@@ -24,6 +24,7 @@
 
 4. 提交合并后的更改：
     ```shell
+    git add .
     git commit -m "Merge main into your_branch"
     ```
 
