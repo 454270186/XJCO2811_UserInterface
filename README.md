@@ -1,3 +1,8 @@
+# XJCO2811_UserInterface
+
+![c++](https://img.shields.io/badge/C++-00599C.svg?style=for-the-badge&logo=C++&logoColor=white)
+![QT](https://img.shields.io/badge/Qt-41CD52.svg?style=for-the-badge&logo=Qt&logoColor=white)
+
 当你在本地完成了一部分工作并希望将更改推送到远程仓库时，可以按照以下流程进行操作：
 
 1. 确保你的本地分支是基于远程仓库的最新代码创建的，并且你的更改已经提交到本地分支。
