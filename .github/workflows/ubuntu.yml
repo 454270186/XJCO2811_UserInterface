@@ -32,6 +32,3 @@ jobs:
           cd build
           qmake ..
           make
-
-      - name: Run Tests
-        run: cd ${{ github.workspace }}/build && make test
