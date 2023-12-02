@@ -10,18 +10,14 @@ CONFIG += c++11
 SOURCES += \
         fileutil.cpp \
         main.cpp \
-        mainwindow.cpp
-#        the_button.cpp \
-#        the_player.cpp \
- #        tomeo.cpp
+        mainwindow.cpp \
+        tinyxml2.cpp \
 
 HEADERS += \
     fileutil.h \
     mainwindow.h \
-#    the_button.h \
-#    the_player.h \
-#    myvideowidget.h \
-#    myvideowidget.h
+    tinyxml2.h \
+
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
