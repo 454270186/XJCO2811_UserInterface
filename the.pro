@@ -9,6 +9,7 @@ CONFIG += c++11
 
 SOURCES += \
         fileutil.cpp \
+        listset.cpp \
         main.cpp \
         mainwindow.cpp \
 #        the_button.cpp \
@@ -17,6 +18,7 @@ SOURCES += \
 
 HEADERS += \
     fileutil.h \
+    listset.h \
     mainwindow.h \
 #    the_button.h \
 #    the_player.h
@@ -27,5 +29,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 FORMS += \
+    listset.ui \
     mainwindow.ui
 
