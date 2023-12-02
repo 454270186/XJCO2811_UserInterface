@@ -12,11 +12,13 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
         tinyxml2.cpp \
+        listset.cpp \
 
 HEADERS += \
     fileutil.h \
     mainwindow.h \
-    tinyxml2.h \
+    tinyxml2.cpp \ 
+    listset.h \
 
 
 # Default rules for deployment.
@@ -25,5 +27,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 FORMS += \
+    listset.ui \
     mainwindow.ui
 
