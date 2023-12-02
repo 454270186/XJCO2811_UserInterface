@@ -9,19 +9,17 @@ CONFIG += c++11
 
 SOURCES += \
         fileutil.cpp \
-        listset.cpp \
         main.cpp \
         mainwindow.cpp \
-#        the_button.cpp \
-#        the_player.cpp \
-#        tomeo.cpp
+        tinyxml2.cpp \
+        listset.cpp \
 
 HEADERS += \
     fileutil.h \
-    listset.h \
     mainwindow.h \
-#    the_button.h \
-#    the_player.h
+    tinyxml2.cpp \ 
+    listset.h \
+
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
