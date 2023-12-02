@@ -3,8 +3,7 @@
 
 
 // FileUtil is the class for providing file operation
-class FileUtil
-{
+class FileUtil {
 public:
     FileUtil();
 };

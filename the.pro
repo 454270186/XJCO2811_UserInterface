@@ -8,18 +8,15 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-        fileutil.cpp \
-        main.cpp \
-        mainwindow.cpp \
-#        the_button.cpp \
-#        the_player.cpp \
-#        tomeo.cpp
+    fileutil.cpp \
+    main.cpp \
+    mainwindow.cpp \
+    tinyxml2.cpp # the lib source code
 
 HEADERS += \
     fileutil.h \
     mainwindow.h \
-#    the_button.h \
-#    the_player.h
+    tinyxml2.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
