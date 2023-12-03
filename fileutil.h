@@ -16,6 +16,8 @@ public:
     void PrintAll();
     string GetVideosPathByListName(const string& listname);
 
+    int AddNewList(const string& listname, const string& videoDirPath);
+
 private:
     string XMLFilePath_;
     tinyxml2::XMLDocument xmlParser_;
