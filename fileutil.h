@@ -16,7 +16,7 @@ public:
     void PrintAll();
     string GetVideosPathByListName(const string& listname);
 
-    int AddNewList(const string& listname, const string& videoDirPath);
+    int AddNewList(const string& listname, const string& videoDirPath, string* error);
 
 private:
     string XMLFilePath_;
