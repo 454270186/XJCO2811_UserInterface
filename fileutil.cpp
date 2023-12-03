@@ -40,6 +40,17 @@ void FileUtil::PrintAll() {
     }
 }
 
+// AddNewList() writes a new list into video-list-data file by given listname and video directory path
+// Params:
+// - error: error is a output-parameter, It only be assigned when the return value is -1
+// Returns:
+// - -1: Some errors occur, the output-parameter error will be assigned with the error information.
+// - new list id: if no error occurs, return new list id.
+int FileUtil::AddNewList(const string& listname, const string& videoDirPath, string* error=nullptr) {
+    // Not implement yet
+    return 1;
+}
+
 // GetVideosPathByListName() returns the videos path according to the given listname
 string FileUtil::GetVideosPathByListName(const string& listname) {
     return "Not implement yet";
