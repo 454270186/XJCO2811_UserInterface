@@ -17,7 +17,7 @@ SOURCES += \
 HEADERS += \
     fileutil.h \
     mainwindow.h \
-    tinyxml2.cpp \ 
+    tinyxml2.h \
     listset.h \
 
 
