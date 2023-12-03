@@ -1,11 +1,11 @@
 #include <QApplication>
 
-#include "mainwindow.h"
+#include "listset.h"
 
 int main(int argc, char** argv) {
     QApplication app(argc, argv);
 
-    MainWindow w;
+    ListSet w;
     w.show();
 
     app.exec();
