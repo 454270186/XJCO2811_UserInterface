@@ -13,12 +13,14 @@ SOURCES += \
         mainwindow.cpp \
         tinyxml2.cpp \
         listset.cpp \
+        formhandler.cpp \
 
 HEADERS += \
     fileutil.h \
     mainwindow.h \
     tinyxml2.h \
     listset.h \
+    formhandler.h \
 
 
 # Default rules for deployment.

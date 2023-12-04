@@ -37,12 +37,12 @@
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
-     <layout class="QVBoxLayout" name="verticalLayout_4">
+     <layout class="QVBoxLayout" name="verticalLayout_left">
       <property name="spacing">
        <number>-1</number>
       </property>
       <item>
-       <widget class="QPushButton" name="pushButton">
+       <widget class="QPushButton" name="backward">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -71,7 +71,7 @@
         <property name="widgetResizable">
          <bool>true</bool>
         </property>
-        <widget class="QWidget" name="scrollAreaWidgetContents_2">
+        <widget class="QWidget" name="scrollAreaWidget">
          <property name="geometry">
           <rect>
            <x>0</x>
@@ -82,7 +82,7 @@
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_6">
           <item>
-           <widget class="QPushButton" name="pushButton_4">
+           <widget class="QPushButton" name="addList">
             <property name="maximumSize">
              <size>
               <width>16777215</width>
@@ -101,7 +101,7 @@
      </layout>
     </item>
     <item>
-     <widget class="QFrame" name="frame">
+     <widget class="QFrame" name="midline">
       <property name="frameShape">
        <enum>QFrame::VLine</enum>
       </property>
@@ -111,9 +111,9 @@
      </widget>
     </item>
     <item>
-     <layout class="QVBoxLayout" name="verticalLayout_5">
+     <layout class="QVBoxLayout" name="verticalLayout_right">
       <item>
-       <widget class="QGroupBox" name="groupBox_2">
+       <widget class="QGroupBox" name="groupBox_right">
         <property name="maximumSize">
          <size>
           <width>450</width>
@@ -125,7 +125,7 @@
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_8">
          <item>
-          <widget class="QLineEdit" name="lineEdit">
+          <widget class="QLineEdit" name="editName">
            <property name="minimumSize">
             <size>
              <width>0</width>
@@ -135,7 +135,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="lineEdit_2">
+          <widget class="QLineEdit" name="editPath">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
              <horstretch>0</horstretch>
@@ -163,7 +163,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton_2">
+          <widget class="QPushButton" name="submit">
            <property name="maximumSize">
             <size>
              <width>16777215</width>
