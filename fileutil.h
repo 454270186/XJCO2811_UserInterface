@@ -28,6 +28,8 @@ public:
     int AddNewList(const string& listname, const string& videoDirPath, string* error);
 
 private:
+    int GetMaxID();
+
     string XMLFilePath_;
     tinyxml2::XMLDocument xmlParser_;
 };
