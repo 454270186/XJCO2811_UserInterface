@@ -51,6 +51,13 @@ int FileUtil::AddNewList(const string& listname, const string& videoDirPath, str
     return 1;
 }
 
+// GetAllListsInfo() returns a vector of infomations of all lists
+vector<ListInfo> FileUtil::GetAllListsInfo() {
+    // Not implement yet
+    vector<ListInfo> listsInfo;
+    return listsInfo;
+}
+
 // GetVideosPathByListName() returns the videos path according to the given listname
 string FileUtil::GetVideosPathByListName(const string& listname) {
     return "Not implement yet";

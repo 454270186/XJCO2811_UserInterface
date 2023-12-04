@@ -2,11 +2,19 @@
 #define FILEUTIL_H
 
 #include <string>
+#include <vector>
 
 #include "tinyxml2.h"
 
 using std::string;
+using std::vector;
 
+class ListInfo {
+public:
+    int id;
+    string name{""};
+    string videoDirPath{""};
+};
 
 // FileUtil is the class for providing file operation
 class FileUtil {
@@ -15,6 +23,7 @@ public:
 
     void PrintAll();
     string GetVideosPathByListName(const string& listname);
+    vector<ListInfo> GetAllListsInfo();
 
     int AddNewList(const string& listname, const string& videoDirPath, string* error);
 
