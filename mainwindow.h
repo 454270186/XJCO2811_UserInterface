@@ -1,5 +1,3 @@
-// mainwindow.h
-
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
@@ -7,15 +5,8 @@
 #include <QMediaPlayer>
 #include <QVideoWidget>
 
-<<<<<<< HEAD
-    namespace Ui {
-    class MainWindow;
-=======
 namespace Ui {
 class MainWindow;
-namespace Ui {
-class MainWindow;
->>>>>>> main
 }
 
 class MainWindow : public QMainWindow
@@ -27,15 +18,6 @@ public:
     ~MainWindow();
 
 public slots:
-<<<<<<< HEAD
-    void setFolderPath(const QString &path);
-
-private slots:
-    void on_pause_clicked();
-    void on_forward_clicked();
-    void on_retreat_clicked();
-    void on_progressbar_sliderMoved(int position);
-=======
     // Slot to handle folder path changes
     void setFolderPath(const QString &path);
 
@@ -53,7 +35,6 @@ private slots:
     void onProgressbarSliderMoved(int position);
 
     // Slot to update the progress bar based on media position
->>>>>>> main
     void updateProgressBar(qint64 position);
 
 private:

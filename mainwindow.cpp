@@ -4,23 +4,25 @@
 #include <QDebug>
 #include <QCoreApplication>
 
+// MainWindow constructor initializes the main window and its components.
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
     mediaPlayer(new QMediaPlayer(this)),
     videoWidget(new QVideoWidget(this))
 {
+    // Set up the user interface
     ui->setupUi(this);
 
-    // Add videoWidget to the layout
+    // Add the video widget to the vertical layout of the main window
     ui->verticalLayout->addWidget(videoWidget);
 
-    // Set the video output window to videoWidget
+    // Set the video output of the media player to the video widget
     mediaPlayer->setVideoOutput(videoWidget);
 
-    // Connect signals and slots
+    // Connect signals and slots for media playback control
     connect(mediaPlayer, &QMediaPlayer::positionChanged, this, &MainWindow::updateProgressBar);
-    connect(ui->progressbar, &QSlider::sliderMoved, this, &MainWindow::on_progressbar_sliderMoved);
+    connect(ui->progressbar, &QSlider::sliderMoved, this, &MainWindow::onProgressbarSliderMoved);
 }
 
 MainWindow::~MainWindow()
@@ -28,77 +30,87 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::on_pause_clicked()
+// onPauseClicked() toggles the play/pause state of the media player.
+// If the media player is currently playing, it pauses playback;
+// otherwise, it starts or resumes playback.
+void MainWindow::onPauseClicked()
 {
+    // Toggle play/pause state
     if (mediaPlayer->state() == QMediaPlayer::PlayingState) {
+        // If the media player is currently in the playing state, pause playback
         mediaPlayer->pause();
     } else {
+        // If the media player is not in the playing state, start or resume playback
         mediaPlayer->play();
     }
 }
 
-void MainWindow::on_forward_clicked()
+// onForwardClicked() fast-forwards the media playback by 5 seconds.
+void MainWindow::onForwardClicked()
 {
-    // Get the current position of the media
+    // Fast forward by 5 seconds
     qint64 currentPosition = mediaPlayer->position();
-
-    // Set the forward time, here set to 5 seconds
     qint64 newPosition = currentPosition + 5000;
-
-    // Set the new position to the media player
     mediaPlayer->setPosition(newPosition);
 }
 
-void MainWindow::on_retreat_clicked()
+// onRetreatClicked() rewinds the media playback by 5 seconds.
+void MainWindow::onRetreatClicked()
 {
-    // Get the current position of the media
+    // Rewind by 5 seconds
     qint64 currentPosition = mediaPlayer->position();
-
-    // Set the retreat time, here set to 5 seconds
     qint64 newPosition = currentPosition - 5000;
-
-    // Set the new position to the media player
     mediaPlayer->setPosition(newPosition);
 }
 
-void MainWindow::on_progressbar_sliderMoved(int position)
+// onProgressbarSliderMoved() handles the sliderMoved signal of the progress bar.
+// It sets the media player's position to the specified value, allowing the user
+// to manually adjust the playback position by moving the progress bar slider.
+// Params:
+// - position: The new position set by the user through the progress bar slider.
+void MainWindow::onProgressbarSliderMoved(int position)
 {
     // Set the position moved by the slider to the media player
     mediaPlayer->setPosition(position);
 }
 
+// updateProgressBar() updates the progress bar based on the current position of the media playback.
 void MainWindow::updateProgressBar(qint64 position)
 {
-    // Get the total duration of the current media
+    // Update the current value of the progress bar
     qint64 totalDuration = mediaPlayer->duration();
 
-    // Ensure that the total duration is not zero
     if (totalDuration > 0) {
-        // Set QSlider's range to [0, totalDuration]
+        // Set the range of the progress bar to the total duration of the media
         ui->progressbar->setRange(0, totalDuration);
 
-        // Set QSlider's current value to the current position of the media
+        // Set the current value of the progress bar to the current position of the media playback
         ui->progressbar->setValue(position);
     }
 }
 
 
+// setFolderPath() sets the media player to play the selected video file.
+// It opens a file dialog to choose a video file, sets the media player's media to the selected file,
+// and initiates playback after waiting for the media to load.
+// Params:
+// - path: The initial path used by the file dialog.
 void MainWindow::setFolderPath(const QString &path)
 {
+    // Log the folder path for debugging purposes
     qDebug() << "setFolderPath called with path:" << path;
 
-    // Handle the folder path here, you can store it as a member variable or use it directly
-    // For example, you can use QFileDialog::getOpenFileName here to choose a file
+    // Open the file dialog to choose a video file
     QString filePath = QFileDialog::getOpenFileName(this, tr("Choose video file"), path, tr("Video files (*.mp4 *.avi *.mkv);;All files (*)"));
 
-    // Output the file path
+    // Log the selected file path for debugging purposes
     qDebug() << "Selected file path:" << filePath;
 
-    // If the user selects a file, set it as the video source
+    // If the file path is not empty, set the media of the media player to the selected file and play
     if (!filePath.isEmpty()) {
         mediaPlayer->setMedia(QUrl::fromLocalFile(filePath));
 
-        // Wait for the media to be ready for playback
+        // Wait for the media to load before starting playback
         while (mediaPlayer->mediaStatus() != QMediaPlayer::LoadedMedia) {
             QCoreApplication::processEvents();
         }
