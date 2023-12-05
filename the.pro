@@ -14,13 +14,19 @@ SOURCES += \
     myvideowidget.cpp \
         tinyxml2.cpp \
         listset.cpp \
+        formhandler.cpp \
 
 HEADERS += \
     fileutil.h \
     mainwindow.h \
+<<<<<<< HEAD
     myvideowidget.h \
     tinyxml2.cpp \ 
+=======
+    tinyxml2.h \
+>>>>>>> main
     listset.h \
+    formhandler.h \
 
 
 # Default rules for deployment.
