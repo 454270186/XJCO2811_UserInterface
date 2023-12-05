@@ -11,12 +11,14 @@ SOURCES += \
         fileutil.cpp \
         main.cpp \
         mainwindow.cpp \
+    myvideowidget.cpp \
         tinyxml2.cpp \
         listset.cpp \
 
 HEADERS += \
     fileutil.h \
     mainwindow.h \
+    myvideowidget.h \
     tinyxml2.cpp \ 
     listset.h \
 
