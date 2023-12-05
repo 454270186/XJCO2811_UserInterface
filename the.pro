@@ -20,7 +20,7 @@ HEADERS += \
     fileutil.h \
     mainwindow.h \
     myvideowidget.h \
-    tinyxml2.cpp \ 
+    tinyxml2.h \
     tinyxml2.h \
     listset.h \
     formhandler.h \
