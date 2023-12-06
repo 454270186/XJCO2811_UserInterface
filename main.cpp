@@ -16,6 +16,8 @@ int main(int argc, char** argv) {
     //MainWindow w;
     ListSet w;
     w.show();
+    int i;
+    int j;
 
     app.exec();
 }
