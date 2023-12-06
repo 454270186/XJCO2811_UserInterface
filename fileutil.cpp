@@ -1,5 +1,7 @@
-#include <iostream>
 #include "fileutil.h"
+
+#include <iostream>
+
 #include "tinyxml2.h"
 
 using namespace tinyxml2;
@@ -17,7 +19,7 @@ FileUtil::FileUtil(const string& XMLFilePath) : XMLFilePath_(XMLFilePath) {
 int FileUtil::GetMaxID() {
     auto lists = GetAllListsInfo();
     if (lists.empty()) {
-        return 1;
+        return 0;
     } else {
         return lists.back().id;
     }
@@ -28,7 +30,8 @@ void FileUtil::PrintAll() {
     XMLElement* rootElement = xmlParser_.RootElement();
     if (rootElement && strcmp(rootElement->Name(), "lists") == 0) {
         // Traverse root element: <videolist>
-        for (XMLElement* videolistElement = rootElement->FirstChildElement("videolist"); videolistElement; videolistElement = videolistElement->NextSiblingElement("videolist")) {
+        for (XMLElement* videolistElement = rootElement->FirstChildElement("videolist"); videolistElement;
+             videolistElement = videolistElement->NextSiblingElement("videolist")) {
             // get <id> element
             XMLElement* idElement = videolistElement->FirstChildElement("id");
             const char* idText = idElement ? idElement->GetText() : nullptr;
@@ -43,19 +46,21 @@ void FileUtil::PrintAll() {
 
             // print out
             if (idText && nameText && videoPathText) {
-                std::cout << "ID: " << idText << ", Name: " << nameText << ", Video Path: " << videoPathText << std::endl;
+                std::cout << "ID: " << idText << ", Name: " << nameText << ", Video Path: " << videoPathText
+                          << std::endl;
             }
         }
     }
 }
 
-// AddNewList() writes a new list into video-list-data file by given listname and video directory path
-// Params:
-// - error: error is a output-parameter, It only be assigned when the return value is -1
-// Returns:
-// - -1: Some errors occur, the output-parameter error will be assigned with the error information.
+// AddNewList() writes a new list into video-list-data file by given listname
+// and video directory path Params:
+// - error: error is a output-parameter, It only be assigned when the return
+// value is -1 Returns:
+// - -1: Some errors occur, the output-parameter error will be assigned with the
+// error information.
 // - new list id: if no error occurs, return new list id.
-int FileUtil::AddNewList(const string& listname, const string& videoDirPath, string* error=nullptr) {
+int FileUtil::AddNewList(const string& listname, const string& videoDirPath, string* error = nullptr) {
     // Create a new XML element for the new list
     XMLElement* newListElement = xmlParser_.NewElement("videolist");
 
@@ -65,7 +70,8 @@ int FileUtil::AddNewList(const string& listname, const string& videoDirPath, str
     XMLElement* videoPathElement = xmlParser_.NewElement("video_path");
 
     // Set text content for the child elements
-    idElement->SetText(GetMaxID()+1);  // You need to implement GenerateNewListId() to generate a new unique id
+    idElement->SetText(GetMaxID() + 1);  // You need to implement GenerateNewListId() to
+                                         // generate a new unique id
     nameElement->SetText(listname.c_str());
     videoPathElement->SetText(videoDirPath.c_str());
 
@@ -105,7 +111,8 @@ vector<ListInfo> FileUtil::GetAllListsInfo() {
     XMLElement* rootElement = xmlParser_.RootElement();
     if (rootElement && strcmp(rootElement->Name(), "lists") == 0) {
         // Traverse root element: <videolist>
-        for (XMLElement* videolistElement = rootElement->FirstChildElement("videolist"); videolistElement; videolistElement = videolistElement->NextSiblingElement("videolist")) {
+        for (XMLElement* videolistElement = rootElement->FirstChildElement("videolist"); videolistElement;
+             videolistElement = videolistElement->NextSiblingElement("videolist")) {
             ListInfo listInfo;
 
             XMLElement* idElement = videolistElement->FirstChildElement("id");
@@ -124,7 +131,8 @@ vector<ListInfo> FileUtil::GetAllListsInfo() {
     return listsInfo;
 }
 
-// GetVideosPathByListName() returns the videos path according to the given listname
+// GetVideosPathByListName() returns the videos path according to the given
+// listname
 string FileUtil::GetVideosPathByListName(const string& listname) {
     return "Not implement yet";
 }
