@@ -7,6 +7,8 @@
 #include <QPushButton>
 #include <QVector>
 
+#include "fileutil.h"
+
 namespace Ui {
 class ListSet;
 }
@@ -20,13 +22,18 @@ public:
     ~ListSet();
 
 private slots:
-    void on_pushButton_4_clicked();
+    int on_addList_clicked();
+    void onSubmitClicked();
 
 private:
+    std::vector<ListInfo> listsInfo;
     Ui::ListSet *ui;
     QVBoxLayout *listLayout;
+    QPushButton *newButton;
     QVector<QPushButton*> itemList;
     int clickCount;
+    int buttonClicked;
+    QPushButton* currentButton;
 };
 
-#endif // LISTSET_H
+#endif //LISTSET_H
