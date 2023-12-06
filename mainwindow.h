@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QStringList>
 #include <QMediaPlayer>
 #include <QVideoWidget>
 
@@ -9,8 +10,7 @@ namespace Ui {
 class MainWindow;
 }
 
-class MainWindow : public QMainWindow
-{
+class MainWindow : public QMainWindow {
     Q_OBJECT
 
 public:
@@ -37,10 +37,15 @@ private slots:
     // Slot to update the progress bar based on media position
     void updateProgressBar(qint64 position);
 
+    void onButtonClicked();
+    void parseFolder(const QString &folderPath);
+    void handleVideoSelection(const QStringList &videoPaths, int currentIndex); // 接口函数
+
 private:
     Ui::MainWindow *ui;
     QMediaPlayer *mediaPlayer;
     QVideoWidget *videoWidget;
+    QStringList videoPaths; // 存储所有视频路径
 };
 
 #endif // MAINWINDOW_H
