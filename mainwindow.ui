@@ -80,29 +80,7 @@
          <property name="title">
           <string/>
          </property>
-         <layout class="QVBoxLayout" name="verticalLayout_2">
-          <item>
-           <widget class="QLabel" name="picture1">
-            <property name="text">
-             <string>picture1</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="picture2">
-            <property name="text">
-             <string>picture2</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="picture3">
-            <property name="text">
-             <string>picture3</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
+         <layout class="QVBoxLayout" name="verticalLayout_2"/>
         </widget>
        </item>
       </layout>
