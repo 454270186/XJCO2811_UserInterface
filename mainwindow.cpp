@@ -138,7 +138,7 @@ void MainWindow::parseFolder(const QString &folderPath) {
             button->setIconSize(QSize(100, 100));
             connect(button, &QPushButton::clicked, this, &MainWindow::onButtonClicked);
 
-            QVBoxLayout *layout = qobject_cast<QVBoxLayout *>(ui->picture->layout());
+            QVBoxLayout *layout = qobject_cast<QVBoxLayout *>(ui->picturelist->layout());
             if (layout) {
                 layout->addWidget(button);
             }
