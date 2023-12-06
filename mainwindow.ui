@@ -26,49 +26,41 @@
    </size>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QHBoxLayout" name="horizontalLayout">
+   <layout class="QHBoxLayout" name="horizontalLayout_2">
     <item>
      <widget class="QGroupBox" name="picturelist">
       <property name="minimumSize">
        <size>
-        <width>18</width>
+        <width>300</width>
         <height>18</height>
        </size>
       </property>
       <property name="title">
        <string/>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout_3">
+      <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
-        <widget class="QGroupBox" name="list">
-         <property name="maximumSize">
-          <size>
-           <width>200</width>
-           <height>200</height>
-          </size>
-         </property>
+        <widget class="QGroupBox" name="groupBox">
          <property name="title">
           <string/>
          </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <layout class="QHBoxLayout" name="horizontalLayout">
           <item>
-           <widget class="QPushButton" name="listbotton1">
-            <property name="text">
-             <string>list1</string>
+           <widget class="QPushButton" name="pushButton">
+            <property name="minimumSize">
+             <size>
+              <width>100</width>
+              <height>20</height>
+             </size>
             </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="listbotton2">
-            <property name="text">
-             <string>list2</string>
+            <property name="maximumSize">
+             <size>
+              <width>100</width>
+              <height>20</height>
+             </size>
             </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="listbotton3">
             <property name="text">
-             <string>list3</string>
+             <string>+</string>
             </property>
            </widget>
           </item>
@@ -76,9 +68,9 @@
         </widget>
        </item>
        <item>
-        <widget class="QGroupBox" name="picture">
-         <property name="title">
-          <string/>
+        <widget class="QScrollArea" name="scrollArea">
+         <property name="widgetResizable">
+          <bool>true</bool>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_2"/>
         </widget>
@@ -96,7 +88,7 @@
         <widget class="QWidget" name="widget" native="true">
          <layout class="QVBoxLayout" name="verticalLayout_4">
           <item>
-           <widget class="QWidget" name="videoplayer" native="true"/>
+           <widget class="MyVideoWidget" name="videoplayer" native="true"/>
           </item>
           <item>
            <widget class="QGroupBox" name="control">
@@ -168,6 +160,13 @@
    </layout>
   </widget>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>MyVideoWidget</class>
+   <extends>QWidget</extends>
+   <header>myvideowidget.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
