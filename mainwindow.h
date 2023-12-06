@@ -17,14 +17,6 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-private slots:
-    void onButtonClicked();
-    void parseFolder(const QString &folderPath);
-    void handleVideoSelection(const QStringList &videoPaths, int currentIndex); // 接口函数
-
-private:
-    Ui::MainWindow *ui;
-    QStringList videoPaths; // 存储所有视频路径
 public slots:
     // Slot to handle folder path changes
     void setFolderPath(const QString &path);
@@ -53,6 +45,7 @@ private:
     Ui::MainWindow *ui;
     QMediaPlayer *mediaPlayer;
     QVideoWidget *videoWidget;
+    QStringList videoPaths; // 存储所有视频路径
 };
 
 #endif // MAINWINDOW_H
