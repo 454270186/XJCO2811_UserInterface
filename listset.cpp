@@ -22,8 +22,9 @@ ListSet::ListSet(QWidget *parent) :
     connect(ui->submit, &QPushButton::clicked, this, &ListSet::onSubmitClicked);
 
     const std::string XMLFilePath ="../XJCO2811_UserInterface/videolist_data.xml";
-    FileUtil fileUtil(XMLFilePath);
-    std::vector<ListInfo> listsInfo = fileUtil.GetAllListsInfo();
+    fileUtil = new FileUtil(XMLFilePath);
+    fileUtil->PrintAll();
+    listsInfo = fileUtil->GetAllListsInfo();
 }
 
 ListSet::~ListSet()
@@ -42,20 +43,20 @@ int ListSet::on_addList_clicked() {
     newButton->setText("New List " + QString::number(clickCount));
     listLayout->addWidget(newButton);
 
-    const std::string XMLFilePath = "../XJCO2811_UserInterface/videolist_data.xml";
-    FileUtil fileUtil(XMLFilePath);
+    listsInfo = fileUtil->GetAllListsInfo();
+    fileUtil->PrintAll();
     std::string error;
-    fileUtil.AddNewList(("New List " + QString::number(clickCount)).toStdString(), "", &error);
+    fileUtil->AddNewList(("New List " + QString::number(clickCount)).toStdString(), "../..", &error);
     qDebug() << listsInfo.size();
 
-    connect(newButton, &QPushButton::clicked, [this, newButton]() {
+    connect(newButton, &QPushButton::clicked, [this, newButton] {
         int index = listLayout->indexOf(newButton);
         buttonClicked = index;
         qDebug() << "Button clicked. Index: " << index;
         // Check if the index is valid
-        if (index != -1 && index < listsInfo.size()) {
+        if (index != -1 && index < this->listsInfo.size()) {
             // Retrieve the corresponding ListInfo
-            ListInfo info = listsInfo[index];
+            ListInfo info = this->listsInfo[index];
             // Set the text of editName and editPath
             ui->editName->setText(QString::fromStdString(info.name));
             ui->editPath->setText(QString::fromStdString(info.videoDirPath));

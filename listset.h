@@ -26,6 +26,7 @@ private slots:
     void onSubmitClicked();
 
 private:
+    FileUtil* fileUtil;
     std::vector<ListInfo> listsInfo;
     Ui::ListSet *ui;
     QVBoxLayout *listLayout;

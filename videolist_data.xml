@@ -1,12 +1,7 @@
 <list>
     <videolist>
-        <id>2</id>
+        <id>1</id>
         <name>New List 1</name>
-        <video_path/>
-    </videolist>
-    <videolist>
-        <id>2</id>
-        <name>New List 2</name>
-        <video_path></video_path>
+        <video_path>../..</video_path>
     </videolist>
 </list>
