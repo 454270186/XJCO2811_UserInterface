@@ -9,6 +9,7 @@
 #include <string>
 #include "formhandler.h"
 #include "listset.h"
+#include "mainwindow.h"
 #include "ui_listset.h"
 
 ListSet::ListSet(QWidget* parent) : QMainWindow(parent), ui(new Ui::ListSet) {
@@ -57,6 +58,9 @@ ListSet::ListSet(QWidget* parent) : QMainWindow(parent), ui(new Ui::ListSet) {
 
         std::cout << listsInfo[i].name << std::endl;
     }
+
+    // connect signal and slot for switch from listset to mainwindow
+    connect(ui->backward, &QPushButton::clicked, this, &ListSet::switchToMainWindow);
 }
 
 ListSet::~ListSet() {
@@ -138,4 +142,10 @@ void ListSet::onSubmitClicked() {
         newButton->setText(QString::fromStdString(listName));
         listLayout->addWidget(newButton);
     }
+}
+
+void ListSet::switchToMainWindow() {
+    hide();
+    MainWindow* mainwindow = new MainWindow();
+    mainwindow->show();
 }
