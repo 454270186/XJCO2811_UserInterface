@@ -131,6 +131,58 @@ vector<ListInfo> FileUtil::GetAllListsInfo() {
     return listsInfo;
 }
 
+// EditList() edits existing list by given list id;
+// Returns:
+// - 1, if successfully edit
+// - -1, if some errors occur, and out-param error will be asigned with error message
+int FileUtil::EditList(int listID, const string& newListName, const string& newVideoDirPath, string* error = nullptr) {
+    XMLElement* rootElement = xmlParser_.RootElement();
+    // check validation of xml file structure
+    if (!rootElement || strcmp(rootElement->Name(), "lists") != 0) {
+        if (error) {
+            *error = "invalid xml file structure";
+        }
+        return -1;
+    }
+
+    bool isFound = false;
+    for (XMLElement* videolistEle = rootElement->FirstChildElement("videolist"); videolistEle;
+         videolistEle = videolistEle->NextSiblingElement("videolist")) {
+        // find target id
+        XMLElement* idElement = videolistEle->FirstChildElement("id");
+        int currentListID = idElement ? atoi(idElement->GetText()) : -1;
+
+        if (currentListID != listID) {
+            continue;
+        }
+
+        isFound = true;
+        XMLElement* nameElement = videolistEle->FirstChildElement("name");
+        if (nameElement) {
+            nameElement->SetText(newListName.c_str());
+        }
+
+        XMLElement* videoDirElement = videolistEle->FirstChildElement("video_path");
+        if (videoDirElement) {
+            videoDirElement->SetText(newVideoDirPath.c_str());
+        }
+
+        if (xmlParser_.SaveFile(XMLFilePath_.c_str()) == XML_SUCCESS) {
+            return 1;
+        } else {
+            return -1;
+        }
+    }
+
+    if (!isFound) {
+        if (error) {
+            *error = "list with id " + std::to_string(listID) + " not found";
+        }
+    }
+
+    return -1;
+}
+
 // GetVideosPathByListName() returns the videos path according to the given
 // listname
 string FileUtil::GetVideosPathByListName(const string& listname) {

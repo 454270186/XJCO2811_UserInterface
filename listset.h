@@ -2,24 +2,41 @@
 #define LISTSET_H
 
 #include <QMainWindow>
+#include <QPushButton>
+#include <QScrollArea>
+#include <QVBoxLayout>
+#include <QVector>
+
+#include "fileutil.h"
 
 namespace Ui {
 class ListSet;
 }
 
-class ListSet : public QMainWindow
-{
+class ListSet : public QMainWindow {
     Q_OBJECT
 
 public:
-    explicit ListSet(QWidget *parent = nullptr);
+    explicit ListSet(QWidget* parent = nullptr);
     ~ListSet();
 
+public slots:
+    void switchToMainWindow();
+
 private slots:
+    int on_addList_clicked();
     void onSubmitClicked();
 
 private:
-    Ui::ListSet *ui;
+    FileUtil* fileUtil;
+    std::vector<ListInfo> listsInfo;
+    Ui::ListSet* ui;
+    QVBoxLayout* listLayout;
+    QPushButton* newButton;
+    QVector<QPushButton*> itemList;
+    int clickCount;
+    int buttonClicked;
+    QPushButton* currentButton;
 };
 
-#endif //LISTSET_H
+#endif  //LISTSET_H

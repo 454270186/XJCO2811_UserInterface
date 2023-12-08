@@ -1,32 +1,22 @@
 <lists>
     <videolist>
         <id>1</id>
-        <name>list A</name>
-        <video_path>./videos</video_path>
+        <name>New List 1</name>
+        <video_path>../..</video_path>
     </videolist>
     <videolist>
         <id>2</id>
-        <name>list B</name>
-        <video_path>./videos</video_path>
+        <name>New List 2</name>
+        <video_path>../..</video_path>
     </videolist>
     <videolist>
         <id>3</id>
-        <name>list C</name>
-        <video_path>qqqqq</video_path>
+        <name>New List 3</name>
+        <video_path>../..</video_path>
     </videolist>
     <videolist>
         <id>4</id>
-        <name>list D</name>
-        <video_path>123456</video_path>
-    </videolist>
-    <videolist>
-        <id>5</id>
-        <name>new list</name>
-        <video_path>./sss/sss</video_path>
-    </videolist>
-    <videolist>
-        <id>6</id>
-        <name>new list</name>
-        <video_path>./sss/sss</video_path>
+        <name>New List 4</name>
+        <video_path>../..</video_path>
     </videolist>
 </lists>

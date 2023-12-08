@@ -1,28 +1,50 @@
 #include "mainwindow.h"
-#include "ui_mainwindow.h"
-#include "btnconvert.h"
-#include <QDir>
-#include <QVBoxLayout>
-#include <QDebug>
-#include <QFileDialog>
 #include <QCoreApplication>
+#include <QDebug>
+#include <QDir>
+#include <QFileDialog>
+#include <QHBoxLayout>
+#include <QVBoxLayout>
+#include "btnconvert.h"
+#include "listset.h"
+#include "ui_mainwindow.h"
 
 // MainWindow constructor initializes the main window and its components.
-MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::MainWindow),
-    mediaPlayer(new QMediaPlayer(this)),
-    videoWidget(new QVideoWidget(this))
-{
+MainWindow::MainWindow(QWidget* parent)
+    : QMainWindow(parent),
+      ui(new Ui::MainWindow),
+      mediaPlayer(new QMediaPlayer(this)),
+      videoWidget(new QVideoWidget(this)) {
     // Set up the user interface
     ui->setupUi(this);
-    parseFolder("/Users/haoyue/Desktop/XJCO2811_UserInterface-hy/XJCO2811_UserInterface/videos"); // 使用前要替换为你本地的文件夹路径
 
     // Add the video widget to the vertical layout of the main window
     ui->verticalLayout->addWidget(videoWidget);
 
+    // Add the list button to horizontal layout
+    listsBtnsLayout = ui->lists->findChild<QHBoxLayout*>("horizontalLayout");
+
+    // Render all lists
+    fileUtil_ = new FileUtil("../XJCO2811_UserInterface/videolist_data.xml");
+    listInfos_ = fileUtil_->GetAllListsInfo();
+
+    for (size_t i = 0; i < listInfos_.size(); i++) {
+        QPushButton* newButton = new QPushButton();
+        newButton->setText(listInfos_[i].name.c_str());
+        newButton->setCheckable(true);
+        newButton->setAutoExclusive(true);
+
+        listsBtnsLayout->addWidget(newButton);
+
+        // connect onClick hook
+        connect(newButton, &QPushButton::clicked, [this, i] { parseFolder(listInfos_[i].videoDirPath.c_str()); });
+    }
+
     // Set the video output of the media player to the video widget
     mediaPlayer->setVideoOutput(videoWidget);
+
+    // Connect signals and slots for window switch
+    connect(ui->addListBtn, &QPushButton::clicked, this, &MainWindow::switchToListset);
 
     // Connect signals and slots for media playback control
     connect(mediaPlayer, &QMediaPlayer::positionChanged, this, &MainWindow::updateProgressBar);
@@ -92,12 +114,13 @@ void MainWindow::updateProgressBar(qint64 position) {
 // and initiates playback after waiting for the media to load.
 // Params:
 // - path: The initial path used by the file dialog.
-void MainWindow::setFolderPath(const QString &path) {
+void MainWindow::setFolderPath(const QString& path) {
     // Log the folder path for debugging purposes
     qDebug() << "setFolderPath called with path:" << path;
 
     // Open the file dialog to choose a video file
-    QString filePath = QFileDialog::getOpenFileName(this, tr("Choose video file"), path, tr("Video files (*.mp4 *.avi *.mkv);;All files (*)"));
+    QString filePath = QFileDialog::getOpenFileName(this, tr("Choose video file"), path,
+                                                    tr("Video files (*.mp4 *.avi *.mkv);;All files (*)"));
 
     // Log the selected file path for debugging purposes
     qDebug() << "Selected file path:" << filePath;
@@ -115,11 +138,11 @@ void MainWindow::setFolderPath(const QString &path) {
     }
 }
 
-void MainWindow::parseFolder(const QString &folderPath) {
+void MainWindow::parseFolder(const QString& folderPath) {
     QDir dir(folderPath);
     QStringList videoFiles = dir.entryList(QStringList() << "*.mp4", QDir::Files);
 
-    foreach (const QString &videoFile, videoFiles) {
+    foreach (const QString& videoFile, videoFiles) {
         QString videoPath = dir.filePath(videoFile);
         videoPaths.append(videoPath);
 
@@ -127,12 +150,12 @@ void MainWindow::parseFolder(const QString &folderPath) {
         QString imagePath = dir.filePath(baseName + ".png");
 
         if (QFileInfo::exists(imagePath)) {
-            BtnConvert *button = new BtnConvert(videoPath);
+            BtnConvert* button = new BtnConvert(videoPath);
             button->setIcon(QIcon(imagePath));
             button->setIconSize(QSize(100, 100));
             connect(button, &QPushButton::clicked, this, &MainWindow::onButtonClicked);
 
-            QVBoxLayout *layout = qobject_cast<QVBoxLayout *>(ui->picturelist->layout());
+            QVBoxLayout* layout = qobject_cast<QVBoxLayout*>(ui->picturelist->layout());
             if (layout) {
                 layout->addWidget(button);
             }
@@ -141,7 +164,7 @@ void MainWindow::parseFolder(const QString &folderPath) {
 }
 
 void MainWindow::onButtonClicked() {
-    BtnConvert *button = qobject_cast<BtnConvert *>(sender());
+    BtnConvert* button = qobject_cast<BtnConvert*>(sender());
     if (button) {
         QString videoPath = button->getVideoPath();
         int index = videoPaths.indexOf(videoPath);
@@ -156,7 +179,7 @@ void MainWindow::onButtonClicked() {
 // Params:
 // - videoPaths: QStringList containing paths of all videos in the folder.
 // - currentIndex: The index corresponding to the clicked button.
-void MainWindow::handleVideoSelection(const QStringList &videoPaths, int currentIndex) {
+void MainWindow::handleVideoSelection(const QStringList& videoPaths, int currentIndex) {
     // Pass the video paths array and index to the interface
     // Implement the logic for the interface call here
     qDebug() << "Button clicked. Video paths:" << videoPaths;
@@ -170,7 +193,7 @@ void MainWindow::handleVideoSelection(const QStringList &videoPaths, int current
 // Params:
 // - videoPaths: QStringList containing paths of all videos in the folder.
 // - currentIndex: The index corresponding to the clicked button.
-void MainWindow::startPlaylistFromParameters(const QStringList &videoPaths, int currentIndex) {
+void MainWindow::startPlaylistFromParameters(const QStringList& videoPaths, int currentIndex) {
     // Set videoPaths and currentVideoIndex
     this->videoPaths = videoPaths;
     this->currentVideoIndex = currentIndex;
@@ -205,4 +228,16 @@ void MainWindow::setMediaAndPlay() {
         // Increment the video index for the next iteration
         currentVideoIndex = (currentVideoIndex + 1) % videoPaths.size();
     }
-}
+    void MainWindow::handleVideoSelection(const QStringList& videoPaths, int currentIndex) {
+        // 将视频路径数组和索引传递给接口
+        // 这里实现接口调用的逻辑
+        qDebug() << "Button clicked. Video paths:"
+                 << videoPaths;  // VideoPaths是一个字符串数组，存储文件夹里所有的视频路径
+        qDebug() << "Button clicked. currentIndex:" << currentIndex;  // currentIndex是一个整型，显示当前按钮对应的索引
+    }
+
+    void MainWindow::switchToListset() {
+        hide();
+        ListSet* listsetWindow = new ListSet();
+        listsetWindow->show();
+    }
