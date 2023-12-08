@@ -131,7 +131,7 @@ vector<ListInfo> FileUtil::GetAllListsInfo() {
     return listsInfo;
 }
 
-int FileUtil::EditList(int listID, const string& newListName, const string& newVideoDirPath) {
+int FileUtil::EditList(int listID, const string& newListName, const string& newVideoDirPath, string* error = nullptr) {
     // not implement yet
     return 1;
 }
