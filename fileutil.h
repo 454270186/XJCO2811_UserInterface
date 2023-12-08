@@ -26,6 +26,7 @@ public:
     vector<ListInfo> GetAllListsInfo();
 
     int AddNewList(const string& listname, const string& videoDirPath, string* error);
+    int EditList(int listID, const string& newListName, const string& newVideoDirPath, string* error);
 
 private:
     int GetMaxID();
@@ -34,4 +35,4 @@ private:
     tinyxml2::XMLDocument xmlParser_;
 };
 
-#endif // FILEUTIL_H
+#endif  // FILEUTIL_H
