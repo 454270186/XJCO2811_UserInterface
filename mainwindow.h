@@ -25,6 +25,9 @@ public slots:
     // Slot to handle folder path changes
     void setFolderPath(const QString& path);
 
+    // Slot to switch between windows
+    void switchToListset();
+
 private slots:
     // Slot for the pause button click event
     void onPauseClicked();
