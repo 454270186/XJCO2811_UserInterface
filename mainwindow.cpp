@@ -36,7 +36,7 @@ MainWindow::~MainWindow() {
 // onPauseClicked() toggles the play/pause state of the media player.
 // If the media player is currently playing, it pauses playback;
 // otherwise, it starts or resumes playback.
-void MainWindow::onPauseClicked(){
+void MainWindow::onPauseClicked() {
     // Toggle play/pause state
     if (mediaPlayer->state() == QMediaPlayer::PlayingState) {
         // If the media player is currently in the playing state, pause playback
@@ -48,7 +48,7 @@ void MainWindow::onPauseClicked(){
 }
 
 // onForwardClicked() fast-forwards the media playback by 5 seconds.
-void MainWindow::onForwardClicked(){
+void MainWindow::onForwardClicked() {
     // Fast forward by 5 seconds
     qint64 currentPosition = mediaPlayer->position();
     qint64 newPosition = currentPosition + 5000;
@@ -56,7 +56,7 @@ void MainWindow::onForwardClicked(){
 }
 
 // onRetreatClicked() rewinds the media playback by 5 seconds.
-void MainWindow::onRetreatClicked(){
+void MainWindow::onRetreatClicked() {
     // Rewind by 5 seconds
     qint64 currentPosition = mediaPlayer->position();
     qint64 newPosition = currentPosition - 5000;
@@ -74,7 +74,7 @@ void MainWindow::onProgressbarSliderMoved(int position) {
 }
 
 // updateProgressBar() updates the progress bar based on the current position of the media playback.
-void MainWindow::updateProgressBar(qint64 position){
+void MainWindow::updateProgressBar(qint64 position) {
     // Update the current value of the progress bar
     qint64 totalDuration = mediaPlayer->duration();
 
@@ -92,7 +92,7 @@ void MainWindow::updateProgressBar(qint64 position){
 // and initiates playback after waiting for the media to load.
 // Params:
 // - path: The initial path used by the file dialog.
-void MainWindow::setFolderPath(const QString &path){
+void MainWindow::setFolderPath(const QString &path) {
     // Log the folder path for debugging purposes
     qDebug() << "setFolderPath called with path:" << path;
 
