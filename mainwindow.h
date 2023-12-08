@@ -46,6 +46,10 @@ private:
     QMediaPlayer *mediaPlayer;
     QVideoWidget *videoWidget;
     QStringList videoPaths; // 存储所有视频路径
+    int currentVideoIndex;// 当前播放的视频索引
+    void setMediaAndPlay();
+    void startPlaylistFromParameters(const QStringList &videoPaths, int currentIndex);
+
 };
 
 #endif // MAINWINDOW_H
