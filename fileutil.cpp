@@ -131,6 +131,10 @@ vector<ListInfo> FileUtil::GetAllListsInfo() {
     return listsInfo;
 }
 
+// EditList() edits existing list by given list id;
+// Returns:
+// - 1, if successfully edit
+// - -1, if some errors occur, and out-param error will be asigned with error message
 int FileUtil::EditList(int listID, const string& newListName, const string& newVideoDirPath, string* error = nullptr) {
     XMLElement* rootElement = xmlParser_.RootElement();
     // check validation of xml file structure
