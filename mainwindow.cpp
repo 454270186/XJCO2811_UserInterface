@@ -49,6 +49,9 @@ MainWindow::MainWindow(QWidget* parent)
     // Connect signals and slots for media playback control
     connect(mediaPlayer, &QMediaPlayer::positionChanged, this, &MainWindow::updateProgressBar);
     connect(ui->progressbar, &QSlider::sliderMoved, this, &MainWindow::onProgressbarSliderMoved);
+    connect(ui->forward, &QPushButton::clicked, this, &MainWindow::onForwardClicked);
+    connect(ui->retreat, &QPushButton::clicked, this, &MainWindow::onRetreatClicked);
+    connect(ui->pause, &QPushButton::clicked, this, &MainWindow::onPauseClicked);
 }
 
 MainWindow::~MainWindow() {
