@@ -131,6 +131,11 @@ vector<ListInfo> FileUtil::GetAllListsInfo() {
     return listsInfo;
 }
 
+int FileUtil::EditList(int listID, const string& newListName, const string& newVideoDirPath) {
+    // not implement yet
+    return 1;
+}
+
 // GetVideosPathByListName() returns the videos path according to the given
 // listname
 string FileUtil::GetVideosPathByListName(const string& listname) {
