@@ -230,13 +230,6 @@ void MainWindow::setMediaAndPlay() {
     }
 }
 
-void MainWindow::handleVideoSelection(const QStringList& videoPaths, int currentIndex) {
-    // 将视频路径数组和索引传递给接口
-    // 这里实现接口调用的逻辑
-    qDebug() << "Button clicked. Video paths:" << videoPaths;  // VideoPaths是一个字符串数组，存储文件夹里所有的视频路径
-    qDebug() << "Button clicked. currentIndex:" << currentIndex;  // currentIndex是一个整型，显示当前按钮对应的索引
-}
-
 void MainWindow::switchToListset() {
     hide();
     ListSet* listsetWindow = new ListSet();
