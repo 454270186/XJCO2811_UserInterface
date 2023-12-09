@@ -1,8 +1,8 @@
 <lists>
     <videolist>
         <id>1</id>
-        <name>1</name>
-        <video_path>2</video_path>
+        <name>New List 1</name>
+        <video_path>../XJCO2811_UserInterface/videos</video_path>
     </videolist>
     <videolist>
         <id>2</id>
