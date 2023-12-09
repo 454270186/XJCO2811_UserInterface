@@ -47,9 +47,7 @@ private slots:
     void onButtonClicked();
     void parseFolder(const QString& folderPath);
     void handleVideoSelection(const QStringList& videoPaths, int currentIndex);  // 接口函数
-    void onMediaStatusChanged(QMediaPlayer::MediaStatus status);
     void handleMediaStatusChanged(QMediaPlayer::MediaStatus status);
-
 
 private:
     void setMediaAndPlay();
@@ -63,7 +61,6 @@ private:
     FileUtil* fileUtil_;
     std::vector<ListInfo> listInfos_;
     int currentVideoIndex;  // 当前播放的视频索引
-
 };
 
 #endif  // MAINWINDOW_H

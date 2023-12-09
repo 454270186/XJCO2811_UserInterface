@@ -2,7 +2,7 @@
     <videolist>
         <id>1</id>
         <name>New List 1</name>
-        <video_path>D:\yzh\XJCO2811 UserInterface\videos</video_path>
+        <video_path>../XJCO2811_UserInterface/videos</video_path>
     </videolist>
     <videolist>
         <id>2</id>
