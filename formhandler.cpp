@@ -55,6 +55,27 @@ bool FormHandler::validateFormData(const std::string& listName, const std::strin
     return true;
 }
 
+bool FormHandler::isListNameUnique(const std::string& newListName) {
+    auto lists = fileUtil_->GetAllListsInfo();
+    for (const auto& list : lists) {
+        if (list.name == newListName) {
+            return false;
+        }
+    }
+    return true;
+}
+
+bool FormHandler::isListNameUnique(const std::string& newListName, int currentListID) {
+    auto lists = fileUtil_->GetAllListsInfo();
+    for (const auto& list : lists) {
+        if (list.name == newListName && list.id != currentListID) {
+            return false;
+        }
+    }
+    return true;
+}
+
+
 // submitForm() handles the submission of a new list. It performs the following steps:
 // 1. Validates the form data using validateFormData function.
 // 2. Attempts to add a new list using the AddNewList method of the FileUtil class.
@@ -67,6 +88,10 @@ bool FormHandler::validateFormData(const std::string& listName, const std::strin
 int FormHandler::submitForm(const std::string& listName, const std::string& videoDirPath) {
     std::string error;
     if (!validateFormData(listName, videoDirPath)) {
+        return -1;
+    }
+
+    if (!isListNameUnique(listName)) {
         return -1;
     }
     
@@ -88,6 +113,10 @@ int FormHandler::editForm(int listID, const std::string& newListName, const std:
     if (!validateFormData(newListName, newVideoDirPath)) {
         return -1;
     }
-    
+
+    if (!isListNameUnique(newListName, listID)) {
+        return -1;
+    }
+
     return fileUtil_->EditList(listID, newListName, newVideoDirPath, &error);
 }

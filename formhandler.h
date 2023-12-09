@@ -16,6 +16,8 @@ public:
 private:
     FileUtil* fileUtil_;
 
+    bool isListNameUnique(const std::string& newListName);
+    bool isListNameUnique(const std::string& newListName, int currentListID);
     bool validateFormData(const std::string& listName, const std::string& videoDirPath);
 };
 
