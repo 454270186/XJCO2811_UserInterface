@@ -138,11 +138,25 @@ void MainWindow::setFolderPath(const QString& path) {
     }
 }
 
-void MainWindow::parseFolder(const QString& folderPath) {
+
+void MainWindow::parseFolder(const QString &folderPath) {
+    // 清空 videoPaths 数组
+    videoPaths.clear();
+
+    // 清空布局
+    QVBoxLayout* layout = qobject_cast<QVBoxLayout*>(ui->scrollArea->layout());
+    if (layout) {
+        QLayoutItem* item;
+        while ((item = layout->takeAt(0)) != nullptr) {
+            delete item->widget();
+            delete item;
+        }
+    }
+
     QDir dir(folderPath);
     QStringList videoFiles = dir.entryList(QStringList() << "*.mp4", QDir::Files);
 
-    foreach (const QString& videoFile, videoFiles) {
+    foreach (const QString &videoFile, videoFiles) {
         QString videoPath = dir.filePath(videoFile);
         videoPaths.append(videoPath);
 
@@ -155,7 +169,6 @@ void MainWindow::parseFolder(const QString& folderPath) {
             button->setIconSize(QSize(100, 100));
             connect(button, &QPushButton::clicked, this, &MainWindow::onButtonClicked);
 
-            QVBoxLayout* layout = qobject_cast<QVBoxLayout*>(ui->picturelist->layout());
             if (layout) {
                 layout->addWidget(button);
             }
