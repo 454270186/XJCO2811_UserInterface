@@ -1,12 +1,2 @@
 <lists>
-    <videolist>
-        <id>1</id>
-        <name>New List 1</name>
-        <video_path>../XJCO2811_UserInterface/videos</video_path>
-    </videolist>
-    <videolist>
-        <id>2</id>
-        <name>2</name>
-        <video_path>1</video_path>
-    </videolist>
 </lists>

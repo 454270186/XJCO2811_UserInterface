@@ -18,9 +18,7 @@ class ListSet : public QMainWindow {
 
 public:
     explicit ListSet(QWidget* parent = nullptr);
-
-    bool buttonClicked = false;
-
+    bool isSubmitEnabled = false;
     ~ListSet();
 
 public slots:
@@ -40,7 +38,6 @@ private:
     QVector<QPushButton*> itemList;
     int clickCount;
     QPushButton* currentButton;
-
     int currentBtnIndex{0};
 };
 

@@ -55,6 +55,12 @@ bool FormHandler::validateFormData(const std::string& listName, const std::strin
     return true;
 }
 
+// isListNameUnique() without list ID checks if a given list name is unique across all lists.
+// It iterates through all existing lists and compares their names with the provided name.
+// Params:
+// - newListName: A string representing the name of the list to be checked for uniqueness.
+// Returns:
+// - bool: Returns true if the provided name is unique; otherwise, returns false.
 bool FormHandler::isListNameUnique(const std::string& newListName) {
     auto lists = fileUtil_->GetAllListsInfo();
     for (const auto& list : lists) {
@@ -65,6 +71,15 @@ bool FormHandler::isListNameUnique(const std::string& newListName) {
     return true;
 }
 
+// isListNameUnique() with list ID checks if a given list name is unique across all lists,
+// excluding the list with the specified ID. This is useful for editing an existing list
+// where the name should be unique among all other lists except itself.
+// Params:
+// - newListName: A string representing the new name of the list to be checked for uniqueness.
+// - currentListID: An integer representing the ID of the list being edited.
+// Returns:
+// - bool: Returns true if the provided name is unique among all lists except the one with the given ID;
+//   otherwise, returns false.
 bool FormHandler::isListNameUnique(const std::string& newListName, int currentListID) {
     auto lists = fileUtil_->GetAllListsInfo();
     for (const auto& list : lists) {
@@ -75,15 +90,15 @@ bool FormHandler::isListNameUnique(const std::string& newListName, int currentLi
     return true;
 }
 
-
 // submitForm() handles the submission of a new list. It performs the following steps:
 // 1. Validates the form data using validateFormData function.
-// 2. Attempts to add a new list using the AddNewList method of the FileUtil class.
+// 2. Checks if the list name is unique among all lists using isListNameUnique function.
+// 3. Attempts to add a new list using the AddNewList method of the FileUtil class.
 // Params:
 // - listName: A string representing the name of the list.
 // - videoDirPath: A string representing the file path of the video directory.
 // Returns:
-// - int: Returns -1 if validation fails or if AddNewList encounters an error.
+// - int: Returns -1 if validation fails, if the list name is not unique, or if AddNewList encounters an error.
 //   If AddNewList succeeds, returns the ID of the new list.
 int FormHandler::submitForm(const std::string& listName, const std::string& videoDirPath) {
     std::string error;
@@ -100,13 +115,14 @@ int FormHandler::submitForm(const std::string& listName, const std::string& vide
 
 // editForm() handles the editing of an existing list. It performs the following steps:
 // 1. Validates the new form data using validateFormData function.
-// 2. Attempts to edit the list using the EditList method of the FileUtil class.
+// 2. Checks if the new list name is unique among all lists except the current list using isListNameUnique function.
+// 3. Attempts to edit the list using the EditList method of the FileUtil class.
 // Params:
 // - listID: An integer representing the ID of the list to be edited.
 // - newListName: A string representing the new name of the list.
 // - newVideoDirPath: A string representing the new file path of the video directory.
 // Returns:
-// - int: Returns -1 if validation fails or if EditList encounters an error.
+// - int: Returns -1 if validation fails, if the new list name is not unique, or if EditList encounters an error.
 //   If EditList succeeds, returns 1.
 int FormHandler::editForm(int listID, const std::string& newListName, const std::string& newVideoDirPath) {
     std::string error;
