@@ -18,6 +18,9 @@ class ListSet : public QMainWindow {
 
 public:
     explicit ListSet(QWidget* parent = nullptr);
+
+    bool buttonClicked = false;
+
     ~ListSet();
 
 public slots:
@@ -31,12 +34,14 @@ private:
     FileUtil* fileUtil;
     std::vector<ListInfo> listsInfo;
     Ui::ListSet* ui;
+    bool hasUnfinishedNewList = false;
     QVBoxLayout* listLayout;
     QPushButton* newButton;
     QVector<QPushButton*> itemList;
     int clickCount;
-    int buttonClicked;
     QPushButton* currentButton;
+
+    int currentBtnIndex{0};
 };
 
 #endif  //LISTSET_H

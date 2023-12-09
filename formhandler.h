@@ -10,12 +10,13 @@ public:
     FormHandler();
     ~FormHandler();
 
-    bool validateFormData(const std::string& listName, const std::string& videoDirPath);
-
     int submitForm(const std::string& listName, const std::string& videoDirPath);
+    int editForm(int listID, const std::string& newListName, const std::string& newVideoDirPath);
 
 private:
     FileUtil* fileUtil_;
+
+    bool validateFormData(const std::string& listName, const std::string& videoDirPath);
 };
 
 #endif // FORMHANDLER_H

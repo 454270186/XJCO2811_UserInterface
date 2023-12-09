@@ -72,3 +72,22 @@ int FormHandler::submitForm(const std::string& listName, const std::string& vide
     
     return fileUtil_->AddNewList(listName, videoDirPath, &error);
 }
+
+// editForm() handles the editing of an existing list. It performs the following steps:
+// 1. Validates the new form data using validateFormData function.
+// 2. Attempts to edit the list using the EditList method of the FileUtil class.
+// Params:
+// - listID: An integer representing the ID of the list to be edited.
+// - newListName: A string representing the new name of the list.
+// - newVideoDirPath: A string representing the new file path of the video directory.
+// Returns:
+// - int: Returns -1 if validation fails or if EditList encounters an error.
+//   If EditList succeeds, returns 1.
+int FormHandler::editForm(int listID, const std::string& newListName, const std::string& newVideoDirPath) {
+    std::string error;
+    if (!validateFormData(newListName, newVideoDirPath)) {
+        return -1;
+    }
+    
+    return fileUtil_->EditList(listID, newListName, newVideoDirPath, &error);
+}
