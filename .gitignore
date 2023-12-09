@@ -43,3 +43,6 @@ compile_commands.json
 # Windows特定文件
 Thumbs.db
 desktop.ini
+
+# test video
+videos
