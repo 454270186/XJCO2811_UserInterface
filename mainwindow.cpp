@@ -239,6 +239,7 @@ void MainWindow::parseFolder(const QString& folderPath) {
     thumbnailScrollArea->setWidget(containerWidget);
 }
 
+
 void MainWindow::onButtonClicked() {
     BtnConvert* button = qobject_cast<BtnConvert*>(sender());
     if (button) {

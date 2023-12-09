@@ -1,2 +1,7 @@
 <lists>
+    <videolist>
+        <id>1</id>
+        <name>sad</name>
+        <video_path>sad</video_path>
+    </videolist>
 </lists>
