@@ -71,7 +71,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QScrollArea" name="scrollArea">
+        <widget class="QScrollArea" name="thumbnailList">
          <property name="widgetResizable">
           <bool>true</bool>
          </property>
