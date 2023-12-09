@@ -3,11 +3,14 @@
 #include <QDebug>
 #include <QDir>
 #include <QFileDialog>
+#include <QFileInfo>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include "btnconvert.h"
 #include "listset.h"
 #include "ui_mainwindow.h"
+
+#include <iostream>
 
 // MainWindow constructor initializes the main window and its components.
 MainWindow::MainWindow(QWidget* parent)
@@ -49,6 +52,9 @@ MainWindow::MainWindow(QWidget* parent)
     // Connect signals and slots for media playback control
     connect(mediaPlayer, &QMediaPlayer::positionChanged, this, &MainWindow::updateProgressBar);
     connect(ui->progressbar, &QSlider::sliderMoved, this, &MainWindow::onProgressbarSliderMoved);
+    connect(ui->forward, &QPushButton::clicked, this, &MainWindow::onForwardClicked);
+    connect(ui->retreat, &QPushButton::clicked, this, &MainWindow::onRetreatClicked);
+    connect(ui->pause, &QPushButton::clicked, this, &MainWindow::onPauseClicked);
 }
 
 MainWindow::~MainWindow() {
@@ -109,9 +115,10 @@ void MainWindow::updateProgressBar(qint64 position) {
     }
 }
 
-// setFolderPath() sets the media player to play the selected video file.
-// It opens a file dialog to choose a video file, sets the media player's media to the selected file,
-// and initiates playback after waiting for the media to load.
+// PS: This function is for TEST, Do NOT use it!
+// setFolderPath() is called to set the media player to play the selected video file asynchronously.
+// It logs the folder path, opens a file dialog to choose a video file, and connects the mediaStatusChanged signal
+// to the handleMediaStatusChanged slot for asynchronous handling of media loading.
 // Params:
 // - path: The initial path used by the file dialog.
 void MainWindow::setFolderPath(const QString& path) {
@@ -119,26 +126,84 @@ void MainWindow::setFolderPath(const QString& path) {
     qDebug() << "setFolderPath called with path:" << path;
 
     // Open the file dialog to choose a video file
-    QString filePath = QFileDialog::getOpenFileName(this, tr("Choose video file"), path,
-                                                    tr("Video files (*.mp4 *.avi *.mkv);;All files (*)"));
+    // QString filePath = QFileDialog::getOpenFileName(this, tr("Choose video file"), path,
+    //                                                 tr("Video files (*.mp4 *.avi *.mkv);;All files (*)"));
+
+    QString filePath = "../XJCO2811_UserInterface/videos/e.mp4";
 
     // Log the selected file path for debugging purposes
     qDebug() << "Selected file path:" << filePath;
 
-    // If the file path is not empty, set the media of the media player to the selected file and play
+    // If the file path is not empty, set the media asynchronously
     if (!filePath.isEmpty()) {
+        // Set the media source to the selected file
         mediaPlayer->setMedia(QUrl::fromLocalFile(filePath));
 
-        // Wait for the media to load before starting playback
-        while (mediaPlayer->mediaStatus() != QMediaPlayer::LoadedMedia) {
-            QCoreApplication::processEvents();
-        }
-
-        mediaPlayer->play();
+        // Connect a slot to the mediaStatusChanged signal for asynchronous handling of media loading
+        connect(mediaPlayer, &QMediaPlayer::mediaStatusChanged, this, &MainWindow::handleMediaStatusChanged);
     }
 }
 
+// handleMediaStatusChanged() is triggered when the media status changes.
+// If the media has loaded successfully (LoadedMedia), it starts playback and disconnects the signal
+// to avoid unnecessary calls.
+void MainWindow::handleMediaStatusChanged(QMediaPlayer::MediaStatus status) {
+    if (status == QMediaPlayer::LoadedMedia) {
+        // Media has loaded successfully, start playback
+        std::cout << "play video: " << currentVideoIndex << std::endl;
+        mediaPlayer->play();
+    } else if (status == QMediaPlayer::EndOfMedia) {
+        // Current video playback is complete, automatically play the next video
+
+        // disconnect previous slots
+        disconnect(mediaPlayer, &QMediaPlayer::mediaStatusChanged, this, &MainWindow::handleMediaStatusChanged);
+
+        currentVideoIndex = (currentVideoIndex + 1) % videoPaths.size();
+        std::cout << "end of video, switch to next: " << currentVideoIndex << std::endl;
+        setMediaAndPlay();
+    }
+}
+
+// setMediaAndPlay() sets up a signal-slot connection for media status changed,
+// checks if the current video index is within the valid range, retrieves the path of the next video,
+// and sets the media source to start playback.
+void MainWindow::setMediaAndPlay() {
+    // Check if the current video index is within the valid range
+    if (currentVideoIndex >= 0 && currentVideoIndex < videoPaths.size()) {
+        // Retrieve the path of the next video in the playlist
+        QString videoPath = videoPaths[currentVideoIndex];
+
+        // Set the media source to the current video
+        mediaPlayer->setMedia(QUrl::fromLocalFile(QFileInfo(videoPath).absoluteFilePath()));
+
+        // Set up a signal-slot connection for media status changed
+        connect(mediaPlayer, &QMediaPlayer::mediaStatusChanged, this, &MainWindow::handleMediaStatusChanged);
+    }
+}
+
+// handleVideoSelection() is called when a video button is clicked. It receives the list of video paths
+// and the current index, sets the current index, resets the playback position, and starts playback.
+// Params:
+// - videoPaths: QStringList containing paths of all videos in the folder.
+// - currentIndex: The index corresponding to the clicked button.
+void MainWindow::handleVideoSelection(const QStringList& videoPaths, int currentIndex) {
+    // Log the video paths and current index for debugging purposes
+    qDebug() << "Button clicked. Video paths:" << videoPaths;
+    qDebug() << "Button clicked. currentIndex:" << currentIndex;
+
+    // Set videoPaths and currentVideoIndex
+    this->videoPaths = videoPaths;
+    this->currentVideoIndex = currentIndex;
+
+    // Reset the playback position
+    mediaPlayer->setPosition(0);
+
+    // Start playback
+    setMediaAndPlay();
+}
+
 void MainWindow::parseFolder(const QString& folderPath) {
+    qDebug() << "Folder path:" << folderPath;
     QDir dir(folderPath);
     QStringList videoFiles = dir.entryList(QStringList() << "*.mp4", QDir::Files);
 
@@ -172,13 +237,6 @@ void MainWindow::onButtonClicked() {
             handleVideoSelection(videoPaths, index);
         }
     }
-}
-
-void MainWindow::handleVideoSelection(const QStringList& videoPaths, int currentIndex) {
-    // 将视频路径数组和索引传递给接口
-    // 这里实现接口调用的逻辑
-    qDebug() << "Button clicked. Video paths:" << videoPaths;  // VideoPaths是一个字符串数组，存储文件夹里所有的视频路径
-    qDebug() << "Button clicked. currentIndex:" << currentIndex;  // currentIndex是一个整型，显示当前按钮对应的索引
 }
 
 void MainWindow::switchToListset() {
