@@ -151,6 +151,7 @@ void MainWindow::handleMediaStatusChanged(QMediaPlayer::MediaStatus status) {
     if (status == QMediaPlayer::LoadedMedia) {
         // Media has loaded successfully, start playback
         std::cout << "play video: " << currentVideoIndex << std::endl;
+        disconnect(mediaPlayer, &QMediaPlayer::mediaStatusChanged, this, &MainWindow::handleMediaStatusChanged);
         mediaPlayer->play();
     } else if (status == QMediaPlayer::EndOfMedia) {
         // Current video playback is complete, automatically play the next video
@@ -207,6 +208,15 @@ void MainWindow::parseFolder(const QString& folderPath) {
     QDir dir(folderPath);
     QStringList videoFiles = dir.entryList(QStringList() << "*.mp4", QDir::Files);
 
+    // 获取名为thumbnailList的ScrollArea对象
+    QScrollArea* thumbnailScrollArea = ui->thumbnailList;
+
+    // 创建一个新的QWidget作为按钮垂直布局的父控件
+    QWidget* containerWidget = new QWidget(thumbnailScrollArea);
+
+    // 创建按钮垂直布局并将按钮添加到布局中
+    QVBoxLayout* layout = new QVBoxLayout(containerWidget);
+
     foreach (const QString& videoFile, videoFiles) {
         QString videoPath = dir.filePath(videoFile);
         videoPaths.append(videoPath);
@@ -217,15 +227,16 @@ void MainWindow::parseFolder(const QString& folderPath) {
         if (QFileInfo::exists(imagePath)) {
             BtnConvert* button = new BtnConvert(videoPath);
             button->setIcon(QIcon(imagePath));
-            button->setIconSize(QSize(100, 100));
+            button->setIconSize(QSize(250, 250));
             connect(button, &QPushButton::clicked, this, &MainWindow::onButtonClicked);
 
-            QVBoxLayout* layout = qobject_cast<QVBoxLayout*>(ui->picturelist->layout());
-            if (layout) {
-                layout->addWidget(button);
-            }
+            // 将按钮添加到布局中
+            layout->addWidget(button);
         }
     }
+
+    // 将容器 QWidget 设置为 QScrollArea 的 widget
+    thumbnailScrollArea->setWidget(containerWidget);
 }
 
 void MainWindow::onButtonClicked() {
