@@ -1,25 +1,23 @@
+#include <iostream>
+#include <string>
+
 #include <QMessageBox>
 #include <QPushButton>
-#include <iostream>
-
-#include <QDebug>
 #include <QListWidgetItem>
-#include <QPushButton>
 #include <QVBoxLayout>
-#include <string>
+
 #include "formhandler.h"
 #include "listset.h"
 #include "mainwindow.h"
 #include "ui_listset.h"
 
-ListSet::ListSet(QWidget* parent) : QMainWindow(parent), ui(new Ui::ListSet) {
+ListSet::ListSet(QWidget* parent) : QMainWindow(parent), ui(new Ui::ListSet), hasUnfinishedNewList(false) {
     ui->setupUi(this);
     listLayout = ui->scrollAreaWidget->findChild<QVBoxLayout*>("verticalLayout_6");
 
-    clickCount = 0;
-    buttonClicked = -1;
     connect(ui->submit, &QPushButton::clicked, this, &ListSet::onSubmitClicked);
 
+    // Load and process video list data from an XML file
     const std::string XMLFilePath = "../XJCO2811_UserInterface/videolist_data.xml";
     fileUtil = new FileUtil(XMLFilePath);
     fileUtil->PrintAll();
@@ -35,22 +33,18 @@ ListSet::ListSet(QWidget* parent) : QMainWindow(parent), ui(new Ui::ListSet) {
         newButton->setText(listsInfo[i].name.c_str());
         newButton->setCheckable(true);
         newButton->setAutoExclusive(true);
-
         listLayout->addWidget(newButton);
 
         connect(newButton, &QPushButton::clicked, [this, newButton] {
             ui->groupBox_right->setVisible(true);
             ui->midline->setVisible(true);
             ui->submit->setText(QString("Edit"));
-
+            isSubmitEnabled = false;
             int index = listLayout->indexOf(newButton) - 1;
-            buttonClicked = index;
-            qDebug() << "Button clicked. Index: " << index;
+            currentBtnIndex = index;
             // Check if the index is valid
             if (index != -1 && index < (int)this->listsInfo.size()) {
-                // Retrieve the corresponding ListInfo
                 ListInfo info = this->listsInfo[index];
-                // Set the text of editName and editPath
                 ui->editName->setText(QString::fromStdString(info.name));
                 ui->editPath->setText(QString::fromStdString(info.videoDirPath));
             }
@@ -59,7 +53,6 @@ ListSet::ListSet(QWidget* parent) : QMainWindow(parent), ui(new Ui::ListSet) {
         std::cout << listsInfo[i].name << std::endl;
     }
 
-    // connect signal and slot for switch from listset to mainwindow
     connect(ui->backward, &QPushButton::clicked, this, &ListSet::switchToMainWindow);
 }
 
@@ -67,83 +60,116 @@ ListSet::~ListSet() {
     delete ui;
 }
 
-// on_addList_clicked() handles the click event of the "Add List" button.
-// It increments the clickCount, creates a new QPushButton with a label,
-// and adds the button to the listLayout of the user interface.
-// The label of the button is set to "Item " followed by the current clickCount.
+// on_addList_clicked() handles the event when the "Add List" button is clicked.
+// It performs the following steps:
+// 1. Checks if there is already an unfinished new list being added.
+// 2. If not, creates a new QPushButton labeled "New List" and adds it to the list layout.
+// 3. Sets up a connection to handle the click event of the new button.
+//    When clicked, it makes the input form visible, sets the submit button text to "Submit",
+//    and clears any existing text in the name and path edit fields.
+// 4. If there is an unfinished list, it shows a warning message.
+// Returns:
+// - int: Always returns 0. This return value is not currently used.
 int ListSet::on_addList_clicked() {
-    clickCount++;
+    if (!hasUnfinishedNewList) {
+        QPushButton* newButton = new QPushButton("New List");
+        newButton->setCheckable(true);
+        newButton->setAutoExclusive(true);
+        listLayout->addWidget(newButton);
+        hasUnfinishedNewList = true;
 
-    QPushButton* newButton = new QPushButton;
-    newButton->setText("New List " + QString::number(clickCount));
-    newButton->setCheckable(true);
-    newButton->setAutoExclusive(true);
+        connect(newButton, &QPushButton::clicked, [this, newButton] {
+            ui->groupBox_right->setVisible(true);
+            ui->midline->setVisible(true);
+            ui->submit->setText("Submit");
+            ui->editName->setText("");
+            ui->editPath->setText("");
+            isSubmitEnabled = true;
+        });
+    } else {
+        QMessageBox::warning(this, "Warning", "There is already a new list.");
+    }
 
-    listLayout->addWidget(newButton);
-
-    // listsInfo = fileUtil->GetAllListsInfo();
-    // fileUtil->PrintAll();
-    // std::string error;
-    // fileUtil->AddNewList(("New List " + QString::number(clickCount)).toStdString(), "../..", &error);
-    // qDebug() << listsInfo.size();
-
-    connect(newButton, &QPushButton::clicked, [this, newButton] {
-        ui->groupBox_right->setVisible(true);
-        ui->midline->setVisible(true);
-
-        ui->editName->setText(QString(""));
-        ui->editPath->setText(QString(""));
-
-        int index = listLayout->indexOf(newButton) - 1;
-        buttonClicked = index;
-        qDebug() << "Button clicked. Index: " << index;
-        // Check if the index is valid
-        if (index != -1 && index < (int)this->listsInfo.size()) {
-            // Retrieve the corresponding ListInfo
-            // ListInfo info = this->listsInfo[index];
-
-            // Set the text of editName and editPath
-            ui->editName->setText(QString(""));
-            ui->editPath->setText(QString(""));
-        }
-    });
-    return clickCount;
+    return 0;
 }
 
 // onSubmitClicked() handles the click event of the submit button.
-// It retrieves the list name and video directory path from the user interface,
-// validates the data using FormHandler, and attempts to add a new list.
-// Upon successful addition, it shows a success message to the user;
-// if the addition fails, it shows an error message.
+// It performs different actions based on the current state:
+// - If editing an existing list (isSubmitEnabled is false):
+//   1. Calls editForm() from FormHandler with the current list ID, name, and path.
+//   2. If successful, updates the UI to reflect the changes and resets isSubmitEnabled.
+//   3. If failed, displays an error message.
+// - If adding a new list (isSubmitEnabled is true):
+//   1. Calls submitForm() from FormHandler with the new list name and path.
+//   2. If successful, adds a new button for the list to the UI and resets hasUnfinishedNewList.
+//   3. Updates currentBtnIndex to the index of the new button.
+//   4. If failed, displays an error message.
 void ListSet::onSubmitClicked() {
     std::string listName = ui->editName->text().toStdString();
     std::string videoDirPath = ui->editPath->text().toStdString();
-    if (buttonClicked != -1) {
-        // Update the existing list in listsInfo
-        qDebug() << "enter!" << buttonClicked << listsInfo.size();
-        if (buttonClicked != -1 && buttonClicked <= listsInfo.size()) {
-            listsInfo[buttonClicked].name = listName;
-            listsInfo[buttonClicked].videoDirPath = videoDirPath;
-            QPushButton* buttonIndex = qobject_cast<QPushButton*>(listLayout->itemAt(buttonClicked)->widget());
-            buttonIndex->setText(QString::fromStdString(listName));
-            QMessageBox::information(this, "Success", "List added successfully!\n");
+
+    FormHandler formHandler;
+
+    if (!isSubmitEnabled) {
+        int result = formHandler.editForm(listsInfo[currentBtnIndex].id, listName, videoDirPath);
+        if (result > 0) {
+            QMessageBox::information(this, "Success", "List edited successfully!\n");
+            QPushButton* button = qobject_cast<QPushButton*>(listLayout->itemAt(currentBtnIndex+1)->widget());
+            if (button) {
+                button->setText(listName.c_str());
+                connect(button, &QPushButton::clicked, [this, listName, videoDirPath] {
+                    ui->editName->setText(listName.c_str());
+                    ui->editPath->setText(videoDirPath.c_str());
+                    isSubmitEnabled = false;
+                });
+            }
+        } else {
+            QMessageBox::warning(this, "Error", "Failed to edit list!\n");
         }
-        buttonClicked = -1;  // Reset buttonClicked flag
     } else {
-        FormHandler formHandler;
         int result = formHandler.submitForm(listName, videoDirPath);
         if (result > 0) {
+            hasUnfinishedNewList = false;
             QMessageBox::information(this, "Success", "List added successfully!\n");
+            QPushButton* newButton = new QPushButton(QString::fromStdString(listName));
+            newButton->setCheckable(true);
+            newButton->setAutoExclusive(true);
+            listLayout->addWidget(newButton);
+            fileUtil = new FileUtil("../XJCO2811_UserInterface/videolist_data.xml");
+            listsInfo = fileUtil->GetAllListsInfo();
+
+            // Remove any existing "New List" button
+            for (int i = 0; i < listLayout->count(); ++i) {
+                QWidget* widget = listLayout->itemAt(i)->widget();
+                if (widget) {
+                    QPushButton* button = qobject_cast<QPushButton*>(widget);
+                    if (button && button->text() == "New List") {
+                        listLayout->removeWidget(button);
+                        delete button;
+                        break;
+                    }
+                }
+            }
+
+            // Connect new button and update currentBtnIndex
+            connect(newButton, &QPushButton::clicked, [this, listName, videoDirPath, newButton]{
+                ui->editName->setText(listName.c_str());
+                ui->editPath->setText(videoDirPath.c_str());
+                ui->submit->setText(QString("Edit"));
+                isSubmitEnabled = false;
+                currentBtnIndex = listLayout->indexOf(newButton)-1;
+            });
         } else {
             QMessageBox::warning(this, "Error", "Failed to add list!\n");
         }
-        clickCount++;
-        QPushButton* newButton = new QPushButton;
-        newButton->setText(QString::fromStdString(listName));
-        listLayout->addWidget(newButton);
     }
 }
 
+// switchToMainWindow() handles the switch from the current ListSet window to the main window.
+// It performs the following actions:
+// 1. Hides the current ListSet window.
+// 2. Creates a new instance of MainWindow.
+// 3. Shows the MainWindow, allowing the user to interact with it.
 void ListSet::switchToMainWindow() {
     hide();
     MainWindow* mainwindow = new MainWindow();
