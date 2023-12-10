@@ -22,7 +22,7 @@ MainWindow::MainWindow(QWidget* parent)
     ui->setupUi(this);
 
     // Add the video widget to the vertical layout of the main window
-    ui->verticalLayout->addWidget(videoWidget);
+    ui->verticalLayout->insertWidget(0, videoWidget);
 
     // Add the list button to horizontal layout
     listsBtnsLayout = ui->lists->findChild<QHBoxLayout*>("horizontalLayout");
@@ -151,7 +151,7 @@ void MainWindow::handleMediaStatusChanged(QMediaPlayer::MediaStatus status) {
     if (status == QMediaPlayer::LoadedMedia) {
         // Media has loaded successfully, start playback
         std::cout << "play video: " << currentVideoIndex << std::endl;
-        disconnect(mediaPlayer, &QMediaPlayer::mediaStatusChanged, this, &MainWindow::handleMediaStatusChanged);
+        //        disconnect(mediaPlayer, &QMediaPlayer::mediaStatusChanged, this, &MainWindow::handleMediaStatusChanged);
         mediaPlayer->play();
     } else if (status == QMediaPlayer::EndOfMedia) {
         // Current video playback is complete, automatically play the next video
@@ -222,11 +222,17 @@ void MainWindow::parseFolder(const QString& folderPath) {
         videoPaths.append(videoPath);
 
         QString baseName = QFileInfo(videoFile).baseName();
-        QString imagePath = dir.filePath(baseName + ".png");
+        QString imagePathPNG = dir.filePath(baseName + ".png");
+        QString imagePathJPG = dir.filePath(baseName + ".jpg");
 
-        if (QFileInfo::exists(imagePath)) {
+        if (QFileInfo::exists(imagePathPNG) || QFileInfo::exists(imagePathJPG)) {
             BtnConvert* button = new BtnConvert(videoPath);
-            button->setIcon(QIcon(imagePath));
+            if (QFileInfo::exists(imagePathPNG)) {
+                button->setIcon(QIcon(imagePathPNG));
+            }
+            if (QFileInfo::exists(imagePathJPG)) {
+                button->setIcon(QIcon(imagePathJPG));
+            }
             button->setIconSize(QSize(250, 250));
             connect(button, &QPushButton::clicked, this, &MainWindow::onButtonClicked);
 
