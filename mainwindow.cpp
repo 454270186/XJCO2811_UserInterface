@@ -47,7 +47,7 @@ MainWindow::MainWindow(QWidget* parent)
     mediaPlayer->setVideoOutput(videoWidget);
 
     // Connect signals and slots for window switch
-    connect(ui->addListBtn, &QPushButton::clicked, this, &MainWindow::switchToListset);
+    connect(ui->addListBtn, &QPushButton::clicked, this, &MainWindow::switchToPage);
 
     // Connect signals and slots for media playback control
     connect(mediaPlayer, &QMediaPlayer::positionChanged, this, &MainWindow::updateProgressBar);

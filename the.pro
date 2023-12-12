@@ -13,6 +13,7 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     myvideowidget.cpp \
+    pagemanager.cpp \
         tinyxml2.cpp \
         listset.cpp \
         formhandler.cpp \
@@ -22,6 +23,7 @@ HEADERS += \
     fileutil.h \
     mainwindow.h \
     myvideowidget.h \
+    pagemanager.h \
     tinyxml2.h \
     tinyxml2.h \
     listset.h \

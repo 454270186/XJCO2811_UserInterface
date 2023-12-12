@@ -1,9 +1,9 @@
 #include <iostream>
 #include <string>
 
+#include <QListWidgetItem>
 #include <QMessageBox>
 #include <QPushButton>
-#include <QListWidgetItem>
 #include <QVBoxLayout>
 
 #include "formhandler.h"
@@ -53,7 +53,7 @@ ListSet::ListSet(QWidget* parent) : QMainWindow(parent), ui(new Ui::ListSet), ha
         std::cout << listsInfo[i].name << std::endl;
     }
 
-    connect(ui->backward, &QPushButton::clicked, this, &ListSet::switchToMainWindow);
+    connect(ui->backward, &QPushButton::clicked, this, &ListSet::switchToPage);
 }
 
 ListSet::~ListSet() {
@@ -114,7 +114,7 @@ void ListSet::onSubmitClicked() {
         int result = formHandler.editForm(listsInfo[currentBtnIndex].id, listName, videoDirPath);
         if (result > 0) {
             QMessageBox::information(this, "Success", "List edited successfully!\n");
-            QPushButton* button = qobject_cast<QPushButton*>(listLayout->itemAt(currentBtnIndex+1)->widget());
+            QPushButton* button = qobject_cast<QPushButton*>(listLayout->itemAt(currentBtnIndex + 1)->widget());
             if (button) {
                 button->setText(listName.c_str());
                 connect(button, &QPushButton::clicked, [this, listName, videoDirPath] {
@@ -152,12 +152,12 @@ void ListSet::onSubmitClicked() {
             }
 
             // Connect new button and update currentBtnIndex
-            connect(newButton, &QPushButton::clicked, [this, listName, videoDirPath, newButton]{
+            connect(newButton, &QPushButton::clicked, [this, listName, videoDirPath, newButton] {
                 ui->editName->setText(listName.c_str());
                 ui->editPath->setText(videoDirPath.c_str());
                 ui->submit->setText(QString("Edit"));
                 isSubmitEnabled = false;
-                currentBtnIndex = listLayout->indexOf(newButton)-1;
+                currentBtnIndex = listLayout->indexOf(newButton) - 1;
             });
         } else {
             QMessageBox::warning(this, "Error", "Failed to add list!\n");

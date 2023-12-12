@@ -1,12 +1,12 @@
 #include <QApplication>
 
-#include "mainwindow.h"
+#include "pagemanager.h"
 
 int main(int argc, char** argv) {
     QApplication app(argc, argv);
 
-    MainWindow w;
-    w.show();
+    PageManager pagemanager;
+    pagemanager.show();
 
     app.exec();
 }
