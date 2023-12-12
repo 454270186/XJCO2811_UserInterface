@@ -56,12 +56,15 @@ private slots:
     void parseFolder(const QString& folderPath);
     void handleVideoSelection(const QStringList& videoPaths, int currentIndex);  // 接口函数
     void handleMediaStatusChanged(QMediaPlayer::MediaStatus status);
-
+    void toggleFullScreen();
     void switchToPage() { emit switchPage(1); }
 
 private:
+    bool isVideoPlaying;
     void setMediaAndPlay();
     void startPlaylistFromParameters(const QStringList& videoPaths, int currentIndex);
+    bool isFullScreen = false;
+    QRect normalGeometry;
 
     Ui::MainWindow* ui;
     QMediaPlayer* mediaPlayer;

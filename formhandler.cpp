@@ -53,6 +53,7 @@ bool FormHandler::validateFormData(const std::string& listName, const std::strin
     return true;
 }
 
+
 // isListNameUnique() without list ID checks if a given list name is unique across all lists.
 // It iterates through all existing lists and compares their names with the provided name.
 // Params:

@@ -39,7 +39,7 @@
     <item>
      <layout class="QVBoxLayout" name="verticalLayout_left">
       <property name="spacing">
-       <number>-1</number>
+       <number>4</number>
       </property>
       <item>
        <widget class="QPushButton" name="backward">
@@ -76,8 +76,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>310</width>
-           <height>323</height>
+           <width>324</width>
+           <height>351</height>
           </rect>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_6">
