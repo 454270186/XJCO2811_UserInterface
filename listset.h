@@ -21,12 +21,17 @@ public:
     bool isSubmitEnabled = false;
     ~ListSet();
 
+signals:
+    void switchPage(int pageIndex);
+
 public slots:
     void switchToMainWindow();
 
 private slots:
     int on_addList_clicked();
     void onSubmitClicked();
+
+    void switchToPage() { emit switchPage(0); }
 
 private:
     FileUtil* fileUtil;

@@ -1,12 +1,12 @@
-#include <iostream>
-#include <cctype>
 #include <algorithm>
+#include <cctype>
+#include <iostream>
 #include <regex>
 
-#include "formhandler.h"
 #include "fileutil.h"
+#include "formhandler.h"
 
-const std::string XMLFilePath ="../XJCO2811_UserInterface/videolist_data.xml";
+const std::string XMLFilePath = "../XJCO2811_UserInterface/videolist_data.xml";
 
 FormHandler::FormHandler() {
     fileUtil_ = new FileUtil(XMLFilePath);
@@ -32,14 +32,12 @@ bool FormHandler::validateFormData(const std::string& listName, const std::strin
     if (listName.empty() || videoDirPath.empty()) {
         return false;
     }
- 
+
     if (listName.length() > 20) {
         return false;
     }
 
-    if (!std::all_of(listName.begin(), listName.end(), [](char c) {
-        return std::isalnum(c) || c == ' ';
-    })) {
+    if (!std::all_of(listName.begin(), listName.end(), [](char c) { return std::isalnum(c) || c == ' '; })) {
         return false;
     }
 
@@ -109,7 +107,7 @@ int FormHandler::submitForm(const std::string& listName, const std::string& vide
     if (!isListNameUnique(listName)) {
         return -1;
     }
-    
+
     return fileUtil_->AddNewList(listName, videoDirPath, &error);
 }
 

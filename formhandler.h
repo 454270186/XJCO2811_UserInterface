@@ -19,4 +19,4 @@ private:
     bool validateFormData(const std::string& listName, const std::string& videoDirPath);
 };
 
-#endif // FORMHANDLER_H
+#endif  // FORMHANDLER_H
