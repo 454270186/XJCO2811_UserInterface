@@ -24,7 +24,7 @@ ListSet::ListSet(QWidget* parent) : QMainWindow(parent), ui(new Ui::ListSet), ha
     listsInfo = fileUtil->GetAllListsInfo();
 
     // Set the input form to invisible at first time
-    ui->groupBox_right->setVisible(false);
+    ui->groupBoxright->setVisible(false);
     ui->midline->setVisible(false);
 
     for (size_t i = 0; i < listsInfo.size(); i++) {
@@ -36,7 +36,7 @@ ListSet::ListSet(QWidget* parent) : QMainWindow(parent), ui(new Ui::ListSet), ha
         listLayout->addWidget(newButton);
 
         connect(newButton, &QPushButton::clicked, [this, newButton] {
-            ui->groupBox_right->setVisible(true);
+            ui->groupBoxright->setVisible(true);
             ui->midline->setVisible(true);
             ui->submit->setText(QString("Edit"));
             isSubmitEnabled = false;
@@ -79,7 +79,7 @@ int ListSet::on_addList_clicked() {
         hasUnfinishedNewList = true;
 
         connect(newButton, &QPushButton::clicked, [this, newButton] {
-            ui->groupBox_right->setVisible(true);
+            ui->groupBoxright->setVisible(true);
             ui->midline->setVisible(true);
             ui->submit->setText("Submit");
             ui->editName->setText("");
