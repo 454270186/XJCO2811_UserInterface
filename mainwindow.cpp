@@ -23,6 +23,12 @@ MainWindow::MainWindow(QWidget* parent)
     // Set up the user interface
     ui->setupUi(this);
 
+    // Assuming you want to set the initial size to 1000x700
+    setGeometry(100, 100, 1000, 700);
+
+    // Set the minimum size to 460x700
+    setMinimumSize(460, 700);
+
     // Assuming that "videoplayer" is the name of the QWidget in your UI file
     QWidget* videoplayer = ui->videoplayer;
 
@@ -68,6 +74,7 @@ MainWindow::MainWindow(QWidget* parent)
     connect(ui->retreat, &QPushButton::clicked, this, &MainWindow::onRetreatClicked);
     connect(ui->pause, &QPushButton::clicked, this, &MainWindow::onPauseClicked);
     connect(ui->fullScreen, &QPushButton::clicked, this, &MainWindow::toggleFullScreen);
+
 }
 
 // Destructor
@@ -170,6 +177,10 @@ void MainWindow::handleMediaStatusChanged(QMediaPlayer::MediaStatus status) {
         mediaPlayer->play();
         isVideoPlaying = true;
         ui->video->show();
+        if (ui->video->isVisible()) {
+            resizeEvent(nullptr);
+        }
+
     } else if (status == QMediaPlayer::EndOfMedia) {
         // Current video playback is complete, automatically play the next video
 
@@ -337,4 +348,33 @@ void MainWindow::toggleFullScreen() {
     }
 }
 
+void MainWindow::resizeEvent(QResizeEvent* event) {
+    QMainWindow::resizeEvent(event);
+
+    // 如果 picturelist 和 videoplayer 都没有被隐藏，立即应用大小调整逻辑
+    if (!ui->picturelist->isHidden() && !ui->video->isHidden()) {
+        // 根据窗口宽度计算新的大小
+        int picturelistWidth = width() * 0.3;
+        int videoWidth = width() * 0.7;
+
+        // 为 picturelist 设置最小宽度（根据需要调整此值）
+        int minPicturelistWidth = 150;
+
+        // 确保 picturelist 有一个最小宽度
+        if (picturelistWidth < minPicturelistWidth) {
+            picturelistWidth = minPicturelistWidth;
+            videoWidth = width() - picturelistWidth;
+        }
+
+        // 设置 QGroupBox 的大小
+        ui->picturelist->setFixedWidth(picturelistWidth);
+        ui->video->setFixedWidth(videoWidth);
+
+        // 调用 updateGeometry 触发布局更新
+        updateGeometry();
+
+        // 强制重绘
+        repaint();
+    }
+}
 

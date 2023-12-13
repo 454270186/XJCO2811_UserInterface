@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>466</width>
+    <width>514</width>
     <height>277</height>
    </rect>
   </property>
@@ -41,8 +41,8 @@
    <property name="layoutDirection">
     <enum>Qt::LeftToRight</enum>
    </property>
-   <layout class="QHBoxLayout" name="horizontalLayout_2">
-    <item>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
      <widget class="QGroupBox" name="groupBoxleft">
       <property name="minimumSize">
        <size>
@@ -95,8 +95,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>92</width>
-            <height>188</height>
+            <width>229</width>
+            <height>198</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -120,27 +120,11 @@
       </layout>
      </widget>
     </item>
-    <item>
-     <widget class="QFrame" name="midline">
-      <property name="maximumSize">
-       <size>
-        <width>16777215</width>
-        <height>16777215</height>
-       </size>
-      </property>
-      <property name="frameShape">
-       <enum>QFrame::VLine</enum>
-      </property>
-      <property name="frameShadow">
-       <enum>QFrame::Raised</enum>
-      </property>
-     </widget>
-    </item>
-    <item>
+    <item row="0" column="1">
      <widget class="QGroupBox" name="groupBoxright">
       <property name="minimumSize">
        <size>
-        <width>600</width>
+        <width>0</width>
         <height>0</height>
        </size>
       </property>
@@ -171,7 +155,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QGroupBox" name="groupBox">
+        <widget class="QGroupBox" name="pathBox">
          <property name="minimumSize">
           <size>
            <width>0</width>
@@ -183,6 +167,11 @@
            <width>16777215</width>
            <height>70</height>
           </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">
+
+</string>
          </property>
          <property name="title">
           <string/>
