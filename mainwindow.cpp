@@ -41,8 +41,14 @@ MainWindow::MainWindow(QWidget* parent)
     isVideoPlaying = false;
     ui->video->hide();
 
-    // Add the list button to horizontal layout
-    listsBtnsLayout = ui->lists->findChild<QHBoxLayout*>("horizontalLayout");
+    // Assuming ui->lists is now a QScrollArea
+    QScrollArea* listsScrollArea = ui->lists;
+
+    // Create a QWidget to serve as the container for the buttons
+    QWidget* listsContainer = new QWidget(listsScrollArea);
+
+    // Create a QHBoxLayout for the buttons and add buttons to the layout
+    QHBoxLayout* listsLayout = new QHBoxLayout(listsContainer);
 
     // Render all lists
     fileUtil_ = new FileUtil("../XJCO2811_UserInterface/videolist_data.xml");
@@ -54,11 +60,16 @@ MainWindow::MainWindow(QWidget* parent)
         newButton->setCheckable(true);
         newButton->setAutoExclusive(true);
 
-        listsBtnsLayout->addWidget(newButton);
+        listsLayout->addWidget(newButton);
 
         // connect onClick hook
         connect(newButton, &QPushButton::clicked, [this, i] { parseFolder(listInfos_[i].videoDirPath.c_str()); });
     }
+
+    // Set the container QWidget as the widget for the QScrollArea
+    listsScrollArea->setWidget(listsContainer);
+
+    ui->lists->setStyleSheet("QScrollArea { border: 0; }");
 
     // Set the video output of the media player to the video widget
     mediaPlayer->setVideoOutput(videoWidget);
@@ -358,7 +369,7 @@ void MainWindow::resizeEvent(QResizeEvent* event) {
         int videoWidth = width() * 0.7;
 
         // 为 picturelist 设置最小宽度（根据需要调整此值）
-        int minPicturelistWidth = 150;
+        int minPicturelistWidth = 200;
 
         // 确保 picturelist 有一个最小宽度
         if (picturelistWidth < minPicturelistWidth) {

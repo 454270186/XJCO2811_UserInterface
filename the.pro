@@ -37,5 +37,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 FORMS += \
     listset.ui \
-    mainwindow.ui
+    mainwindow.ui \
+
 
