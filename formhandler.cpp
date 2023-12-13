@@ -45,14 +45,14 @@ bool FormHandler::validateFormData(const std::string& listName, const std::strin
         return false;
     }
 
-    std::regex pathPattern(R"(^(?:[a-zA-Z]:)?[\\/]?[\w\s-]+([\\/][\w\s-]+)*[\\/]?(\.[\w]+)?)");
+    std::regex pathPattern(R"(^(\/|[a-zA-Z]:)?(?:\.{1,2}\/)?(?:[\w.-]+\/)*(?:[\w.-]+)?$)");
     if (!std::regex_match(videoDirPath, pathPattern)) {
+        std::cout << "regex false" << std::endl;
         return false;
     }
 
     return true;
 }
-
 
 // isListNameUnique() without list ID checks if a given list name is unique across all lists.
 // It iterates through all existing lists and compares their names with the provided name.
