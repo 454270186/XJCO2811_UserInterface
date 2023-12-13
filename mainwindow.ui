@@ -28,8 +28,8 @@
   <widget class="QWidget" name="centralwidget">
    <property name="minimumSize">
     <size>
-     <width>1000</width>
-     <height>700</height>
+     <width>0</width>
+     <height>0</height>
     </size>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -37,8 +37,8 @@
      <widget class="QGroupBox" name="picturelist">
       <property name="minimumSize">
        <size>
-        <width>350</width>
-        <height>18</height>
+        <width>0</width>
+        <height>0</height>
        </size>
       </property>
       <property name="maximumSize">
@@ -76,13 +76,13 @@
            <widget class="QPushButton" name="addListBtn">
             <property name="minimumSize">
              <size>
-              <width>50</width>
+              <width>0</width>
               <height>0</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>100</width>
+              <width>16777215</width>
               <height>16777215</height>
              </size>
             </property>
@@ -108,7 +108,7 @@
      <widget class="QGroupBox" name="video">
       <property name="minimumSize">
        <size>
-        <width>300</width>
+        <width>0</width>
         <height>0</height>
        </size>
       </property>
@@ -137,38 +137,6 @@
              <string/>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_4">
-             <item>
-              <spacer name="horizontalSpacer">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>183</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item>
-              <widget class="QPushButton" name="mobileTerminal">
-               <property name="minimumSize">
-                <size>
-                 <width>30</width>
-                 <height>30</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>30</width>
-                 <height>30</height>
-                </size>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-              </widget>
-             </item>
              <item>
               <spacer name="horizontalSpacer_2">
                <property name="orientation">
@@ -216,13 +184,13 @@ color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, s
             <property name="minimumSize">
              <size>
               <width>0</width>
-              <height>70</height>
+              <height>60</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
               <width>16777215</width>
-              <height>70</height>
+              <height>60</height>
              </size>
             </property>
             <property name="title">
@@ -233,8 +201,8 @@ color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, s
               <widget class="QPushButton" name="retreat">
                <property name="maximumSize">
                 <size>
-                 <width>100</width>
-                 <height>50</height>
+                 <width>16777215</width>
+                 <height>16777215</height>
                 </size>
                </property>
                <property name="text">
@@ -246,8 +214,8 @@ color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, s
               <widget class="QPushButton" name="pause">
                <property name="maximumSize">
                 <size>
-                 <width>100</width>
-                 <height>50</height>
+                 <width>16777215</width>
+                 <height>16777215</height>
                 </size>
                </property>
                <property name="text">
@@ -259,8 +227,8 @@ color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, s
               <widget class="QPushButton" name="forward">
                <property name="maximumSize">
                 <size>
-                 <width>100</width>
-                 <height>50</height>
+                 <width>16777215</width>
+                 <height>16777215</height>
                 </size>
                </property>
                <property name="text">
