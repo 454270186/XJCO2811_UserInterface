@@ -10,7 +10,6 @@
 #include "listset.h"
 #include "ui_mainwindow.h"
 
-
 #include <iostream>
 
 // MainWindow constructor initializes the main window and its components.
@@ -245,6 +244,8 @@ void MainWindow::parseFolder(const QString& folderPath) {
     QVBoxLayout* layout = new QVBoxLayout(containerWidget);
 
     // Iterate through each video file in the folder
+    // Clear videoPaths
+    videoPaths.clear();
     foreach (const QString& videoFile, videoFiles) {
         QString videoPath = dir.filePath(videoFile);
         videoPaths.append(videoPath);
@@ -336,5 +337,3 @@ void MainWindow::toggleFullScreen() {
         ui->picturelist->show();
     }
 }
-
-
