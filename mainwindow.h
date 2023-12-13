@@ -63,6 +63,7 @@ private:
     bool isVideoPlaying;
     void setMediaAndPlay();
     void startPlaylistFromParameters(const QStringList& videoPaths, int currentIndex);
+    void resizeEvent(QResizeEvent* event) override;
     bool isFullScreen = false;
     QRect normalGeometry;
 
