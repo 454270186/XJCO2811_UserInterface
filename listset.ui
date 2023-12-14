@@ -53,7 +53,7 @@
    <property name="layoutDirection">
     <enum>Qt::LeftToRight</enum>
    </property>
-   <layout class="QHBoxLayout" name="horizontalLayout_2">
+   <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="1,0,2">
     <item>
      <widget class="QGroupBox" name="groupBox_left">
       <property name="minimumSize">
@@ -107,7 +107,7 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>309</width>
+            <width>282</width>
             <height>620</height>
            </rect>
           </property>

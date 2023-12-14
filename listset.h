@@ -43,7 +43,6 @@ private:
     QVector<QPushButton*> itemList;
     QPushButton* currentButton;
     int currentBtnIndex{0};
-    void resizeEvent(QResizeEvent* event) override;
 };
 
 #endif  //LISTSET_H

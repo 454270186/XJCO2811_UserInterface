@@ -14,12 +14,6 @@ ListSet::ListSet(QWidget* parent) : QMainWindow(parent), ui(new Ui::ListSet), ha
 
     connect(ui->submit, &QPushButton::clicked, this, &ListSet::onSubmitClicked);
 
-    // Assuming you want to set the initial size to 1000x700
-    setGeometry(100, 100, 1000, 700);
-
-    // Set the minimum size to 460x700
-    setMinimumSize(460, 700);
-
     // Load and process video list data from an XML file
     const std::string XMLFilePath = "../XJCO2811_UserInterface/videolist_data.xml";
     fileUtil = new FileUtil(XMLFilePath);
@@ -49,10 +43,7 @@ ListSet::ListSet(QWidget* parent) : QMainWindow(parent), ui(new Ui::ListSet), ha
                 ListInfo info = this->listsInfo[index];
                 ui->editName->setText(QString::fromStdString(info.name));
                 ui->editPath->setText(QString::fromStdString(info.videoDirPath));
-            }
-            if (ui->groupBoxright->isVisible()) {
-                resizeEvent(nullptr);
-            }
+            }      
         });
     }
 
@@ -177,34 +168,4 @@ void ListSet::switchToMainWindow() {
     hide();
     MainWindow* mainwindow = new MainWindow();
     mainwindow->show();
-}
-
-void ListSet::resizeEvent(QResizeEvent* event) {
-    QMainWindow::resizeEvent(event);
-
-    // 如果 groupBoxLeft 和 groupBoxRight 都没有被隐藏，立即应用大小调整逻辑
-    if (!ui->groupBoxleft->isHidden() && !ui->groupBoxright->isHidden()) {
-        // 根据窗口宽度计算新的大小
-        int groupBoxLeftWidth = width() * 0.3;
-        int groupBoxRightWidth = width() * 0.7;
-
-        // 为 groupBoxLeft 设置最小宽度（根据需要调整此值）
-        int minGroupBoxLeftWidth = 120;
-
-        // 确保 groupBoxLeft 有一个最小宽度
-        if (groupBoxLeftWidth < minGroupBoxLeftWidth) {
-            groupBoxLeftWidth = minGroupBoxLeftWidth;
-            groupBoxRightWidth = width() - groupBoxLeftWidth;
-        }
-
-        // 设置 QGroupBox 的大小
-        ui->groupBoxleft->setFixedWidth(groupBoxLeftWidth);
-        ui->groupBoxright->setFixedWidth(groupBoxRightWidth);
-
-        // 调用 updateGeometry 触发布局更新
-        updateGeometry();
-
-        // 强制重绘
-        repaint();
-    }
 }
