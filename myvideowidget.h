@@ -6,7 +6,7 @@
 class MyVideoWidget : public QVideoWidget {
     Q_OBJECT
 public:
-    explicit MyVideoWidget(QWidget *parent = nullptr);
+    explicit MyVideoWidget(QWidget* parent = nullptr);
 
 protected:
 };

@@ -12,8 +12,8 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>1000</width>
-    <height>700</height>
+    <width>0</width>
+    <height>0</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -26,13 +26,25 @@
    </size>
   </property>
   <widget class="QWidget" name="centralwidget">
+   <property name="minimumSize">
+    <size>
+     <width>0</width>
+     <height>0</height>
+    </size>
+   </property>
    <layout class="QHBoxLayout" name="horizontalLayout_2">
     <item>
      <widget class="QGroupBox" name="picturelist">
       <property name="minimumSize">
        <size>
-        <width>300</width>
-        <height>18</height>
+        <width>0</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>16777215</height>
        </size>
       </property>
       <property name="title">
@@ -40,7 +52,19 @@
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
-        <widget class="QGroupBox" name="lists">
+        <widget class="QGroupBox" name="listsGroup">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>100</height>
+          </size>
+         </property>
          <property name="title">
           <string/>
          </property>
@@ -52,19 +76,36 @@
            <widget class="QPushButton" name="addListBtn">
             <property name="minimumSize">
              <size>
-              <width>50</width>
-              <height>0</height>
+              <width>30</width>
+              <height>30</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>100</width>
-              <height>16777215</height>
+              <width>30</width>
+              <height>30</height>
              </size>
             </property>
             <property name="text">
              <string>+</string>
             </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QScrollArea" name="lists">
+            <property name="widgetResizable">
+             <bool>true</bool>
+            </property>
+            <widget class="QWidget" name="scrollAreaWidgetContents">
+             <property name="geometry">
+              <rect>
+               <x>0</x>
+               <y>0</y>
+               <width>420</width>
+               <height>77</height>
+              </rect>
+             </property>
+            </widget>
            </widget>
           </item>
          </layout>
@@ -82,22 +123,91 @@
     </item>
     <item>
      <widget class="QGroupBox" name="video">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>0</height>
+       </size>
+      </property>
       <property name="title">
        <string/>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
         <widget class="QWidget" name="widget" native="true">
-         <layout class="QVBoxLayout" name="verticalLayout_4">
+         <layout class="QVBoxLayout" name="verticalLayout_3">
           <item>
-           <widget class="MyVideoWidget" name="videoplayer" native="true"/>
-          </item>
-          <item>
-           <widget class="QGroupBox" name="control">
+           <widget class="QGroupBox" name="fullandmoblie">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>60</height>
+             </size>
+            </property>
             <property name="maximumSize">
              <size>
               <width>16777215</width>
-              <height>100</height>
+              <height>60</height>
+             </size>
+            </property>
+            <property name="title">
+             <string/>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_4">
+             <item>
+              <spacer name="horizontalSpacer_2">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>183</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QPushButton" name="fullScreen">
+               <property name="minimumSize">
+                <size>
+                 <width>30</width>
+                 <height>30</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>30</width>
+                 <height>30</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">
+color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0 rgba(0, 0, 0, 255), stop:0.19397 rgba(0, 0, 0, 255), stop:0.202312 rgba(122, 97, 0, 255), stop:0.495514 rgba(76, 58, 0, 255), stop:0.504819 rgba(255, 255, 255, 255), stop:0.79 rgba(255, 255, 255, 255), stop:1 rgba(255, 158, 158, 255));</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QWidget" name="videoplayer" native="true"/>
+          </item>
+          <item>
+           <widget class="QGroupBox" name="control">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>60</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>60</height>
              </size>
             </property>
             <property name="title">
@@ -108,8 +218,8 @@
               <widget class="QPushButton" name="retreat">
                <property name="maximumSize">
                 <size>
-                 <width>100</width>
-                 <height>50</height>
+                 <width>16777215</width>
+                 <height>16777215</height>
                 </size>
                </property>
                <property name="text">
@@ -121,8 +231,8 @@
               <widget class="QPushButton" name="pause">
                <property name="maximumSize">
                 <size>
-                 <width>100</width>
-                 <height>50</height>
+                 <width>16777215</width>
+                 <height>16777215</height>
                 </size>
                </property>
                <property name="text">
@@ -134,8 +244,8 @@
               <widget class="QPushButton" name="forward">
                <property name="maximumSize">
                 <size>
-                 <width>100</width>
-                 <height>50</height>
+                 <width>16777215</width>
+                 <height>16777215</height>
                 </size>
                </property>
                <property name="text">
@@ -162,13 +272,6 @@
    </layout>
   </widget>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>MyVideoWidget</class>
-   <extends>QWidget</extends>
-   <header>myvideowidget.h</header>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>

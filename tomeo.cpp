@@ -20,15 +20,14 @@
 #include <QtWidgets/QFileIconProvider>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QPushButton>
-#include "the_button.h"
-#include "the_player.h"
 #include <iostream>
 #include <string>
 #include <vector>
+#include "the_button.h"
+#include "the_player.h"
 
 // read in videos and thumbnails to this directory
-std::vector<TheButtonInfo> getInfoIn(std::string loc)
-{
+std::vector<TheButtonInfo> getInfoIn(std::string loc) {
     std::cout << "123";
     std::vector<TheButtonInfo> out = std::vector<TheButtonInfo>();
     QDir dir(QString::fromStdString(loc));
@@ -37,58 +36,52 @@ std::vector<TheButtonInfo> getInfoIn(std::string loc)
     // 创建一个集合，用于跟踪已经生成的图片路径
     QSet<QString> generatedThumbnails;
 
-    while (it.hasNext()) { // for all files
+    while (it.hasNext()) {  // for all files
         std::cout << "asdas" << std::endl;
         QString f = it.next();
 
         if (f.contains("."))
 
 #if defined(_WIN32)
-        if (f.contains(".wmv") || f.contains(".mp4"))  { // windows
+            if (f.contains(".wmv") || f.contains(".mp4")) {  // windows
 #else
-        if (f.contains(".mp4") || f.contains("MOV"))  { // mac/linux
+            if (f.contains(".mp4") || f.contains("MOV")) {  // mac/linux
 #endif
-            std::cout << "sadsa";
-            QString thumb = f.left(f.length() - 4) + ".png";
+                std::cout << "sadsa";
+                QString thumb = f.left(f.length() - 4) + ".png";
 
-            // 检查是否已经生成相同路径的图片，如果是，则跳过
-            if (generatedThumbnails.contains(thumb))
-            {
-                continue;
-            }
-
-            if (QFile(thumb).exists()) { // if a png thumbnail
-                std::cout << "exist" << std::endl;
-                QImageReader *imageReader = new QImageReader(thumb);
-                QImage sprite = imageReader->read(); // read the thumbnail
-                if (!sprite.isNull()) {
-                    std::cout << "isNULL()" << std::endl;
-                    QIcon *ico = new QIcon(
-                        QPixmap::fromImage(sprite)); // voodoo to create an icon for the button
-                    QUrl *url = new QUrl(
-                        QUrl::fromLocalFile(f)); // convert the file location to a generic url
-                    out.push_back(TheButtonInfo(url, ico)); // add to the output list
-                    std::cout << "push_back" << std::endl;
-
-                    // 将已生成的图片路径添加到集合中
-                    generatedThumbnails.insert(thumb);
-                } else {
-                    qDebug() << "warning: skipping video because I couldn't process thumbnail "
-                             << thumb << endl;
+                // 检查是否已经生成相同路径的图片，如果是，则跳过
+                if (generatedThumbnails.contains(thumb)) {
+                    continue;
                 }
-            } else {
-                qDebug() << "warning: skipping video because I couldn't find thumbnail "
-                         << thumb << endl;
+
+                if (QFile(thumb).exists()) {  // if a png thumbnail
+                    std::cout << "exist" << std::endl;
+                    QImageReader* imageReader = new QImageReader(thumb);
+                    QImage sprite = imageReader->read();  // read the thumbnail
+                    if (!sprite.isNull()) {
+                        std::cout << "isNULL()" << std::endl;
+                        QIcon* ico = new QIcon(QPixmap::fromImage(sprite));  // voodoo to create an icon for the button
+                        QUrl* url = new QUrl(QUrl::fromLocalFile(f));  // convert the file location to a generic url
+                        out.push_back(TheButtonInfo(url, ico));        // add to the output list
+                        std::cout << "push_back" << std::endl;
+
+                        // 将已生成的图片路径添加到集合中
+                        generatedThumbnails.insert(thumb);
+                    } else {
+                        qDebug() << "warning: skipping video because I couldn't process thumbnail " << thumb << endl;
+                    }
+                } else {
+                    qDebug() << "warning: skipping video because I couldn't find thumbnail " << thumb << endl;
+                }
             }
-        }
     }
 
     std::cout << "return" << std::endl;
     return out;
 }
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char* argv[]) {
     // let's just check that Qt is operational first
     qDebug() << "Qt version: " << QT_VERSION_STR << endl;
 
@@ -109,32 +102,30 @@ int main(int argc, char *argv[])
     if (videos.size() == 0) {
         std::cout << "here2:" << std::endl;
         const int result = QMessageBox::information(
-            NULL,
-            QString("Tomeo"),
-            QString("no videos found! Add command line argument to \"quoted\" file location."));
+            NULL, QString("Tomeo"), QString("no videos found! Add command line argument to \"quoted\" file location."));
         exit(-1);
     }
 
     std::cout << "here2:" << std::endl;
     // the widget that will show the video
-    QVideoWidget *videoWidget = new QVideoWidget;
+    QVideoWidget* videoWidget = new QVideoWidget;
 
     // the QMediaPlayer which controls the playback
-    ThePlayer *player = new ThePlayer;
+    ThePlayer* player = new ThePlayer;
     player->setVideoOutput(videoWidget);
 
     // a row of buttons
-    QWidget *buttonWidget = new QWidget();
+    QWidget* buttonWidget = new QWidget();
     // a list of the buttons
-    std::vector<TheButton *> buttons;
+    std::vector<TheButton*> buttons;
     // the buttons are arranged horizontally
-    QHBoxLayout *layout = new QHBoxLayout();
+    QHBoxLayout* layout = new QHBoxLayout();
     buttonWidget->setLayout(layout);
 
     std::cout << "here3:" << std::endl;
     // create the four buttons
     for (int i = 0; i < videos.size(); i++) {
-        TheButton *button = new TheButton(buttonWidget);
+        TheButton* button = new TheButton(buttonWidget);
         button->connect(button, SIGNAL(buttonClicked(TheButtonInfo*)), player, SLOT(jumpTo(TheButtonInfo*)));
         buttons.push_back(button);
         layout->addWidget(button);
@@ -147,7 +138,7 @@ int main(int argc, char *argv[])
 
     // create the main window and layout
     QWidget window;
-    QVBoxLayout *top = new QVBoxLayout();
+    QVBoxLayout* top = new QVBoxLayout();
     window.setLayout(top);
     window.setWindowTitle("tomeo");
     window.setMinimumSize(800, 680);

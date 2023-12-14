@@ -21,6 +21,14 @@ public:
     explicit MainWindow(QWidget* parent = nullptr);
     ~MainWindow();
 
+    // Play() and Pause() are exposed to PageManager
+    // to control the video play or pause
+    void Play() { mediaPlayer->play(); }
+    void Pause() { mediaPlayer->pause(); }
+
+signals:
+    void switchPage(int pageIndex);
+
 public slots:
     // Slot to handle folder path changes
     void setFolderPath(const QString& path);
@@ -48,10 +56,16 @@ private slots:
     void parseFolder(const QString& folderPath);
     void handleVideoSelection(const QStringList& videoPaths, int currentIndex);  // 接口函数
     void handleMediaStatusChanged(QMediaPlayer::MediaStatus status);
+    void toggleFullScreen();
+    void switchToPage() { emit switchPage(1); }
 
 private:
+    bool isVideoPlaying;
     void setMediaAndPlay();
     void startPlaylistFromParameters(const QStringList& videoPaths, int currentIndex);
+    void resizeEvent(QResizeEvent* event) override;
+    bool isFullScreen = false;
+    QRect normalGeometry;
 
     Ui::MainWindow* ui;
     QMediaPlayer* mediaPlayer;

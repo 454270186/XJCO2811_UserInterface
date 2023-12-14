@@ -1,9 +1,9 @@
 #include <iostream>
 #include <string>
 
+#include <QListWidgetItem>
 #include <QMessageBox>
 #include <QPushButton>
-#include <QListWidgetItem>
 #include <QVBoxLayout>
 
 #include "formhandler.h"
@@ -17,6 +17,12 @@ ListSet::ListSet(QWidget* parent) : QMainWindow(parent), ui(new Ui::ListSet), ha
 
     connect(ui->submit, &QPushButton::clicked, this, &ListSet::onSubmitClicked);
 
+    // Assuming you want to set the initial size to 1000x700
+    setGeometry(100, 100, 1000, 700);
+
+    // Set the minimum size to 460x700
+    setMinimumSize(460, 700);
+
     // Load and process video list data from an XML file
     const std::string XMLFilePath = "../XJCO2811_UserInterface/videolist_data.xml";
     fileUtil = new FileUtil(XMLFilePath);
@@ -24,8 +30,9 @@ ListSet::ListSet(QWidget* parent) : QMainWindow(parent), ui(new Ui::ListSet), ha
     listsInfo = fileUtil->GetAllListsInfo();
 
     // Set the input form to invisible at first time
-    ui->groupBox_right->setVisible(false);
-    ui->midline->setVisible(false);
+    ui->groupBoxright->setVisible(false);
+
+    ui->pathBox->setStyleSheet("QGroupBox { border: 0; }");
 
     for (size_t i = 0; i < listsInfo.size(); i++) {
         // initialize video list ui
@@ -36,8 +43,7 @@ ListSet::ListSet(QWidget* parent) : QMainWindow(parent), ui(new Ui::ListSet), ha
         listLayout->addWidget(newButton);
 
         connect(newButton, &QPushButton::clicked, [this, newButton] {
-            ui->groupBox_right->setVisible(true);
-            ui->midline->setVisible(true);
+            ui->groupBoxright->setVisible(true);
             ui->submit->setText(QString("Edit"));
             isSubmitEnabled = false;
             int index = listLayout->indexOf(newButton) - 1;
@@ -48,12 +54,15 @@ ListSet::ListSet(QWidget* parent) : QMainWindow(parent), ui(new Ui::ListSet), ha
                 ui->editName->setText(QString::fromStdString(info.name));
                 ui->editPath->setText(QString::fromStdString(info.videoDirPath));
             }
+            if (ui->groupBoxright->isVisible()) {
+                resizeEvent(nullptr);
+            }
         });
 
         std::cout << listsInfo[i].name << std::endl;
     }
 
-    connect(ui->backward, &QPushButton::clicked, this, &ListSet::switchToMainWindow);
+    connect(ui->backward, &QPushButton::clicked, this, &ListSet::switchToPage);
 }
 
 ListSet::~ListSet() {
@@ -79,8 +88,7 @@ int ListSet::on_addList_clicked() {
         hasUnfinishedNewList = true;
 
         connect(newButton, &QPushButton::clicked, [this, newButton] {
-            ui->groupBox_right->setVisible(true);
-            ui->midline->setVisible(true);
+            ui->groupBoxright->setVisible(true);
             ui->submit->setText("Submit");
             ui->editName->setText("");
             ui->editPath->setText("");
@@ -114,7 +122,7 @@ void ListSet::onSubmitClicked() {
         int result = formHandler.editForm(listsInfo[currentBtnIndex].id, listName, videoDirPath);
         if (result > 0) {
             QMessageBox::information(this, "Success", "List edited successfully!\n");
-            QPushButton* button = qobject_cast<QPushButton*>(listLayout->itemAt(currentBtnIndex+1)->widget());
+            QPushButton* button = qobject_cast<QPushButton*>(listLayout->itemAt(currentBtnIndex + 1)->widget());
             if (button) {
                 button->setText(listName.c_str());
                 connect(button, &QPushButton::clicked, [this, listName, videoDirPath] {
@@ -152,12 +160,12 @@ void ListSet::onSubmitClicked() {
             }
 
             // Connect new button and update currentBtnIndex
-            connect(newButton, &QPushButton::clicked, [this, listName, videoDirPath, newButton]{
+            connect(newButton, &QPushButton::clicked, [this, listName, videoDirPath, newButton] {
                 ui->editName->setText(listName.c_str());
                 ui->editPath->setText(videoDirPath.c_str());
                 ui->submit->setText(QString("Edit"));
                 isSubmitEnabled = false;
-                currentBtnIndex = listLayout->indexOf(newButton)-1;
+                currentBtnIndex = listLayout->indexOf(newButton) - 1;
             });
         } else {
             QMessageBox::warning(this, "Error", "Failed to add list!\n");
@@ -174,4 +182,34 @@ void ListSet::switchToMainWindow() {
     hide();
     MainWindow* mainwindow = new MainWindow();
     mainwindow->show();
+}
+
+void ListSet::resizeEvent(QResizeEvent* event) {
+    QMainWindow::resizeEvent(event);
+
+    // 如果 groupBoxLeft 和 groupBoxRight 都没有被隐藏，立即应用大小调整逻辑
+    if (!ui->groupBoxleft->isHidden() && !ui->groupBoxright->isHidden()) {
+        // 根据窗口宽度计算新的大小
+        int groupBoxLeftWidth = width() * 0.3;
+        int groupBoxRightWidth = width() * 0.7;
+
+        // 为 groupBoxLeft 设置最小宽度（根据需要调整此值）
+        int minGroupBoxLeftWidth = 120;
+
+        // 确保 groupBoxLeft 有一个最小宽度
+        if (groupBoxLeftWidth < minGroupBoxLeftWidth) {
+            groupBoxLeftWidth = minGroupBoxLeftWidth;
+            groupBoxRightWidth = width() - groupBoxLeftWidth;
+        }
+
+        // 设置 QGroupBox 的大小
+        ui->groupBoxleft->setFixedWidth(groupBoxLeftWidth);
+        ui->groupBoxright->setFixedWidth(groupBoxRightWidth);
+
+        // 调用 updateGeometry 触发布局更新
+        updateGeometry();
+
+        // 强制重绘
+        repaint();
+    }
 }

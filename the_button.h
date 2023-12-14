@@ -8,33 +8,28 @@
 #include <QPushButton>
 #include <QUrl>
 
-class TheButtonInfo
-{
+class TheButtonInfo {
 public:
-    QUrl *url;   // video file to play
-    QIcon *icon; // icon to display
+    QUrl* url;    // video file to play
+    QIcon* icon;  // icon to display
 
-    TheButtonInfo(QUrl *url, QIcon *icon)
-        : url(url)
-        , icon(icon)
-    {}
+    TheButtonInfo(QUrl* url, QIcon* icon) : url(url), icon(icon) {}
 };
 
-class TheButton : public QPushButton
-{
+class TheButton : public QPushButton {
     Q_OBJECT
 
 public:
-    TheButtonInfo *info;
+    TheButtonInfo* info;
 
-    TheButton(QWidget *parent);
+    TheButton(QWidget* parent);
 
-    void init(TheButtonInfo *i);
+    void init(TheButtonInfo* i);
 
 private slots:
     void onClicked();
 
 signals:
-    void buttonClicked(TheButtonInfo *);
+    void buttonClicked(TheButtonInfo*);
 };
-#endif //CW2_THE_BUTTON_H
+#endif  //CW2_THE_BUTTON_H

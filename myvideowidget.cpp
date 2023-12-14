@@ -1,6 +1,3 @@
 #include "myvideowidget.h"
 
-MyVideoWidget::MyVideoWidget(QWidget *parent) : QVideoWidget(parent)
-{
-
-}
+MyVideoWidget::MyVideoWidget(QWidget* parent) : QVideoWidget(parent) {}

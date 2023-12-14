@@ -17,37 +17,73 @@ MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent),
       ui(new Ui::MainWindow),
       mediaPlayer(new QMediaPlayer(this)),
-      videoWidget(new QVideoWidget(this)) {
+      videoWidget(new QVideoWidget(this)),
+      isFullScreen(false) {
     // Set up the user interface
     ui->setupUi(this);
 
-    // Add the video widget to the vertical layout of the main window
-    ui->verticalLayout->addWidget(videoWidget);
+    ui->lists->setStyleSheet("QScrollArea { border: 0; }");
 
-    // Add the list button to horizontal layout
-    listsBtnsLayout = ui->lists->findChild<QHBoxLayout*>("horizontalLayout");
+    // Assuming you want to set the initial size to 1000x700
+    setGeometry(100, 100, 1000, 700);
+
+    // Set the minimum size to 460x700
+    setMinimumSize(460, 700);
+
+    // Assuming that "videoplayer" is the name of the QWidget in your UI file
+    QWidget* videoplayer = ui->videoplayer;
+
+    // Create a new QVideoWidget
+    QVideoWidget* videoWidget = new QVideoWidget(this);
+
+    // Set up layout for videoWidget
+    QVBoxLayout* videoLayout = new QVBoxLayout(videoplayer);
+    videoLayout->addWidget(videoWidget);
+
+    isVideoPlaying = false;
+    ui->video->hide();
+
+    // Assuming ui->lists is now a QScrollArea
+    QScrollArea* listsScrollArea = ui->lists;
+
+    // Create a QWidget to serve as the container for the buttons
+    QWidget* listsContainer = new QWidget(listsScrollArea);
+
+    // Create a QHBoxLayout for the buttons
+    QHBoxLayout* listsLayout = new QHBoxLayout(listsContainer);
 
     // Render all lists
     fileUtil_ = new FileUtil("../XJCO2811_UserInterface/videolist_data.xml");
     listInfos_ = fileUtil_->GetAllListsInfo();
 
+    // Clear existing buttons
+    QLayoutItem* child;
+    while ((child = listsLayout->takeAt(0)) != nullptr) {
+        delete child->widget();
+        delete child;
+    }
+
+    // Create new buttons based on updated listInfos_
     for (size_t i = 0; i < listInfos_.size(); i++) {
         QPushButton* newButton = new QPushButton();
         newButton->setText(listInfos_[i].name.c_str());
         newButton->setCheckable(true);
         newButton->setAutoExclusive(true);
 
-        listsBtnsLayout->addWidget(newButton);
+        listsLayout->addWidget(newButton);
 
         // connect onClick hook
         connect(newButton, &QPushButton::clicked, [this, i] { parseFolder(listInfos_[i].videoDirPath.c_str()); });
     }
 
+    // Set the container QWidget as the widget for the QScrollArea
+    listsScrollArea->setWidget(listsContainer);
+
     // Set the video output of the media player to the video widget
     mediaPlayer->setVideoOutput(videoWidget);
 
     // Connect signals and slots for window switch
-    connect(ui->addListBtn, &QPushButton::clicked, this, &MainWindow::switchToListset);
+    connect(ui->addListBtn, &QPushButton::clicked, this, &MainWindow::switchToPage);
 
     // Connect signals and slots for media playback control
     connect(mediaPlayer, &QMediaPlayer::positionChanged, this, &MainWindow::updateProgressBar);
@@ -55,12 +91,15 @@ MainWindow::MainWindow(QWidget* parent)
     connect(ui->forward, &QPushButton::clicked, this, &MainWindow::onForwardClicked);
     connect(ui->retreat, &QPushButton::clicked, this, &MainWindow::onRetreatClicked);
     connect(ui->pause, &QPushButton::clicked, this, &MainWindow::onPauseClicked);
+    connect(ui->fullScreen, &QPushButton::clicked, this, &MainWindow::toggleFullScreen);
 }
 
+// Destructor
 MainWindow::~MainWindow() {
+    // Delete videoWidget
+    delete videoWidget;
     delete ui;
 }
-
 // onPauseClicked() toggles the play/pause state of the media player.
 // If the media player is currently playing, it pauses playback;
 // otherwise, it starts or resumes playback.
@@ -151,8 +190,14 @@ void MainWindow::handleMediaStatusChanged(QMediaPlayer::MediaStatus status) {
     if (status == QMediaPlayer::LoadedMedia) {
         // Media has loaded successfully, start playback
         std::cout << "play video: " << currentVideoIndex << std::endl;
-        disconnect(mediaPlayer, &QMediaPlayer::mediaStatusChanged, this, &MainWindow::handleMediaStatusChanged);
+        //        disconnect(mediaPlayer, &QMediaPlayer::mediaStatusChanged, this, &MainWindow::handleMediaStatusChanged);
         mediaPlayer->play();
+        isVideoPlaying = true;
+        ui->video->show();
+        if (ui->video->isVisible()) {
+            resizeEvent(nullptr);
+        }
+
     } else if (status == QMediaPlayer::EndOfMedia) {
         // Current video playback is complete, automatically play the next video
 
@@ -203,47 +248,78 @@ void MainWindow::handleVideoSelection(const QStringList& videoPaths, int current
     setMediaAndPlay();
 }
 
+// parseFolder() is called to parse the specified folder path for video files (".mp4").
+// It creates thumbnail buttons for each video with corresponding preview images (.png or .jpg).
+// The buttons are displayed in a vertical layout within a scroll area.
+// Params:
+// - folderPath: The path of the folder to parse for video files.
 void MainWindow::parseFolder(const QString& folderPath) {
+    // Log the folder path for debugging purposes
     qDebug() << "Folder path:" << folderPath;
+
+    // Create a QDir object for the specified folder path
     QDir dir(folderPath);
+
+    // Retrieve a list of video files (.mp4) in the folder
     QStringList videoFiles = dir.entryList(QStringList() << "*.mp4", QDir::Files);
 
-    // 获取名为thumbnailList的ScrollArea对象
+    // Get the QScrollArea object named thumbnailList
     QScrollArea* thumbnailScrollArea = ui->thumbnailList;
 
-    // 创建一个新的QWidget作为按钮垂直布局的父控件
+    // Create a new QWidget to serve as the parent control for the button's vertical layout
     QWidget* containerWidget = new QWidget(thumbnailScrollArea);
 
-    // 创建按钮垂直布局并将按钮添加到布局中
+    // Create a QVBoxLayout for the buttons and add buttons to the layout
     QVBoxLayout* layout = new QVBoxLayout(containerWidget);
 
+    // Iterate through each video file in the folder
+    // Clear videoPaths
+    videoPaths.clear();
     foreach (const QString& videoFile, videoFiles) {
         QString videoPath = dir.filePath(videoFile);
         videoPaths.append(videoPath);
 
         QString baseName = QFileInfo(videoFile).baseName();
-        QString imagePath = dir.filePath(baseName + ".png");
+        QString imagePathPNG = dir.filePath(baseName + ".png");
+        QString imagePathJPG = dir.filePath(baseName + ".jpg");
 
-        if (QFileInfo::exists(imagePath)) {
+        // Check if preview images (.png or .jpg) exist for the current video
+        if (QFileInfo::exists(imagePathPNG) || QFileInfo::exists(imagePathJPG)) {
+            // Create a BtnConvert button with the video path
             BtnConvert* button = new BtnConvert(videoPath);
-            button->setIcon(QIcon(imagePath));
+
+            // Set the button icon to the existing preview image (.png or .jpg)
+            if (QFileInfo::exists(imagePathPNG)) {
+                button->setIcon(QIcon(imagePathPNG));
+            }
+            if (QFileInfo::exists(imagePathJPG)) {
+                button->setIcon(QIcon(imagePathJPG));
+            }
+
+            // Set the icon size and connect the button click signal to onButtonClicked slot
             button->setIconSize(QSize(250, 250));
             connect(button, &QPushButton::clicked, this, &MainWindow::onButtonClicked);
 
-            // 将按钮添加到布局中
+            // Add the button to the layout
             layout->addWidget(button);
         }
     }
 
-    // 将容器 QWidget 设置为 QScrollArea 的 widget
+    // Set the container QWidget as the widget for the QScrollArea
     thumbnailScrollArea->setWidget(containerWidget);
 }
 
-
+// onButtonClicked() is triggered when a BtnConvert button is clicked.
+// It retrieves the video path from the clicked button and calls handleVideoSelection()
+// to handle the selection of the corresponding video in the playlist.
 void MainWindow::onButtonClicked() {
+    // Attempt to cast the sender to BtnConvert
     BtnConvert* button = qobject_cast<BtnConvert*>(sender());
     if (button) {
+        // Retrieve the video path from the clicked button
         QString videoPath = button->getVideoPath();
+
+        // Find the index of the video path in the list and handle the video selection
         int index = videoPaths.indexOf(videoPath);
         if (index != -1) {
             handleVideoSelection(videoPaths, index);
@@ -251,8 +327,72 @@ void MainWindow::onButtonClicked() {
     }
 }
 
+// switchToListset() is called to switch to the ListSet window.
+// It hides the current MainWindow and shows a new ListSet window.
 void MainWindow::switchToListset() {
+    // Close the current MainWindow
     hide();
+
+    // Create a new ListSet window
     ListSet* listsetWindow = new ListSet();
+
+    // Show the ListSet window
     listsetWindow->show();
+}
+
+// toggleFullScreen() toggles between fullscreen and normal display modes.
+// It adjusts the window flags and visibility of UI elements accordingly.
+void MainWindow::toggleFullScreen() {
+    qDebug() << "Button Clicked";
+
+    // Toggle the fullscreen state
+    isFullScreen = !isFullScreen;
+
+    if (isFullScreen) {
+        // Enter fullscreen mode
+        // Set videoplayer as a top-level window
+        ui->video->setWindowFlags(Qt::Window);
+        // Show videoplayer in fullscreen
+        ui->video->showFullScreen();
+        // Hide picturelist
+        ui->picturelist->hide();
+    } else {
+        // Exit fullscreen mode
+        // Set videoplayer as a subwindow
+        ui->video->setWindowFlags(Qt::SubWindow);
+        // Show videoplayer in normal mode
+        ui->video->showNormal();
+        // Show picturelist
+        ui->picturelist->show();
+    }
+}
+
+void MainWindow::resizeEvent(QResizeEvent* event) {
+    QMainWindow::resizeEvent(event);
+
+    // 如果 picturelist 和 videoplayer 都没有被隐藏，立即应用大小调整逻辑
+    if (!ui->picturelist->isHidden() && !ui->video->isHidden()) {
+        // 根据窗口宽度计算新的大小
+        int picturelistWidth = width() * 0.3;
+        int videoWidth = width() * 0.7;
+
+        // 为 picturelist 设置最小宽度（根据需要调整此值）
+        int minPicturelistWidth = 200;
+
+        // 确保 picturelist 有一个最小宽度
+        if (picturelistWidth < minPicturelistWidth) {
+            picturelistWidth = minPicturelistWidth;
+            videoWidth = width() - picturelistWidth;
+        }
+
+        // 设置 QGroupBox 的大小
+        ui->picturelist->setFixedWidth(picturelistWidth);
+        ui->video->setFixedWidth(videoWidth);
+
+        // 调用 updateGeometry 触发布局更新
+        updateGeometry();
+
+        // 强制重绘
+        repaint();
+    }
 }
