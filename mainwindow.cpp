@@ -22,6 +22,8 @@ MainWindow::MainWindow(QWidget* parent)
     // Set up the user interface
     ui->setupUi(this);
 
+    ui->lists->setStyleSheet("QScrollArea { border: 0; }");
+
     // Assuming you want to set the initial size to 1000x700
     setGeometry(100, 100, 1000, 700);
 
@@ -47,13 +49,21 @@ MainWindow::MainWindow(QWidget* parent)
     // Create a QWidget to serve as the container for the buttons
     QWidget* listsContainer = new QWidget(listsScrollArea);
 
-    // Create a QHBoxLayout for the buttons and add buttons to the layout
+    // Create a QHBoxLayout for the buttons
     QHBoxLayout* listsLayout = new QHBoxLayout(listsContainer);
 
     // Render all lists
     fileUtil_ = new FileUtil("../XJCO2811_UserInterface/videolist_data.xml");
     listInfos_ = fileUtil_->GetAllListsInfo();
 
+    // Clear existing buttons
+    QLayoutItem* child;
+    while ((child = listsLayout->takeAt(0)) != nullptr) {
+        delete child->widget();
+        delete child;
+    }
+
+    // Create new buttons based on updated listInfos_
     for (size_t i = 0; i < listInfos_.size(); i++) {
         QPushButton* newButton = new QPushButton();
         newButton->setText(listInfos_[i].name.c_str());
@@ -68,8 +78,6 @@ MainWindow::MainWindow(QWidget* parent)
 
     // Set the container QWidget as the widget for the QScrollArea
     listsScrollArea->setWidget(listsContainer);
-
-    ui->lists->setStyleSheet("QScrollArea { border: 0; }");
 
     // Set the video output of the media player to the video widget
     mediaPlayer->setVideoOutput(videoWidget);
@@ -322,7 +330,7 @@ void MainWindow::onButtonClicked() {
 // switchToListset() is called to switch to the ListSet window.
 // It hides the current MainWindow and shows a new ListSet window.
 void MainWindow::switchToListset() {
-    // Hide the current MainWindow
+    // Close the current MainWindow
     hide();
 
     // Create a new ListSet window
