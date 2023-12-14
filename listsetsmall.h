@@ -1,9 +1,9 @@
-#ifndef LISTSET_H
-#define LISTSET_H
+#ifndef LISTSETSMALL_H
+#define LISTSETSMALL_H
 
 #include <QMainWindow>
 #include <QPushButton>
-#include <QVBoxLayout>
+#include <QHBoxLayout>
 #include <QListWidgetItem>
 
 #include <vector>
@@ -11,19 +11,16 @@
 #include "fileutil.h" 
 
 namespace Ui {
-    class ListSet;
+    class ListSetSmall;
 }
 
-class ListSet : public QMainWindow {
+class ListSetSmall : public QMainWindow {
     Q_OBJECT
 
 public:
-    explicit ListSet(QWidget* parent = nullptr);
+    explicit ListSetSmall(QWidget* parent = nullptr);
     bool isSubmitEnabled = false;
-    ~ListSet();
-
-signals:
-    void switchPage(int pageIndex);
+    ~ListSetSmall();
 
 public slots:
     void switchToMainWindow();
@@ -31,19 +28,17 @@ public slots:
 private slots:
     int on_addList_clicked();
     void onSubmitClicked();
-    void switchToPage() { emit switchPage(0); }
 
 private:
     FileUtil* fileUtil;
     std::vector<ListInfo> listsInfo;
-    Ui::ListSet* ui;
+    Ui::ListSetSmall* ui;
     bool hasUnfinishedNewList = false;
-    QVBoxLayout* listLayout;
+    QHBoxLayout* listLayout; 
     QPushButton* newButton;
     QVector<QPushButton*> itemList;
     QPushButton* currentButton;
-    int currentBtnIndex{0};
-    void resizeEvent(QResizeEvent* event) override;
+    int currentBtnIndex{0}; 
 };
 
-#endif  //LISTSET_H
+#endif  // LISTSETSMALL_H
