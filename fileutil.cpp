@@ -183,6 +183,44 @@ int FileUtil::EditList(int listID, const string& newListName, const string& newV
     return -1;
 }
 
+// DelListByID() deletes a list by given id.
+// if list ID does not exist, error occurs.
+int FileUtil::DelListByID(int listID, string* error) {
+    XMLElement* rootElement = xmlParser_.RootElement();
+    // check validation of xml file structure
+    if (!rootElement || strcmp(rootElement->Name(), "lists") != 0) {
+        if (error) {
+            *error = "invalid xml file structure";
+        }
+        return -1;
+    }
+
+    for (XMLElement* videolistEle = rootElement->FirstChildElement("videolist"); videolistEle;
+         videolistEle = videolistEle->NextSiblingElement("videolist")) {
+        XMLElement* idElement = videolistEle->FirstChildElement("id");
+        int currentListID = idElement ? atoi(idElement->GetText()) : -1;
+
+        if (currentListID == listID) {
+            rootElement->DeleteChild(videolistEle);
+
+            // save change
+            if (xmlParser_.SaveFile(XMLFilePath_.c_str()) == XML_SUCCESS) {
+                return 1;
+            } else {
+                if (error) {
+                    *error = "error while save chenge into file";
+                }
+                return -1;
+            }
+        }
+    }
+
+    if (error) {
+        *error = "List id not found";
+    }
+    return -1;
+}
+
 // GetVideosPathByListName() returns the videos path according to the given
 // listname
 string FileUtil::GetVideosPathByListName(const string& listname) {

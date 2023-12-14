@@ -27,6 +27,7 @@ public:
 
     int AddNewList(const string& listname, const string& videoDirPath, string* error);
     int EditList(int listID, const string& newListName, const string& newVideoDirPath, string* error);
+    int DelListByID(int listID, string* error);
 
 private:
     int GetMaxID();
