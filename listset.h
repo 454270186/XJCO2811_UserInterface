@@ -31,6 +31,7 @@ public slots:
 private slots:
     int on_addList_clicked();
     void onSubmitClicked();
+    void onDeleteClicked();
     void switchToPage() { emit switchPage(0); }
 
 private:

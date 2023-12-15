@@ -32,4 +32,4 @@ private slots:
 signals:
     void buttonClicked(TheButtonInfo*);
 };
-#endif  //CW2_THE_BUTTON_H
+#endif  // THE_BUTTON_H
