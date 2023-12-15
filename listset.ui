@@ -8,21 +8,7 @@
     <y>0</y>
     <width>1000</width>
     <height>700</height>
-    <width>1000</width>
-    <height>700</height>
    </rect>
-  </property>
-  <property name="minimumSize">
-   <size>
-    <width>0</width>
-    <height>0</height>
-   </size>
-  </property>
-  <property name="maximumSize">
-   <size>
-    <width>16777214</width>
-    <height>16777215</height>
-   </size>
   </property>
   <property name="minimumSize">
    <size>
@@ -68,9 +54,7 @@
     <enum>Qt::LeftToRight</enum>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="1,0,2">
-   <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="1,0,2">
     <item>
-     <widget class="QGroupBox" name="groupBox_left">
      <widget class="QGroupBox" name="groupBox_left">
       <property name="minimumSize">
        <size>
@@ -100,8 +84,6 @@
           <size>
            <width>120</width>
            <height>16777215</height>
-           <width>120</width>
-           <height>16777215</height>
           </size>
          </property>
          <property name="text">
@@ -127,14 +109,9 @@
             <y>0</y>
             <width>282</width>
             <height>620</height>
-            <width>282</width>
-            <height>620</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_6">
-           <property name="topMargin">
-            <number>12</number>
-           </property>
            <property name="topMargin">
             <number>12</number>
            </property>
@@ -159,23 +136,6 @@
      </widget>
     </item>
     <item>
-     <widget class="QFrame" name="midline">
-      <property name="maximumSize">
-       <size>
-        <width>16777215</width>
-        <height>16777215</height>
-       </size>
-      </property>
-      <property name="frameShape">
-       <enum>QFrame::VLine</enum>
-      </property>
-      <property name="frameShadow">
-       <enum>QFrame::Raised</enum>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QGroupBox" name="groupBox_right">
      <widget class="QFrame" name="midline">
       <property name="maximumSize">
        <size>
@@ -241,43 +201,9 @@
            </widget>
           </item>
          </layout>
-      <layout class="QVBoxLayout" name="verticalLayout" stretch="3,3,2">
-       <item>
-        <widget class="QWidget" name="widget_name" native="true">
-         <layout class="QHBoxLayout" name="horizontalLayout_3">
-          <property name="leftMargin">
-           <number>10</number>
-          </property>
-          <property name="topMargin">
-           <number>10</number>
-          </property>
-          <property name="rightMargin">
-           <number>10</number>
-          </property>
-          <property name="bottomMargin">
-           <number>10</number>
-          </property>
-          <item>
-           <widget class="QLineEdit" name="editName">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>50</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>50</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-         </layout>
         </widget>
        </item>
        <item>
-        <widget class="QWidget" name="widget_path" native="true">
         <widget class="QWidget" name="widget_path" native="true">
          <property name="minimumSize">
           <size>
@@ -289,22 +215,9 @@
           <size>
            <width>16777215</width>
            <height>16777215</height>
-           <height>16777215</height>
           </size>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout">
-          <property name="leftMargin">
-           <number>10</number>
-          </property>
-          <property name="topMargin">
-           <number>10</number>
-          </property>
-          <property name="rightMargin">
-           <number>10</number>
-          </property>
-          <property name="bottomMargin">
-           <number>10</number>
-          </property>
           <property name="leftMargin">
            <number>10</number>
           </property>
@@ -334,7 +247,6 @@
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="findPath">
            <widget class="QPushButton" name="findPath">
             <property name="minimumSize">
              <size>

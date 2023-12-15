@@ -43,7 +43,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 FORMS += \
     listset.ui \
     mainwindow.ui \
-    mainwindowm.ui
-
-
+    mainwindowm.ui \
     listsetsmall.ui
