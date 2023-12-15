@@ -171,6 +171,7 @@ void ListSetSmall::onSubmitClicked() {
 //   1. Displays a success message.
 //   2. Removes the corresponding button from the UI.
 //   3. Removes the list information from the listsInfo array.
+//   4. Clears the interface when there is no list.
 // - If the deletion fails (result <= 0), displays an error message.
 void ListSetSmall::onDeleteClicked() {
     if (currentBtnIndex < 0 || currentBtnIndex >= listsInfo.size()) {
@@ -192,6 +193,13 @@ void ListSetSmall::onDeleteClicked() {
         }
         // Remove list information from listsInfo array
         listsInfo.erase(listsInfo.begin() + currentBtnIndex);
+        // Clear interface when there is no list
+        listsInfo.clear();
+        listsInfo = fileUtil->GetAllListsInfo();
+        if (listsInfo.empty()){
+            ui->groupBox_form->setVisible(false);
+            ui->placeholderWidget->setVisible(true);
+        }
     } else {
         QMessageBox::warning(this, "Error", QString::fromStdString(error));
     }
