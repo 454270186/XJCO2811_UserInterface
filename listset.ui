@@ -284,6 +284,13 @@
            <number>10</number>
           </property>
           <item>
+           <widget class="QPushButton" name="Delete">
+            <property name="text">
+             <string>Delete</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QPushButton" name="submit">
             <property name="maximumSize">
              <size>

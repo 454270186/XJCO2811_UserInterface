@@ -13,6 +13,7 @@ ListSetSmall::ListSetSmall(QWidget* parent) : QMainWindow(parent), ui(new Ui::Li
     listLayout = ui->scrollAreaWidget->findChild<QHBoxLayout*>("horizontalLayout_4");
 
     connect(ui->submit, &QPushButton::clicked, this, &ListSetSmall::onSubmitClicked);
+    connect(ui->Delete, &QPushButton::clicked, this, &ListSetSmall::onDeleteClicked);
 
     // Load and process video list data from an XML file
     const std::string XMLFilePath = "../XJCO2811_UserInterface/videolist_data.xml";
@@ -22,6 +23,7 @@ ListSetSmall::ListSetSmall(QWidget* parent) : QMainWindow(parent), ui(new Ui::Li
     // Set the input form to invisible at first time
     ui->groupBox_form->setVisible(false);
     ui->placeholderWidget->setVisible(true);
+    ui->Delete->setVisible(false);
 
     for (size_t i = 0; i < listsInfo.size(); i++) {
         // initialize video list ui
@@ -34,6 +36,7 @@ ListSetSmall::ListSetSmall(QWidget* parent) : QMainWindow(parent), ui(new Ui::Li
         connect(newButton, &QPushButton::clicked, [this, newButton] {
             ui->groupBox_form->setVisible(true);
             ui->placeholderWidget->setVisible(false);
+            ui->Delete->setVisible(true);
             ui->submit->setText(QString("Edit"));
             isSubmitEnabled = false;
             int index = listLayout->indexOf(newButton) - 1;
@@ -73,6 +76,7 @@ int ListSetSmall::on_addList_clicked() {
         connect(newButton, &QPushButton::clicked, [this, newButton] {
             ui->groupBox_form->setVisible(true);
             ui->placeholderWidget->setVisible(false);
+            ui->Delete->setVisible(false);
             ui->submit->setText("Submit");
             ui->editName->setText("");
             ui->editPath->setText("");
@@ -154,6 +158,41 @@ void ListSetSmall::onSubmitClicked() {
         } else {
             QMessageBox::warning(this, "Error", "Failed to add list!\n");
         }
+    }
+}
+
+// onDeleteClicked() handles the click event of the delete button.
+// It performs the following actions:
+// - Checks if a valid list is currently selected (currentBtnIndex is within valid range).
+//   If not, displays an error message and exits the function.
+// - Calls DelListByID from FileUtil with the ID of the selected list.
+// - If the deletion is successful (result > 0):
+//   1. Displays a success message.
+//   2. Removes the corresponding button from the UI.
+//   3. Removes the list information from the listsInfo array.
+// - If the deletion fails (result <= 0), displays an error message.
+void ListSetSmall::onDeleteClicked() {
+    if (currentBtnIndex < 0 || currentBtnIndex >= listsInfo.size()) {
+        QMessageBox::warning(this, "Error", "No list selected or invalid list index");
+        return;
+    }
+
+    int listID = listsInfo[currentBtnIndex].id;
+    string error;
+    int result = fileUtil->DelListByID(listID, &error);
+
+    if (result > 0) {
+        QMessageBox::information(this, "Success", "List deleted successfully");
+        // Remove the corresponding button from the UI
+        QWidget* widget = listLayout->itemAt(currentBtnIndex+1)->widget();
+        if (widget) {
+            listLayout->removeWidget(widget);
+            delete widget;
+        }
+        // Remove list information from listsInfo array
+        listsInfo.erase(listsInfo.begin() + currentBtnIndex);
+    } else {
+        QMessageBox::warning(this, "Error", QString::fromStdString(error));
     }
 }
 
