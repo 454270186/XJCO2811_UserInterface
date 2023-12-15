@@ -22,6 +22,7 @@ ListSetSmall::ListSetSmall(QWidget* parent) : QMainWindow(parent), ui(new Ui::Li
     // Set the input form to invisible at first time
     ui->groupBox_form->setVisible(false);
     ui->placeholderWidget->setVisible(true);
+    ui->Delete->setVisible(false);
 
     for (size_t i = 0; i < listsInfo.size(); i++) {
         // initialize video list ui
@@ -34,6 +35,7 @@ ListSetSmall::ListSetSmall(QWidget* parent) : QMainWindow(parent), ui(new Ui::Li
         connect(newButton, &QPushButton::clicked, [this, newButton] {
             ui->groupBox_form->setVisible(true);
             ui->placeholderWidget->setVisible(false);
+            ui->Delete->setVisible(true);
             ui->submit->setText(QString("Edit"));
             isSubmitEnabled = false;
             int index = listLayout->indexOf(newButton) - 1;
@@ -73,6 +75,7 @@ int ListSetSmall::on_addList_clicked() {
         connect(newButton, &QPushButton::clicked, [this, newButton] {
             ui->groupBox_form->setVisible(true);
             ui->placeholderWidget->setVisible(false);
+            ui->Delete->setVisible(false);
             ui->submit->setText("Submit");
             ui->editName->setText("");
             ui->editPath->setText("");
