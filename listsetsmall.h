@@ -28,6 +28,7 @@ public slots:
 private slots:
     int on_addList_clicked();
     void onSubmitClicked();
+    void onDeleteClicked();
 
 private:
     FileUtil* fileUtil;

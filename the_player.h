@@ -48,4 +48,4 @@ public slots:
     void jumpTo(TheButtonInfo* button);
 };
 
-#endif  //CW2_THE_PLAYER_H
+#endif  // THE_PLAYER_H
