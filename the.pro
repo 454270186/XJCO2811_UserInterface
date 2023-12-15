@@ -12,6 +12,7 @@ SOURCES += \
     fileutil.cpp \
     main.cpp \
     mainwindow.cpp \
+    mainwindowm.cpp \
     myvideowidget.cpp \
     pagemanager.cpp \
     tinyxml2.cpp \
@@ -23,6 +24,7 @@ HEADERS += \
     btnconvert.h \
     fileutil.h \
     mainwindow.h \
+    mainwindowm.h \
     myvideowidget.h \
     pagemanager.h \
     tinyxml2.h \
@@ -30,6 +32,7 @@ HEADERS += \
     listset.h \
     formhandler.h \
     listsetsmall.h
+
 
 
 # Default rules for deployment.
@@ -40,4 +43,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 FORMS += \
     listset.ui \
     mainwindow.ui \
+    mainwindowm.ui \
     listsetsmall.ui

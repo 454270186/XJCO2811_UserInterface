@@ -1,4 +1,4 @@
-#include "mainwindow.h"
+#include "mainwindowm.h"
 #include <QCoreApplication>
 #include <QDebug>
 #include <QDir>
@@ -8,24 +8,21 @@
 #include <QVBoxLayout>
 #include "btnconvert.h"
 #include "listset.h"
-#include "ui_mainwindow.h"
+#include "ui_mainwindowm.h"
 
 #include <iostream>
 
 // MainWindow constructor initializes the main window and its components.
-MainWindow::MainWindow(QWidget* parent)
+mainwindowm::mainwindowm(QWidget* parent)
     : QMainWindow(parent),
-      ui(new Ui::MainWindow),
+      ui(new Ui::mainwindowm),
       isFullScreen(false),
       mediaPlayer(new QMediaPlayer(this)),
-      videoWidget(new QVideoWidget(this)){
+      videoWidget(new QVideoWidget(this)) {
     // Set up the user interface
     ui->setupUi(this);
 
     ui->lists->setStyleSheet("QScrollArea { border: 0; }");
-
-    // Assuming you want to set the initial size to 1000x700
-    setGeometry(100, 100, 1000, 700);
 
     // Set the minimum size to 460x700
     setMinimumSize(460, 700);
@@ -83,28 +80,29 @@ MainWindow::MainWindow(QWidget* parent)
     mediaPlayer->setVideoOutput(videoWidget);
 
     // Connect signals and slots for window switch
-    connect(ui->addListBtn, &QPushButton::clicked, this, &MainWindow::switchToPage);
+    connect(ui->addListBtn, &QPushButton::clicked, this, &mainwindowm::switchToPage);
 
     // Connect signals and slots for media playback control
-    connect(mediaPlayer, &QMediaPlayer::positionChanged, this, &MainWindow::updateProgressBar);
-    connect(ui->progressbar, &QSlider::sliderMoved, this, &MainWindow::onProgressbarSliderMoved);
-    connect(ui->forward, &QPushButton::clicked, this, &MainWindow::onForwardClicked);
-    connect(ui->retreat, &QPushButton::clicked, this, &MainWindow::onRetreatClicked);
-    connect(ui->pause, &QPushButton::clicked, this, &MainWindow::onPauseClicked);
-    connect(ui->fullScreen, &QPushButton::clicked, this, &MainWindow::toggleFullScreen);
+    connect(mediaPlayer, &QMediaPlayer::positionChanged, this, &mainwindowm::updateProgressBar);
+    connect(ui->progressbar, &QSlider::sliderMoved, this, &mainwindowm::onProgressbarSliderMoved);
+    connect(ui->forward, &QPushButton::clicked, this, &mainwindowm::onForwardClicked);
+    connect(ui->retreat, &QPushButton::clicked, this, &mainwindowm::onRetreatClicked);
+    connect(ui->pause, &QPushButton::clicked, this, &mainwindowm::onPauseClicked);
+    connect(ui->fullScreen, &QPushButton::clicked, this, &mainwindowm::toggleFullScreen);
 
 }
 
 // Destructor
-MainWindow::~MainWindow() {
+mainwindowm::~mainwindowm() {
     // Delete videoWidget
     delete videoWidget;
     delete ui;
 }
+
 // onPauseClicked() toggles the play/pause state of the media player.
 // If the media player is currently playing, it pauses playback;
 // otherwise, it starts or resumes playback.
-void MainWindow::onPauseClicked() {
+void mainwindowm::onPauseClicked() {
     // Toggle play/pause state
     if (mediaPlayer->state() == QMediaPlayer::PlayingState) {
         // If the media player is currently in the playing state, pause playback
@@ -116,7 +114,7 @@ void MainWindow::onPauseClicked() {
 }
 
 // onForwardClicked() fast-forwards the media playback by 5 seconds.
-void MainWindow::onForwardClicked() {
+void mainwindowm::onForwardClicked() {
     // Fast forward by 5 seconds
     qint64 currentPosition = mediaPlayer->position();
     qint64 newPosition = currentPosition + 5000;
@@ -124,7 +122,7 @@ void MainWindow::onForwardClicked() {
 }
 
 // onRetreatClicked() rewinds the media playback by 5 seconds.
-void MainWindow::onRetreatClicked() {
+void mainwindowm::onRetreatClicked() {
     // Rewind by 5 seconds
     qint64 currentPosition = mediaPlayer->position();
     qint64 newPosition = currentPosition - 5000;
@@ -136,13 +134,13 @@ void MainWindow::onRetreatClicked() {
 // to manually adjust the playback position by moving the progress bar slider.
 // Params:
 // - position: The new position set by the user through the progress bar slider.
-void MainWindow::onProgressbarSliderMoved(int position) {
+void mainwindowm::onProgressbarSliderMoved(int position) {
     // Set the position moved by the slider to the media player
     mediaPlayer->setPosition(position);
 }
 
 // updateProgressBar() updates the progress bar based on the current position of the media playback.
-void MainWindow::updateProgressBar(qint64 position) {
+void mainwindowm::updateProgressBar(qint64 position) {
     // Update the current value of the progress bar
     qint64 totalDuration = mediaPlayer->duration();
 
@@ -161,7 +159,7 @@ void MainWindow::updateProgressBar(qint64 position) {
 // to the handleMediaStatusChanged slot for asynchronous handling of media loading.
 // Params:
 // - path: The initial path used by the file dialog.
-void MainWindow::setFolderPath(const QString& path) {
+void mainwindowm::setFolderPath(const QString& path) {
     // Log the folder path for debugging purposes
     qDebug() << "setFolderPath called with path:" << path;
 
@@ -180,14 +178,14 @@ void MainWindow::setFolderPath(const QString& path) {
         mediaPlayer->setMedia(QUrl::fromLocalFile(filePath));
 
         // Connect a slot to the mediaStatusChanged signal for asynchronous handling of media loading
-        connect(mediaPlayer, &QMediaPlayer::mediaStatusChanged, this, &MainWindow::handleMediaStatusChanged);
+        connect(mediaPlayer, &QMediaPlayer::mediaStatusChanged, this, &mainwindowm::handleMediaStatusChanged);
     }
 }
 
 // handleMediaStatusChanged() is triggered when the media status changes.
 // If the media has loaded successfully (LoadedMedia), it starts playback and disconnects the signal
 // to avoid unnecessary calls.
-void MainWindow::handleMediaStatusChanged(QMediaPlayer::MediaStatus status) {
+void mainwindowm::handleMediaStatusChanged(QMediaPlayer::MediaStatus status) {
     if (status == QMediaPlayer::LoadedMedia) {
         // Media has loaded successfully, start playback
         std::cout << "play video: " << currentVideoIndex << std::endl;
@@ -203,7 +201,7 @@ void MainWindow::handleMediaStatusChanged(QMediaPlayer::MediaStatus status) {
         // Current video playback is complete, automatically play the next video
 
         // disconnect previous slots
-        disconnect(mediaPlayer, &QMediaPlayer::mediaStatusChanged, this, &MainWindow::handleMediaStatusChanged);
+        disconnect(mediaPlayer, &QMediaPlayer::mediaStatusChanged, this, &mainwindowm::handleMediaStatusChanged);
 
         currentVideoIndex = (currentVideoIndex + 1) % videoPaths.size();
         std::cout << "end of video, switch to next: " << currentVideoIndex << std::endl;
@@ -214,7 +212,7 @@ void MainWindow::handleMediaStatusChanged(QMediaPlayer::MediaStatus status) {
 // setMediaAndPlay() sets up a signal-slot connection for media status changed,
 // checks if the current video index is within the valid range, retrieves the path of the next video,
 // and sets the media source to start playback.
-void MainWindow::setMediaAndPlay() {
+void mainwindowm::setMediaAndPlay() {
     // Check if the current video index is within the valid range
     if (currentVideoIndex >= 0 && currentVideoIndex < videoPaths.size()) {
         // Retrieve the path of the next video in the playlist
@@ -224,7 +222,7 @@ void MainWindow::setMediaAndPlay() {
         mediaPlayer->setMedia(QUrl::fromLocalFile(QFileInfo(videoPath).absoluteFilePath()));
 
         // Set up a signal-slot connection for media status changed
-        connect(mediaPlayer, &QMediaPlayer::mediaStatusChanged, this, &MainWindow::handleMediaStatusChanged);
+        connect(mediaPlayer, &QMediaPlayer::mediaStatusChanged, this, &mainwindowm::handleMediaStatusChanged);
     }
 }
 
@@ -233,7 +231,7 @@ void MainWindow::setMediaAndPlay() {
 // Params:
 // - videoPaths: QStringList containing paths of all videos in the folder.
 // - currentIndex: The index corresponding to the clicked button.
-void MainWindow::handleVideoSelection(const QStringList& videoPaths, int currentIndex) {
+void mainwindowm::handleVideoSelection(const QStringList& videoPaths, int currentIndex) {
     // Log the video paths and current index for debugging purposes
     qDebug() << "Button clicked. Video paths:" << videoPaths;
     qDebug() << "Button clicked. currentIndex:" << currentIndex;
@@ -254,7 +252,7 @@ void MainWindow::handleVideoSelection(const QStringList& videoPaths, int current
 // The buttons are displayed in a vertical layout within a scroll area.
 // Params:
 // - folderPath: The path of the folder to parse for video files.
-void MainWindow::parseFolder(const QString& folderPath) {
+void mainwindowm::parseFolder(const QString& folderPath) {
     // Log the folder path for debugging purposes
     qDebug() << "Folder path:" << folderPath;
 
@@ -297,7 +295,7 @@ void MainWindow::parseFolder(const QString& folderPath) {
 
             // Set the icon size and connect the button click signal to onButtonClicked slot
             button->setIconSize(QSize(250, 250));
-            connect(button, &QPushButton::clicked, this, &MainWindow::onButtonClicked);
+            connect(button, &QPushButton::clicked, this, &mainwindowm::onButtonClicked);
 
             // Add the button to the layout
             layout->addWidget(button);
@@ -311,7 +309,7 @@ void MainWindow::parseFolder(const QString& folderPath) {
 // onButtonClicked() is triggered when a BtnConvert button is clicked.
 // It retrieves the video path from the clicked button and calls handleVideoSelection()
 // to handle the selection of the corresponding video in the playlist.
-void MainWindow::onButtonClicked() {
+void mainwindowm::onButtonClicked() {
     // Attempt to cast the sender to BtnConvert
     BtnConvert* button = qobject_cast<BtnConvert*>(sender());
     if (button) {
@@ -328,7 +326,7 @@ void MainWindow::onButtonClicked() {
 
 // switchToListset() is called to switch to the ListSet window.
 // It hides the current MainWindow and shows a new ListSet window.
-void MainWindow::switchToListset() {
+void mainwindowm::switchToListset() {
     // Close the current MainWindow
     hide();
 
@@ -341,7 +339,7 @@ void MainWindow::switchToListset() {
 
 // toggleFullScreen() toggles between fullscreen and normal display modes.
 // It adjusts the window flags and visibility of UI elements accordingly.
-void MainWindow::toggleFullScreen() {
+void mainwindowm::toggleFullScreen() {
     qDebug() << "Button Clicked";
 
     // Toggle the fullscreen state
@@ -366,7 +364,7 @@ void MainWindow::toggleFullScreen() {
     }
 }
 
-void MainWindow::resizeEvent(QResizeEvent* event) {
+void mainwindowm::resizeEvent(QResizeEvent* event) {
     QMainWindow::resizeEvent(event);
 
     // 如果 picturelist 和 videoplayer 都没有被隐藏，立即应用大小调整逻辑
@@ -395,3 +393,4 @@ void MainWindow::resizeEvent(QResizeEvent* event) {
         repaint();
     }
 }
+

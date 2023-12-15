@@ -1,17 +1,20 @@
 #ifndef LISTSET_H
 #define LISTSET_H
 
+#include <QListWidgetItem>
 #include <QMainWindow>
 #include <QPushButton>
 #include <QVBoxLayout>
+
 #include <QListWidgetItem>
+#include <vector>
 
 #include <vector>
 
-#include "fileutil.h" 
+#include "fileutil.h"
 
 namespace Ui {
-    class ListSet;
+class ListSet;
 }
 
 class ListSet : public QMainWindow {
