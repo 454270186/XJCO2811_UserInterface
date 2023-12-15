@@ -7,10 +7,15 @@
 #include <QListWidgetItem>
 
 #include <vector>
+#include <QListWidgetItem>
 
+#include <vector>
+
+#include "fileutil.h" 
 #include "fileutil.h" 
 
 namespace Ui {
+    class ListSet;
     class ListSet;
 }
 
@@ -31,6 +36,7 @@ public slots:
 private slots:
     int on_addList_clicked();
     void onSubmitClicked();
+    void onDeleteClicked();
     void switchToPage() { emit switchPage(0); }
 
 private:

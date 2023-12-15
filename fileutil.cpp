@@ -112,7 +112,7 @@ vector<ListInfo> FileUtil::GetAllListsInfo() {
     if (rootElement && strcmp(rootElement->Name(), "lists") == 0) {
         // Traverse root element: <videolist>
         for (XMLElement* videolistElement = rootElement->FirstChildElement("videolist"); videolistElement;
-             videolistElement = videolistElement->NextSiblingElement("videolist")) {
+            videolistElement = videolistElement->NextSiblingElement("videolist")) {
             ListInfo listInfo;
 
             XMLElement* idElement = videolistElement->FirstChildElement("id");

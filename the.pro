@@ -9,16 +9,16 @@ CONFIG += c++11
 
 SOURCES += \
     btnconvert.cpp \
-        fileutil.cpp \
-        main.cpp \
-        mainwindow.cpp \
+    fileutil.cpp \
+    main.cpp \
+    mainwindow.cpp \
     mainwindowm.cpp \
     myvideowidget.cpp \
     pagemanager.cpp \
-        tinyxml2.cpp \
-        listset.cpp \
-        formhandler.cpp \
-
+    tinyxml2.cpp \
+    listset.cpp \
+    formhandler.cpp \
+    listsetsmall.cpp
 
 HEADERS += \
     btnconvert.h \
@@ -31,6 +31,7 @@ HEADERS += \
     tinyxml2.h \
     listset.h \
     formhandler.h \
+    listsetsmall.h
 
 
 
@@ -45,5 +46,4 @@ FORMS += \
     mainwindowm.ui
 
 
-
-
+    listsetsmall.ui
