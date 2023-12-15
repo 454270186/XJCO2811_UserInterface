@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1000</width>
-    <height>700</height>
+    <width>587</width>
+    <height>426</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -62,7 +62,7 @@
          <property name="minimumSize">
           <size>
            <width>0</width>
-           <height>0</height>
+           <height>100</height>
           </size>
          </property>
          <property name="maximumSize">
@@ -79,9 +79,6 @@
          </property>
          <property name="title">
           <string/>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout">
           <item>
@@ -145,8 +142,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>374</width>
-               <height>67</height>
+               <width>115</width>
+               <height>77</height>
               </rect>
              </property>
             </widget>
@@ -380,8 +377,11 @@
              </item>
              <item>
               <widget class="QSlider" name="progressbar">
-               <property name="cursor">
-                <cursorShape>PointingHandCursor</cursorShape>
+               <property name="minimumSize">
+                <size>
+                 <width>50</width>
+                 <height>0</height>
+                </size>
                </property>
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>

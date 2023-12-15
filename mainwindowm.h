@@ -1,5 +1,5 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef MAINWINDOWM_H
+#define MAINWINDOWM_H
 
 #include <QHBoxLayout>
 #include <QMainWindow>
@@ -12,16 +12,16 @@
 #include "fileutil.h"
 
 namespace Ui {
-class MainWindow;
+class mainwindowm;
 }
 
-class MainWindow : public QMainWindow {
+class mainwindowm : public QMainWindow {
     Q_OBJECT
 
 public:
-    Ui::MainWindow* ui;
-    explicit MainWindow(QWidget* parent = nullptr);
-    ~MainWindow();
+    Ui::mainwindowm* ui;
+    explicit mainwindowm(QWidget* parent = nullptr);
+    ~mainwindowm();
 
     // Play() and Pause() are exposed to PageManager
     // to control the video play or pause
@@ -81,4 +81,4 @@ private:
     int currentVideoIndex;  // 当前播放的视频索引
 };
 
-#endif  // MAINWINDOW_H
+#endif  // MAINWINDOWM_H
