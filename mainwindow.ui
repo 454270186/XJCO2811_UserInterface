@@ -89,22 +89,22 @@
            </widget>
           </item>
           <item>
-            <widget class="QScrollArea" name="lists">
-             <property name="widgetResizable">
-              <bool>true</bool>
+           <widget class="QScrollArea" name="lists">
+            <property name="widgetResizable">
+             <bool>true</bool>
+            </property>
+            <widget class="QWidget" name="scrollAreaWidgetContents">
+             <property name="geometry">
+              <rect>
+               <x>0</x>
+               <y>0</y>
+               <width>115</width>
+               <height>77</height>
+              </rect>
              </property>
-             <widget class="QWidget" name="scrollAreaWidgetContents">
-              <property name="geometry">
-               <rect>
-                <x>0</x>
-                <y>0</y>
-                <width>420</width>
-                <height>77</height>
-               </rect>
-              </property>
-             </widget>
             </widget>
-           </item>
+           </widget>
+          </item>
          </layout>
         </widget>
        </item>
@@ -220,7 +220,7 @@ color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, s
                 </size>
                </property>
                <property name="text">
-                <string>后退</string>
+                <string>《《</string>
                </property>
               </widget>
              </item>
@@ -246,12 +246,18 @@ color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, s
                 </size>
                </property>
                <property name="text">
-                <string>前进</string>
+                <string>》》</string>
                </property>
               </widget>
              </item>
              <item>
               <widget class="QSlider" name="progressbar">
+               <property name="minimumSize">
+                <size>
+                 <width>50</width>
+                 <height>0</height>
+                </size>
+               </property>
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
                </property>
