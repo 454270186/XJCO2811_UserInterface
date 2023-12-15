@@ -151,6 +151,7 @@ void ListSetSmall::onSubmitClicked() {
             connect(newButton, &QPushButton::clicked, [this, listName, videoDirPath, newButton] {
                 ui->editName->setText(listName.c_str());
                 ui->editPath->setText(videoDirPath.c_str());
+                ui->Delete->setVisible(true);
                 ui->submit->setText(QString("Edit"));
                 isSubmitEnabled = false;
                 currentBtnIndex = listLayout->indexOf(newButton) - 1;
