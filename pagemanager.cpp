@@ -11,6 +11,7 @@ PageManager::PageManager(QWidget* parent) : QMainWindow{parent} {
 
     connect(mainwindow, &MainWindow::switchPage, this, &PageManager::switchToPage);
     connect(listset, &ListSet::switchPage, this, &PageManager::switchToPage);
+    connect(this, &PageManager::resized, this, &PageManager::changeWindows);
 
     setCentralWidget(stackPage);
 }
