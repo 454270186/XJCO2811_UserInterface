@@ -46,7 +46,7 @@ ListSet::ListSet(QWidget* parent) : QMainWindow(parent), ui(new Ui::ListSet), ha
                 ListInfo info = this->listsInfo[index];
                 ui->editName->setText(QString::fromStdString(info.name));
                 ui->editPath->setText(QString::fromStdString(info.videoDirPath));
-            }      
+            }
         });
     }
 
@@ -153,6 +153,7 @@ void ListSet::onSubmitClicked() {
             connect(newButton, &QPushButton::clicked, [this, listName, videoDirPath, newButton] {
                 ui->editName->setText(listName.c_str());
                 ui->editPath->setText(videoDirPath.c_str());
+                ui->Delete->setVisible(true);
                 ui->submit->setText(QString("Edit"));
                 isSubmitEnabled = false;
                 currentBtnIndex = listLayout->indexOf(newButton) - 1;
@@ -186,7 +187,7 @@ void ListSet::onDeleteClicked() {
     if (result > 0) {
         QMessageBox::information(this, "Success", "List deleted successfully");
         // Remove the corresponding button from the UI
-        QWidget* widget = listLayout->itemAt(currentBtnIndex+1)->widget();
+        QWidget* widget = listLayout->itemAt(currentBtnIndex + 1)->widget();
         if (widget) {
             listLayout->removeWidget(widget);
             delete widget;
