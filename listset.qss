@@ -1,6 +1,35 @@
 QMainWindow {
     background-color: rgb(39, 40, 40);
+    font: 9pt "Arial";
 }
+
+
+QPushButton#backward{
+     qproperty-icon: url(../XJCO2811_UserInterface/icons/house-door.svg); 
+     qproperty-iconSize: 40px; 
+}
+
+QPushButton#addList{
+     qproperty-icon: url(../XJCO2811_UserInterface/icons/plus-circle.svg); 
+     qproperty-iconSize: 40px; 
+}
+
+QPushButton#findPath{
+     qproperty-icon: url(../XJCO2811_UserInterface/icons/folder-plus.svg); 
+     qproperty-iconSize: 40px; 
+}
+
+QLineEdit {
+    background-color: #272828; 
+    color: white; 
+    border: 1px solid white;
+}
+
+QLineEdit:focus {
+    background-color: #464747; 
+    border: 1px solid #d0edff;
+}
+
 
 QScrollArea QPushButton#newButton {
     border-radius: 20px;
@@ -28,6 +57,7 @@ QScrollArea QPushButton#newButton:checked {
 }
 
 QMessageBox {
+    background-color: #272828;
     color: white;
 }
 
@@ -35,11 +65,8 @@ QMessageBox QLabel {
     color: white;
 }
 
-QLineEdit {
-    color: white;
-}
-
 QMessageBox QPushButton {
+    background-color: #474848;
     color: white;
 }
 
@@ -49,21 +76,6 @@ QPushButton#Delete, QPushButton#submit {
      border: 1px solid white;
      background-color: #444;
      border-radius: 20px;
-}
-
-QPushButton#backward{
-     qproperty-icon: url(../XJCO2811_UserInterface/icons/house-door.svg); 
-     qproperty-iconSize: 40px; 
-}
-
-QPushButton#addList{
-     qproperty-icon: url(../XJCO2811_UserInterface/icons/plus-circle.svg); 
-     qproperty-iconSize: 40px; 
-}
-
-QPushButton#findPath{
-     qproperty-icon: url(../XJCO2811_UserInterface/icons/folder-plus.svg); 
-     qproperty-iconSize: 40px; 
 }
 
 QPushButton#Delete:hover, QPushButton#submit:hover {
@@ -77,5 +89,5 @@ QPushButton{
 }
 
 QPushButton:hover {
-     margin: 3px 5px 7px 5px;
+     margin: 2px 5px 8px 5px;
 }

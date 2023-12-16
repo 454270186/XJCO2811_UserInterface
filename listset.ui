@@ -29,8 +29,7 @@
    <enum>Qt::LeftToRight</enum>
   </property>
   <property name="styleSheet">
-   <string notr="true">font: 9pt &quot;Arial&quot;;
-background-color: rgb(39, 40, 40);</string>
+   <string notr="true"/>
   </property>
   <widget class="QWidget" name="centralwidget">
    <property name="sizePolicy">
@@ -218,6 +217,9 @@ background-color: rgb(39, 40, 40);</string>
            <pointsize>18</pointsize>
           </font>
          </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(255, 255, 255);</string>
+         </property>
          <property name="text">
           <string>List Name</string>
          </property>
@@ -269,6 +271,9 @@ background-color: rgb(39, 40, 40);</string>
           <font>
            <pointsize>18</pointsize>
           </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(255, 255, 255);</string>
          </property>
          <property name="text">
           <string>List Path</string>
