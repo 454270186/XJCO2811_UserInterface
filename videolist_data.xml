@@ -9,4 +9,9 @@
         <name>list 3</name>
         <video_path>../..</video_path>
     </videolist>
+    <videolist>
+        <id>3</id>
+        <name>asd</name>
+        <video_path>./ss</video_path>
+    </videolist>
 </lists>
