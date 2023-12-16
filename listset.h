@@ -25,6 +25,8 @@ public:
     bool isSubmitEnabled = false;
     ~ListSet();
 
+    void RefreshList();
+
 signals:
     void switchPage(int pageIndex);
 
@@ -47,6 +49,8 @@ private:
     QVector<QPushButton*> itemList;
     QPushButton* currentButton;
     int currentBtnIndex{0};
+
+    void renderList();
 };
 
 #endif  //LISTSET_H

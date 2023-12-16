@@ -108,11 +108,18 @@ int FileUtil::AddNewList(const string& listname, const string& videoDirPath, str
 vector<ListInfo> FileUtil::GetAllListsInfo() {
     vector<ListInfo> listsInfo;
 
+    xmlParser_.Clear();
+    XMLError err = xmlParser_.LoadFile(XMLFilePath_.c_str());
+    if (err != XML_SUCCESS) {
+        std::cout << "读取 xml 失败：" << xmlParser_.ErrorStr() << std::endl;
+        return listsInfo;
+    }
+
     XMLElement* rootElement = xmlParser_.RootElement();
     if (rootElement && strcmp(rootElement->Name(), "lists") == 0) {
         // Traverse root element: <videolist>
         for (XMLElement* videolistElement = rootElement->FirstChildElement("videolist"); videolistElement;
-            videolistElement = videolistElement->NextSiblingElement("videolist")) {
+             videolistElement = videolistElement->NextSiblingElement("videolist")) {
             ListInfo listInfo;
 
             XMLElement* idElement = videolistElement->FirstChildElement("id");
