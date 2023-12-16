@@ -18,7 +18,7 @@ MainWindow::MainWindow(QWidget* parent)
       ui(new Ui::MainWindow),
       isFullScreen(false),
       mediaPlayer(new QMediaPlayer(this)),
-      videoWidget(new QVideoWidget(this)){
+      videoWidget(new QVideoWidget(this)) {
     // Set up the user interface
     ui->setupUi(this);
 
@@ -50,7 +50,7 @@ MainWindow::MainWindow(QWidget* parent)
     QWidget* listsContainer = new QWidget(listsScrollArea);
 
     // Create a QHBoxLayout for the buttons
-    QHBoxLayout* listsLayout = new QHBoxLayout(listsContainer);
+    listsBtnsLayout = new QHBoxLayout(listsContainer);
 
     // Render all lists
     fileUtil_ = new FileUtil("../XJCO2811_UserInterface/videolist_data.xml");
@@ -58,23 +58,24 @@ MainWindow::MainWindow(QWidget* parent)
 
     // Clear existing buttons
     QLayoutItem* child;
-    while ((child = listsLayout->takeAt(0)) != nullptr) {
+    while ((child = listsBtnsLayout->takeAt(0)) != nullptr) {
         delete child->widget();
         delete child;
     }
 
     // Create new buttons based on updated listInfos_
-    for (size_t i = 0; i < listInfos_.size(); i++) {
-        QPushButton* newButton = new QPushButton();
-        newButton->setText(listInfos_[i].name.c_str());
-        newButton->setCheckable(true);
-        newButton->setAutoExclusive(true);
+    //    for (size_t i = 0; i < listInfos_.size(); i++) {
+    //        QPushButton* newButton = new QPushButton();
+    //        newButton->setText(listInfos_[i].name.c_str());
+    //        newButton->setCheckable(true);
+    //        newButton->setAutoExclusive(true);
 
-        listsLayout->addWidget(newButton);
+    //        listsLayout->addWidget(newButton);
 
-        // connect onClick hook
-        connect(newButton, &QPushButton::clicked, [this, i] { parseFolder(listInfos_[i].videoDirPath.c_str()); });
-    }
+    //        // connect onClick hook
+    //        connect(newButton, &QPushButton::clicked, [this, i] { parseFolder(listInfos_[i].videoDirPath.c_str()); });
+    //    }
+    renderBtnList(listsBtnsLayout);
 
     // Set the container QWidget as the widget for the QScrollArea
     listsScrollArea->setWidget(listsContainer);
@@ -92,7 +93,6 @@ MainWindow::MainWindow(QWidget* parent)
     connect(ui->retreat, &QPushButton::clicked, this, &MainWindow::onRetreatClicked);
     connect(ui->pause, &QPushButton::clicked, this, &MainWindow::onPauseClicked);
     connect(ui->fullScreen, &QPushButton::clicked, this, &MainWindow::toggleFullScreen);
-
 }
 
 // Destructor
@@ -101,6 +101,21 @@ MainWindow::~MainWindow() {
     delete videoWidget;
     delete ui;
 }
+
+void MainWindow::renderBtnList(QHBoxLayout* btnLayout) {
+    for (size_t i = 0; i < listInfos_.size(); i++) {
+        QPushButton* newButton = new QPushButton();
+        newButton->setText(listInfos_[i].name.c_str());
+        newButton->setCheckable(true);
+        newButton->setAutoExclusive(true);
+
+        btnLayout->addWidget(newButton);
+
+        // connect onClick hook
+        connect(newButton, &QPushButton::clicked, [this, i] { parseFolder(listInfos_[i].videoDirPath.c_str()); });
+    }
+}
+
 // onPauseClicked() toggles the play/pause state of the media player.
 // If the media player is currently playing, it pauses playback;
 // otherwise, it starts or resumes playback.
@@ -417,4 +432,32 @@ void MainWindow::resizeEvent(QResizeEvent* event) {
         // 强制重绘
         repaint();
     }
+}
+
+// RefreshList() refreshes the videolist and video path
+void MainWindow::RefreshList() {
+    // Assuming ui->lists is now a QScrollArea
+    QScrollArea* listsScrollArea = ui->lists;
+
+    // Create a QWidget to serve as the container for the buttons
+    QWidget* listsContainer = new QWidget(listsScrollArea);
+
+    // Create a QHBoxLayout for the buttons
+    if (listsBtnsLayout == nullptr) {
+        listsBtnsLayout = new QHBoxLayout(listsContainer);
+    }
+
+    // Clear existing buttons
+    QLayoutItem* child;
+    while ((child = listsBtnsLayout->takeAt(0)) != nullptr) {
+        delete child->widget();
+        delete child;
+    }
+
+    listInfos_ = fileUtil_->GetAllListsInfo();
+    fileUtil_->PrintAll();
+    for (size_t i = 0; i < listInfos_.size(); i++) {
+        std::cout << listInfos_[i].name << std::endl;
+    }
+    renderBtnList(listsBtnsLayout);
 }
