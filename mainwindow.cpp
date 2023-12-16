@@ -115,20 +115,44 @@ void MainWindow::onPauseClicked() {
     }
 }
 
-// onForwardClicked() fast-forwards the media playback by 5 seconds.
+// onForwardClicked() switches to the next video in the playlist.
 void MainWindow::onForwardClicked() {
-    // Fast forward by 5 seconds
-    qint64 currentPosition = mediaPlayer->position();
-    qint64 newPosition = currentPosition + 5000;
-    mediaPlayer->setPosition(newPosition);
+    // Switch to the next video
+    currentVideoIndex = (currentVideoIndex + 1) % videoPaths.size();
+
+    // Check if the current video index is within the valid range
+    if (currentVideoIndex >= 0 && currentVideoIndex < videoPaths.size()) {
+        // Reset the playback position
+        mediaPlayer->setPosition(0);
+
+        // Set up the media source for the new video
+        QString videoPath = videoPaths[currentVideoIndex];
+        mediaPlayer->setMedia(QUrl::fromLocalFile(QFileInfo(videoPath).absoluteFilePath()));
+
+        // Start playback
+        mediaPlayer->play();
+
+    }
 }
 
-// onRetreatClicked() rewinds the media playback by 5 seconds.
+// onRetreatClicked() switches to the previous video in the playlist.
 void MainWindow::onRetreatClicked() {
-    // Rewind by 5 seconds
-    qint64 currentPosition = mediaPlayer->position();
-    qint64 newPosition = currentPosition - 5000;
-    mediaPlayer->setPosition(newPosition);
+    // Switch to the previous video
+    currentVideoIndex = (currentVideoIndex - 1 + videoPaths.size()) % videoPaths.size();
+
+    // Check if the current video index is within the valid range
+    if (currentVideoIndex >= 0 && currentVideoIndex < videoPaths.size()) {
+        // Reset the playback position
+        mediaPlayer->setPosition(0);
+
+        // Set up the media source for the new video
+        QString videoPath = videoPaths[currentVideoIndex];
+        mediaPlayer->setMedia(QUrl::fromLocalFile(QFileInfo(videoPath).absoluteFilePath()));
+
+        // Start playback
+        mediaPlayer->play();
+
+    }
 }
 
 // onProgressbarSliderMoved() handles the sliderMoved signal of the progress bar.
@@ -342,7 +366,6 @@ void MainWindow::switchToListset() {
 // toggleFullScreen() toggles between fullscreen and normal display modes.
 // It adjusts the window flags and visibility of UI elements accordingly.
 void MainWindow::toggleFullScreen() {
-    qDebug() << "Button Clicked";
 
     // Toggle the fullscreen state
     isFullScreen = !isFullScreen;
