@@ -210,15 +210,30 @@ background-color: rgb(39, 40, 40);</string>
       <property name="title">
        <string/>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout" stretch="3,0,2">
+      <layout class="QVBoxLayout" name="verticalLayout" stretch="3,3,3,3,2">
+       <item>
+        <widget class="QLabel" name="label_name">
+         <property name="font">
+          <font>
+           <pointsize>18</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>List Name</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
        <item>
         <widget class="QWidget" name="widget_name" native="true">
-         <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <layout class="QVBoxLayout" name="verticalLayout_2">
           <property name="leftMargin">
            <number>10</number>
           </property>
           <property name="topMargin">
-           <number>10</number>
+           <number>0</number>
           </property>
           <property name="rightMargin">
            <number>10</number>
@@ -249,6 +264,21 @@ background-color: rgb(39, 40, 40);</string>
         </widget>
        </item>
        <item>
+        <widget class="QLabel" name="label_path">
+         <property name="font">
+          <font>
+           <pointsize>18</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>List Path</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QWidget" name="widget_path" native="true">
          <property name="minimumSize">
           <size>
@@ -270,7 +300,7 @@ background-color: rgb(39, 40, 40);</string>
            <number>10</number>
           </property>
           <property name="topMargin">
-           <number>10</number>
+           <number>0</number>
           </property>
           <property name="rightMargin">
            <number>10</number>
