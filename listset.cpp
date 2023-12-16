@@ -25,6 +25,40 @@ ListSet::ListSet(QWidget* parent) : QMainWindow(parent), ui(new Ui::ListSet), ha
     ui->midline->setVisible(false);
     ui->Delete->setVisible(false);
 
+    //    for (size_t i = 0; i < listsInfo.size(); i++) {
+    //        // initialize video list ui
+    //        QPushButton* newButton = new QPushButton();
+    //        newButton->setText(listsInfo[i].name.c_str());
+    //        newButton->setCheckable(true);
+    //        newButton->setAutoExclusive(true);
+    //        listLayout->addWidget(newButton);
+
+    //        connect(newButton, &QPushButton::clicked, [this, newButton] {
+    //            ui->groupBox_right->setVisible(true);
+    //            ui->midline->setVisible(true);
+    //            ui->Delete->setVisible(true);
+    //            ui->submit->setText(QString("Edit"));
+    //            isSubmitEnabled = false;
+    //            int index = listLayout->indexOf(newButton) - 1;
+    //            currentBtnIndex = index;
+    //            // Check if the index is valid
+    //            if (index != -1 && index < (int)this->listsInfo.size()) {
+    //                ListInfo info = this->listsInfo[index];
+    //                ui->editName->setText(QString::fromStdString(info.name));
+    //                ui->editPath->setText(QString::fromStdString(info.videoDirPath));
+    //            }
+    //        });
+    //    }
+    renderList();
+
+    connect(ui->backward, &QPushButton::clicked, this, &ListSet::switchToPage);
+}
+
+ListSet::~ListSet() {
+    delete ui;
+}
+
+void ListSet::renderList() {
     for (size_t i = 0; i < listsInfo.size(); i++) {
         // initialize video list ui
         QPushButton* newButton = new QPushButton();
@@ -49,12 +83,6 @@ ListSet::ListSet(QWidget* parent) : QMainWindow(parent), ui(new Ui::ListSet), ha
             }
         });
     }
-
-    connect(ui->backward, &QPushButton::clicked, this, &ListSet::switchToPage);
-}
-
-ListSet::~ListSet() {
-    delete ui;
 }
 
 // on_addList_clicked() handles the event when the "Add List" button is clicked.
@@ -173,6 +201,7 @@ void ListSet::onSubmitClicked() {
 //   1. Displays a success message.
 //   2. Removes the corresponding button from the UI.
 //   3. Removes the list information from the listsInfo array.
+//   4. Clears the interface when there is no list.
 // - If the deletion fails (result <= 0), displays an error message.
 void ListSet::onDeleteClicked() {
     if (currentBtnIndex < 0 || currentBtnIndex >= listsInfo.size()) {
@@ -194,6 +223,13 @@ void ListSet::onDeleteClicked() {
         }
         // Remove list information from listsInfo array
         listsInfo.erase(listsInfo.begin() + currentBtnIndex);
+        // Clear interface when there is no list
+        listsInfo.clear();
+        listsInfo = fileUtil->GetAllListsInfo();
+        if (listsInfo.empty()) {
+            ui->groupBox_right->setVisible(false);
+            ui->midline->setVisible(false);
+        }
     } else {
         QMessageBox::warning(this, "Error", QString::fromStdString(error));
     }
@@ -208,4 +244,23 @@ void ListSet::switchToMainWindow() {
     hide();
     MainWindow* mainwindow = new MainWindow();
     mainwindow->show();
+}
+
+void ListSet::RefreshList() {
+    if (listLayout == nullptr) {
+        listLayout = ui->scrollAreaWidget->findChild<QVBoxLayout*>("verticalLayout_6");
+    }
+
+    // Clear existing buttons
+    QLayoutItem* child;
+    while ((child = listLayout->takeAt(1)) != nullptr) {
+        delete child->widget();
+        delete child;
+    }
+
+    ui->editName->setText("");
+    ui->editPath->setText("");
+
+    listsInfo = fileUtil->GetAllListsInfo();
+    renderList();
 }

@@ -8,7 +8,8 @@
 #include "mainwindow.h"
 #include "ui_listsetsmall.h"
 
-ListSetSmall::ListSetSmall(QWidget* parent) : QMainWindow(parent), ui(new Ui::ListSetSmall), hasUnfinishedNewList(false) {
+ListSetSmall::ListSetSmall(QWidget* parent)
+    : QMainWindow(parent), ui(new Ui::ListSetSmall), hasUnfinishedNewList(false) {
     ui->setupUi(this);
     listLayout = ui->scrollAreaWidget->findChild<QHBoxLayout*>("horizontalLayout_4");
 
@@ -25,6 +26,38 @@ ListSetSmall::ListSetSmall(QWidget* parent) : QMainWindow(parent), ui(new Ui::Li
     ui->placeholderWidget->setVisible(true);
     ui->Delete->setVisible(false);
 
+    //    for (size_t i = 0; i < listsInfo.size(); i++) {
+    //        // initialize video list ui
+    //        QPushButton* newButton = new QPushButton();
+    //        newButton->setText(listsInfo[i].name.c_str());
+    //        newButton->setCheckable(true);
+    //        newButton->setAutoExclusive(true);
+    //        listLayout->addWidget(newButton);
+
+    //        connect(newButton, &QPushButton::clicked, [this, newButton] {
+    //            ui->groupBox_form->setVisible(true);
+    //            ui->placeholderWidget->setVisible(false);
+    //            ui->Delete->setVisible(true);
+    //            ui->submit->setText(QString("Edit"));
+    //            isSubmitEnabled = false;
+    //            int index = listLayout->indexOf(newButton) - 1;
+    //            currentBtnIndex = index;
+    //            // Check if the index is valid
+    //            if (index != -1 && index < (int)this->listsInfo.size()) {
+    //                ListInfo info = this->listsInfo[index];
+    //                ui->editName->setText(QString::fromStdString(info.name));
+    //                ui->editPath->setText(QString::fromStdString(info.videoDirPath));
+    //            }
+    //        });
+    //    }
+    renderList();
+}
+
+ListSetSmall::~ListSetSmall() {
+    delete ui;
+}
+
+void ListSetSmall::renderList() {
     for (size_t i = 0; i < listsInfo.size(); i++) {
         // initialize video list ui
         QPushButton* newButton = new QPushButton();
@@ -47,12 +80,8 @@ ListSetSmall::ListSetSmall(QWidget* parent) : QMainWindow(parent), ui(new Ui::Li
                 ui->editName->setText(QString::fromStdString(info.name));
                 ui->editPath->setText(QString::fromStdString(info.videoDirPath));
             }
-        });  
+        });
     }
-}
-
-ListSetSmall::~ListSetSmall() {
-    delete ui;
 }
 
 // on_addList_clicked() handles the event when the "Add List" button is clicked.
@@ -70,7 +99,7 @@ int ListSetSmall::on_addList_clicked() {
         QPushButton* newButton = new QPushButton("New List");
         newButton->setCheckable(true);
         newButton->setAutoExclusive(true);
-        listLayout->addWidget(newButton); 
+        listLayout->addWidget(newButton);
         hasUnfinishedNewList = true;
 
         connect(newButton, &QPushButton::clicked, [this, newButton] {
@@ -171,6 +200,7 @@ void ListSetSmall::onSubmitClicked() {
 //   1. Displays a success message.
 //   2. Removes the corresponding button from the UI.
 //   3. Removes the list information from the listsInfo array.
+//   4. Clears the interface when there is no list.
 // - If the deletion fails (result <= 0), displays an error message.
 void ListSetSmall::onDeleteClicked() {
     if (currentBtnIndex < 0 || currentBtnIndex >= listsInfo.size()) {
@@ -185,13 +215,20 @@ void ListSetSmall::onDeleteClicked() {
     if (result > 0) {
         QMessageBox::information(this, "Success", "List deleted successfully");
         // Remove the corresponding button from the UI
-        QWidget* widget = listLayout->itemAt(currentBtnIndex+1)->widget();
+        QWidget* widget = listLayout->itemAt(currentBtnIndex + 1)->widget();
         if (widget) {
             listLayout->removeWidget(widget);
             delete widget;
         }
         // Remove list information from listsInfo array
         listsInfo.erase(listsInfo.begin() + currentBtnIndex);
+        // Clear interface when there is no list
+        listsInfo.clear();
+        listsInfo = fileUtil->GetAllListsInfo();
+        if (listsInfo.empty()) {
+            ui->groupBox_form->setVisible(false);
+            ui->placeholderWidget->setVisible(true);
+        }
     } else {
         QMessageBox::warning(this, "Error", QString::fromStdString(error));
     }
@@ -206,4 +243,23 @@ void ListSetSmall::switchToMainWindow() {
     hide();
     MainWindow* mainwindow = new MainWindow();
     mainwindow->show();
+}
+
+void ListSetSmall::RefreshList() {
+    if (listLayout == nullptr) {
+        listLayout = ui->scrollAreaWidget->findChild<QHBoxLayout*>("horizontalLayout_4");
+    }
+
+    // Clear existing buttons
+    QLayoutItem* child;
+    while ((child = listLayout->takeAt(1)) != nullptr) {
+        delete child->widget();
+        delete child;
+    }
+
+    ui->editName->setText("");
+    ui->editPath->setText("");
+
+    listsInfo = fileUtil->GetAllListsInfo();
+    renderList();
 }

@@ -4,10 +4,10 @@
 #include <QHBoxLayout>
 #include <QMainWindow>
 #include <QMediaPlayer>
+#include <QPushButton>
 #include <QStringList>
 #include <QVideoWidget>
 #include <vector>
-#include <QPushButton>
 
 #include "fileutil.h"
 
@@ -28,9 +28,10 @@ public:
     void Play() { mediaPlayer->play(); }
     void Pause() { mediaPlayer->pause(); }
 
+    void RefreshList();
+
 signals:
     void switchPage(int pageIndex);
-
 
 public slots:
     // Slot to handle folder path changes
@@ -60,14 +61,13 @@ private slots:
     void handleVideoSelection(const QStringList& videoPaths, int currentIndex);  // 接口函数
     void handleMediaStatusChanged(QMediaPlayer::MediaStatus status);
     void toggleFullScreen();
-    void switchToPage() { emit switchPage(1);
-
- }
+    void switchToPage() { emit switchPage(1); }
 
 private:
     bool isVideoPlaying;
     void setMediaAndPlay();
     void startPlaylistFromParameters(const QStringList& videoPaths, int currentIndex);
+    void renderBtnList(QHBoxLayout* btnLayout);
     void resizeEvent(QResizeEvent* event) override;
     bool isFullScreen = false;
     QRect normalGeometry;

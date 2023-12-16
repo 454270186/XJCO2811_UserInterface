@@ -1,17 +1,17 @@
 #ifndef LISTSETSMALL_H
 #define LISTSETSMALL_H
 
-#include <QMainWindow>
-#include <QPushButton>
 #include <QHBoxLayout>
 #include <QListWidgetItem>
+#include <QMainWindow>
+#include <QPushButton>
 
 #include <vector>
 
-#include "fileutil.h" 
+#include "fileutil.h"
 
 namespace Ui {
-    class ListSetSmall;
+class ListSetSmall;
 }
 
 class ListSetSmall : public QMainWindow {
@@ -21,6 +21,8 @@ public:
     explicit ListSetSmall(QWidget* parent = nullptr);
     bool isSubmitEnabled = false;
     ~ListSetSmall();
+
+    void RefreshList();
 
 public slots:
     void switchToMainWindow();
@@ -35,11 +37,13 @@ private:
     std::vector<ListInfo> listsInfo;
     Ui::ListSetSmall* ui;
     bool hasUnfinishedNewList = false;
-    QHBoxLayout* listLayout; 
+    QHBoxLayout* listLayout;
     QPushButton* newButton;
     QVector<QPushButton*> itemList;
     QPushButton* currentButton;
-    int currentBtnIndex{0}; 
+    int currentBtnIndex{0};
+
+    void renderList();
 };
 
 #endif  // LISTSETSMALL_H
