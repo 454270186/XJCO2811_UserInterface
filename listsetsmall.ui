@@ -64,7 +64,25 @@
        </item>
        <item>
         <widget class="QGroupBox" name="groupBox_form">
-         <layout class="QVBoxLayout" name="verticalLayout_form" stretch="3,3,0">
+         <layout class="QVBoxLayout" name="verticalLayout_form" stretch="3,3,3,3,2">
+          <item>
+           <widget class="QLabel" name="label_name">
+            <property name="font">
+             <font>
+              <pointsize>15</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>List Name</string>
+            </property>
+            <property name="textFormat">
+             <enum>Qt::AutoText</enum>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
           <item>
            <widget class="QWidget" name="widget_name" native="true">
             <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -97,6 +115,21 @@
               </widget>
              </item>
             </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_path">
+            <property name="font">
+             <font>
+              <pointsize>15</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>List Path</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
            </widget>
           </item>
           <item>
