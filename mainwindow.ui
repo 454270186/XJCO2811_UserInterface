@@ -19,6 +19,9 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(39, 40, 40);</string>
+  </property>
   <property name="iconSize">
    <size>
     <width>18</width>
@@ -47,6 +50,9 @@
         <height>16777215</height>
        </size>
       </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(72, 73, 73);</string>
+      </property>
       <property name="title">
        <string/>
       </property>
@@ -64,6 +70,12 @@
            <width>16777215</width>
            <height>100</height>
           </size>
+         </property>
+         <property name="cursor">
+          <cursorShape>ArrowCursor</cursorShape>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(237，237，237);</string>
          </property>
          <property name="title">
           <string/>
@@ -83,13 +95,45 @@
               <height>30</height>
              </size>
             </property>
+            <property name="cursor">
+             <cursorShape>OpenHandCursor</cursorShape>
+            </property>
+            <property name="autoFillBackground">
+             <bool>false</bool>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">border: none; /* 移除边框 */
+    background-color: transparent; /* 设置背景透明 */
+    icon-size: 64px 64px; /* 设置图标大小，根据需要进行调整 */
+    padding: 0px; /* 移除内边距 */</string>
+            </property>
             <property name="text">
-             <string>+</string>
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>../../Downloads/Hopstarter-Button-Button-Add.256.png</normaloff>../../Downloads/Hopstarter-Button-Button-Add.256.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
+            </property>
+            <property name="autoRepeat">
+             <bool>false</bool>
+            </property>
+            <property name="autoExclusive">
+             <bool>false</bool>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QScrollArea" name="lists">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(75, 77, 77);
+</string>
+            </property>
             <property name="widgetResizable">
              <bool>true</bool>
             </property>
@@ -98,8 +142,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>115</width>
-               <height>77</height>
+               <width>207</width>
+               <height>75</height>
               </rect>
              </property>
             </widget>
@@ -110,6 +154,9 @@
        </item>
        <item>
         <widget class="QScrollArea" name="thumbnailList">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(75, 77, 77);border-radius: 30px</string>
+         </property>
          <property name="widgetResizable">
           <bool>true</bool>
          </property>
@@ -178,12 +225,33 @@
                  <height>30</height>
                 </size>
                </property>
+               <property name="font">
+                <font>
+                 <family>Academy Engraved LET</family>
+                </font>
+               </property>
+               <property name="cursor">
+                <cursorShape>OpenHandCursor</cursorShape>
+               </property>
                <property name="styleSheet">
-                <string notr="true">
-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0 rgba(0, 0, 0, 255), stop:0.19397 rgba(0, 0, 0, 255), stop:0.202312 rgba(122, 97, 0, 255), stop:0.495514 rgba(76, 58, 0, 255), stop:0.504819 rgba(255, 255, 255, 255), stop:0.79 rgba(255, 255, 255, 255), stop:1 rgba(255, 158, 158, 255));</string>
+                <string notr="true">border: none; /* 移除边框 */
+    background-color: transparent; /* 设置背景透明 */
+    icon-size: 64px 64px; /* 设置图标大小，根据需要进行调整 */
+    padding: 0px; /* 移除内边距 */
+</string>
                </property>
                <property name="text">
                 <string/>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>../../Downloads/Hopstarter-Button-Button-Stop.256.png</normaloff>../../Downloads/Hopstarter-Button-Button-Stop.256.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>24</width>
+                 <height>24</height>
+                </size>
                </property>
               </widget>
              </item>
@@ -219,8 +287,27 @@ color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, s
                  <height>16777215</height>
                 </size>
                </property>
+               <property name="cursor">
+                <cursorShape>OpenHandCursor</cursorShape>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">border: none; /* 移除边框 */
+    background-color: transparent; /* 设置背景透明 */
+    icon-size: 64px 64px; /* 设置图标大小，根据需要进行调整 */
+    padding: 0px; /* 移除内边距 */</string>
+               </property>
                <property name="text">
-                <string>《《</string>
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>../../Downloads/Hopstarter-Button-Button-Previous.256.png</normaloff>../../Downloads/Hopstarter-Button-Button-Previous.256.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>24</width>
+                 <height>24</height>
+                </size>
                </property>
               </widget>
              </item>
@@ -232,8 +319,27 @@ color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, s
                  <height>16777215</height>
                 </size>
                </property>
+               <property name="cursor">
+                <cursorShape>OpenHandCursor</cursorShape>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">border: none; /* 移除边框 */
+    background-color: transparent; /* 设置背景透明 */
+    icon-size: 64px 64px; /* 设置图标大小，根据需要进行调整 */
+    padding: 0px; /* 移除内边距 */</string>
+               </property>
                <property name="text">
-                <string>暂停</string>
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>../../Downloads/Hopstarter-Button-Button-Pause.256.png</normaloff>../../Downloads/Hopstarter-Button-Button-Pause.256.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>24</width>
+                 <height>24</height>
+                </size>
                </property>
               </widget>
              </item>
@@ -245,8 +351,27 @@ color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, s
                  <height>16777215</height>
                 </size>
                </property>
+               <property name="cursor">
+                <cursorShape>OpenHandCursor</cursorShape>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">border: none; /* 移除边框 */
+    background-color: transparent; /* 设置背景透明 */
+    
+    padding: 0px; /* 移除内边距 */</string>
+               </property>
                <property name="text">
-                <string>》》</string>
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>../../Downloads/Hopstarter-Button-Button-Next.256.png</normaloff>../../Downloads/Hopstarter-Button-Button-Next.256.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>24</width>
+                 <height>24</height>
+                </size>
                </property>
               </widget>
              </item>
