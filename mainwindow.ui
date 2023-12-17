@@ -22,6 +22,9 @@
   <property name="styleSheet">
    <string notr="true">background-color: rgb(39, 40, 40);</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(39, 40, 40);</string>
+  </property>
   <property name="iconSize">
    <size>
     <width>18</width>
@@ -96,6 +99,18 @@
              </size>
             </property>
             <property name="cursor">
+             <cursorShape>OpenHandCursor</cursorShape>
+            </property>
+            <property name="autoFillBackground">
+             <bool>false</bool>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">border: none; /* 移除边框 */
+    background-color: transparent; /* 设置背景透明 */
+    icon-size: 64px 64px; /* 设置图标大小，根据需要进行调整 */
+    padding: 0px; /* 移除内边距 */</string>
+            </property>
+            <property name="cursor">
              <cursorShape>ArrowCursor</cursorShape>
             </property>
             <property name="autoFillBackground">
@@ -105,23 +120,7 @@
              <string notr="true"/>
             </property>
             <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset>
-              <normaloff>../../../Downloads/book-half.svg</normaloff>../../../Downloads/book-half.svg</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>24</width>
-              <height>24</height>
-             </size>
-            </property>
-            <property name="autoRepeat">
-             <bool>false</bool>
-            </property>
-            <property name="autoExclusive">
-             <bool>false</bool>
+             <string>+</string>
             </property>
            </widget>
           </item>
@@ -139,8 +138,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>77</width>
-               <height>67</height>
+               <width>115</width>
+               <height>77</height>
               </rect>
              </property>
             </widget>
@@ -222,14 +221,6 @@
                  <height>30</height>
                 </size>
                </property>
-               <property name="font">
-                <font>
-                 <family>Academy Engraved LET</family>
-                </font>
-               </property>
-               <property name="cursor">
-                <cursorShape>ArrowCursor</cursorShape>
-               </property>
                <property name="styleSheet">
                 <string notr="true">border: none; /* 移除边框 */
     background-color: transparent; /* 设置背景透明 */
@@ -239,12 +230,6 @@
                </property>
                <property name="text">
                 <string/>
-               </property>
-               <property name="iconSize">
-                <size>
-                 <width>24</width>
-                 <height>24</height>
-                </size>
                </property>
               </widget>
              </item>
@@ -284,16 +269,19 @@
                 <cursorShape>OpenHandCursor</cursorShape>
                </property>
                <property name="styleSheet">
+                <string notr="true">border: none; /* 移除边框 */
+    background-color: transparent; /* 设置背景透明 */
+    icon-size: 64px 64px; /* 设置图标大小，根据需要进行调整 */
+    padding: 0px; /* 移除内边距 */</string>
+               </property>
+               <property name="cursor">
+                <cursorShape>OpenHandCursor</cursorShape>
+               </property>
+               <property name="styleSheet">
                 <string notr="true"/>
                </property>
                <property name="text">
-                <string/>
-               </property>
-               <property name="iconSize">
-                <size>
-                 <width>24</width>
-                 <height>24</height>
-                </size>
+                <string>《《</string>
                </property>
               </widget>
              </item>
@@ -309,16 +297,19 @@
                 <cursorShape>OpenHandCursor</cursorShape>
                </property>
                <property name="styleSheet">
+                <string notr="true">border: none; /* 移除边框 */
+    background-color: transparent; /* 设置背景透明 */
+    icon-size: 64px 64px; /* 设置图标大小，根据需要进行调整 */
+    padding: 0px; /* 移除内边距 */</string>
+               </property>
+               <property name="cursor">
+                <cursorShape>OpenHandCursor</cursorShape>
+               </property>
+               <property name="styleSheet">
                 <string notr="true"/>
                </property>
                <property name="text">
-                <string/>
-               </property>
-               <property name="iconSize">
-                <size>
-                 <width>24</width>
-                 <height>24</height>
-                </size>
+                <string>暂停</string>
                </property>
               </widget>
              </item>
@@ -331,19 +322,22 @@
                 </size>
                </property>
                <property name="cursor">
+                <cursorShape>OpenHandCursor</cursorShape>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">border: none; /* 移除边框 */
+    background-color: transparent; /* 设置背景透明 */
+    
+    padding: 0px; /* 移除内边距 */</string>
+               </property>
+               <property name="cursor">
                 <cursorShape>ArrowCursor</cursorShape>
                </property>
                <property name="styleSheet">
                 <string notr="true"/>
                </property>
                <property name="text">
-                <string/>
-               </property>
-               <property name="iconSize">
-                <size>
-                 <width>24</width>
-                 <height>24</height>
-                </size>
+                <string>》》</string>
                </property>
               </widget>
              </item>
