@@ -21,13 +21,13 @@ MainWindow::MainWindow(QWidget* parent)
       videoWidget(new QVideoWidget(this)) {
     // Set up the user interface
     ui->setupUi(this);
-    QFile file1("../XJCO2811_UserInterface/mainwindow.qss");
+    QFile file2("../XJCO2811_UserInterface/mainwindow.qss");
     QString StyleSheet;
-    if (file1.open(QFile::ReadOnly)) {
-        StyleSheet += QLatin1String(file1.readAll());
-        file1.close();
+    if (file2.open(QFile::ReadOnly)) {
+        StyleSheet += QLatin1String(file2.readAll());
+        file2.close();
     } else {
-        qDebug() << "File does not exist: " << file1.fileName();
+        qDebug() << "File does not exist: " << file2.fileName();
     }
 
     if (!StyleSheet.isEmpty()) {

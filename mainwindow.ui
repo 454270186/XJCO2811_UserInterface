@@ -22,9 +22,6 @@
   <property name="styleSheet">
    <string notr="true">background-color: rgb(39, 40, 40);</string>
   </property>
-  <property name="styleSheet">
-   <string notr="true">background-color: rgb(39, 40, 40);</string>
-  </property>
   <property name="iconSize">
    <size>
     <width>18</width>
@@ -110,24 +107,15 @@
     icon-size: 64px 64px; /* 设置图标大小，根据需要进行调整 */
     padding: 0px; /* 移除内边距 */</string>
             </property>
-            <property name="cursor">
-             <cursorShape>ArrowCursor</cursorShape>
-            </property>
-            <property name="autoFillBackground">
-             <bool>false</bool>
-            </property>
-            <property name="styleSheet">
-             <string notr="true"/>
-            </property>
             <property name="text">
-             <string>+</string>
+             <string/>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QScrollArea" name="lists">
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(75, 77, 77);
+             <string notr="true">background-color: rgb(73, 74, 74);
 </string>
             </property>
             <property name="widgetResizable">
@@ -138,8 +126,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>115</width>
-               <height>77</height>
+               <width>130</width>
+               <height>67</height>
               </rect>
              </property>
             </widget>
@@ -151,7 +139,7 @@
        <item>
         <widget class="QScrollArea" name="thumbnailList">
          <property name="styleSheet">
-          <string notr="true">background-color: rgb(75, 77, 77);border-radius: 30px</string>
+          <string notr="true">background-color: rgb(73, 74, 74);border-radius: 20px</string>
          </property>
          <property name="widgetResizable">
           <bool>true</bool>
@@ -274,14 +262,14 @@
     icon-size: 64px 64px; /* 设置图标大小，根据需要进行调整 */
     padding: 0px; /* 移除内边距 */</string>
                </property>
-               <property name="cursor">
-                <cursorShape>OpenHandCursor</cursorShape>
-               </property>
-               <property name="styleSheet">
-                <string notr="true"/>
-               </property>
                <property name="text">
-                <string>《《</string>
+                <string/>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>30</width>
+                 <height>30</height>
+                </size>
                </property>
               </widget>
              </item>
@@ -302,14 +290,14 @@
     icon-size: 64px 64px; /* 设置图标大小，根据需要进行调整 */
     padding: 0px; /* 移除内边距 */</string>
                </property>
-               <property name="cursor">
-                <cursorShape>OpenHandCursor</cursorShape>
-               </property>
-               <property name="styleSheet">
-                <string notr="true"/>
-               </property>
                <property name="text">
-                <string>暂停</string>
+                <string/>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>30</width>
+                 <height>30</height>
+                </size>
                </property>
               </widget>
              </item>
@@ -327,17 +315,17 @@
                <property name="styleSheet">
                 <string notr="true">border: none; /* 移除边框 */
     background-color: transparent; /* 设置背景透明 */
-    
+    icon-size: 64px 64px; /* 设置图标大小，根据需要进行调整 */
     padding: 0px; /* 移除内边距 */</string>
                </property>
-               <property name="cursor">
-                <cursorShape>ArrowCursor</cursorShape>
-               </property>
-               <property name="styleSheet">
-                <string notr="true"/>
-               </property>
                <property name="text">
-                <string>》》</string>
+                <string/>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>30</width>
+                 <height>30</height>
+                </size>
                </property>
               </widget>
              </item>
