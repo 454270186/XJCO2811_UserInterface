@@ -302,6 +302,8 @@ void MainWindow::parseFolder(const QString& folderPath) {
     QVBoxLayout* layout = new QVBoxLayout(containerWidget);
 
     // Iterate through each video file in the folder
+    // Clear video paths
+    videoPaths.clear();
     foreach (const QString& videoFile, videoFiles) {
         QString videoPath = dir.filePath(videoFile);
         videoPaths.append(videoPath);
