@@ -1,0 +1,33 @@
+#thumbnailList QScrollBar:vertical {
+    border: none;
+    background: rgb(213, 213, 213);
+    width: 14px;
+    margin: 15px 0 15px 0;
+    border-radius: 0px;
+}
+
+#thumbnailList QScrollBar::handle:vertical {
+    background: #9aa3ad;
+    min-height: 30px;
+    border-radius: 7px;
+}
+
+#thumbnailList QScrollBar::handle:vertical:hover {
+    background: rgb(225, 225, 225);
+}
+
+#thumbnailList QScrollBar::sub-line:vertical, QScrollBar::add-line:vertical {
+    border: none;
+    background: none;
+}
+
+#thumbnailList QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {
+    border: none;
+    width: 0px;
+    height: 0px;
+    background: none;
+}
+
+#thumbnailList QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+    background: none;
+}
