@@ -31,3 +31,21 @@
 #thumbnailList QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
     background: none;
 }
+
+QMainWindow {
+    background-color: rgb(39, 40, 40);
+    font: 9pt "Arial";
+}
+
+PushButton#retreat{
+     qproperty-icon: url(../XJCO2811_UserInterface/icons/.svg);
+     qproperty-iconSize: 40px;
+}
+PushButton#pause{
+     qproperty-icon: url(../XJCO2811_UserInterface/icons/pause-circle.svg);
+     qproperty-iconSize: 40px;
+}
+PushButton#forward{
+     qproperty-icon: url(../XJCO2811_UserInterface/icons/#.svg);
+     qproperty-iconSize: 40px;
+}

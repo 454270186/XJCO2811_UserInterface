@@ -96,23 +96,20 @@
              </size>
             </property>
             <property name="cursor">
-             <cursorShape>OpenHandCursor</cursorShape>
+             <cursorShape>ArrowCursor</cursorShape>
             </property>
             <property name="autoFillBackground">
              <bool>false</bool>
             </property>
             <property name="styleSheet">
-             <string notr="true">border: none; /* 移除边框 */
-    background-color: transparent; /* 设置背景透明 */
-    icon-size: 64px 64px; /* 设置图标大小，根据需要进行调整 */
-    padding: 0px; /* 移除内边距 */</string>
+             <string notr="true"/>
             </property>
             <property name="text">
              <string/>
             </property>
             <property name="icon">
              <iconset>
-              <normaloff>../../../Downloads/Hopstarter-Button-Button-Add.256.png</normaloff>../../../Downloads/Hopstarter-Button-Button-Add.256.png</iconset>
+              <normaloff>../../../Downloads/book-half.svg</normaloff>../../../Downloads/book-half.svg</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -142,8 +139,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>115</width>
-               <height>77</height>
+               <width>77</width>
+               <height>67</height>
               </rect>
              </property>
             </widget>
@@ -231,7 +228,7 @@
                 </font>
                </property>
                <property name="cursor">
-                <cursorShape>OpenHandCursor</cursorShape>
+                <cursorShape>ArrowCursor</cursorShape>
                </property>
                <property name="styleSheet">
                 <string notr="true">border: none; /* 移除边框 */
@@ -242,10 +239,6 @@
                </property>
                <property name="text">
                 <string/>
-               </property>
-               <property name="icon">
-                <iconset>
-                 <normaloff>../../../Downloads/Hopstarter-Button-Button-Stop.256.png</normaloff>../../../Downloads/Hopstarter-Button-Button-Stop.256.png</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -291,17 +284,10 @@
                 <cursorShape>OpenHandCursor</cursorShape>
                </property>
                <property name="styleSheet">
-                <string notr="true">border: none; /* 移除边框 */
-    background-color: transparent; /* 设置背景透明 */
-    icon-size: 64px 64px; /* 设置图标大小，根据需要进行调整 */
-    padding: 0px; /* 移除内边距 */</string>
+                <string notr="true"/>
                </property>
                <property name="text">
                 <string/>
-               </property>
-               <property name="icon">
-                <iconset>
-                 <normaloff>../../../Downloads/Hopstarter-Button-Button-Previous.256.png</normaloff>../../../Downloads/Hopstarter-Button-Button-Previous.256.png</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -323,17 +309,10 @@
                 <cursorShape>OpenHandCursor</cursorShape>
                </property>
                <property name="styleSheet">
-                <string notr="true">border: none; /* 移除边框 */
-    background-color: transparent; /* 设置背景透明 */
-    icon-size: 64px 64px; /* 设置图标大小，根据需要进行调整 */
-    padding: 0px; /* 移除内边距 */</string>
+                <string notr="true"/>
                </property>
                <property name="text">
                 <string/>
-               </property>
-               <property name="icon">
-                <iconset>
-                 <normaloff>../../../Downloads/Hopstarter-Button-Button-Pause.256.png</normaloff>../../../Downloads/Hopstarter-Button-Button-Pause.256.png</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -352,20 +331,13 @@
                 </size>
                </property>
                <property name="cursor">
-                <cursorShape>OpenHandCursor</cursorShape>
+                <cursorShape>ArrowCursor</cursorShape>
                </property>
                <property name="styleSheet">
-                <string notr="true">border: none; /* 移除边框 */
-    background-color: transparent; /* 设置背景透明 */
-    
-    padding: 0px; /* 移除内边距 */</string>
+                <string notr="true"/>
                </property>
                <property name="text">
                 <string/>
-               </property>
-               <property name="icon">
-                <iconset>
-                 <normaloff>../../../Downloads/Hopstarter-Button-Button-Next.256.png</normaloff>../../../Downloads/Hopstarter-Button-Button-Next.256.png</iconset>
                </property>
                <property name="iconSize">
                 <size>

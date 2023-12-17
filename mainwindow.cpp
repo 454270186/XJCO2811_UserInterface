@@ -21,7 +21,20 @@ MainWindow::MainWindow(QWidget* parent)
       videoWidget(new QVideoWidget(this)) {
     // Set up the user interface
     ui->setupUi(this);
+    QFile file1("../XJCO2811_UserInterface/mainwindow.qss");
+    QString StyleSheet;
+    if (file1.open(QFile::ReadOnly)) {
+        StyleSheet += QLatin1String(file1.readAll());
+        file1.close();
+    } else {
+        qDebug() << "File does not exist: " << file1.fileName();
+    }
 
+    if (!StyleSheet.isEmpty()) {
+        this->setStyleSheet(StyleSheet);
+    } else {
+        qDebug() << "Current directory:" << QDir::currentPath();
+    }
     ui->lists->setStyleSheet("QScrollArea { border: 0; }");
 
     // Assuming you want to set the initial size to 1000x700
