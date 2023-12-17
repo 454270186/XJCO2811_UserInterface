@@ -1,5 +1,4 @@
 #include <QApplication>
-
 #include "pagemanager.h"
 
 int main(int argc, char** argv) {

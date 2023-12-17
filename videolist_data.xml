@@ -7,7 +7,7 @@
     <videolist>
         <id>2</id>
         <name>list 3</name>
-        <video_path>../..</video_path>
+        <video_path>../../</video_path>
     </videolist>
     <videolist>
         <id>3</id>
