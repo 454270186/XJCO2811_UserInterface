@@ -21,7 +21,20 @@ MainWindow::MainWindow(QWidget* parent)
       videoWidget(new QVideoWidget(this)) {
     // Set up the user interface
     ui->setupUi(this);
+    QFile file2("../XJCO2811_UserInterface/mainwindow.qss");
+    QString StyleSheet;
+    if (file2.open(QFile::ReadOnly)) {
+        StyleSheet += QLatin1String(file2.readAll());
+        file2.close();
+    } else {
+        qDebug() << "File does not exist: " << file2.fileName();
+    }
 
+    if (!StyleSheet.isEmpty()) {
+        this->setStyleSheet(StyleSheet);
+    } else {
+        qDebug() << "Current directory:" << QDir::currentPath();
+    }
     ui->lists->setStyleSheet("QScrollArea { border: 0; }");
 
     // Assuming you want to set the initial size to 1000x700
@@ -289,6 +302,8 @@ void MainWindow::parseFolder(const QString& folderPath) {
     QVBoxLayout* layout = new QVBoxLayout(containerWidget);
 
     // Iterate through each video file in the folder
+    // Clear video paths
+    videoPaths.clear();
     foreach (const QString& videoFile, videoFiles) {
         QString videoPath = dir.filePath(videoFile);
         videoPaths.append(videoPath);
