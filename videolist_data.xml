@@ -9,4 +9,9 @@
         <name>TikTok2</name>
         <video_path>../XJCO2811_UserInterface/videos/landscape/list2</video_path>
     </videolist>
+    <videolist>
+        <id>3</id>
+        <name>1231231</name>
+        <video_path>231231</video_path>
+    </videolist>
 </lists>

@@ -25,6 +25,7 @@ mainwindowm::mainwindowm(QWidget* parent)
 
     ui->lists->setStyleSheet("QScrollArea { border: 0; }");
     ui->fullandmoblie->setStyleSheet("QGroupBox { border: 0; }");
+    ui->videoBox->setStyleSheet("QGroupBox { border: 0; }");
 
     // Set the minimum size to 460x700
     setMinimumSize(460, 700);
@@ -38,6 +39,14 @@ mainwindowm::mainwindowm(QWidget* parent)
     // Set up layout for videoWidget
     QVBoxLayout* videoLayout = new QVBoxLayout(videoplayer);
     videoLayout->addWidget(videoWidget);
+
+    // 设置初始音量为 50
+    mediaPlayer->setVolume(50);
+
+    // 将 QSlider 初始值设置为 50
+    ui->voicecontrolstrip->setValue(50);
+
+    ui->videoBox->installEventFilter(this);
 
     isVideoPlaying = false;
     ui->video->hide();
@@ -91,7 +100,7 @@ mainwindowm::mainwindowm(QWidget* parent)
     connect(ui->retreat, &QPushButton::clicked, this, &mainwindowm::onRetreatClicked);
     connect(ui->pause, &QPushButton::clicked, this, &mainwindowm::onPauseClicked);
     connect(ui->fullScreen, &QPushButton::clicked, this, &mainwindowm::toggleFullScreen);
-
+    connect(ui->voicecontrolstrip, &QSlider::valueChanged, this, &mainwindowm::adjustVolume);
 }
 
 // Destructor
@@ -219,7 +228,6 @@ void mainwindowm::handleMediaStatusChanged(QMediaPlayer::MediaStatus status) {
         mediaPlayer->play();
         isVideoPlaying = true;
         ui->video->show();
-        ui->picturelist->hide();
         if (ui->video->isVisible()) {
             resizeEvent(nullptr);
         }
@@ -400,7 +408,7 @@ void mainwindowm::resizeEvent(QResizeEvent* event) {
         int videoWidth = width() * 0.7;
 
         // 为 picturelist 设置最小宽度（根据需要调整此值）
-        int minPicturelistWidth = 200;
+        int minPicturelistWidth = 150;
 
         // 确保 picturelist 有一个最小宽度
         if (picturelistWidth < minPicturelistWidth) {
@@ -418,5 +426,28 @@ void mainwindowm::resizeEvent(QResizeEvent* event) {
 
     // 强制重绘
     repaint();
+}
+
+bool mainwindowm::eventFilter(QObject* obj, QEvent* event) {
+    if (obj == ui->videoBox) {
+        if (event->type() == QEvent::Enter) {
+            // 鼠标进入 videoBox 区域，显示音量条
+            ui->voicecontrolstrip->show();
+        } else if (event->type() == QEvent::Leave) {
+            // 鼠标离开 videoBox 区域，隐藏音量条
+            ui->voicecontrolstrip->hide();
+        }
+    }
+
+    // 将事件传递给基类处理
+    return QMainWindow::eventFilter(obj, event);
+}
+
+void mainwindowm::adjustVolume(int volume) {
+    // 将音量值映射到 QMediaPlayer 的音量范围（0 到 100）
+    qreal volumeLevel = volume / 100.0;
+
+    // 设置 QMediaPlayer 的音量
+    mediaPlayer->setVolume(static_cast<int>(volumeLevel * 100));
 }
 
