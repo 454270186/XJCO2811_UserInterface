@@ -82,7 +82,7 @@ int FileUtil::AddNewList(const string& listname, const string& videoDirPath, str
 
     // Append the new list element to the root element
     XMLElement* rootElement = xmlParser_.RootElement();
-    if (rootElement) {
+    if (rootElement && strcmp(rootElement->Name(), "lists") == 0) {
         rootElement->InsertEndChild(newListElement);
 
         // Save the modified XML document to the file
@@ -108,12 +108,12 @@ int FileUtil::AddNewList(const string& listname, const string& videoDirPath, str
 vector<ListInfo> FileUtil::GetAllListsInfo() {
     vector<ListInfo> listsInfo;
 
-    xmlParser_.Clear();
-    XMLError err = xmlParser_.LoadFile(XMLFilePath_.c_str());
-    if (err != XML_SUCCESS) {
-        std::cout << "读取 xml 失败：" << xmlParser_.ErrorStr() << std::endl;
-        return listsInfo;
-    }
+    //    xmlParser_.Clear();
+    //    XMLError err = xmlParser_.LoadFile(XMLFilePath_.c_str());
+    //    if (err != XML_SUCCESS) {
+    //        std::cout << "读取 xml 失败：" << xmlParser_.ErrorStr() << std::endl;
+    //        return listsInfo;
+    //    }
 
     XMLElement* rootElement = xmlParser_.RootElement();
     if (rootElement && strcmp(rootElement->Name(), "lists") == 0) {

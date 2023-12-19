@@ -35,7 +35,7 @@
      <height>0</height>
     </size>
    </property>
-   <layout class="QHBoxLayout" name="horizontalLayout_2">
+   <layout class="QHBoxLayout" name="horizontalLayout_5">
     <item>
      <widget class="QGroupBox" name="picturelist">
       <property name="minimumSize">
@@ -110,28 +110,12 @@
             <property name="text">
              <string/>
             </property>
-            <property name="icon">
-             <iconset>
-              <normaloff>../../Downloads/Hopstarter-Button-Button-Add.256.png</normaloff>../../Downloads/Hopstarter-Button-Button-Add.256.png</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>24</width>
-              <height>24</height>
-             </size>
-            </property>
-            <property name="autoRepeat">
-             <bool>false</bool>
-            </property>
-            <property name="autoExclusive">
-             <bool>false</bool>
-            </property>
            </widget>
           </item>
           <item>
            <widget class="QScrollArea" name="lists">
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(75, 77, 77);
+             <string notr="true">background-color: rgb(73, 74, 74);
 </string>
             </property>
             <property name="widgetResizable">
@@ -142,8 +126,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>207</width>
-               <height>75</height>
+               <width>118</width>
+               <height>77</height>
               </rect>
              </property>
             </widget>
@@ -155,7 +139,7 @@
        <item>
         <widget class="QScrollArea" name="thumbnailList">
          <property name="styleSheet">
-          <string notr="true">background-color: rgb(75, 77, 77);border-radius: 30px</string>
+          <string notr="true">background-color: rgb(73, 74, 74);border-radius: 20px</string>
          </property>
          <property name="widgetResizable">
           <bool>true</bool>
@@ -199,19 +183,6 @@
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_4">
              <item>
-              <spacer name="horizontalSpacer_2">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>183</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item>
               <widget class="QPushButton" name="fullScreen">
                <property name="minimumSize">
                 <size>
@@ -225,14 +196,6 @@
                  <height>30</height>
                 </size>
                </property>
-               <property name="font">
-                <font>
-                 <family>Academy Engraved LET</family>
-                </font>
-               </property>
-               <property name="cursor">
-                <cursorShape>OpenHandCursor</cursorShape>
-               </property>
                <property name="styleSheet">
                 <string notr="true">border: none; /* 移除边框 */
     background-color: transparent; /* 设置背景透明 */
@@ -243,23 +206,42 @@
                <property name="text">
                 <string/>
                </property>
-               <property name="icon">
-                <iconset>
-                 <normaloff>../../Downloads/Hopstarter-Button-Button-Stop.256.png</normaloff>../../Downloads/Hopstarter-Button-Button-Stop.256.png</iconset>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
                </property>
-               <property name="iconSize">
+               <property name="sizeHint" stdset="0">
                 <size>
-                 <width>24</width>
-                 <height>24</height>
+                 <width>299</width>
+                 <height>20</height>
                 </size>
                </property>
-              </widget>
+              </spacer>
              </item>
             </layout>
            </widget>
           </item>
           <item>
-           <widget class="QWidget" name="videoplayer" native="true"/>
+           <widget class="QGroupBox" name="videoBox">
+            <property name="title">
+             <string/>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_2">
+             <item>
+              <widget class="QWidget" name="videoplayer" native="true"/>
+             </item>
+             <item>
+              <widget class="QSlider" name="voicecontrolstrip">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
           </item>
           <item>
            <widget class="QGroupBox" name="control">
@@ -299,14 +281,10 @@
                <property name="text">
                 <string/>
                </property>
-               <property name="icon">
-                <iconset>
-                 <normaloff>../../Downloads/Hopstarter-Button-Button-Previous.256.png</normaloff>../../Downloads/Hopstarter-Button-Button-Previous.256.png</iconset>
-               </property>
                <property name="iconSize">
                 <size>
-                 <width>24</width>
-                 <height>24</height>
+                 <width>30</width>
+                 <height>30</height>
                 </size>
                </property>
               </widget>
@@ -331,14 +309,10 @@
                <property name="text">
                 <string/>
                </property>
-               <property name="icon">
-                <iconset>
-                 <normaloff>../../Downloads/Hopstarter-Button-Button-Pause.256.png</normaloff>../../Downloads/Hopstarter-Button-Button-Pause.256.png</iconset>
-               </property>
                <property name="iconSize">
                 <size>
-                 <width>24</width>
-                 <height>24</height>
+                 <width>30</width>
+                 <height>30</height>
                 </size>
                </property>
               </widget>
@@ -357,20 +331,16 @@
                <property name="styleSheet">
                 <string notr="true">border: none; /* 移除边框 */
     background-color: transparent; /* 设置背景透明 */
-    
+    icon-size: 64px 64px; /* 设置图标大小，根据需要进行调整 */
     padding: 0px; /* 移除内边距 */</string>
                </property>
                <property name="text">
                 <string/>
                </property>
-               <property name="icon">
-                <iconset>
-                 <normaloff>../../Downloads/Hopstarter-Button-Button-Next.256.png</normaloff>../../Downloads/Hopstarter-Button-Button-Next.256.png</iconset>
-               </property>
                <property name="iconSize">
                 <size>
-                 <width>24</width>
-                 <height>24</height>
+                 <width>30</width>
+                 <height>30</height>
                 </size>
                </property>
               </widget>
