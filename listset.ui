@@ -72,7 +72,8 @@
        </size>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color: rgb(72, 73, 73);</string>
+       <string notr="true">background-color: rgb(72, 73, 73);
+border-radius: 20px;</string>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_left">
        <property name="spacing">
@@ -119,8 +120,7 @@
           </size>
          </property>
          <property name="styleSheet">
-          <string notr="true">
-     border-radius: 20px;</string>
+          <string notr="true">border-radius: 20px;</string>
          </property>
          <property name="widgetResizable">
           <bool>true</bool>
@@ -130,8 +130,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>304</width>
-            <height>619</height>
+            <width>310</width>
+            <height>628</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_6">
