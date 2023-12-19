@@ -19,7 +19,8 @@ MainWindow::MainWindow(QWidget* parent)
       ui(new Ui::MainWindow),
       isFullScreen(false),
       mediaPlayer(new QMediaPlayer(this)),
-      videoWidget(new QVideoWidget(this)) {
+      videoWidget(new QVideoWidget(this))
+{
     // Set up the user interface
     ui->setupUi(this);
     QFile file2("../XJCO2811_UserInterface/mainwindow.qss");
@@ -53,6 +54,14 @@ MainWindow::MainWindow(QWidget* parent)
     // Set up layout for videoWidget
     QVBoxLayout* videoLayout = new QVBoxLayout(videoplayer);
     videoLayout->addWidget(videoWidget);
+
+    // 设置初始音量为 50
+    mediaPlayer->setVolume(50);
+
+    // 将 QSlider 初始值设置为 50
+    ui->voicecontrolstrip->setValue(50);
+
+    ui->videoBox->installEventFilter(this);
 
     isVideoPlaying = false;
     ui->video->hide();
@@ -107,6 +116,7 @@ MainWindow::MainWindow(QWidget* parent)
     connect(ui->retreat, &QPushButton::clicked, this, &MainWindow::onRetreatClicked);
     connect(ui->pause, &QPushButton::clicked, this, &MainWindow::onPauseClicked);
     connect(ui->fullScreen, &QPushButton::clicked, this, &MainWindow::toggleFullScreen);
+    connect(ui->voicecontrolstrip, &QSlider::valueChanged, this, &MainWindow::adjustVolume);
 }
 
 // Destructor
@@ -447,6 +457,29 @@ void MainWindow::resizeEvent(QResizeEvent* event) {
 
     // 强制重绘
     repaint();
+}
+
+bool MainWindow::eventFilter(QObject* obj, QEvent* event) {
+    if (obj == ui->videoBox) {
+        if (event->type() == QEvent::Enter) {
+            // 鼠标进入 videoBox 区域，显示音量条
+            ui->voicecontrolstrip->show();
+        } else if (event->type() == QEvent::Leave) {
+            // 鼠标离开 videoBox 区域，隐藏音量条
+            ui->voicecontrolstrip->hide();
+        }
+    }
+
+    // 将事件传递给基类处理
+    return QMainWindow::eventFilter(obj, event);
+}
+
+void MainWindow::adjustVolume(int volume) {
+    // 将音量值映射到 QMediaPlayer 的音量范围（0 到 100）
+    qreal volumeLevel = volume / 100.0;
+
+    // 设置 QMediaPlayer 的音量
+    mediaPlayer->setVolume(static_cast<int>(volumeLevel * 100));
 }
 
 // RefreshList() refreshes the videolist and video path
