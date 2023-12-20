@@ -14,7 +14,7 @@
 extern std::map<int, QString> errorMessages;
 
 namespace Ui {
-class ListSet;
+    class ListSet;
 }
 
 class ListSet : public QMainWindow {
