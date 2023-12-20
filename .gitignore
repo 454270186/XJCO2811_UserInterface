@@ -49,3 +49,9 @@ videos
 
 # bin
 bin
+
+# temp img file
+*.PNG
+*.png
+*.JPG
+*.jpg
