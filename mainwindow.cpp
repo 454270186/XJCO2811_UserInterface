@@ -6,6 +6,7 @@
 #include <QFileInfo>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
+#include <QResizeEvent>
 #include "btnconvert.h"
 #include "listset.h"
 #include "ui_mainwindow.h"
@@ -18,7 +19,8 @@ MainWindow::MainWindow(QWidget* parent)
       ui(new Ui::MainWindow),
       isFullScreen(false),
       mediaPlayer(new QMediaPlayer(this)),
-      videoWidget(new QVideoWidget(this)) {
+      videoWidget(new QVideoWidget(this))
+{
     // Set up the user interface
     ui->setupUi(this);
     QFile file2("../XJCO2811_UserInterface/mainwindow.qss");
@@ -52,6 +54,14 @@ MainWindow::MainWindow(QWidget* parent)
     // Set up layout for videoWidget
     QVBoxLayout* videoLayout = new QVBoxLayout(videoplayer);
     videoLayout->addWidget(videoWidget);
+
+    // 设置初始音量为 50
+    mediaPlayer->setVolume(50);
+
+    // 将 QSlider 初始值设置为 50
+    ui->voicecontrolstrip->setValue(50);
+
+    ui->videoBox->installEventFilter(this);
 
     isVideoPlaying = false;
     ui->video->hide();
@@ -106,6 +116,7 @@ MainWindow::MainWindow(QWidget* parent)
     connect(ui->retreat, &QPushButton::clicked, this, &MainWindow::onRetreatClicked);
     connect(ui->pause, &QPushButton::clicked, this, &MainWindow::onPauseClicked);
     connect(ui->fullScreen, &QPushButton::clicked, this, &MainWindow::toggleFullScreen);
+    connect(ui->voicecontrolstrip, &QSlider::valueChanged, this, &MainWindow::adjustVolume);
 }
 
 // Destructor
@@ -143,20 +154,44 @@ void MainWindow::onPauseClicked() {
     }
 }
 
-// onForwardClicked() fast-forwards the media playback by 5 seconds.
+// onForwardClicked() switches to the next video in the playlist.
 void MainWindow::onForwardClicked() {
-    // Fast forward by 5 seconds
-    qint64 currentPosition = mediaPlayer->position();
-    qint64 newPosition = currentPosition + 5000;
-    mediaPlayer->setPosition(newPosition);
+    // Switch to the next video
+    currentVideoIndex = (currentVideoIndex + 1) % videoPaths.size();
+
+    // Check if the current video index is within the valid range
+    if (currentVideoIndex >= 0 && currentVideoIndex < videoPaths.size()) {
+        // Reset the playback position
+        mediaPlayer->setPosition(0);
+
+        // Set up the media source for the new video
+        QString videoPath = videoPaths[currentVideoIndex];
+        mediaPlayer->setMedia(QUrl::fromLocalFile(QFileInfo(videoPath).absoluteFilePath()));
+
+        // Start playback
+        mediaPlayer->play();
+
+    }
 }
 
-// onRetreatClicked() rewinds the media playback by 5 seconds.
+// onRetreatClicked() switches to the previous video in the playlist.
 void MainWindow::onRetreatClicked() {
-    // Rewind by 5 seconds
-    qint64 currentPosition = mediaPlayer->position();
-    qint64 newPosition = currentPosition - 5000;
-    mediaPlayer->setPosition(newPosition);
+    // Switch to the previous video
+    currentVideoIndex = (currentVideoIndex - 1 + videoPaths.size()) % videoPaths.size();
+
+    // Check if the current video index is within the valid range
+    if (currentVideoIndex >= 0 && currentVideoIndex < videoPaths.size()) {
+        // Reset the playback position
+        mediaPlayer->setPosition(0);
+
+        // Set up the media source for the new video
+        QString videoPath = videoPaths[currentVideoIndex];
+        mediaPlayer->setMedia(QUrl::fromLocalFile(QFileInfo(videoPath).absoluteFilePath()));
+
+        // Start playback
+        mediaPlayer->play();
+
+    }
 }
 
 // onProgressbarSliderMoved() handles the sliderMoved signal of the progress bar.
@@ -369,39 +404,37 @@ void MainWindow::switchToListset() {
     listsetWindow->show();
 }
 
-// toggleFullScreen() toggles between fullscreen and normal display modes.
-// It adjusts the window flags and visibility of UI elements accordingly.
+// togglePictureList() toggles the visibility of the picturelist.
 void MainWindow::toggleFullScreen() {
-    qDebug() << "Button Clicked";
+    ui->picturelist->setHidden(!ui->picturelist->isHidden());
+    updateGeometry();  // 强制更新布局
+    repaint();  // 强制重绘
 
-    // Toggle the fullscreen state
-    isFullScreen = !isFullScreen;
-
-    if (isFullScreen) {
-        // Enter fullscreen mode
-        // Set videoplayer as a top-level window
-        ui->video->setWindowFlags(Qt::Window);
-        // Show videoplayer in fullscreen
-        ui->video->showFullScreen();
-        // Hide picturelist
-        ui->picturelist->hide();
-    } else {
-        // Exit fullscreen mode
-        // Set videoplayer as a subwindow
-        ui->video->setWindowFlags(Qt::SubWindow);
-        // Show videoplayer in normal mode
-        ui->video->showNormal();
-        // Show picturelist
-        ui->picturelist->show();
-    }
+    // 手动触发 resizeEvent
+    QResizeEvent* event = new QResizeEvent(size(), size());
+    resizeEvent(event);
 }
 
 void MainWindow::resizeEvent(QResizeEvent* event) {
     QMainWindow::resizeEvent(event);
 
-    // 如果 picturelist 和 videoplayer 都没有被隐藏，立即应用大小调整逻辑
-    if (!ui->picturelist->isHidden() && !ui->video->isHidden()) {
-        // 根据窗口宽度计算新的大小
+    // 检测是否有一个被隐藏
+    bool isPictureListHidden = ui->picturelist->isHidden();
+    bool isVideoHidden = ui->video->isHidden();
+
+    // 如果 picturelist 和 videoplayer 其中有一个被隐藏，自适应宽度
+    if (isPictureListHidden != isVideoHidden) {
+        if (isPictureListHidden) {
+            // 如果 picturelist 被隐藏，自适应 video 的宽度
+            int videoWidth = width();
+            ui->video->setFixedWidth(videoWidth);
+        } else {
+            // 如果 video 被隐藏，自适应 picturelist 的宽度
+            int picturelistWidth = width();
+            ui->picturelist->setFixedWidth(picturelistWidth);
+        }
+    } else {
+        // 如果 picturelist 和 videoplayer 都没有被隐藏，立即应用大小调整逻辑
         int picturelistWidth = width() * 0.3;
         int videoWidth = width() * 0.7;
 
@@ -417,13 +450,36 @@ void MainWindow::resizeEvent(QResizeEvent* event) {
         // 设置 QGroupBox 的大小
         ui->picturelist->setFixedWidth(picturelistWidth);
         ui->video->setFixedWidth(videoWidth);
-
-        // 调用 updateGeometry 触发布局更新
-        updateGeometry();
-
-        // 强制重绘
-        repaint();
     }
+
+    // 调用 updateGeometry 触发布局更新
+    updateGeometry();
+
+    // 强制重绘
+    repaint();
+}
+
+bool MainWindow::eventFilter(QObject* obj, QEvent* event) {
+    if (obj == ui->videoBox) {
+        if (event->type() == QEvent::Enter) {
+            // 鼠标进入 videoBox 区域，显示音量条
+            ui->voicecontrolstrip->show();
+        } else if (event->type() == QEvent::Leave) {
+            // 鼠标离开 videoBox 区域，隐藏音量条
+            ui->voicecontrolstrip->hide();
+        }
+    }
+
+    // 将事件传递给基类处理
+    return QMainWindow::eventFilter(obj, event);
+}
+
+void MainWindow::adjustVolume(int volume) {
+    // 将音量值映射到 QMediaPlayer 的音量范围（0 到 100）
+    qreal volumeLevel = volume / 100.0;
+
+    // 设置 QMediaPlayer 的音量
+    mediaPlayer->setVolume(static_cast<int>(volumeLevel * 100));
 }
 
 // RefreshList() refreshes the videolist and video path
