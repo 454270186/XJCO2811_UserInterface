@@ -38,6 +38,7 @@ private slots:
     void onSubmitClicked();
     void onDeleteClicked();
     void switchToPage() { emit switchPage(0); }
+    void onFindPathClicked();
 
 private:
     FileUtil* fileUtil;

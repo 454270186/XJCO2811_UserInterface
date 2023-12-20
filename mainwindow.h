@@ -63,7 +63,8 @@ private slots:
     void handleVideoSelection(const QStringList& videoPaths, int currentIndex);  // 接口函数
     void handleMediaStatusChanged(QMediaPlayer::MediaStatus status);
     void toggleFullScreen();
-    void switchToPage() { emit switchPage(1); }
+    void switchToPage() { emit switchPage(1);}
+    void adjustVolume(int volume);
 
 private:
     bool isVideoPlaying;
@@ -71,7 +72,6 @@ private:
     void startPlaylistFromParameters(const QStringList& videoPaths, int currentIndex);
     void renderBtnList(QHBoxLayout* btnLayout);
     void resizeEvent(QResizeEvent* event) override;
-    void adjustVolume(int volume);
     bool isFullScreen = false;
     virtual bool eventFilter(QObject* obj, QEvent* event) override;
     QRect normalGeometry;

@@ -2,6 +2,7 @@
 #include <string>
 
 #include <QMessageBox>
+#include <QFileDialog>
 
 #include "formhandler.h"
 #include "listsetsmall.h"
@@ -51,6 +52,7 @@ ListSetSmall::ListSetSmall(QWidget* parent)
     //        });
     //    }
     renderList();
+    connect(ui->findPath, &QPushButton::clicked, this, &ListSetSmall::onFindPathClicked);
 }
 
 ListSetSmall::~ListSetSmall() {
@@ -262,4 +264,17 @@ void ListSetSmall::RefreshList() {
 
     listsInfo = fileUtil->GetAllListsInfo();
     renderList();
+}
+
+void ListSetSmall::onFindPathClicked() {
+    QString initialPath = QDir::currentPath(); // or set to another base path
+    QString directoryPath = QFileDialog::getExistingDirectory(this, tr("Choose video directory"), initialPath);
+
+    if (!directoryPath.isEmpty()) {
+        // Convert the selected directory path to a relative path
+        QDir baseDir(QDir::currentPath()); // Change this to the desired base directory
+        QString relativePath = baseDir.relativeFilePath(directoryPath);
+
+        ui->editPath->setText(relativePath);
+    }
 }
