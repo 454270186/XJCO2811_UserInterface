@@ -2,10 +2,10 @@
 
 #include <iostream>
 
-#include "error.h"
 #include "tinyxml2.h"
 
 using namespace tinyxml2;
+using namespace ERROR;
 
 // Constructor of FileUtil needs a XML File Path
 FileUtil::FileUtil(const string& XMLFilePath) : XMLFilePath_(XMLFilePath) {
