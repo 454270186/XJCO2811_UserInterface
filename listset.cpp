@@ -5,6 +5,7 @@
 #include <QApplication>
 #include <QFile>
 #include <QDir>
+#include <QFileDialog>
 
 #include "formhandler.h"
 #include "listset.h"
@@ -70,6 +71,7 @@ ListSet::ListSet(QWidget* parent) : QMainWindow(parent), ui(new Ui::ListSet), ha
     renderList();
 
     connect(ui->backward, &QPushButton::clicked, this, &ListSet::switchToPage);
+    connect(ui->findPath, &QPushButton::clicked, this, &ListSet::onFindPathClicked);
 }
 
 ListSet::~ListSet() {
@@ -286,23 +288,15 @@ void ListSet::RefreshList() {
     renderList();
 }
 
-void ListSet::showError(int errorCode) {
-    QString errorMsg = errorMessages.count(errorCode) ? errorMessages[errorCode] : errorMessages[0];
-    QMessageBox::warning(this, "Error", errorMsg);
-}
+void ListSet::onFindPathClicked() {
+    QString initialPath = QDir::currentPath(); // or set to another base path
+    QString directoryPath = QFileDialog::getExistingDirectory(this, tr("Choose video directory"), initialPath);
 
-std::map<int, QString> errorMessages = {
-    {FORMHANDLER_ERROR::ErrEmptyFields, "Error: One or more fields are empty!\n"},
-    {FORMHANDLER_ERROR::ErrListNameTooLong, "Error: List name is too long!\n"},
-    {FORMHANDLER_ERROR::ErrInvalidListNameChars, "Error: List name contains invalid characters!\n"},
-    {FORMHANDLER_ERROR::ErrVideoDirPathTooLong, "Error: Video directory path is too long!\n"},
-    {FORMHANDLER_ERROR::ErrInvalidVideoDirPathFormat, "Error: Invalid video directory path format!\n"},
-    {FORMHANDLER_ERROR::ErrListNameNotUnique, "Error: List name is not unique!\n"},
-    {FORMHANDLER_ERROR::ErrUnexpect, "Error: Unexpected result of form handler!\n"},
-    {ERROR::ErrXMLParserInit, "Error: Initializing XML parser went wrong!\n"},
-    {ERROR::ErrXMLChangeSave, "Error: Saving changes to XML file went wrong!\n"},
-    {ERROR::ErrInvalidXML, "Error: Invalid XML file format!\n"},
-    {ERROR::ErrUnexpect, "Error: Unexpected result of file utility!\n"},
-    {ERROR::ErrListIDNotFound, "Error: List ID not found!\n"},
-    {0, "Error: Unexpected result of list set!\n"}  // Default error message
-};
+    if (!directoryPath.isEmpty()) {
+        // Convert the selected directory path to a relative path
+        QDir baseDir(QDir::currentPath()); // Change this to the desired base directory
+        QString relativePath = baseDir.relativeFilePath(directoryPath);
+
+        ui->editPath->setText(relativePath);
+    }
+}

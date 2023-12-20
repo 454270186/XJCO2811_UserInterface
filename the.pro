@@ -9,6 +9,7 @@ CONFIG += c++11
 
 SOURCES += \
     btnconvert.cpp \
+    faq.cpp \
     fileutil.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -22,6 +23,7 @@ SOURCES += \
 
 HEADERS += \
     btnconvert.h \
+    faq.h \
     fileutil.h \
     mainwindow.h \
     mainwindowm.h \
@@ -41,6 +43,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 FORMS += \
+    faq.ui \
     listset.ui \
     mainwindow.ui \
     mainwindowm.ui \
