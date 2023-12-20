@@ -21,6 +21,7 @@ SOURCES += \
     listsetsmall.cpp
 
 HEADERS += \
+    error.h \
     btnconvert.h \
     fileutil.h \
     mainwindow.h \
