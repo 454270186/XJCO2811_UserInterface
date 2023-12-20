@@ -4,12 +4,12 @@
 #include <QHBoxLayout>
 #include <QMainWindow>
 #include <QMediaPlayer>
+#include <QPropertyAnimation>
 #include <QPushButton>
+#include <QSlider>
 #include <QStringList>
 #include <QVideoWidget>
 #include <vector>
-#include <QSlider>
-#include <QPropertyAnimation>
 
 #include "fileutil.h"
 
@@ -63,8 +63,7 @@ private slots:
     void handleVideoSelection(const QStringList& videoPaths, int currentIndex);  // 接口函数
     void handleMediaStatusChanged(QMediaPlayer::MediaStatus status);
     void toggleFullScreen();
-    void switchToPage() { emit switchPage(1);
- }
+    void switchToPage() { emit switchPage(1); }
 
 private:
     bool isVideoPlaying;

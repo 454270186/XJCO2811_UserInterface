@@ -5,6 +5,7 @@
 #include "tinyxml2.h"
 
 using namespace tinyxml2;
+using namespace ERROR;
 
 // Constructor of FileUtil needs a XML File Path
 FileUtil::FileUtil(const string& XMLFilePath) : XMLFilePath_(XMLFilePath) {
@@ -54,12 +55,12 @@ void FileUtil::PrintAll() {
 }
 
 // AddNewList() writes a new list into video-list-data file by given listname
-// and video directory path Params:
+// and video directory path
+// Params:
 // - error: error is a output-parameter, It only be assigned when the return
-// value is -1 Returns:
-// - -1: Some errors occur, the output-parameter error will be assigned with the
-// error information.
-// - new list id: if no error occurs, return new list id.
+// value is -1
+// Returns:
+// Error number in error.h
 int FileUtil::AddNewList(const string& listname, const string& videoDirPath, string* error = nullptr) {
     // Create a new XML element for the new list
     XMLElement* newListElement = xmlParser_.NewElement("videolist");
@@ -88,20 +89,22 @@ int FileUtil::AddNewList(const string& listname, const string& videoDirPath, str
         // Save the modified XML document to the file
         if (xmlParser_.SaveFile(XMLFilePath_.c_str()) == XML_SUCCESS) {
             // Successfully added a new list
-            return atoi(idElement->GetText());
+            return ERROR::SUCCESS;
         } else {
             if (error) {
                 *error = "Failed to save the XML file.";
             }
+            return ERROR::ErrXMLChangeSave;
         }
     } else {
         if (error) {
             *error = "Invalid XML file format.";
         }
+        return ERROR::ErrInvalidXML;
     }
 
     // Error occurred
-    return -1;
+    return ERROR::ErrUnexpect;
 }
 
 // GetAllListsInfo() returns a vector of infomations of all lists
@@ -140,16 +143,15 @@ vector<ListInfo> FileUtil::GetAllListsInfo() {
 
 // EditList() edits existing list by given list id;
 // Returns:
-// - 1, if successfully edit
-// - -1, if some errors occur, and out-param error will be asigned with error message
+// Error number in error.h
 int FileUtil::EditList(int listID, const string& newListName, const string& newVideoDirPath, string* error = nullptr) {
     XMLElement* rootElement = xmlParser_.RootElement();
     // check validation of xml file structure
     if (!rootElement || strcmp(rootElement->Name(), "lists") != 0) {
         if (error) {
-            *error = "invalid xml file structure";
+            *error = "invalid xml file format";
         }
-        return -1;
+        return ERROR::ErrInvalidXML;
     }
 
     bool isFound = false;
@@ -175,9 +177,9 @@ int FileUtil::EditList(int listID, const string& newListName, const string& newV
         }
 
         if (xmlParser_.SaveFile(XMLFilePath_.c_str()) == XML_SUCCESS) {
-            return 1;
+            return ERROR::SUCCESS;
         } else {
-            return -1;
+            return ERROR::ErrXMLChangeSave;
         }
     }
 
@@ -185,9 +187,10 @@ int FileUtil::EditList(int listID, const string& newListName, const string& newV
         if (error) {
             *error = "list with id " + std::to_string(listID) + " not found";
         }
+        return ERROR::ErrListIDNotFound;
     }
 
-    return -1;
+    return ERROR::ErrUnexpect;
 }
 
 // DelListByID() deletes a list by given id.
@@ -199,7 +202,7 @@ int FileUtil::DelListByID(int listID, string* error) {
         if (error) {
             *error = "invalid xml file structure";
         }
-        return -1;
+        return ERROR::ErrInvalidXML;
     }
 
     for (XMLElement* videolistEle = rootElement->FirstChildElement("videolist"); videolistEle;
@@ -212,20 +215,20 @@ int FileUtil::DelListByID(int listID, string* error) {
 
             // save change
             if (xmlParser_.SaveFile(XMLFilePath_.c_str()) == XML_SUCCESS) {
-                return 1;
+                return ERROR::SUCCESS;
             } else {
                 if (error) {
                     *error = "error while save chenge into file";
                 }
-                return -1;
+                return ERROR::ErrXMLChangeSave;
             }
         }
     }
 
     if (error) {
-        *error = "List id not found";
+        *error = "list with id " + std::to_string(listID) + " not found";
     }
-    return -1;
+    return ERROR::ErrListIDNotFound;
 }
 
 // GetVideosPathByListName() returns the videos path according to the given
