@@ -34,6 +34,7 @@ private slots:
     int on_addList_clicked();
     void onSubmitClicked();
     void onDeleteClicked();
+    void onFindPathClicked();
 
 private:
     FileUtil* fileUtil;

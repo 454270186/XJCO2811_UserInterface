@@ -5,6 +5,7 @@
 #include <QApplication>
 #include <QFile>
 #include <QDir>
+#include <QFileDialog>
 
 #include "formhandler.h"
 #include "listset.h"
@@ -71,6 +72,7 @@ ListSet::ListSet(QWidget* parent) : QMainWindow(parent), ui(new Ui::ListSet), ha
     renderList();
 
     connect(ui->backward, &QPushButton::clicked, this, &ListSet::switchToPage);
+    connect(ui->findPath, &QPushButton::clicked, this, &ListSet::onFindPathClicked);
 }
 
 ListSet::~ListSet() {
@@ -299,26 +301,11 @@ void ListSet::RefreshList() {
     renderList();
 }
 
-// showError(int errorCode) displays an error message based on the provided error code.
-// The function performs the following actions:
-// - Checks if the errorMessages map contains the provided errorCode.
-// - If found, retrieves the corresponding error message from the map.
-// - If not found, uses the default error message (associated with key 0 in the map).
-// - Displays the error message in a message box with a warning icon.
-// Parameters:
-// - errorCode: An integer representing the specific error code.
-// Returns: None.
 void ListSet::showError(int errorCode) {
     QString errorMsg = errorMessages.count(errorCode) ? errorMessages[errorCode] : errorMessages[0];
     QMessageBox::warning(this, "Error", errorMsg);
 }
 
-// errorMessages is a map that associates integer error codes with their corresponding error messages.
-// This map is used throughout the application to display contextual error messages to the user.
-// The map contains the following key-value pairs:
-// - Error codes defined in FORMHANDLER_ERROR and ERROR namespaces.
-// - Corresponding error messages in QString format.
-// If an error code is not found in this map, a default error message is used.
 std::map<int, QString> errorMessages = {
     {FORMHANDLER_ERROR::ErrEmptyFields, "Error: One or more fields are empty!\n"},
     {FORMHANDLER_ERROR::ErrListNameTooLong, "Error: List name is too long!\n"},
@@ -332,5 +319,18 @@ std::map<int, QString> errorMessages = {
     {ERROR::ErrInvalidXML, "Error: Invalid XML file format!\n"},
     {ERROR::ErrUnexpect, "Error: Unexpected result of file utility!\n"},
     {ERROR::ErrListIDNotFound, "Error: List ID not found!\n"},
-    {0, "Error: Unexpected result of list set!\n"}
+    {0, "Error: Unexpected result of list set!\n"}  // Default error message
 };
+
+void ListSet::onFindPathClicked() {
+    QString initialPath = QDir::currentPath(); // or set to another base path
+    QString directoryPath = QFileDialog::getExistingDirectory(this, tr("Choose video directory"), initialPath);
+
+    if (!directoryPath.isEmpty()) {
+        // Convert the selected directory path to a relative path
+        QDir baseDir(QDir::currentPath()); // Change this to the desired base directory
+        QString relativePath = baseDir.relativeFilePath(directoryPath);
+
+        ui->editPath->setText(relativePath);
+    }
+}
