@@ -148,9 +148,15 @@ void MainWindow::onPauseClicked() {
     if (mediaPlayer->state() == QMediaPlayer::PlayingState) {
         // If the media player is currently in the playing state, pause playback
         mediaPlayer->pause();
+
+        // Set the pause icon
+        ui->pause->setIcon(QIcon("../XJCO2811_UserInterface/icons/play-circle.svg"));
     } else {
         // If the media player is not in the playing state, start or resume playback
         mediaPlayer->play();
+
+        // Set the play icon
+        ui->pause->setIcon(QIcon("../XJCO2811_UserInterface/icons/pause.svg"));
     }
 }
 
