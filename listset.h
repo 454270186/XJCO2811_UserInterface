@@ -5,13 +5,13 @@
 #include <QMainWindow>
 #include <QPushButton>
 #include <QVBoxLayout>
-
-#include <QListWidgetItem>
 #include <vector>
-
-#include <vector>
+#include <map>
+#include <QString>
 
 #include "fileutil.h"
+
+extern std::map<int, QString> errorMessages;
 
 namespace Ui {
 class ListSet;
@@ -43,7 +43,6 @@ private:
     FileUtil* fileUtil;
     std::vector<ListInfo> listsInfo;
     Ui::ListSet* ui;
-    bool hasUnfinishedNewList = false;
     QVBoxLayout* listLayout;
     QPushButton* newButton;
     QVector<QPushButton*> itemList;
@@ -51,6 +50,9 @@ private:
     int currentBtnIndex{0};
 
     void renderList();
+    void showError(int errorCode);
+
+    bool hasUnfinishedNewList = false;
 };
 
 #endif  //LISTSET_H
