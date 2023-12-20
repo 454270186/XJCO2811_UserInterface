@@ -158,7 +158,7 @@ void ListSet::onSubmitClicked() {
 
     if (!isSubmitEnabled) {
         int result = formHandler.editForm(listsInfo[currentBtnIndex].id, listName, videoDirPath);
-        if (result > 0) {
+        if (result == FORMHANDLER_ERROR::SUCCESS) {
             QMessageBox::information(this, "Success", "List edited successfully!\n");
             QPushButton* button = qobject_cast<QPushButton*>(listLayout->itemAt(currentBtnIndex + 1)->widget());
             if (button) {
@@ -170,7 +170,7 @@ void ListSet::onSubmitClicked() {
                 });
             }
         } else {
-            QMessageBox::warning(this, "Error", "Failed to edit list!\n");
+            showError(result);
         }
     } else {
         int result = formHandler.submitForm(listName, videoDirPath);
@@ -285,3 +285,24 @@ void ListSet::RefreshList() {
     listsInfo = fileUtil->GetAllListsInfo();
     renderList();
 }
+
+void ListSet::showError(int errorCode) {
+    QString errorMsg = errorMessages.count(errorCode) ? errorMessages[errorCode] : errorMessages[0];
+    QMessageBox::warning(this, "Error", errorMsg);
+}
+
+std::map<int, QString> errorMessages = {
+    {FORMHANDLER_ERROR::ErrEmptyFields, "Error: One or more fields are empty!\n"},
+    {FORMHANDLER_ERROR::ErrListNameTooLong, "Error: List name is too long!\n"},
+    {FORMHANDLER_ERROR::ErrInvalidListNameChars, "Error: List name contains invalid characters!\n"},
+    {FORMHANDLER_ERROR::ErrVideoDirPathTooLong, "Error: Video directory path is too long!\n"},
+    {FORMHANDLER_ERROR::ErrInvalidVideoDirPathFormat, "Error: Invalid video directory path format!\n"},
+    {FORMHANDLER_ERROR::ErrListNameNotUnique, "Error: List name is not unique!\n"},
+    {FORMHANDLER_ERROR::ErrUnexpect, "Error: Unexpected result of form handler!\n"},
+    {ERROR::ErrXMLParserInit, "Error: Initializing XML parser went wrong!\n"},
+    {ERROR::ErrXMLChangeSave, "Error: Saving changes to XML file went wrong!\n"},
+    {ERROR::ErrInvalidXML, "Error: Invalid XML file format!\n"},
+    {ERROR::ErrUnexpect, "Error: Unexpected result of file utility!\n"},
+    {ERROR::ErrListIDNotFound, "Error: List ID not found!\n"},
+    {0, "Error: Unexpected result of list set!\n"}  // Default error message
+};
