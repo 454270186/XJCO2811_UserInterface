@@ -103,21 +103,16 @@ bool FormHandler::isListNameUnique(const std::string& newListName, int currentLi
 int FormHandler::submitForm(const std::string& listName, const std::string& videoDirPath) {
     std::string error;
     int validationResult = validateFormData(listName, videoDirPath);
-    std::cout<<"shit6"<<std::endl;
 
     if (validationResult != FORMHANDLER_ERROR::SUCCESS) {
-        std::cout<<"shit7"<<std::endl;
         return validationResult;
     }
 
-    std::cout<<"shit8"<<std::endl;
 
     if (!isListNameUnique(listName)) {
-        std::cout<<"shit9"<<std::endl;
         return FORMHANDLER_ERROR::ErrListNameNotUnique;
     }
 
-    std::cout<<"shit10"<<std::endl;
 
     return fileUtil_->AddNewList(listName, videoDirPath, &error);
 }
@@ -136,20 +131,15 @@ int FormHandler::submitForm(const std::string& listName, const std::string& vide
 int FormHandler::editForm(int listID, const std::string& newListName, const std::string& newVideoDirPath) {
     std::string error;
     int validationResult = validateFormData(newListName, newVideoDirPath);
-    std::cout<<"shit1"<<std::endl;
+
 
     if (validationResult != FORMHANDLER_ERROR::SUCCESS) {
-        std::cout<<"shit2"<<std::endl;
         return validationResult;
     }
 
-    std::cout<<"shit3"<<std::endl;
-
     if (!isListNameUnique(newListName, listID)) {
-        std::cout<<"shit4"<<std::endl;
         return FORMHANDLER_ERROR::ErrListNameNotUnique;
     }
-    std::cout<<"shit5"<<std::endl;
 
     return fileUtil_->EditList(listID, newListName, newVideoDirPath, &error);
 }
