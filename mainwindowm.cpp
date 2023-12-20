@@ -356,6 +356,7 @@ void mainwindowm::onButtonClicked() {
         if (index != -1) {
             handleVideoSelection(videoPaths, index);
         }
+        ui->picturelist->hide();
     }
 }
 
