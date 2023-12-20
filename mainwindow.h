@@ -4,12 +4,12 @@
 #include <QHBoxLayout>
 #include <QMainWindow>
 #include <QMediaPlayer>
+#include <QPropertyAnimation>
 #include <QPushButton>
+#include <QSlider>
 #include <QStringList>
 #include <QVideoWidget>
 #include <vector>
-#include <QSlider>
-#include <QPropertyAnimation>
 
 #include "fileutil.h"
 

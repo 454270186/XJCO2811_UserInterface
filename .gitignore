@@ -46,3 +46,12 @@ desktop.ini
 
 # test video
 videos
+
+# bin
+bin
+
+# temp img file
+*.PNG
+*.png
+*.JPG
+*.jpg
