@@ -5,6 +5,7 @@
 #include <QApplication>
 #include <QFile>
 #include <QDir>
+#include <QFileDialog>
 
 #include "formhandler.h"
 #include "listset.h"
@@ -70,6 +71,7 @@ ListSet::ListSet(QWidget* parent) : QMainWindow(parent), ui(new Ui::ListSet), ha
     renderList();
 
     connect(ui->backward, &QPushButton::clicked, this, &ListSet::switchToPage);
+    connect(ui->findPath, &QPushButton::clicked, this, &ListSet::onFindPathClicked);
 }
 
 ListSet::~ListSet() {
@@ -284,4 +286,17 @@ void ListSet::RefreshList() {
 
     listsInfo = fileUtil->GetAllListsInfo();
     renderList();
+}
+
+void ListSet::onFindPathClicked() {
+    QString initialPath = QDir::currentPath(); // or set to another base path
+    QString directoryPath = QFileDialog::getExistingDirectory(this, tr("Choose video directory"), initialPath);
+
+    if (!directoryPath.isEmpty()) {
+        // Convert the selected directory path to a relative path
+        QDir baseDir(QDir::currentPath()); // Change this to the desired base directory
+        QString relativePath = baseDir.relativeFilePath(directoryPath);
+
+        ui->editPath->setText(relativePath);
+    }
 }
