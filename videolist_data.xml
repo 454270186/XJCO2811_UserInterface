@@ -2,7 +2,7 @@
     <videolist>
         <id>1</id>
         <name>TikTok1</name>
-        <video_path>../XJCO2811_UserInterface/videos/landscape/list1</video_path>
+        <video_path>../XJCO2811_UserInterface/videos/landscape/list3</video_path>
     </videolist>
     <videolist>
         <id>2</id>
@@ -11,8 +11,8 @@
     </videolist>
     <videolist>
         <id>3</id>
-        <name>1231231</name>
-        <video_path>231231</video_path>
+        <name>TikTok3</name>
+        <video_path>../XJCO2811_UserInterface/videos/landscape/list3</video_path>
     </videolist>
     <videolist>
         <id>4</id>

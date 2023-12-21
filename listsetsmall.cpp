@@ -2,6 +2,7 @@
 #include <string>
 
 #include <QMessageBox>
+#include <QFileDialog>
 #include <QApplication>
 #include <QFile>
 #include <QDir>
@@ -69,6 +70,7 @@ ListSetSmall::ListSetSmall(QWidget* parent)
     //        });
     //    }
     renderList();
+    connect(ui->findPath, &QPushButton::clicked, this, &ListSetSmall::onFindPathClicked);
 }
 
 ListSetSmall::~ListSetSmall() {
@@ -157,7 +159,7 @@ void ListSetSmall::onSubmitClicked() {
 
     if (!isSubmitEnabled) {
         int result = formHandler.editForm(listsInfo[currentBtnIndex].id, listName, videoDirPath);
-        if (result > 0) {
+        if (result == FORMHANDLER_ERROR::SUCCESS) {
             QMessageBox::information(this, "Success", "List edited successfully!\n");
             QPushButton* button = qobject_cast<QPushButton*>(listLayout->itemAt(currentBtnIndex + 1)->widget());
             if (button) {
@@ -169,11 +171,11 @@ void ListSetSmall::onSubmitClicked() {
                 });
             }
         } else {
-            QMessageBox::warning(this, "Error", "Failed to edit list!\n");
+            showError(result);
         }
     } else {
         int result = formHandler.submitForm(listName, videoDirPath);
-        if (result > 0) {
+        if (result == FORMHANDLER_ERROR::SUCCESS) {
             hasUnfinishedNewList = false;
             QMessageBox::information(this, "Success", "List added successfully!\n");
             QPushButton* newButton = new QPushButton(QString::fromStdString(listName));
@@ -207,7 +209,7 @@ void ListSetSmall::onSubmitClicked() {
                 currentBtnIndex = listLayout->indexOf(newButton) - 1;
             });
         } else {
-            QMessageBox::warning(this, "Error", "Failed to add list!\n");
+            showError(result);
         }
     }
 }
@@ -233,7 +235,7 @@ void ListSetSmall::onDeleteClicked() {
     string error;
     int result = fileUtil->DelListByID(listID, &error);
 
-    if (result > 0) {
+    if (result == FORMHANDLER_ERROR::SUCCESS) {
         QMessageBox::information(this, "Success", "List deleted successfully");
         // Remove the corresponding button from the UI
         QWidget* widget = listLayout->itemAt(currentBtnIndex + 1)->widget();
@@ -251,7 +253,7 @@ void ListSetSmall::onDeleteClicked() {
             ui->placeholderWidget->setVisible(true);
         }
     } else {
-        QMessageBox::warning(this, "Error", QString::fromStdString(error));
+        showError(result);
     }
 }
 
@@ -266,6 +268,18 @@ void ListSetSmall::switchToMainWindow() {
     mainwindow->show();
 }
 
+// RefreshList() updates and refreshes the list display in the ListSetSmall window.
+// This function performs the following actions:
+// - Checks if the listLayout pointer is null. If it is, it initializes listLayout
+//   by finding the QHBoxLayout with the name "horizontalLayout_4" in the UI.
+// - Clears the existing list buttons from the layout. It does this by repeatedly
+//   removing and deleting the first layout item (and its associated widget) until
+//   no items remain.
+// - Clears the text in the edit fields for list name (editName) and path (editPath).
+// - Retrieves updated list information by calling GetAllListsInfo from the FileUtil object.
+// - Calls renderList() to display the updated list information in the UI.
+// Parameters: None.
+// Returns: None.
 void ListSetSmall::RefreshList() {
     if (listLayout == nullptr) {
         listLayout = ui->scrollAreaWidget->findChild<QHBoxLayout*>("horizontalLayout_4");
@@ -283,4 +297,31 @@ void ListSetSmall::RefreshList() {
 
     listsInfo = fileUtil->GetAllListsInfo();
     renderList();
+}
+
+// showError(int errorCode) displays an error message based on the provided error code.
+// The function performs the following actions:
+// - Checks if the errorMessages map contains the provided errorCode.
+// - If found, retrieves the corresponding error message from the map.
+// - If not found, uses the default error message (associated with key 0 in the map).
+// - Displays the error message in a message box with a warning icon.
+// Parameters:
+// - errorCode: An integer representing the specific error code.
+// Returns: None.
+void ListSetSmall::showError(int errorCode) {
+    QString errorMsg = errorMessages.count(errorCode) ? errorMessages[errorCode] : errorMessages[0];
+    QMessageBox::warning(this, "Error", errorMsg);
+}
+
+void ListSetSmall::onFindPathClicked() {
+    QString initialPath = QDir::currentPath(); // or set to another base path
+    QString directoryPath = QFileDialog::getExistingDirectory(this, tr("Choose video directory"), initialPath);
+
+    if (!directoryPath.isEmpty()) {
+        // Convert the selected directory path to a relative path
+        QDir baseDir(QDir::currentPath()); // Change this to the desired base directory
+        QString relativePath = baseDir.relativeFilePath(directoryPath);
+
+        ui->editPath->setText(relativePath);
+    }
 }
