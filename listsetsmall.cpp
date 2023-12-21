@@ -2,6 +2,9 @@
 #include <string>
 
 #include <QMessageBox>
+#include <QApplication>
+#include <QFile>
+#include <QDir>
 
 #include "formhandler.h"
 #include "listsetsmall.h"
@@ -20,6 +23,21 @@ ListSetSmall::ListSetSmall(QWidget* parent)
     const std::string XMLFilePath = "../XJCO2811_UserInterface/videolist_data.xml";
     fileUtil = new FileUtil(XMLFilePath);
     listsInfo = fileUtil->GetAllListsInfo();
+
+    QFile file("../XJCO2811_UserInterface/listsetsmall.qss");
+    QString StyleSheet;
+    if (file.open(QFile::ReadOnly)) {
+        StyleSheet += QLatin1String(file.readAll());
+        file.close();
+    } else {
+        qDebug() << "File does not exist: " << file.fileName();
+    }
+
+    if (!StyleSheet.isEmpty()) {
+        this->setStyleSheet(StyleSheet);
+    } else {
+        qDebug() << "Current directory:" << QDir::currentPath();
+    }
 
     // Set the input form to invisible at first time
     ui->groupBox_form->setVisible(false);
@@ -61,6 +79,7 @@ void ListSetSmall::renderList() {
     for (size_t i = 0; i < listsInfo.size(); i++) {
         // initialize video list ui
         QPushButton* newButton = new QPushButton();
+        newButton->setObjectName("newButton");
         newButton->setText(listsInfo[i].name.c_str());
         newButton->setCheckable(true);
         newButton->setAutoExclusive(true);
@@ -97,6 +116,7 @@ void ListSetSmall::renderList() {
 int ListSetSmall::on_addList_clicked() {
     if (!hasUnfinishedNewList) {
         QPushButton* newButton = new QPushButton("New List");
+        newButton->setObjectName("newButton");
         newButton->setCheckable(true);
         newButton->setAutoExclusive(true);
         listLayout->addWidget(newButton);
@@ -157,6 +177,7 @@ void ListSetSmall::onSubmitClicked() {
             hasUnfinishedNewList = false;
             QMessageBox::information(this, "Success", "List added successfully!\n");
             QPushButton* newButton = new QPushButton(QString::fromStdString(listName));
+            newButton->setObjectName("newButton");
             newButton->setCheckable(true);
             newButton->setAutoExclusive(true);
             listLayout->addWidget(newButton);

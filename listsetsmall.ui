@@ -22,13 +22,13 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout_2" stretch="3,1">
     <property name="spacing">
-     <number>-1</number>
+     <number>5</number>
     </property>
     <item>
      <widget class="QGroupBox" name="groupBox_top">
       <layout class="QVBoxLayout" name="verticalLayout_top" stretch="1,0,0">
        <property name="spacing">
-        <number>-1</number>
+        <number>5</number>
        </property>
        <item>
         <widget class="QPushButton" name="backward">
@@ -45,7 +45,7 @@
           </size>
          </property>
          <property name="text">
-          <string>Backward</string>
+          <string/>
          </property>
          <property name="autoRepeatDelay">
           <number>300</number>
@@ -142,7 +142,7 @@
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0">
              <property name="spacing">
-              <number>-1</number>
+              <number>5</number>
              </property>
              <property name="leftMargin">
               <number>10</number>
@@ -254,10 +254,13 @@
      <widget class="QGroupBox" name="groupBox_bottom">
       <layout class="QVBoxLayout" name="verticalLayout_bottom" stretch="0">
        <property name="spacing">
-        <number>-1</number>
+        <number>5</number>
        </property>
        <item>
         <widget class="QScrollArea" name="scrollArea">
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
          <property name="widgetResizable">
           <bool>true</bool>
          </property>
@@ -266,8 +269,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>404</width>
-            <height>133</height>
+            <width>424</width>
+            <height>145</height>
            </rect>
           </property>
           <layout class="QHBoxLayout" name="horizontalLayout_4">
@@ -286,7 +289,7 @@
               </size>
              </property>
              <property name="text">
-              <string>+</string>
+              <string/>
              </property>
             </widget>
            </item>

@@ -72,8 +72,7 @@
        </size>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color: rgb(72, 73, 73);
-border-radius: 20px;</string>
+       <string notr="true"/>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_left">
        <property name="spacing">
@@ -91,10 +90,7 @@ border-radius: 20px;</string>
           <cursorShape>PointingHandCursor</cursorShape>
          </property>
          <property name="styleSheet">
-          <string notr="true">border: none; /* 移除边框 */
-    background-color: transparent; /* 设置背景透明 */
-    icon-size: 64px 64px; /* 设置图标大小，根据需要进行调整 */
-    padding: 0px; /* 移除内边距 */</string>
+          <string notr="true"/>
          </property>
          <property name="text">
           <string/>
@@ -120,7 +116,7 @@ border-radius: 20px;</string>
           </size>
          </property>
          <property name="styleSheet">
-          <string notr="true">border-radius: 20px;</string>
+          <string notr="true"/>
          </property>
          <property name="widgetResizable">
           <bool>true</bool>
@@ -130,8 +126,8 @@ border-radius: 20px;</string>
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>310</width>
-            <height>628</height>
+            <width>302</width>
+            <height>612</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -150,10 +146,7 @@ border-radius: 20px;</string>
               <cursorShape>PointingHandCursor</cursorShape>
              </property>
              <property name="styleSheet">
-              <string notr="true">border: none; /* 移除边框 */
-    background-color: transparent; /* 设置背景透明 */
-    icon-size: 64px 64px; /* 设置图标大小，根据需要进行调整 */
-    padding: 0px; /* 移除内边距 */</string>
+              <string notr="true"/>
              </property>
              <property name="text">
               <string/>
@@ -218,7 +211,7 @@ border-radius: 20px;</string>
           </font>
          </property>
          <property name="styleSheet">
-          <string notr="true">color: rgb(255, 255, 255);</string>
+          <string notr="true"/>
          </property>
          <property name="text">
           <string>List Name</string>
@@ -273,7 +266,7 @@ border-radius: 20px;</string>
           </font>
          </property>
          <property name="styleSheet">
-          <string notr="true">color: rgb(255, 255, 255);</string>
+          <string notr="true"/>
          </property>
          <property name="text">
           <string>List Path</string>
@@ -350,11 +343,7 @@ border-radius: 20px;</string>
              <cursorShape>PointingHandCursor</cursorShape>
             </property>
             <property name="styleSheet">
-             <string notr="true">QPushButton {
-    border: none;
-    padding: 0px;
-}
-</string>
+             <string notr="true"/>
             </property>
             <property name="text">
              <string/>
