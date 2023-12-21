@@ -9,8 +9,9 @@
 #include <map>
 #include <vector>
 
-#include "fileutil.h"
 #include "listsetresource.h"
+
+#include <iostream>
 
 extern std::map<int, QString> errorMessages;
 
@@ -28,6 +29,9 @@ public:
 
     void RefreshList();
 
+signals:
+    void switchPage(int pageIndex);
+
 public slots:
     void switchToMainWindow();
 
@@ -36,6 +40,10 @@ private slots:
     void onSubmitClicked();
     void onDeleteClicked();
     void onFindPathClicked();
+    void switchToPage() {
+        std::cout << "hereherehere" << std::endl;
+        emit switchPage(2);
+    }
 
 private:
     Ui::ListSetSmall* ui;

@@ -63,7 +63,7 @@ private slots:
     void handleVideoSelection(const QStringList& videoPaths, int currentIndex);  // 接口函数
     void handleMediaStatusChanged(QMediaPlayer::MediaStatus status);
     void toggleFullScreen();
-    void switchToPage() { emit switchPage(1); }
+    void switchToPage() { emit switchPage(3); }
     void adjustVolume(int volume);
     void toggleVoiceControlStrip();
 

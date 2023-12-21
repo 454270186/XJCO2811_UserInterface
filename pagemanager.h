@@ -9,6 +9,8 @@
 #include "mainwindow.h"
 #include "mainwindowm.h"
 
+#include <iostream>
+
 class PageManager : public QMainWindow {
     Q_OBJECT
 public:
@@ -19,14 +21,16 @@ signals:
 
 private slots:
     void switchToPage(int pageIndex) {
-        if (pageIndex == 1) {
+
+        if (pageIndex == 1 || pageIndex == 3) {
             mainwindow->Pause();
-        } else {
+        } else if (pageIndex == 0 || pageIndex == 2) {
             // refresh video list before page switch
             mainwindow->RefreshList();
 
             mainwindow->Play();
         }
+        std::cout << "page index: " << pageIndex << std::endl;
         stackPage->setCurrentIndex(pageIndex);
     }
 

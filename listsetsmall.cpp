@@ -73,6 +73,7 @@ ListSetSmall::ListSetSmall(QWidget* parent, ListSetResource* cr) : QMainWindow(p
     //    }
     renderList();
     connect(ui->findPath, &QPushButton::clicked, this, &ListSetSmall::onFindPathClicked);
+    connect(ui->backward, &QPushButton::clicked, this, &ListSetSmall::switchToPage);
 }
 
 ListSetSmall::~ListSetSmall() {
