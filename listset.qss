@@ -36,12 +36,12 @@ QPushButton#addList{
 }
 
 QLineEdit {
-    background-color: #686969; 
+    background-color: #c1c1c1;
 }
 
 QLineEdit:focus {
-    background-color: #ededed; 
-    border: 1px solid #0055ff;
+    background-color: white; 
+    border: 2px solid #4aa1ff;
 }
 
 QMessageBox {
@@ -80,6 +80,31 @@ QPushButton:hover {
      margin: 2px 5px 8px 5px;
 }
 
+QLabel {
+    color: rgb(255, 255, 255);
+}
+
+QScrollArea#scrollArea {
+    background-color: rgb(72, 73, 73);
+    border: 1px solid white;
+    border-radius: 20px;
+}
+
+QScrollArea#scrollArea::vertical-scrollbar, QScrollArea#scrollArea::horizontal-scrollbar {
+    background-color: #454545;
+    width: 10px;
+    height: 10px;
+}
+
+QScrollArea#scrollArea::vertical-scrollbar-handle, QScrollArea#scrollArea::horizontal-scrollbar-handle {
+    background-color: #c1c1c1;
+    border-radius: 19px;
+}
+
+QScrollArea#scrollArea QWidget {
+    border-radius: 20px;
+}
+
 QPushButton#newButton {
     background-color: rgb(39, 40, 40);
     color: #F0F0F0;
@@ -93,25 +118,26 @@ QPushButton#newButton {
 }
 
 QPushButton#newButton:hover {
-    color: white;
-    border: 1px solid grey;
-
     background-color: rgb(75, 77, 77);
+    border: 1px solid #0055ff;
+    color: #F0F0F0;
+    padding: 10px;
+    margin: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    border: 1px solid white;
     border-radius: 20px;
 }
 
 QPushButton#newButton:checked {
-    background-color: rgb(39, 40, 40);
-    border: 1px solid white;
-    border-radius: 20px;
-}
-
-QLabel {
-    color: rgb(255, 255, 255);
-}
-
-QScrollArea#scrollArea {
-    background-color: rgb(72, 73, 73);
-    border: 1px solid white;
+    background-color: rgb(75, 77, 77);
+    color: #F0F0F0;
+    padding: 10px;
+    margin: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    border: 2px solid #4aa1ff;
     border-radius: 20px;
 }
