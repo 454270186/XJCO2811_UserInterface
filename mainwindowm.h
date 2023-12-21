@@ -36,8 +36,6 @@ signals:
     void switchPage(int pageIndex);
 
 public slots:
-    // Slot to handle folder path changes
-    void setFolderPath(const QString& path);
 
     // Slot to switch between windows
     void switchToListset();
@@ -65,17 +63,13 @@ private slots:
     void toggleFullScreen();
     void switchToPage() { emit switchPage(1); }
     void adjustVolume(int volume);
+    void toggleVoiceControlStrip();
 
 private:
-    bool isVideoPlaying;
     void setMediaAndPlay();
     void startPlaylistFromParameters(const QStringList& videoPaths, int currentIndex);
     void resizeEvent(QResizeEvent* event) override;
     void renderBtnList(QHBoxLayout* btnLayout);
-    bool isFullScreen = false;
-    virtual bool eventFilter(QObject* obj, QEvent* event) override;
-    QRect normalGeometry;
-    QPropertyAnimation* volumeAnimation;
 
     QMediaPlayer* mediaPlayer;
     QVideoWidget* videoWidget;
@@ -84,6 +78,7 @@ private:
     FileUtil* fileUtil_;
     std::vector<ListInfo> listInfos_;
     int currentVideoIndex;  // 当前播放的视频索引
+    bool isVideoPlaying;
 };
 
 #endif  // MAINWINDOWM_H
