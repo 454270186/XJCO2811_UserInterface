@@ -17,7 +17,6 @@
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent),
       ui(new Ui::MainWindow),
-      isFullScreen(false),
       mediaPlayer(new QMediaPlayer(this)),
       videoWidget(new QVideoWidget(this))
 {
@@ -133,6 +132,10 @@ void MainWindow::renderBtnList(QHBoxLayout* btnLayout) {
         newButton->setCheckable(true);
         newButton->setAutoExclusive(true);
 
+        // 设置按钮的最小和最大大小
+        newButton->setMinimumSize(100, 30);
+        newButton->setMaximumSize(100, 30);
+
         btnLayout->addWidget(newButton);
 
         // connect onClick hook
@@ -221,35 +224,6 @@ void MainWindow::updateProgressBar(qint64 position) {
 
         // Set the current value of the progress bar to the current position of the media playback
         ui->progressbar->setValue(position);
-    }
-}
-
-// PS: This function is for TEST, Do NOT use it!
-// setFolderPath() is called to set the media player to play the selected video file asynchronously.
-// It logs the folder path, opens a file dialog to choose a video file, and connects the mediaStatusChanged signal
-// to the handleMediaStatusChanged slot for asynchronous handling of media loading.
-// Params:
-// - path: The initial path used by the file dialog.
-void MainWindow::setFolderPath(const QString& path) {
-    // Log the folder path for debugging purposes
-    qDebug() << "setFolderPath called with path:" << path;
-
-    // Open the file dialog to choose a video file
-    // QString filePath = QFileDialog::getOpenFileName(this, tr("Choose video file"), path,
-    //                                                 tr("Video files (*.mp4 *.avi *.mkv);;All files (*)"));
-
-    QString filePath = "../XJCO2811_UserInterface/videos/e.mp4";
-
-    // Log the selected file path for debugging purposes
-    qDebug() << "Selected file path:" << filePath;
-
-    // If the file path is not empty, set the media asynchronously
-    if (!filePath.isEmpty()) {
-        // Set the media source to the selected file
-        mediaPlayer->setMedia(QUrl::fromLocalFile(filePath));
-
-        // Connect a slot to the mediaStatusChanged signal for asynchronous handling of media loading
-        connect(mediaPlayer, &QMediaPlayer::mediaStatusChanged, this, &MainWindow::handleMediaStatusChanged);
     }
 }
 

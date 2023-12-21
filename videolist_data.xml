@@ -14,4 +14,9 @@
         <name>TikTok3</name>
         <video_path>../XJCO2811_UserInterface/videos/landscape/list3</video_path>
     </videolist>
+    <videolist>
+        <id>4</id>
+        <name>hjhj</name>
+        <video_path>../XJCO2811_UserInterface/videos/demo</video_path>
+    </videolist>
 </lists>
