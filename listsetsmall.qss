@@ -3,36 +3,36 @@ QMainWindow {
     font: 9pt "Arial";
 }
 
-QWidget#groupBox_left {
+QGroupBox#groupBox_left {
     background-color: rgb(72, 73, 73);
-    border: none;
+    border-radius: 20px;
 }
 
-QPushButton#backward{
-     qproperty-icon: url(../XJCO2811_UserInterface/icons/house-door.svg); 
-     qproperty-iconSize: 40px; 
-     border: none;
-     background-color: transparent;
-     icon-size: 64px 64px;
+QPushButton#backward {
+    border: none;
+    background-color: transparent;
+    icon-size: 64px 64px;
+    qproperty-icon: url(../XJCO2811_UserInterface/icons/house-door.svg); 
+    qproperty-iconSize: 40px;
     text-align: left; 
 }
 
 QPushButton#findPath{
-     qproperty-icon: url(../XJCO2811_UserInterface/icons/folder-plus.svg); 
-     qproperty-iconSize: 40px; 
      border: none;
      background-color: transparent;
      icon-size: 64px 64px;
      padding: 0px;
+     qproperty-icon: url(../XJCO2811_UserInterface/icons/folder-plus.svg); 
+     qproperty-iconSize: 40px; 
 }
 
 QPushButton#addList{
-     qproperty-icon: url(../XJCO2811_UserInterface/icons/plus-circle.svg); 
-     qproperty-iconSize: 40px; 
      border: none;
      background-color: transparent;
      icon-size: 64px 64px;
      padding: 0px;
+     qproperty-icon: url(../XJCO2811_UserInterface/icons/plus-circle.svg); 
+     qproperty-iconSize: 40px; 
 }
 
 QLineEdit {
@@ -110,8 +110,19 @@ QLabel {
     color: rgb(255, 255, 255);
 }
 
+QGroupBox#groupBox_bottom {
+    margin-top: 20px;
+    background-color: rgb(72, 73, 73);
+    border: none;
+}
+
+QGroupBox#groupBox_form {
+    border-radius: 20px;
+    border: 1px solid white;
+}
+
 QScrollArea#scrollArea {
+    border-radius: 20px;
     background-color: rgb(72, 73, 73);
     border: 1px solid white;
-    border-radius: 20px;
 }
