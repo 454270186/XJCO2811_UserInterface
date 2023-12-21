@@ -33,6 +33,7 @@ ListSet::ListSet(QWidget* parent) : QMainWindow(parent), ui(new Ui::ListSet), ha
 
     connect(ui->submit, &QPushButton::clicked, this, &ListSet::onSubmitClicked);
     connect(ui->Delete, &QPushButton::clicked, this, &ListSet::onDeleteClicked);
+    
 
     // Load and process video list data from an XML file
     const std::string XMLFilePath = "../XJCO2811_UserInterface/videolist_data.xml";
@@ -160,7 +161,7 @@ void ListSet::onSubmitClicked() {
 
     if (!isSubmitEnabled) {
         int result = formHandler.editForm(listsInfo[currentBtnIndex].id, listName, videoDirPath);
-        if (result > 0) {
+        if (result == FORMHANDLER_ERROR::SUCCESS) {
             QMessageBox::information(this, "Success", "List edited successfully!\n");
             QPushButton* button = qobject_cast<QPushButton*>(listLayout->itemAt(currentBtnIndex + 1)->widget());
             if (button) {
@@ -172,11 +173,11 @@ void ListSet::onSubmitClicked() {
                 });
             }
         } else {
-            QMessageBox::warning(this, "Error", "Failed to edit list!\n");
+            showError(result);
         }
     } else {
         int result = formHandler.submitForm(listName, videoDirPath);
-        if (result > 0) {
+        if (result == FORMHANDLER_ERROR::SUCCESS) {
             hasUnfinishedNewList = false;
             QMessageBox::information(this, "Success", "List added successfully!\n");
             QPushButton* newButton = new QPushButton(QString::fromStdString(listName));
@@ -210,7 +211,7 @@ void ListSet::onSubmitClicked() {
                 currentBtnIndex = listLayout->indexOf(newButton) - 1;
             });
         } else {
-            QMessageBox::warning(this, "Error", "Failed to add list!\n");
+            showError(result);
         }
     }
 }
@@ -236,7 +237,7 @@ void ListSet::onDeleteClicked() {
     string error;
     int result = fileUtil->DelListByID(listID, &error);
 
-    if (result > 0) {
+    if (result == FORMHANDLER_ERROR::SUCCESS) {
         QMessageBox::information(this, "Success", "List deleted successfully");
         // Remove the corresponding button from the UI
         QWidget* widget = listLayout->itemAt(currentBtnIndex + 1)->widget();
@@ -254,7 +255,7 @@ void ListSet::onDeleteClicked() {
             ui->midline->setVisible(false);
         }
     } else {
-        QMessageBox::warning(this, "Error", QString::fromStdString(error));
+        showError(result);
     }
 }
 
@@ -269,6 +270,18 @@ void ListSet::switchToMainWindow() {
     mainwindow->show();
 }
 
+// RefreshList() updates and refreshes the list display in the ListSetSmall window.
+// This function performs the following actions:
+// - Checks if the listLayout pointer is null. If it is, it initializes listLayout
+//   by finding the QHBoxLayout with the name "horizontalLayout_4" in the UI.
+// - Clears the existing list buttons from the layout. It does this by repeatedly
+//   removing and deleting the first layout item (and its associated widget) until
+//   no items remain.
+// - Clears the text in the edit fields for list name (editName) and path (editPath).
+// - Retrieves updated list information by calling GetAllListsInfo from the FileUtil object.
+// - Calls renderList() to display the updated list information in the UI.
+// Parameters: None.
+// Returns: None.
 void ListSet::RefreshList() {
     if (listLayout == nullptr) {
         listLayout = ui->scrollAreaWidget->findChild<QVBoxLayout*>("verticalLayout_6");
@@ -287,6 +300,27 @@ void ListSet::RefreshList() {
     listsInfo = fileUtil->GetAllListsInfo();
     renderList();
 }
+
+void ListSet::showError(int errorCode) {
+    QString errorMsg = errorMessages.count(errorCode) ? errorMessages[errorCode] : errorMessages[0];
+    QMessageBox::warning(this, "Error", errorMsg);
+}
+
+std::map<int, QString> errorMessages = {
+    {FORMHANDLER_ERROR::ErrEmptyFields, "Error: One or more fields are empty!\n"},
+    {FORMHANDLER_ERROR::ErrListNameTooLong, "Error: List name is too long!\n"},
+    {FORMHANDLER_ERROR::ErrInvalidListNameChars, "Error: List name contains invalid characters!\n"},
+    {FORMHANDLER_ERROR::ErrVideoDirPathTooLong, "Error: Video directory path is too long!\n"},
+    {FORMHANDLER_ERROR::ErrInvalidVideoDirPathFormat, "Error: Invalid video directory path format!\n"},
+    {FORMHANDLER_ERROR::ErrListNameNotUnique, "Error: List name is not unique!\n"},
+    {FORMHANDLER_ERROR::ErrUnexpect, "Error: Unexpected result of form handler!\n"},
+    {ERROR::ErrXMLParserInit, "Error: Initializing XML parser went wrong!\n"},
+    {ERROR::ErrXMLChangeSave, "Error: Saving changes to XML file went wrong!\n"},
+    {ERROR::ErrInvalidXML, "Error: Invalid XML file format!\n"},
+    {ERROR::ErrUnexpect, "Error: Unexpected result of file utility!\n"},
+    {ERROR::ErrListIDNotFound, "Error: List ID not found!\n"},
+    {0, "Error: Unexpected result of list set!\n"}  // Default error message
+};
 
 void ListSet::onFindPathClicked() {
     QString initialPath = QDir::currentPath(); // or set to another base path

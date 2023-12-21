@@ -3,6 +3,9 @@
 
 #include <QMessageBox>
 #include <QFileDialog>
+#include <QApplication>
+#include <QFile>
+#include <QDir>
 
 #include "formhandler.h"
 #include "listsetsmall.h"
@@ -21,6 +24,21 @@ ListSetSmall::ListSetSmall(QWidget* parent)
     const std::string XMLFilePath = "../XJCO2811_UserInterface/videolist_data.xml";
     fileUtil = new FileUtil(XMLFilePath);
     listsInfo = fileUtil->GetAllListsInfo();
+
+    QFile file("../XJCO2811_UserInterface/listsetsmall.qss");
+    QString StyleSheet;
+    if (file.open(QFile::ReadOnly)) {
+        StyleSheet += QLatin1String(file.readAll());
+        file.close();
+    } else {
+        qDebug() << "File does not exist: " << file.fileName();
+    }
+
+    if (!StyleSheet.isEmpty()) {
+        this->setStyleSheet(StyleSheet);
+    } else {
+        qDebug() << "Current directory:" << QDir::currentPath();
+    }
 
     // Set the input form to invisible at first time
     ui->groupBox_form->setVisible(false);
@@ -63,6 +81,7 @@ void ListSetSmall::renderList() {
     for (size_t i = 0; i < listsInfo.size(); i++) {
         // initialize video list ui
         QPushButton* newButton = new QPushButton();
+        newButton->setObjectName("newButton");
         newButton->setText(listsInfo[i].name.c_str());
         newButton->setCheckable(true);
         newButton->setAutoExclusive(true);
@@ -99,6 +118,7 @@ void ListSetSmall::renderList() {
 int ListSetSmall::on_addList_clicked() {
     if (!hasUnfinishedNewList) {
         QPushButton* newButton = new QPushButton("New List");
+        newButton->setObjectName("newButton");
         newButton->setCheckable(true);
         newButton->setAutoExclusive(true);
         listLayout->addWidget(newButton);
@@ -139,7 +159,7 @@ void ListSetSmall::onSubmitClicked() {
 
     if (!isSubmitEnabled) {
         int result = formHandler.editForm(listsInfo[currentBtnIndex].id, listName, videoDirPath);
-        if (result > 0) {
+        if (result == FORMHANDLER_ERROR::SUCCESS) {
             QMessageBox::information(this, "Success", "List edited successfully!\n");
             QPushButton* button = qobject_cast<QPushButton*>(listLayout->itemAt(currentBtnIndex + 1)->widget());
             if (button) {
@@ -151,14 +171,15 @@ void ListSetSmall::onSubmitClicked() {
                 });
             }
         } else {
-            QMessageBox::warning(this, "Error", "Failed to edit list!\n");
+            showError(result);
         }
     } else {
         int result = formHandler.submitForm(listName, videoDirPath);
-        if (result > 0) {
+        if (result == FORMHANDLER_ERROR::SUCCESS) {
             hasUnfinishedNewList = false;
             QMessageBox::information(this, "Success", "List added successfully!\n");
             QPushButton* newButton = new QPushButton(QString::fromStdString(listName));
+            newButton->setObjectName("newButton");
             newButton->setCheckable(true);
             newButton->setAutoExclusive(true);
             listLayout->addWidget(newButton);
@@ -188,7 +209,7 @@ void ListSetSmall::onSubmitClicked() {
                 currentBtnIndex = listLayout->indexOf(newButton) - 1;
             });
         } else {
-            QMessageBox::warning(this, "Error", "Failed to add list!\n");
+            showError(result);
         }
     }
 }
@@ -214,7 +235,7 @@ void ListSetSmall::onDeleteClicked() {
     string error;
     int result = fileUtil->DelListByID(listID, &error);
 
-    if (result > 0) {
+    if (result == FORMHANDLER_ERROR::SUCCESS) {
         QMessageBox::information(this, "Success", "List deleted successfully");
         // Remove the corresponding button from the UI
         QWidget* widget = listLayout->itemAt(currentBtnIndex + 1)->widget();
@@ -232,7 +253,7 @@ void ListSetSmall::onDeleteClicked() {
             ui->placeholderWidget->setVisible(true);
         }
     } else {
-        QMessageBox::warning(this, "Error", QString::fromStdString(error));
+        showError(result);
     }
 }
 
@@ -247,6 +268,18 @@ void ListSetSmall::switchToMainWindow() {
     mainwindow->show();
 }
 
+// RefreshList() updates and refreshes the list display in the ListSetSmall window.
+// This function performs the following actions:
+// - Checks if the listLayout pointer is null. If it is, it initializes listLayout
+//   by finding the QHBoxLayout with the name "horizontalLayout_4" in the UI.
+// - Clears the existing list buttons from the layout. It does this by repeatedly
+//   removing and deleting the first layout item (and its associated widget) until
+//   no items remain.
+// - Clears the text in the edit fields for list name (editName) and path (editPath).
+// - Retrieves updated list information by calling GetAllListsInfo from the FileUtil object.
+// - Calls renderList() to display the updated list information in the UI.
+// Parameters: None.
+// Returns: None.
 void ListSetSmall::RefreshList() {
     if (listLayout == nullptr) {
         listLayout = ui->scrollAreaWidget->findChild<QHBoxLayout*>("horizontalLayout_4");
@@ -264,6 +297,20 @@ void ListSetSmall::RefreshList() {
 
     listsInfo = fileUtil->GetAllListsInfo();
     renderList();
+}
+
+// showError(int errorCode) displays an error message based on the provided error code.
+// The function performs the following actions:
+// - Checks if the errorMessages map contains the provided errorCode.
+// - If found, retrieves the corresponding error message from the map.
+// - If not found, uses the default error message (associated with key 0 in the map).
+// - Displays the error message in a message box with a warning icon.
+// Parameters:
+// - errorCode: An integer representing the specific error code.
+// Returns: None.
+void ListSetSmall::showError(int errorCode) {
+    QString errorMsg = errorMessages.count(errorCode) ? errorMessages[errorCode] : errorMessages[0];
+    QMessageBox::warning(this, "Error", errorMsg);
 }
 
 void ListSetSmall::onFindPathClicked() {

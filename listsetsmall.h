@@ -1,17 +1,20 @@
 #ifndef LISTSETSMALL_H
 #define LISTSETSMALL_H
 
-#include <QHBoxLayout>
 #include <QListWidgetItem>
 #include <QMainWindow>
 #include <QPushButton>
-
+#include <QHBoxLayout>
 #include <vector>
+#include <map>
+#include <QString>
 
 #include "fileutil.h"
 
+extern std::map<int, QString> errorMessages;
+
 namespace Ui {
-class ListSetSmall;
+    class ListSetSmall;
 }
 
 class ListSetSmall : public QMainWindow {
@@ -37,7 +40,6 @@ private:
     FileUtil* fileUtil;
     std::vector<ListInfo> listsInfo;
     Ui::ListSetSmall* ui;
-    bool hasUnfinishedNewList = false;
     QHBoxLayout* listLayout;
     QPushButton* newButton;
     QVector<QPushButton*> itemList;
@@ -45,6 +47,9 @@ private:
     int currentBtnIndex{0};
 
     void renderList();
+    void showError(int errorCode);
+
+    bool hasUnfinishedNewList = false;
 };
 
 #endif  // LISTSETSMALL_H
