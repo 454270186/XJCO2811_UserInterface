@@ -56,7 +56,7 @@ mainwindowm::mainwindowm(QWidget* parent, MainWindowResource* cr)
     QWidget* listsContainer = new QWidget(listsScrollArea);
 
     // Create a QHBoxLayout for the buttons
-    QHBoxLayout* listsLayout = new QHBoxLayout(listsContainer);
+    listsBtnsLayout = new QHBoxLayout(listsContainer);
 
     // Render all lists
     //    fileUtil_ = new FileUtil("../XJCO2811_UserInterface/videolist_data.xml");
@@ -64,28 +64,29 @@ mainwindowm::mainwindowm(QWidget* parent, MainWindowResource* cr)
 
     // Clear existing buttons
     QLayoutItem* child;
-    while ((child = listsLayout->takeAt(0)) != nullptr) {
+    while ((child = listsBtnsLayout->takeAt(0)) != nullptr) {
         delete child->widget();
         delete child;
     }
 
     // Create new buttons based on updated listInfos_
-    for (size_t i = 0; i < commonResrc->listinfo_.size(); i++) {
-        QPushButton* newButton = new QPushButton();
-        newButton->setText(commonResrc->listinfo_[i].name.c_str());
-        newButton->setCheckable(true);
-        newButton->setAutoExclusive(true);
+    //    for (size_t i = 0; i < commonResrc->listinfo_.size(); i++) {
+    //        QPushButton* newButton = new QPushButton();
+    //        newButton->setText(commonResrc->listinfo_[i].name.c_str());
+    //        newButton->setCheckable(true);
+    //        newButton->setAutoExclusive(true);
 
-        // 设置按钮的最小和最大大小
-        newButton->setMinimumSize(100, 30);
-        newButton->setMaximumSize(100, 30);
+    //        // 设置按钮的最小和最大大小
+    //        newButton->setMinimumSize(100, 30);
+    //        newButton->setMaximumSize(100, 30);
 
-        listsLayout->addWidget(newButton);
+    //        listsLayout->addWidget(newButton);
 
-        // connect onClick hook
-        connect(newButton, &QPushButton::clicked,
-                [this, i] { parseFolder(commonResrc->listinfo_[i].videoDirPath.c_str()); });
-    }
+    //        // connect onClick hook
+    //        connect(newButton, &QPushButton::clicked,
+    //                [this, i] { parseFolder(commonResrc->listinfo_[i].videoDirPath.c_str()); });
+    //    }
+    renderBtnList(listsBtnsLayout);
 
     // Set the container QWidget as the widget for the QScrollArea
     listsScrollArea->setWidget(listsContainer);
@@ -109,9 +110,27 @@ mainwindowm::mainwindowm(QWidget* parent, MainWindowResource* cr)
 
 // Destructor
 mainwindowm::~mainwindowm() {
-    // Delete videoWidget
-    delete videoWidget;
+    delete commonResrc;
     delete ui;
+}
+
+void mainwindowm::renderBtnList(QHBoxLayout* btnLayout) {
+    for (size_t i = 0; i < commonResrc->listinfo_.size(); i++) {
+        QPushButton* newButton = new QPushButton();
+        newButton->setText(commonResrc->listinfo_[i].name.c_str());
+        newButton->setCheckable(true);
+        newButton->setAutoExclusive(true);
+
+        // 设置按钮的最小和最大大小
+        newButton->setMinimumSize(100, 30);
+        newButton->setMaximumSize(100, 30);
+
+        btnLayout->addWidget(newButton);
+
+        // connect onClick hook
+        connect(newButton, &QPushButton::clicked,
+                [this, i] { parseFolder(commonResrc->listinfo_[i].videoDirPath.c_str()); });
+    }
 }
 
 // onPauseClicked() toggles the play/pause state of the media player.
@@ -419,4 +438,35 @@ void mainwindowm::adjustVolume(int volume) {
 
     // 设置 QMediaPlayer 的音量
     commonResrc->mediaPlayer_->setVolume(static_cast<int>(volumeLevel * 100));
+}
+
+// RefreshList() refreshes the videolist and video path
+void mainwindowm::RefreshList() {
+    // Assuming ui->lists is now a QScrollArea
+    QScrollArea* listsScrollArea = ui->lists;
+
+    // Create a QWidget to serve as the container for the buttons
+    QWidget* listsContainer = new QWidget(listsScrollArea);
+
+    // Create a QHBoxLayout for the buttons
+    if (listsBtnsLayout == nullptr) {
+        listsBtnsLayout = new QHBoxLayout(listsContainer);
+    }
+
+    // Clear existing buttons
+    QLayoutItem* child;
+    while ((child = listsBtnsLayout->takeAt(0)) != nullptr) {
+        std::cout << "delete in mainwindow small" << std::endl;
+        delete child->widget();
+        delete child;
+    }
+
+    delete commonResrc->fileUtil_;
+    commonResrc->fileUtil_ = new FileUtil("../XJCO2811_UserInterface/videolist_data.xml");
+    commonResrc->listinfo_ = commonResrc->fileUtil_->GetAllListsInfo();
+    commonResrc->fileUtil_->PrintAll();
+    for (size_t i = 0; i < commonResrc->listinfo_.size(); i++) {
+        std::cout << commonResrc->listinfo_[i].name << std::endl;
+    }
+    renderBtnList(listsBtnsLayout);
 }

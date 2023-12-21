@@ -21,14 +21,21 @@ signals:
 
 private slots:
     void switchToPage(int pageIndex) {
-
         if (pageIndex == 1 || pageIndex == 3) {
-            mainwindow->Pause();
+            if (pageIndex == 1) {
+                mainwindow->Pause();
+            } else {
+                mainwindowSmall->Pause();
+            }
         } else if (pageIndex == 0 || pageIndex == 2) {
             // refresh video list before page switch
-            mainwindow->RefreshList();
-
-            mainwindow->Play();
+            if (pageIndex == 0) {
+                mainwindow->RefreshList();
+                mainwindow->Play();
+            } else {
+                mainwindowSmall->RefreshList();
+                mainwindowSmall->Play();
+            }
         }
         std::cout << "page index: " << pageIndex << std::endl;
         stackPage->setCurrentIndex(pageIndex);

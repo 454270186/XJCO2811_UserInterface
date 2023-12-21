@@ -476,10 +476,13 @@ void MainWindow::RefreshList() {
     // Clear existing buttons
     QLayoutItem* child;
     while ((child = listsBtnsLayout->takeAt(0)) != nullptr) {
+        std::cout << "delete in mainwindow big" << std::endl;
         delete child->widget();
         delete child;
     }
 
+    delete commonResrc->fileUtil_;
+    commonResrc->fileUtil_ = new FileUtil("../XJCO2811_UserInterface/videolist_data.xml");
     commonResrc->listinfo_ = commonResrc->fileUtil_->GetAllListsInfo();
     commonResrc->fileUtil_->PrintAll();
     for (size_t i = 0; i < commonResrc->listinfo_.size(); i++) {
