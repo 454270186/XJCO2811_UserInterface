@@ -11,9 +11,11 @@ SOURCES += \
     btnconvert.cpp \
     faq.cpp \
     fileutil.cpp \
+    listsetresource.cpp \
     main.cpp \
     mainwindow.cpp \
     mainwindowm.cpp \
+    mainwindowresource.cpp \
     myvideowidget.cpp \
     pagemanager.cpp \
     tinyxml2.cpp \
@@ -25,8 +27,10 @@ HEADERS += \
     btnconvert.h \
     faq.h \
     fileutil.h \
+    listsetresource.h \
     mainwindow.h \
     mainwindowm.h \
+    mainwindowresource.h \
     myvideowidget.h \
     pagemanager.h \
     tinyxml2.h \

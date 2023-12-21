@@ -5,8 +5,8 @@
 #include <QFileDialog>
 #include <QFileInfo>
 #include <QHBoxLayout>
-#include <QVBoxLayout>
 #include <QResizeEvent>
+#include <QVBoxLayout>
 #include "btnconvert.h"
 #include "listset.h"
 #include "ui_mainwindow.h"
@@ -14,12 +14,11 @@
 #include <iostream>
 
 // MainWindow constructor initializes the main window and its components.
-MainWindow::MainWindow(QWidget* parent)
-    : QMainWindow(parent),
-      ui(new Ui::MainWindow),
-      mediaPlayer(new QMediaPlayer(this)),
-      videoWidget(new QVideoWidget(this))
-{
+MainWindow::MainWindow(QWidget* parent, MainWindowResource* cr)
+    : QMainWindow(parent), ui(new Ui::MainWindow), videoWidget(new QVideoWidget(this)) {
+    // Init common resource
+    commonResrc = cr;
+
     // Set up the user interface
     ui->setupUi(this);
     QFile file2("../XJCO2811_UserInterface/mainwindow.qss");
@@ -47,15 +46,12 @@ MainWindow::MainWindow(QWidget* parent)
     // Assuming that "videoplayer" is the name of the QWidget in your UI file
     QWidget* videoplayer = ui->videoplayer;
 
-    // Create a new QVideoWidget
-    QVideoWidget* videoWidget = new QVideoWidget(this);
-
     // Set up layout for videoWidget
     QVBoxLayout* videoLayout = new QVBoxLayout(videoplayer);
     videoLayout->addWidget(videoWidget);
 
     // 设置初始音量为 50
-    mediaPlayer->setVolume(50);
+    commonResrc->mediaPlayer_->setVolume(50);
 
     // 将 QSlider 初始值设置为 50
     ui->voicecontrolstrip->setValue(50);
@@ -75,8 +71,8 @@ MainWindow::MainWindow(QWidget* parent)
     listsBtnsLayout = new QHBoxLayout(listsContainer);
 
     // Render all lists
-    fileUtil_ = new FileUtil("../XJCO2811_UserInterface/videolist_data.xml");
-    listInfos_ = fileUtil_->GetAllListsInfo();
+    //    fileUtil_ = new FileUtil("../XJCO2811_UserInterface/videolist_data.xml");
+    //    listInfos_ = fileUtil_->GetAllListsInfo();
 
     // Clear existing buttons
     QLayoutItem* child;
@@ -103,13 +99,13 @@ MainWindow::MainWindow(QWidget* parent)
     listsScrollArea->setWidget(listsContainer);
 
     // Set the video output of the media player to the video widget
-    mediaPlayer->setVideoOutput(videoWidget);
+    commonResrc->mediaPlayer_->setVideoOutput(videoWidget);
 
     // Connect signals and slots for window switch
     connect(ui->addListBtn, &QPushButton::clicked, this, &MainWindow::switchToPage);
 
     // Connect signals and slots for media playback control
-    connect(mediaPlayer, &QMediaPlayer::positionChanged, this, &MainWindow::updateProgressBar);
+    connect(commonResrc->mediaPlayer_, &QMediaPlayer::positionChanged, this, &MainWindow::updateProgressBar);
     connect(ui->progressbar, &QSlider::sliderMoved, this, &MainWindow::onProgressbarSliderMoved);
     connect(ui->forward, &QPushButton::clicked, this, &MainWindow::onForwardClicked);
     connect(ui->retreat, &QPushButton::clicked, this, &MainWindow::onRetreatClicked);
@@ -120,15 +116,14 @@ MainWindow::MainWindow(QWidget* parent)
 
 // Destructor
 MainWindow::~MainWindow() {
-    // Delete videoWidget
-    delete videoWidget;
     delete ui;
+    delete commonResrc;
 }
 
 void MainWindow::renderBtnList(QHBoxLayout* btnLayout) {
-    for (size_t i = 0; i < listInfos_.size(); i++) {
+    for (size_t i = 0; i < commonResrc->listinfo_.size(); i++) {
         QPushButton* newButton = new QPushButton();
-        newButton->setText(listInfos_[i].name.c_str());
+        newButton->setText(commonResrc->listinfo_[i].name.c_str());
         newButton->setCheckable(true);
         newButton->setAutoExclusive(true);
 
@@ -139,7 +134,8 @@ void MainWindow::renderBtnList(QHBoxLayout* btnLayout) {
         btnLayout->addWidget(newButton);
 
         // connect onClick hook
-        connect(newButton, &QPushButton::clicked, [this, i] { parseFolder(listInfos_[i].videoDirPath.c_str()); });
+        connect(newButton, &QPushButton::clicked,
+                [this, i] { parseFolder(commonResrc->listinfo_[i].videoDirPath.c_str()); });
     }
 }
 
@@ -148,15 +144,15 @@ void MainWindow::renderBtnList(QHBoxLayout* btnLayout) {
 // otherwise, it starts or resumes playback.
 void MainWindow::onPauseClicked() {
     // Toggle play/pause state
-    if (mediaPlayer->state() == QMediaPlayer::PlayingState) {
+    if (commonResrc->mediaPlayer_->state() == QMediaPlayer::PlayingState) {
         // If the media player is currently in the playing state, pause playback
-        mediaPlayer->pause();
+        commonResrc->mediaPlayer_->pause();
 
         // Set the pause icon
         ui->pause->setIcon(QIcon("../XJCO2811_UserInterface/icons/play-circle.svg"));
     } else {
         // If the media player is not in the playing state, start or resume playback
-        mediaPlayer->play();
+        commonResrc->mediaPlayer_->play();
 
         // Set the play icon
         ui->pause->setIcon(QIcon("../XJCO2811_UserInterface/icons/pause.svg"));
@@ -166,40 +162,39 @@ void MainWindow::onPauseClicked() {
 // onForwardClicked() switches to the next video in the playlist.
 void MainWindow::onForwardClicked() {
     // Switch to the next video
-    currentVideoIndex = (currentVideoIndex + 1) % videoPaths.size();
+    commonResrc->currentVideoIndex_ = (commonResrc->currentVideoIndex_ + 1) % commonResrc->videoPaths_.size();
 
     // Check if the current video index is within the valid range
-    if (currentVideoIndex >= 0 && currentVideoIndex < videoPaths.size()) {
+    if (commonResrc->currentVideoIndex_ >= 0 && commonResrc->currentVideoIndex_ < commonResrc->videoPaths_.size()) {
         // Reset the playback position
-        mediaPlayer->setPosition(0);
+        commonResrc->mediaPlayer_->setPosition(0);
 
         // Set up the media source for the new video
-        QString videoPath = videoPaths[currentVideoIndex];
-        mediaPlayer->setMedia(QUrl::fromLocalFile(QFileInfo(videoPath).absoluteFilePath()));
+        QString videoPath = commonResrc->videoPaths_[commonResrc->currentVideoIndex_];
+        commonResrc->mediaPlayer_->setMedia(QUrl::fromLocalFile(QFileInfo(videoPath).absoluteFilePath()));
 
         // Start playback
-        mediaPlayer->play();
-
+        commonResrc->mediaPlayer_->play();
     }
 }
 
 // onRetreatClicked() switches to the previous video in the playlist.
 void MainWindow::onRetreatClicked() {
     // Switch to the previous video
-    currentVideoIndex = (currentVideoIndex - 1 + videoPaths.size()) % videoPaths.size();
+    commonResrc->currentVideoIndex_ =
+        (commonResrc->currentVideoIndex_ - 1 + commonResrc->videoPaths_.size()) % commonResrc->videoPaths_.size();
 
     // Check if the current video index is within the valid range
-    if (currentVideoIndex >= 0 && currentVideoIndex < videoPaths.size()) {
+    if (commonResrc->currentVideoIndex_ >= 0 && commonResrc->currentVideoIndex_ < commonResrc->videoPaths_.size()) {
         // Reset the playback position
-        mediaPlayer->setPosition(0);
+        commonResrc->mediaPlayer_->setPosition(0);
 
         // Set up the media source for the new video
-        QString videoPath = videoPaths[currentVideoIndex];
-        mediaPlayer->setMedia(QUrl::fromLocalFile(QFileInfo(videoPath).absoluteFilePath()));
+        QString videoPath = commonResrc->videoPaths_[commonResrc->currentVideoIndex_];
+        commonResrc->mediaPlayer_->setMedia(QUrl::fromLocalFile(QFileInfo(videoPath).absoluteFilePath()));
 
         // Start playback
-        mediaPlayer->play();
-
+        commonResrc->mediaPlayer_->play();
     }
 }
 
@@ -210,13 +205,13 @@ void MainWindow::onRetreatClicked() {
 // - position: The new position set by the user through the progress bar slider.
 void MainWindow::onProgressbarSliderMoved(int position) {
     // Set the position moved by the slider to the media player
-    mediaPlayer->setPosition(position);
+    commonResrc->mediaPlayer_->setPosition(position);
 }
 
 // updateProgressBar() updates the progress bar based on the current position of the media playback.
 void MainWindow::updateProgressBar(qint64 position) {
     // Update the current value of the progress bar
-    qint64 totalDuration = mediaPlayer->duration();
+    qint64 totalDuration = commonResrc->mediaPlayer_->duration();
 
     if (totalDuration > 0) {
         // Set the range of the progress bar to the total duration of the media
@@ -233,9 +228,9 @@ void MainWindow::updateProgressBar(qint64 position) {
 void MainWindow::handleMediaStatusChanged(QMediaPlayer::MediaStatus status) {
     if (status == QMediaPlayer::LoadedMedia) {
         // Media has loaded successfully, start playback
-        std::cout << "play video: " << currentVideoIndex << std::endl;
+        std::cout << "play video: " << commonResrc->currentVideoIndex_ << std::endl;
         //        disconnect(mediaPlayer, &QMediaPlayer::mediaStatusChanged, this, &MainWindow::handleMediaStatusChanged);
-        mediaPlayer->play();
+        commonResrc->mediaPlayer_->play();
         isVideoPlaying = true;
         ui->video->show();
         if (ui->video->isVisible()) {
@@ -246,10 +241,11 @@ void MainWindow::handleMediaStatusChanged(QMediaPlayer::MediaStatus status) {
         // Current video playback is complete, automatically play the next video
 
         // disconnect previous slots
-        disconnect(mediaPlayer, &QMediaPlayer::mediaStatusChanged, this, &MainWindow::handleMediaStatusChanged);
+        disconnect(commonResrc->mediaPlayer_, &QMediaPlayer::mediaStatusChanged, this,
+                   &MainWindow::handleMediaStatusChanged);
 
-        currentVideoIndex = (currentVideoIndex + 1) % videoPaths.size();
-        std::cout << "end of video, switch to next: " << currentVideoIndex << std::endl;
+        commonResrc->currentVideoIndex_ = (commonResrc->currentVideoIndex_ + 1) % commonResrc->videoPaths_.size();
+        std::cout << "end of video, switch to next: " << commonResrc->currentVideoIndex_ << std::endl;
         setMediaAndPlay();
     }
 }
@@ -259,34 +255,35 @@ void MainWindow::handleMediaStatusChanged(QMediaPlayer::MediaStatus status) {
 // and sets the media source to start playback.
 void MainWindow::setMediaAndPlay() {
     // Check if the current video index is within the valid range
-    if (currentVideoIndex >= 0 && currentVideoIndex < videoPaths.size()) {
+    if (commonResrc->currentVideoIndex_ >= 0 && commonResrc->currentVideoIndex_ < commonResrc->videoPaths_.size()) {
         // Retrieve the path of the next video in the playlist
-        QString videoPath = videoPaths[currentVideoIndex];
+        QString videoPath = commonResrc->videoPaths_[commonResrc->currentVideoIndex_];
 
         // Set the media source to the current video
-        mediaPlayer->setMedia(QUrl::fromLocalFile(QFileInfo(videoPath).absoluteFilePath()));
+        commonResrc->mediaPlayer_->setMedia(QUrl::fromLocalFile(QFileInfo(videoPath).absoluteFilePath()));
 
         // Set up a signal-slot connection for media status changed
-        connect(mediaPlayer, &QMediaPlayer::mediaStatusChanged, this, &MainWindow::handleMediaStatusChanged);
+        connect(commonResrc->mediaPlayer_, &QMediaPlayer::mediaStatusChanged, this,
+                &MainWindow::handleMediaStatusChanged);
     }
 }
 
 // handleVideoSelection() is called when a video button is clicked. It receives the list of video paths
 // and the current index, sets the current index, resets the playback position, and starts playback.
 // Params:
-// - videoPaths: QStringList containing paths of all videos in the folder.
+// - commonResrc->videoPaths_: QStringList containing paths of all videos in the folder.
 // - currentIndex: The index corresponding to the clicked button.
-void MainWindow::handleVideoSelection(const QStringList& videoPaths, int currentIndex) {
+void MainWindow::handleVideoSelection(const QStringList& videoPaths_, int currentIndex) {
     // Log the video paths and current index for debugging purposes
-    qDebug() << "Button clicked. Video paths:" << videoPaths;
+    qDebug() << "Button clicked. Video paths:" << videoPaths_;
     qDebug() << "Button clicked. currentIndex:" << currentIndex;
 
-    // Set videoPaths and currentVideoIndex
-    this->videoPaths = videoPaths;
-    this->currentVideoIndex = currentIndex;
+    // Set commonResrc->videoPaths_ and commonResrc->currentVideoIndex_
+    this->commonResrc->videoPaths_ = commonResrc->videoPaths_;
+    this->commonResrc->currentVideoIndex_ = currentIndex;
 
     // Reset the playback position
-    mediaPlayer->setPosition(0);
+    commonResrc->mediaPlayer_->setPosition(0);
 
     // Start playback
     setMediaAndPlay();
@@ -318,10 +315,10 @@ void MainWindow::parseFolder(const QString& folderPath) {
 
     // Iterate through each video file in the folder
     // Clear video paths
-    videoPaths.clear();
+    commonResrc->videoPaths_.clear();
     foreach (const QString& videoFile, videoFiles) {
         QString videoPath = dir.filePath(videoFile);
-        videoPaths.append(videoPath);
+        commonResrc->videoPaths_.append(videoPath);
 
         QString baseName = QFileInfo(videoFile).baseName();
         QString imagePathPNG = dir.filePath(baseName + ".png");
@@ -364,9 +361,9 @@ void MainWindow::onButtonClicked() {
         QString videoPath = button->getVideoPath();
 
         // Find the index of the video path in the list and handle the video selection
-        int index = videoPaths.indexOf(videoPath);
+        int index = commonResrc->videoPaths_.indexOf(videoPath);
         if (index != -1) {
-            handleVideoSelection(videoPaths, index);
+            handleVideoSelection(commonResrc->videoPaths_, index);
         }
         ui->picturelist->hide();
     }
@@ -389,7 +386,7 @@ void MainWindow::switchToListset() {
 void MainWindow::toggleFullScreen() {
     ui->picturelist->setHidden(!ui->picturelist->isHidden());
     updateGeometry();  // 强制更新布局
-    repaint();  // 强制重绘
+    repaint();         // 强制重绘
 
     // 手动触发 resizeEvent
     QResizeEvent* event = new QResizeEvent(size(), size());
@@ -438,7 +435,7 @@ void MainWindow::adjustVolume(int volume) {
     qreal volumeLevel = volume / 100.0;
 
     // 设置 QMediaPlayer 的音量
-    mediaPlayer->setVolume(static_cast<int>(volumeLevel * 100));
+    commonResrc->mediaPlayer_->setVolume(static_cast<int>(volumeLevel * 100));
 }
 
 // RefreshList() refreshes the videolist and video path
@@ -457,14 +454,17 @@ void MainWindow::RefreshList() {
     // Clear existing buttons
     QLayoutItem* child;
     while ((child = listsBtnsLayout->takeAt(0)) != nullptr) {
+        std::cout << "delete in mainwindow big" << std::endl;
         delete child->widget();
         delete child;
     }
 
-    listInfos_ = fileUtil_->GetAllListsInfo();
-    fileUtil_->PrintAll();
-    for (size_t i = 0; i < listInfos_.size(); i++) {
-        std::cout << listInfos_[i].name << std::endl;
+    delete commonResrc->fileUtil_;
+    commonResrc->fileUtil_ = new FileUtil("../XJCO2811_UserInterface/videolist_data.xml");
+    commonResrc->listinfo_ = commonResrc->fileUtil_->GetAllListsInfo();
+    commonResrc->fileUtil_->PrintAll();
+    for (size_t i = 0; i < commonResrc->listinfo_.size(); i++) {
+        std::cout << commonResrc->listinfo_[i].name << std::endl;
     }
     renderBtnList(listsBtnsLayout);
 }
