@@ -17,7 +17,6 @@
 mainwindowm::mainwindowm(QWidget* parent)
     : QMainWindow(parent),
       ui(new Ui::mainwindowm),
-      isFullScreen(false),
       mediaPlayer(new QMediaPlayer(this)),
       videoWidget(new QVideoWidget(this)) {
     // Set up the user interface
@@ -47,6 +46,8 @@ mainwindowm::mainwindowm(QWidget* parent)
     ui->voicecontrolstrip->setValue(50);
 
     ui->videoBox->installEventFilter(this);
+
+    ui->voicecontrolstrip->hide();
 
     isVideoPlaying = false;
     ui->video->hide();
@@ -78,6 +79,10 @@ mainwindowm::mainwindowm(QWidget* parent)
         newButton->setCheckable(true);
         newButton->setAutoExclusive(true);
 
+        // 设置按钮的最小和最大大小
+        newButton->setMinimumSize(100, 30);
+        newButton->setMaximumSize(100, 30);
+
         listsLayout->addWidget(newButton);
 
         // connect onClick hook
@@ -101,6 +106,7 @@ mainwindowm::mainwindowm(QWidget* parent)
     connect(ui->pause, &QPushButton::clicked, this, &mainwindowm::onPauseClicked);
     connect(ui->fullScreen, &QPushButton::clicked, this, &mainwindowm::toggleFullScreen);
     connect(ui->voicecontrolstrip, &QSlider::valueChanged, this, &mainwindowm::adjustVolume);
+    connect(ui->voice, &QPushButton::clicked, this, &mainwindowm::toggleVoiceControlStrip);
 }
 
 // Destructor
@@ -185,35 +191,6 @@ void mainwindowm::updateProgressBar(qint64 position) {
 
         // Set the current value of the progress bar to the current position of the media playback
         ui->progressbar->setValue(position);
-    }
-}
-
-// PS: This function is for TEST, Do NOT use it!
-// setFolderPath() is called to set the media player to play the selected video file asynchronously.
-// It logs the folder path, opens a file dialog to choose a video file, and connects the mediaStatusChanged signal
-// to the handleMediaStatusChanged slot for asynchronous handling of media loading.
-// Params:
-// - path: The initial path used by the file dialog.
-void mainwindowm::setFolderPath(const QString& path) {
-    // Log the folder path for debugging purposes
-    qDebug() << "setFolderPath called with path:" << path;
-
-    // Open the file dialog to choose a video file
-    // QString filePath = QFileDialog::getOpenFileName(this, tr("Choose video file"), path,
-    //                                                 tr("Video files (*.mp4 *.avi *.mkv);;All files (*)"));
-
-    QString filePath = "../XJCO2811_UserInterface/videos/e.mp4";
-
-    // Log the selected file path for debugging purposes
-    qDebug() << "Selected file path:" << filePath;
-
-    // If the file path is not empty, set the media asynchronously
-    if (!filePath.isEmpty()) {
-        // Set the media source to the selected file
-        mediaPlayer->setMedia(QUrl::fromLocalFile(filePath));
-
-        // Connect a slot to the mediaStatusChanged signal for asynchronous handling of media loading
-        connect(mediaPlayer, &QMediaPlayer::mediaStatusChanged, this, &mainwindowm::handleMediaStatusChanged);
     }
 }
 
@@ -429,19 +406,13 @@ void mainwindowm::resizeEvent(QResizeEvent* event) {
     repaint();
 }
 
-bool mainwindowm::eventFilter(QObject* obj, QEvent* event) {
-    if (obj == ui->videoBox) {
-        if (event->type() == QEvent::Enter) {
-            // 鼠标进入 videoBox 区域，显示音量条
-            ui->voicecontrolstrip->show();
-        } else if (event->type() == QEvent::Leave) {
-            // 鼠标离开 videoBox 区域，隐藏音量条
-            ui->voicecontrolstrip->hide();
-        }
+void mainwindowm::toggleVoiceControlStrip() {
+    // 判断当前状态，如果是隐藏则显示，反之亦然
+    if (ui->voicecontrolstrip->isHidden()) {
+        ui->voicecontrolstrip->show();
+    } else {
+        ui->voicecontrolstrip->hide();
     }
-
-    // 将事件传递给基类处理
-    return QMainWindow::eventFilter(obj, event);
 }
 
 void mainwindowm::adjustVolume(int volume) {
