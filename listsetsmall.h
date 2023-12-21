@@ -1,31 +1,36 @@
 #ifndef LISTSETSMALL_H
 #define LISTSETSMALL_H
 
+#include <QHBoxLayout>
 #include <QListWidgetItem>
 #include <QMainWindow>
 #include <QPushButton>
-#include <QHBoxLayout>
-#include <vector>
-#include <map>
 #include <QString>
+#include <map>
+#include <vector>
 
-#include "fileutil.h"
+#include "listsetresource.h"
+
+#include <iostream>
 
 extern std::map<int, QString> errorMessages;
 
 namespace Ui {
-    class ListSetSmall;
+class ListSetSmall;
 }
 
 class ListSetSmall : public QMainWindow {
     Q_OBJECT
 
 public:
-    explicit ListSetSmall(QWidget* parent = nullptr);
+    explicit ListSetSmall(QWidget* parent = nullptr, ListSetResource* cr = nullptr);
     bool isSubmitEnabled = false;
     ~ListSetSmall();
 
     void RefreshList();
+
+signals:
+    void switchPage(int pageIndex);
 
 public slots:
     void switchToMainWindow();
@@ -35,21 +40,19 @@ private slots:
     void onSubmitClicked();
     void onDeleteClicked();
     void onFindPathClicked();
+    void switchToPage() {
+        std::cout << "hereherehere" << std::endl;
+        emit switchPage(2);
+    }
 
 private:
-    FileUtil* fileUtil;
-    std::vector<ListInfo> listsInfo;
     Ui::ListSetSmall* ui;
     QHBoxLayout* listLayout;
-    QPushButton* newButton;
-    QVector<QPushButton*> itemList;
-    QPushButton* currentButton;
-    int currentBtnIndex{0};
 
     void renderList();
     void showError(int errorCode);
 
-    bool hasUnfinishedNewList = false;
+    ListSetResource* commonResrc;
 };
 
 #endif  // LISTSETSMALL_H

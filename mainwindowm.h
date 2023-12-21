@@ -4,14 +4,15 @@
 #include <QHBoxLayout>
 #include <QMainWindow>
 #include <QMediaPlayer>
+#include <QPropertyAnimation>
+#include <QPushButton>
+#include <QSlider>
 #include <QStringList>
 #include <QVideoWidget>
 #include <vector>
-#include <QPushButton>
-#include <QSlider>
-#include <QPropertyAnimation>
 
 #include "fileutil.h"
+#include "mainwindowresource.h"
 
 namespace Ui {
 class mainwindowm;
@@ -22,16 +23,17 @@ class mainwindowm : public QMainWindow {
 
 public:
     Ui::mainwindowm* ui;
-    explicit mainwindowm(QWidget* parent = nullptr);
+    explicit mainwindowm(QWidget* parent = nullptr, MainWindowResource* cr = nullptr);
     ~mainwindowm();
 
     // Play() and Pause() are exposed to PageManager
     // to control the video play or pause
-    void Play() { mediaPlayer->play(); }
-    void Pause() { mediaPlayer->pause(); }
+    void Play() { commonResrc->mediaPlayer_->play(); }
+    void Pause() { commonResrc->mediaPlayer_->pause(); }
+
+    QVideoWidget* getVideoOutput() { return this->videoWidget; }
 
     void RefreshList();
-
 signals:
     void switchPage(int pageIndex);
 
@@ -61,7 +63,7 @@ private slots:
     void handleVideoSelection(const QStringList& videoPaths, int currentIndex);  // 接口函数
     void handleMediaStatusChanged(QMediaPlayer::MediaStatus status);
     void toggleFullScreen();
-    void switchToPage() { emit switchPage(1); }
+    void switchToPage() { emit switchPage(3); }
     void adjustVolume(int volume);
     void toggleVoiceControlStrip();
 
@@ -71,14 +73,11 @@ private:
     void resizeEvent(QResizeEvent* event) override;
     void renderBtnList(QHBoxLayout* btnLayout);
 
-    QMediaPlayer* mediaPlayer;
     QVideoWidget* videoWidget;
-    QStringList videoPaths;  // 存储所有视频路径
     QHBoxLayout* listsBtnsLayout;
-    FileUtil* fileUtil_;
-    std::vector<ListInfo> listInfos_;
-    int currentVideoIndex;  // 当前播放的视频索引
     bool isVideoPlaying;
+
+    MainWindowResource* commonResrc;
 };
 
 #endif  // MAINWINDOWM_H
