@@ -4,14 +4,15 @@
 #include <QHBoxLayout>
 #include <QMainWindow>
 #include <QMediaPlayer>
+#include <QPropertyAnimation>
+#include <QPushButton>
+#include <QSlider>
 #include <QStringList>
 #include <QVideoWidget>
 #include <vector>
-#include <QPushButton>
-#include <QSlider>
-#include <QPropertyAnimation>
 
 #include "fileutil.h"
+#include "mainwindowresource.h"
 
 namespace Ui {
 class mainwindowm;
@@ -22,7 +23,7 @@ class mainwindowm : public QMainWindow {
 
 public:
     Ui::mainwindowm* ui;
-    explicit mainwindowm(QWidget* parent = nullptr);
+    explicit mainwindowm(QWidget* parent = nullptr, MainWindowResource* cr = nullptr);
     ~mainwindowm();
 
     // Play() and Pause() are exposed to PageManager
@@ -31,7 +32,6 @@ public:
     void Pause() { mediaPlayer->pause(); }
 
     void RefreshList();
-
 signals:
     void switchPage(int pageIndex);
 
@@ -79,6 +79,8 @@ private:
     std::vector<ListInfo> listInfos_;
     int currentVideoIndex;  // 当前播放的视频索引
     bool isVideoPlaying;
+
+    MainWindowResource* commonResrc;
 };
 
 #endif  // MAINWINDOWM_H

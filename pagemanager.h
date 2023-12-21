@@ -35,6 +35,7 @@ private slots:
 
         if (size.width() >= thresholdSize.width()) {
             if (stackPage->currentIndex() == 2 || stackPage->currentIndex() == 3) {
+                // from small to big
                 if (stackPage->currentIndex() == 2) {
                     stackPage->setCurrentIndex(0);
                 } else if (stackPage->currentIndex() == 3) {

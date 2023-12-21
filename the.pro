@@ -14,6 +14,7 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     mainwindowm.cpp \
+    mainwindowresource.cpp \
     myvideowidget.cpp \
     pagemanager.cpp \
     tinyxml2.cpp \
@@ -27,6 +28,7 @@ HEADERS += \
     fileutil.h \
     mainwindow.h \
     mainwindowm.h \
+    mainwindowresource.h \
     myvideowidget.h \
     pagemanager.h \
     tinyxml2.h \
