@@ -11,6 +11,7 @@ SOURCES += \
     btnconvert.cpp \
     faq.cpp \
     fileutil.cpp \
+    listsetresource.cpp \
     main.cpp \
     mainwindow.cpp \
     mainwindowm.cpp \
@@ -26,6 +27,7 @@ HEADERS += \
     btnconvert.h \
     faq.h \
     fileutil.h \
+    listsetresource.h \
     mainwindow.h \
     mainwindowm.h \
     mainwindowresource.h \

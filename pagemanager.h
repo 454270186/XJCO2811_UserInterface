@@ -65,6 +65,7 @@ private:
     QStackedWidget* stackPage;
 
     MainWindowResource* commonResrc;
+    ListSetResource* listsetResrc;
 
     MainWindow* mainwindow;        // page index 0
     ListSet* listset;              // page index 1

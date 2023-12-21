@@ -1,18 +1,18 @@
 #include <iostream>
 #include <string>
 
-#include <QMessageBox>
 #include <QApplication>
-#include <QFile>
 #include <QDir>
+#include <QFile>
 #include <QFileDialog>
+#include <QMessageBox>
 
 #include "formhandler.h"
 #include "listset.h"
 #include "mainwindow.h"
 #include "ui_listset.h"
 
-ListSet::ListSet(QWidget* parent) : QMainWindow(parent), ui(new Ui::ListSet), hasUnfinishedNewList(false) {
+ListSet::ListSet(QWidget* parent, ListSetResource* cr) : QMainWindow(parent), ui(new Ui::ListSet) {
     ui->setupUi(this);
     QFile file1("../XJCO2811_UserInterface/listset.qss");
     QString StyleSheet;
@@ -33,12 +33,14 @@ ListSet::ListSet(QWidget* parent) : QMainWindow(parent), ui(new Ui::ListSet), ha
 
     connect(ui->submit, &QPushButton::clicked, this, &ListSet::onSubmitClicked);
     connect(ui->Delete, &QPushButton::clicked, this, &ListSet::onDeleteClicked);
-    
+
+    // init common resource
+    commonResrc = cr;
 
     // Load and process video list data from an XML file
-    const std::string XMLFilePath = "../XJCO2811_UserInterface/videolist_data.xml";
-    fileUtil = new FileUtil(XMLFilePath);
-    listsInfo = fileUtil->GetAllListsInfo();
+    //    const std::string XMLFilePath = "../XJCO2811_UserInterface/videolist_data.xml";
+    //    fileUtil = new FileUtil(XMLFilePath);
+    //    listsInfo = fileUtil->GetAllListsInfo();
 
     // Set the input form to invisible at first time
     ui->groupBox_right->setVisible(false);
@@ -80,11 +82,11 @@ ListSet::~ListSet() {
 }
 
 void ListSet::renderList() {
-    for (size_t i = 0; i < listsInfo.size(); i++) {
+    for (size_t i = 0; i < commonResrc->ListInfo_.size(); i++) {
         // initialize video list ui
         QPushButton* newButton = new QPushButton();
         newButton->setObjectName("newButton");
-        newButton->setText(listsInfo[i].name.c_str());
+        newButton->setText(commonResrc->ListInfo_[i].name.c_str());
         newButton->setCheckable(true);
         newButton->setAutoExclusive(true);
         listLayout->addWidget(newButton);
@@ -96,10 +98,10 @@ void ListSet::renderList() {
             ui->submit->setText(QString("Edit"));
             isSubmitEnabled = false;
             int index = listLayout->indexOf(newButton) - 1;
-            currentBtnIndex = index;
+            commonResrc->currentBtnIndex_ = index;
             // Check if the index is valid
-            if (index != -1 && index < (int)this->listsInfo.size()) {
-                ListInfo info = this->listsInfo[index];
+            if (index != -1 && index < (int)this->commonResrc->ListInfo_.size()) {
+                ListInfo info = this->commonResrc->ListInfo_[index];
                 ui->editName->setText(QString::fromStdString(info.name));
                 ui->editPath->setText(QString::fromStdString(info.videoDirPath));
             }
@@ -118,13 +120,13 @@ void ListSet::renderList() {
 // Returns:
 // - int: Always returns 0. This return value is not currently used.
 int ListSet::on_addList_clicked() {
-    if (!hasUnfinishedNewList) {
+    if (!commonResrc->hasUnfinishedNewList_) {
         QPushButton* newButton = new QPushButton("New List");
         newButton->setObjectName("newButton");
         newButton->setCheckable(true);
         newButton->setAutoExclusive(true);
         listLayout->addWidget(newButton);
-        hasUnfinishedNewList = true;
+        commonResrc->hasUnfinishedNewList_ = true;
 
         connect(newButton, &QPushButton::clicked, [this, newButton] {
             ui->groupBox_right->setVisible(true);
@@ -160,10 +162,12 @@ void ListSet::onSubmitClicked() {
     FormHandler formHandler;
 
     if (!isSubmitEnabled) {
-        int result = formHandler.editForm(listsInfo[currentBtnIndex].id, listName, videoDirPath);
+        int result =
+            formHandler.editForm(commonResrc->ListInfo_[commonResrc->currentBtnIndex_].id, listName, videoDirPath);
         if (result == FORMHANDLER_ERROR::SUCCESS) {
             QMessageBox::information(this, "Success", "List edited successfully!\n");
-            QPushButton* button = qobject_cast<QPushButton*>(listLayout->itemAt(currentBtnIndex + 1)->widget());
+            QPushButton* button =
+                qobject_cast<QPushButton*>(listLayout->itemAt(commonResrc->currentBtnIndex_ + 1)->widget());
             if (button) {
                 button->setText(listName.c_str());
                 connect(button, &QPushButton::clicked, [this, listName, videoDirPath] {
@@ -178,15 +182,15 @@ void ListSet::onSubmitClicked() {
     } else {
         int result = formHandler.submitForm(listName, videoDirPath);
         if (result == FORMHANDLER_ERROR::SUCCESS) {
-            hasUnfinishedNewList = false;
+            commonResrc->hasUnfinishedNewList_ = false;
             QMessageBox::information(this, "Success", "List added successfully!\n");
             QPushButton* newButton = new QPushButton(QString::fromStdString(listName));
             newButton->setObjectName("newButton");
             newButton->setCheckable(true);
             newButton->setAutoExclusive(true);
             listLayout->addWidget(newButton);
-            fileUtil = new FileUtil("../XJCO2811_UserInterface/videolist_data.xml");
-            listsInfo = fileUtil->GetAllListsInfo();
+            commonResrc->fileUtil_ = new FileUtil("../XJCO2811_UserInterface/videolist_data.xml");
+            commonResrc->ListInfo_ = commonResrc->fileUtil_->GetAllListsInfo();
 
             // Remove any existing "New List" button
             for (int i = 0; i < listLayout->count(); ++i) {
@@ -208,7 +212,7 @@ void ListSet::onSubmitClicked() {
                 ui->Delete->setVisible(true);
                 ui->submit->setText(QString("Edit"));
                 isSubmitEnabled = false;
-                currentBtnIndex = listLayout->indexOf(newButton) - 1;
+                commonResrc->currentBtnIndex_ = listLayout->indexOf(newButton) - 1;
             });
         } else {
             showError(result);
@@ -228,29 +232,29 @@ void ListSet::onSubmitClicked() {
 //   4. Clears the interface when there is no list.
 // - If the deletion fails (result <= 0), displays an error message.
 void ListSet::onDeleteClicked() {
-    if (currentBtnIndex < 0 || currentBtnIndex >= listsInfo.size()) {
+    if (commonResrc->currentBtnIndex_ < 0 || commonResrc->currentBtnIndex_ >= commonResrc->ListInfo_.size()) {
         QMessageBox::warning(this, "Error", "No list selected or invalid list index");
         return;
     }
 
-    int listID = listsInfo[currentBtnIndex].id;
+    int listID = commonResrc->ListInfo_[commonResrc->currentBtnIndex_].id;
     string error;
-    int result = fileUtil->DelListByID(listID, &error);
+    int result = commonResrc->fileUtil_->DelListByID(listID, &error);
 
     if (result == FORMHANDLER_ERROR::SUCCESS) {
         QMessageBox::information(this, "Success", "List deleted successfully");
         // Remove the corresponding button from the UI
-        QWidget* widget = listLayout->itemAt(currentBtnIndex + 1)->widget();
+        QWidget* widget = listLayout->itemAt(commonResrc->currentBtnIndex_ + 1)->widget();
         if (widget) {
             listLayout->removeWidget(widget);
             delete widget;
         }
         // Remove list information from listsInfo array
-        listsInfo.erase(listsInfo.begin() + currentBtnIndex);
+        commonResrc->ListInfo_.erase(commonResrc->ListInfo_.begin() + commonResrc->currentBtnIndex_);
         // Clear interface when there is no list
-        listsInfo.clear();
-        listsInfo = fileUtil->GetAllListsInfo();
-        if (listsInfo.empty()) {
+        commonResrc->ListInfo_.clear();
+        commonResrc->ListInfo_ = commonResrc->fileUtil_->GetAllListsInfo();
+        if (commonResrc->ListInfo_.empty()) {
             ui->groupBox_right->setVisible(false);
             ui->midline->setVisible(false);
         }
@@ -297,7 +301,7 @@ void ListSet::RefreshList() {
     ui->editName->setText("");
     ui->editPath->setText("");
 
-    listsInfo = fileUtil->GetAllListsInfo();
+    commonResrc->ListInfo_ = commonResrc->fileUtil_->GetAllListsInfo();
     renderList();
 }
 
@@ -323,12 +327,12 @@ std::map<int, QString> errorMessages = {
 };
 
 void ListSet::onFindPathClicked() {
-    QString initialPath = QDir::currentPath(); // or set to another base path
+    QString initialPath = QDir::currentPath();  // or set to another base path
     QString directoryPath = QFileDialog::getExistingDirectory(this, tr("Choose video directory"), initialPath);
 
     if (!directoryPath.isEmpty()) {
         // Convert the selected directory path to a relative path
-        QDir baseDir(QDir::currentPath()); // Change this to the desired base directory
+        QDir baseDir(QDir::currentPath());  // Change this to the desired base directory
         QString relativePath = baseDir.relativeFilePath(directoryPath);
 
         ui->editPath->setText(relativePath);

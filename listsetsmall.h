@@ -1,27 +1,28 @@
 #ifndef LISTSETSMALL_H
 #define LISTSETSMALL_H
 
+#include <QHBoxLayout>
 #include <QListWidgetItem>
 #include <QMainWindow>
 #include <QPushButton>
-#include <QHBoxLayout>
-#include <vector>
-#include <map>
 #include <QString>
+#include <map>
+#include <vector>
 
 #include "fileutil.h"
+#include "listsetresource.h"
 
 extern std::map<int, QString> errorMessages;
 
 namespace Ui {
-    class ListSetSmall;
+class ListSetSmall;
 }
 
 class ListSetSmall : public QMainWindow {
     Q_OBJECT
 
 public:
-    explicit ListSetSmall(QWidget* parent = nullptr);
+    explicit ListSetSmall(QWidget* parent = nullptr, ListSetResource* cr = nullptr);
     bool isSubmitEnabled = false;
     ~ListSetSmall();
 
@@ -37,19 +38,13 @@ private slots:
     void onFindPathClicked();
 
 private:
-    FileUtil* fileUtil;
-    std::vector<ListInfo> listsInfo;
     Ui::ListSetSmall* ui;
     QHBoxLayout* listLayout;
-    QPushButton* newButton;
-    QVector<QPushButton*> itemList;
-    QPushButton* currentButton;
-    int currentBtnIndex{0};
 
     void renderList();
     void showError(int errorCode);
 
-    bool hasUnfinishedNewList = false;
+    ListSetResource* commonResrc;
 };
 
 #endif  // LISTSETSMALL_H

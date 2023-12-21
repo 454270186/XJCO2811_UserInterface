@@ -4,24 +4,25 @@
 #include <QListWidgetItem>
 #include <QMainWindow>
 #include <QPushButton>
-#include <QVBoxLayout>
-#include <vector>
-#include <map>
 #include <QString>
+#include <QVBoxLayout>
+#include <map>
+#include <vector>
 
 #include "fileutil.h"
+#include "listsetresource.h"
 
 extern std::map<int, QString> errorMessages;
 
 namespace Ui {
-    class ListSet;
+class ListSet;
 }
 
 class ListSet : public QMainWindow {
     Q_OBJECT
 
 public:
-    explicit ListSet(QWidget* parent = nullptr);
+    explicit ListSet(QWidget* parent = nullptr, ListSetResource* cr = nullptr);
     bool isSubmitEnabled = false;
     ~ListSet();
 
@@ -41,19 +42,13 @@ private slots:
     void onFindPathClicked();
 
 private:
-    FileUtil* fileUtil;
-    std::vector<ListInfo> listsInfo;
     Ui::ListSet* ui;
     QVBoxLayout* listLayout;
-    QPushButton* newButton;
-    QVector<QPushButton*> itemList;
-    QPushButton* currentButton;
-    int currentBtnIndex{0};
 
     void renderList();
     void showError(int errorCode);
 
-    bool hasUnfinishedNewList = false;
+    ListSetResource* commonResrc;
 };
 
 #endif  //LISTSET_H

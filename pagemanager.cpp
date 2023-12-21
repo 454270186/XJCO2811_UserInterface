@@ -10,8 +10,10 @@ PageManager::PageManager(QWidget* parent) : QMainWindow{parent} {
     mainwindowSmall = new mainwindowm(this, commonResrc);
     mainwindow = new MainWindow(this, commonResrc);
 
-    listset = new ListSet(this);
-    listsetSmall = new ListSetSmall(this);
+    // distribute listset common resource
+    listsetResrc = new ListSetResource();
+    listset = new ListSet(this, listsetResrc);
+    listsetSmall = new ListSetSmall(this, listsetResrc);
 
     stackPage->addWidget(mainwindow);
     stackPage->addWidget(listset);
