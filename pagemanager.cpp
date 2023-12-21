@@ -5,10 +5,10 @@ PageManager::PageManager(QWidget* parent) : QMainWindow{parent} {
     stackPage = new QStackedWidget(this);
 
     // distribute common resource
-    MainWindowResource* commonResrc = new MainWindowResource();
+    commonResrc = new MainWindowResource();
     commonResrc->mediaPlayer_ = new QMediaPlayer(this);
-    mainwindow = new MainWindow(this, commonResrc);
     mainwindowSmall = new mainwindowm(this, commonResrc);
+    mainwindow = new MainWindow(this, commonResrc);
 
     listset = new ListSet(this);
     listsetSmall = new ListSetSmall(this);

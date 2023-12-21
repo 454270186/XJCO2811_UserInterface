@@ -30,6 +30,8 @@ public:
     void Play() { commonResrc->mediaPlayer_->play(); }
     void Pause() { commonResrc->mediaPlayer_->pause(); }
 
+    QVideoWidget* getVideoOutput() { return this->videoWidget; }
+
     void RefreshList();
 
 signals:

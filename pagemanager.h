@@ -37,6 +37,7 @@ private slots:
             if (stackPage->currentIndex() == 2 || stackPage->currentIndex() == 3) {
                 // from small to big
                 if (stackPage->currentIndex() == 2) {
+                    commonResrc->mediaPlayer_->setVideoOutput(mainwindow->getVideoOutput());
                     stackPage->setCurrentIndex(0);
                 } else if (stackPage->currentIndex() == 3) {
                     listset->RefreshList();
@@ -47,6 +48,7 @@ private slots:
             if (stackPage->currentIndex() == 0 || stackPage->currentIndex() == 1) {
                 // from big to small
                 if (stackPage->currentIndex() == 0) {
+                    commonResrc->mediaPlayer_->setVideoOutput(mainwindowSmall->getVideoOutput());
                     stackPage->setCurrentIndex(2);
                 } else if (stackPage->currentIndex() == 1) {
                     listsetSmall->RefreshList();
@@ -61,6 +63,8 @@ protected:
 
 private:
     QStackedWidget* stackPage;
+
+    MainWindowResource* commonResrc;
 
     MainWindow* mainwindow;        // page index 0
     ListSet* listset;              // page index 1

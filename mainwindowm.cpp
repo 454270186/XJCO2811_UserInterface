@@ -32,9 +32,6 @@ mainwindowm::mainwindowm(QWidget* parent, MainWindowResource* cr)
     // Assuming that "videoplayer" is the name of the QWidget in your UI file
     QWidget* videoplayer = ui->videoplayer;
 
-    // Create a new QVideoWidget
-    QVideoWidget* videoWidget = new QVideoWidget(this);
-
     // Set up layout for videoWidget
     QVBoxLayout* videoLayout = new QVBoxLayout(videoplayer);
     videoLayout->addWidget(videoWidget);
