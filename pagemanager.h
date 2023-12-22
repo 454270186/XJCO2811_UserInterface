@@ -16,7 +16,6 @@ class PageManager : public QMainWindow {
     Q_OBJECT
 public:
     explicit PageManager(QWidget* parent = nullptr);
-
 signals:
     void resized(const QSize& size);
 
