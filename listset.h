@@ -31,6 +31,7 @@ signals:
 
 public slots:
     void switchToMainWindow();
+    void toggleLanguage();
 
 private slots:
     int on_addList_clicked();
@@ -48,6 +49,8 @@ private:
     void showError(int errorCode);
 
     ListSetResource* commonResrc;
+    bool isChineseLanguage;
+    void loadStyleSheet(const QString &sheetName);
 };
 
 #endif  //LISTSET_H

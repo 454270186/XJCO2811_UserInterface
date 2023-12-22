@@ -75,6 +75,7 @@ ListSetSmall::ListSetSmall(QWidget* parent, ListSetResource* cr) : QMainWindow(p
     connect(ui->findPath, &QPushButton::clicked, this, &ListSetSmall::onFindPathClicked);
     connect(ui->backward, &QPushButton::clicked, this, &ListSetSmall::switchToPage);
     connect(ui->qa, &QPushButton::clicked, this, &ListSetSmall::switchToPage1);
+    connect(ui->language, &QPushButton::clicked, this, &ListSetSmall::toggleStyleSheet);
 }
 
 ListSetSmall::~ListSetSmall() {
@@ -329,5 +330,26 @@ void ListSetSmall::onFindPathClicked() {
         QString relativePath = baseDir.relativeFilePath(directoryPath);
 
         ui->editPath->setText(relativePath);
+    }
+}
+
+void ListSetSmall::toggleStyleSheet() {
+    QString StyleSheet;
+    QFile file;
+
+    // Toggle the stylesheet
+    if (usingCNStyleSheet) {
+        file.setFileName("../XJCO2811_UserInterface/listsetsmall.qss");
+    } else {
+        file.setFileName("../XJCO2811_UserInterface/listsetsmall_cn.qss");
+    }
+
+    if (file.open(QFile::ReadOnly)) {
+        StyleSheet = QLatin1String(file.readAll());
+        file.close();
+        this->setStyleSheet(StyleSheet);
+        usingCNStyleSheet = !usingCNStyleSheet; // Toggle the flag
+    } else {
+        qDebug() << "Failed to load the stylesheet file:" << file.fileName();
     }
 }

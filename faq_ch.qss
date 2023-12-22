@@ -1,0 +1,45 @@
+QDialog#Faq {
+    background-color: rgb(10, 25, 47); /* 深蓝色背景 */
+}
+
+QLabel {
+    color: white; /* 白色文本保持不变 */
+}
+
+QScrollArea#scrollArea {
+    background-color: rgb(28, 49, 84); /* 浅一点的深蓝色背景 */
+    border-radius: 20px;
+}
+
+QScrollArea#scrollArea QWidget {
+    border-radius: 20px;
+}
+
+QPushButton#backward {
+    border: none;
+    background-color: transparent;
+    icon-size: 64px 64px;
+    qproperty-icon: url(../XJCO2811_UserInterface/icons/house-door.svg); 
+    qproperty-iconSize: 40px;
+    text-align: left; 
+}
+
+QGroupBox#groupBox {
+    border: none;
+}
+
+QLabel[objectName^='question'] {
+    color: white; /* 白色文本保持不变 */
+    font: bold 25px Arial;
+    padding: 2px;
+    margin: 6px;
+}
+
+QLabel[objectName^='answer'] {
+    color: lightcoral; /* 浅珊瑚色文本保持不变 */
+    font: 20px Arial;
+    border: 1px solid white; /* 白色边框保持不变 */
+    border-radius: 10px;
+    padding: 8px;
+    margin: 4px;
+}

@@ -1,0 +1,125 @@
+QMainWindow {
+    background-color: rgb(10, 25, 47); /* 深蓝色背景 */
+    font: 9pt "Arial";
+}
+
+QWidget#groupBox_left {
+    background-color: rgb(28, 49, 84); /* 浅一点的深蓝色背景 */
+    border: none;
+}
+
+QPushButton#backward, QPushButton#qa, QPushButton#language, QPushButton#findPath, QPushButton#addList {
+    border: none;
+    background-color: transparent;
+    icon-size: 64px 64px;
+}
+
+QGroupBox#groupBox {
+    border: none;
+}
+
+QLineEdit {
+    background-color: #506790; /* 浅深蓝色背景 */
+}
+
+QLineEdit:focus {
+    background-color: white; 
+    border: 2px solid #4aa1ff;
+}
+
+QMessageBox {
+    background-color: rgb(10, 25, 47); /* 深蓝色背景 */
+    color: white;
+}
+
+QMessageBox QLabel {
+    color: white;
+}
+
+QMessageBox QPushButton {
+    background-color: rgb(28, 49, 84); /* 浅一点的深蓝色背景 */
+    color: white;
+}
+
+QPushButton#Delete, QPushButton#submit {
+    color: white;
+    padding: 10px;
+    border: 1px solid white;
+    background-color: rgb(28, 49, 84); /* 浅一点的深蓝色背景 */
+    border-radius: 20px;
+}
+
+QPushButton#Delete:hover, QPushButton#submit:hover {
+    background-color: #1c3154; /* 暗深蓝色 */
+    border-color: #555;
+    border-radius: 20px;
+}
+
+QPushButton {
+    margin: 5px 5px 5px 5px;
+}
+
+QPushButton:hover {
+    margin: 2px 5px 8px 5px;
+}
+
+QLabel {
+    color: white; /* 白色文本 */
+}
+
+QScrollArea#scrollArea {
+    background-color: rgb(28, 49, 84); /* 浅一点的深蓝色背景 */
+    border: 1px solid white;
+    border-radius: 20px;
+}
+
+QScrollArea#scrollArea::vertical-scrollbar, QScrollArea#scrollArea::horizontal-scrollbar {
+    background-color: #2a3958; /* 深蓝色 */
+    width: 10px;
+    height: 10px;
+}
+
+QScrollArea#scrollArea::vertical-scrollbar-handle, QScrollArea#scrollArea::horizontal-scrollbar-handle {
+    background-color: #506790; /* 浅深蓝色 */
+    border-radius: 19px;
+}
+
+QScrollArea#scrollArea QWidget {
+    border-radius: 20px;
+}
+
+QPushButton#newButton {
+    background-color: rgb(28, 49, 84);
+    color: #F0F0F0;
+    padding: 10px;
+    margin: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    border: 1px solid white;
+    border-radius: 15px;
+}
+
+QPushButton#newButton:hover {
+    background-color: #294985;
+    border: 1px solid #0055ff;
+    color: #F0F0F0;
+    padding: 10px;
+    margin: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    border-radius: 15px;
+}
+
+QPushButton#newButton:checked {
+    background-color: #294985;
+    color: #F0F0F0;
+    padding: 10px;
+    margin: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    border: 2px solid #4aa1ff;
+    border-radius: 15px;
+}

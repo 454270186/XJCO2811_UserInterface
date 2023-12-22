@@ -51,6 +51,9 @@ private:
     void showError(int errorCode);
 
     ListSetResource* commonResrc;
+    bool usingCNStyleSheet = false;
+    void toggleStyleSheet();
+
 };
 
 #endif  // LISTSETSMALL_H
