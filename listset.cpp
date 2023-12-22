@@ -74,6 +74,7 @@ ListSet::ListSet(QWidget* parent, ListSetResource* cr) : QMainWindow(parent), ui
     renderList();
 
     connect(ui->backward, &QPushButton::clicked, this, &ListSet::switchToPage);
+    connect(ui->qa, &QPushButton::clicked, this, &ListSet::switchToPage1);
     connect(ui->findPath, &QPushButton::clicked, this, &ListSet::onFindPathClicked);
 }
 

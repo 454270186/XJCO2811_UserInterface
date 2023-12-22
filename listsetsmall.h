@@ -40,10 +40,8 @@ private slots:
     void onSubmitClicked();
     void onDeleteClicked();
     void onFindPathClicked();
-    void switchToPage() {
-        std::cout << "hereherehere" << std::endl;
-        emit switchPage(2);
-    }
+    void switchToPage() { emit switchPage(2); }
+    void switchToPage1() { emit switchPage(4); }
 
 private:
     Ui::ListSetSmall* ui;

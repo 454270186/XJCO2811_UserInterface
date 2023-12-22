@@ -14,7 +14,23 @@ QPushButton#backward{
      border: none;
      background-color: transparent;
      icon-size: 64px 64px;
-    text-align: left; 
+     text-align: left; 
+}
+
+QPushButton#qa{
+     qproperty-icon: url(../XJCO2811_UserInterface/icons/QA.svg); 
+     qproperty-iconSize: 40px; 
+     border: none;
+     background-color: transparent;
+     icon-size: 64px 64px;
+}
+
+QPushButton#language{
+     qproperty-icon: url(../XJCO2811_UserInterface/icons/Language.svg); 
+     qproperty-iconSize: 40px; 
+     border: none;
+     background-color: transparent;
+     icon-size: 64px 64px;
 }
 
 QPushButton#findPath{
@@ -33,6 +49,10 @@ QPushButton#addList{
      background-color: transparent;
      icon-size: 64px 64px;
      padding: 0px;
+}
+
+QGroupBox#groupBox {
+    border: none;
 }
 
 QLineEdit {

@@ -7,9 +7,7 @@
 #include <QString>
 #include <QVBoxLayout>
 #include <map>
-#include <vector>
 
-#include "fileutil.h"
 #include "listsetresource.h"
 
 extern std::map<int, QString> errorMessages;
@@ -39,6 +37,7 @@ private slots:
     void onSubmitClicked();
     void onDeleteClicked();
     void switchToPage() { emit switchPage(0); }
+    void switchToPage1() { emit switchPage(4); }
     void onFindPathClicked();
 
 private:
