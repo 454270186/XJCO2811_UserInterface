@@ -28,3 +28,14 @@ PageManager::PageManager(QWidget* parent) : QMainWindow{parent} {
 
     setCentralWidget(stackPage);
 }
+
+PageManager::~PageManager() {
+    commonResrc->mediaPlayer_->pause();
+    delete commonResrc->mediaPlayer_;
+    delete commonResrc;
+    delete listsetResrc;
+    delete mainwindow;
+    delete mainwindowSmall;
+    delete listset;
+    delete listsetSmall;
+}
