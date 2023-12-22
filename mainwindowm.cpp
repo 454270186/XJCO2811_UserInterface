@@ -21,6 +21,17 @@ mainwindowm::mainwindowm(QWidget* parent, MainWindowResource* cr)
 
     // Set up the user interface
     ui->setupUi(this);
+    // Set up the user interface
+    ui->setupUi(this);
+    QFile file2("../XJCO2811_UserInterface/mainwindow.qss");
+    QString StyleSheet;
+    if (file2.open(QFile::ReadOnly)) {
+        StyleSheet += QLatin1String(file2.readAll());
+        file2.close();
+    } else {
+        qDebug() << "File does not exist: " << file2.fileName();
+    }
+
 
     ui->lists->setStyleSheet("QScrollArea { border: 0; }");
     ui->fullandmoblie->setStyleSheet("QGroupBox { border: 0; }");
