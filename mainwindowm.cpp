@@ -382,45 +382,23 @@ void mainwindowm::toggleFullScreen() {
 void mainwindowm::resizeEvent(QResizeEvent* event) {
     QMainWindow::resizeEvent(event);
 
-    // 检测是否有一个被隐藏
-    bool isPictureListHidden = ui->picturelist->isHidden();
-    bool isVideoHidden = ui->video->isHidden();
+    // 如果 picturelist 和 videoplayer 都没有被隐藏
+    if (!ui->picturelist->isHidden() && !ui->video->isHidden()) {
+        // 获取 QGroupBox 的初始宽度比例，可以根据需要进行调整
+        float initialPicturelistWidthRatio = 0.3;
 
-    // 如果 picturelist 和 videoplayer 其中有一个被隐藏，自适应宽度
-    if (isPictureListHidden != isVideoHidden) {
-        if (isPictureListHidden) {
-            // 如果 picturelist 被隐藏，自适应 video 的宽度
-            int videoWidth = width();
-            ui->video->setFixedWidth(videoWidth);
-        } else {
-            // 如果 video 被隐藏，自适应 picturelist 的宽度
-            int picturelistWidth = width();
-            ui->picturelist->setFixedWidth(picturelistWidth);
-        }
-    } else {
-        // 如果 picturelist 和 videoplayer 都没有被隐藏，立即应用大小调整逻辑
-        int picturelistWidth = width() * 0.3;
-        int videoWidth = width() * 0.7;
+        // 获取 central 的宽度
+        int centralWidth = this->width();
 
-        // 为 picturelist 设置最小宽度（根据需要调整此值）
-        int minPicturelistWidth = 150;
-
-        // 确保 picturelist 有一个最小宽度
-        if (picturelistWidth < minPicturelistWidth) {
-            picturelistWidth = minPicturelistWidth;
-            videoWidth = width() - picturelistWidth;
-        }
+        // 计算 QGroupBox 的宽度
+        int initialPicturelistWidth = static_cast<int>(centralWidth * initialPicturelistWidthRatio);
 
         // 设置 QGroupBox 的大小
-        ui->picturelist->setFixedWidth(picturelistWidth);
-        ui->video->setFixedWidth(videoWidth);
+        ui->picturelist->setFixedWidth(initialPicturelistWidth);
     }
 
     // 调用 updateGeometry 触发布局更新
     updateGeometry();
-
-    // 强制重绘
-    repaint();
 }
 
 void mainwindowm::toggleVoiceControlStrip() {
