@@ -16,6 +16,7 @@ class PageManager : public QMainWindow {
     Q_OBJECT
 public:
     explicit PageManager(QWidget* parent = nullptr);
+    ~PageManager();
 signals:
     void resized(const QSize& size);
 
@@ -49,6 +50,7 @@ private slots:
                 // from small to big
                 if (stackPage->currentIndex() == 2) {
                     commonResrc->mediaPlayer_->setVideoOutput(mainwindow->getVideoOutput());
+                    mainwindow->RefreshList();
                     stackPage->setCurrentIndex(0);
                 } else if (stackPage->currentIndex() == 3) {
                     listset->RefreshList();
@@ -60,6 +62,7 @@ private slots:
                 // from big to small
                 if (stackPage->currentIndex() == 0) {
                     commonResrc->mediaPlayer_->setVideoOutput(mainwindowSmall->getVideoOutput());
+                    mainwindowSmall->RefreshList();
                     stackPage->setCurrentIndex(2);
                 } else if (stackPage->currentIndex() == 1) {
                     listsetSmall->RefreshList();
