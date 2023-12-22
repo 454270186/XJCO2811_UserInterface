@@ -110,7 +110,6 @@ mainwindowm::mainwindowm(QWidget* parent, MainWindowResource* cr)
 
 // Destructor
 mainwindowm::~mainwindowm() {
-    delete commonResrc;
     delete ui;
 }
 
