@@ -12,6 +12,7 @@
 class MainWindowResource {
 public:
     MainWindowResource();
+    ~MainWindowResource();
 
     QMediaPlayer* mediaPlayer_;
     int currentVideoIndex_{0};
