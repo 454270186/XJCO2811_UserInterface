@@ -8,10 +8,29 @@ QWidget#groupBox_left {
     border: none;
 }
 
-QPushButton#backward, QPushButton#qa, QPushButton#language, QPushButton#findPath, QPushButton#addList {
+QPushButton#backward {
     border: none;
     background-color: transparent;
     icon-size: 64px 64px;
+    qproperty-icon: url(../XJCO2811_UserInterface/icons/house-door.svg); 
+    qproperty-iconSize: 40px;
+    text-align: left; 
+}
+
+QPushButton#qa{
+     qproperty-icon: url(../XJCO2811_UserInterface/icons/QA.svg); 
+     qproperty-iconSize: 40px; 
+     border: none;
+     background-color: transparent;
+     icon-size: 64px 64px;
+}
+
+QPushButton#language{
+     qproperty-icon: url(../XJCO2811_UserInterface/icons/English.svg); 
+     qproperty-iconSize: 40px; 
+     border: none;
+     background-color: transparent;
+     icon-size: 64px 64px;
 }
 
 QGroupBox#groupBox {

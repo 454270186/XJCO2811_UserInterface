@@ -46,7 +46,7 @@ QPushButton#qa{
 }
 
 QPushButton#language{
-     qproperty-icon: url(../XJCO2811_UserInterface/icons/Language.svg); 
+     qproperty-icon: url(../XJCO2811_UserInterface/icons/Chinese.svg); 
      qproperty-iconSize: 40px; 
      border: none;
      background-color: transparent;

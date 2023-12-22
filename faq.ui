@@ -37,6 +37,22 @@
        </widget>
       </item>
       <item>
+       <widget class="QPushButton" name="language">
+        <property name="maximumSize">
+         <size>
+          <width>50</width>
+          <height>50</height>
+         </size>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QLabel" name="faq_title">
         <property name="maximumSize">
          <size>

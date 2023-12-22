@@ -21,6 +21,7 @@ signals:
 
 public slots:
     void switchToListset();
+    void toggleLanguage();
 
 private slots:
     void switchToPage() { emit switchPage(1); }
@@ -28,6 +29,8 @@ private slots:
 private:
     Ui::Faq* ui;
     void resizeEvent(QResizeEvent* event) override;
+    bool isChineseLanguage;
+    void loadStyleSheet(const QString &sheetName);
 };
 
 #endif  // FAQ_H

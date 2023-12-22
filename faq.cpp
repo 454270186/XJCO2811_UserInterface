@@ -25,6 +25,7 @@ Faq::Faq(QWidget* parent) : QDialog(parent), ui(new Ui::Faq) {
     }
 
     connect(ui->backward, &QPushButton::clicked, this, &Faq::switchToPage);
+    connect(ui->language, &QPushButton::clicked, this, &Faq::toggleLanguage);
 
 }
 
@@ -73,4 +74,27 @@ void Faq::switchToListset() {
     hide();
     ListSet* listsetWindow = new ListSet();
     listsetWindow->show();
+}
+
+void Faq::toggleLanguage() {
+    isChineseLanguage = !isChineseLanguage;
+    QString sheetName = isChineseLanguage ? "faq_ch.qss" : "faq.qss";
+    loadStyleSheet(sheetName);
+}
+
+void Faq::loadStyleSheet(const QString &sheetName) {
+    QFile file("../XJCO2811_UserInterface/" + sheetName);
+    QString StyleSheet;
+    if (file.open(QFile::ReadOnly)) {
+        StyleSheet += QLatin1String(file.readAll());
+        file.close();
+    } else {
+        qDebug() << "File does not exist: " << file.fileName();
+    }
+
+    if (!StyleSheet.isEmpty()) {
+        this->setStyleSheet(StyleSheet);
+    } else {
+        qDebug() << "Failed to load stylesheet: " << sheetName;
+    }
 }

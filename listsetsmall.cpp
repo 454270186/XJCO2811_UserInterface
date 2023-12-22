@@ -75,7 +75,9 @@ ListSetSmall::ListSetSmall(QWidget* parent, ListSetResource* cr) : QMainWindow(p
     connect(ui->findPath, &QPushButton::clicked, this, &ListSetSmall::onFindPathClicked);
     connect(ui->backward, &QPushButton::clicked, this, &ListSetSmall::switchToPage);
     connect(ui->qa, &QPushButton::clicked, this, &ListSetSmall::switchToPage1);
-    connect(ui->language, &QPushButton::clicked, this, &ListSetSmall::toggleStyleSheet);
+    connect(ui->language, &QPushButton::clicked, this, &ListSetSmall::toggleLanguage);
+
+
 }
 
 ListSetSmall::~ListSetSmall() {
@@ -333,23 +335,25 @@ void ListSetSmall::onFindPathClicked() {
     }
 }
 
-void ListSetSmall::toggleStyleSheet() {
-    QString StyleSheet;
-    QFile file;
+void ListSetSmall::toggleLanguage() {
+    isChineseLanguage = !isChineseLanguage;
+    QString sheetName = isChineseLanguage ? "listsetsmall_ch.qss" : "listsetsmall.qss";
+    loadStyleSheet(sheetName);
+}
 
-    // Toggle the stylesheet
-    if (usingCNStyleSheet) {
-        file.setFileName("../XJCO2811_UserInterface/listsetsmall.qss");
+void ListSetSmall::loadStyleSheet(const QString &sheetName) {
+    QFile file("../XJCO2811_UserInterface/" + sheetName);
+    QString StyleSheet;
+    if (file.open(QFile::ReadOnly)) {
+        StyleSheet += QLatin1String(file.readAll());
+        file.close();
     } else {
-        file.setFileName("../XJCO2811_UserInterface/listsetsmall_cn.qss");
+        qDebug() << "File does not exist: " << file.fileName();
     }
 
-    if (file.open(QFile::ReadOnly)) {
-        StyleSheet = QLatin1String(file.readAll());
-        file.close();
+    if (!StyleSheet.isEmpty()) {
         this->setStyleSheet(StyleSheet);
-        usingCNStyleSheet = !usingCNStyleSheet; // Toggle the flag
     } else {
-        qDebug() << "Failed to load the stylesheet file:" << file.fileName();
+        qDebug() << "Failed to load stylesheet: " << sheetName;
     }
 }

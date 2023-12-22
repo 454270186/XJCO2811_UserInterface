@@ -24,6 +24,14 @@ QPushButton#backward {
     text-align: left; 
 }
 
+QPushButton#language{
+     qproperty-icon: url(../XJCO2811_UserInterface/icons/Chinese.svg); 
+     qproperty-iconSize: 40px; 
+     border: none;
+     background-color: transparent;
+     icon-size: 64px 64px;
+}
+
 QGroupBox#groupBox {
     border: none;
 }
