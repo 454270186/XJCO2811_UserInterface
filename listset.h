@@ -1,11 +1,14 @@
 #ifndef LISTSET_H
 #define LISTSET_H
 
+#include <QKeyEvent>
 #include <QListWidgetItem>
 #include <QMainWindow>
 #include <QPushButton>
 #include <QString>
 #include <QVBoxLayout>
+#include <QWidget>
+
 #include <map>
 
 #include "listsetresource.h"
@@ -47,6 +50,7 @@ private:
 
     void renderList();
     void showError(int errorCode);
+    void keyPressEvent(QKeyEvent* event);
 
     ListSetResource* commonResrc;
     bool isChineseLanguage;

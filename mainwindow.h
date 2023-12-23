@@ -9,6 +9,9 @@
 #include <QSlider>
 #include <QStringList>
 #include <QVideoWidget>
+#include <QWidget>
+#include <QKeyEvent>
+
 #include <vector>
 
 #include "mainwindowresource.h"
@@ -71,6 +74,7 @@ private:
     void renderBtnList(QHBoxLayout* btnLayout);
     void resizeEvent(QResizeEvent* event) override;
     virtual bool eventFilter(QObject* obj, QEvent* event) override;
+    void keyPressEvent(QKeyEvent *event);
 
     QVideoWidget* videoWidget;
     QHBoxLayout* listsBtnsLayout;
