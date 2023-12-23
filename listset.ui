@@ -156,9 +156,6 @@
            <height>16777215</height>
           </size>
          </property>
-         <property name="focusPolicy">
-          <enum>Qt::NoFocus</enum>
-         </property>
          <property name="styleSheet">
           <string notr="true"/>
          </property>
@@ -170,13 +167,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-<<<<<<< HEAD
-            <width>282</width>
-            <height>596</height>
-=======
             <width>302</width>
             <height>589</height>
->>>>>>> main
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -193,9 +185,6 @@
              </property>
              <property name="cursor">
               <cursorShape>PointingHandCursor</cursorShape>
-             </property>
-             <property name="focusPolicy">
-              <enum>Qt::NoFocus</enum>
              </property>
              <property name="styleSheet">
               <string notr="true"/>
@@ -394,9 +383,6 @@
             <property name="cursor">
              <cursorShape>PointingHandCursor</cursorShape>
             </property>
-            <property name="focusPolicy">
-             <enum>Qt::NoFocus</enum>
-            </property>
             <property name="styleSheet">
              <string notr="true"/>
             </property>
@@ -438,13 +424,8 @@
           </property>
           <item>
            <widget class="QPushButton" name="Delete">
-<<<<<<< HEAD
-            <property name="focusPolicy">
-             <enum>Qt::NoFocus</enum>
-=======
             <property name="cursor">
              <cursorShape>PointingHandCursor</cursorShape>
->>>>>>> main
             </property>
             <property name="text">
              <string>Delete</string>
@@ -459,13 +440,8 @@
               <height>16777215</height>
              </size>
             </property>
-<<<<<<< HEAD
-            <property name="focusPolicy">
-             <enum>Qt::NoFocus</enum>
-=======
             <property name="cursor">
              <cursorShape>PointingHandCursor</cursorShape>
->>>>>>> main
             </property>
             <property name="text">
              <string>Submit</string>
@@ -481,10 +457,6 @@
    </layout>
   </widget>
  </widget>
- <tabstops>
-  <tabstop>editName</tabstop>
-  <tabstop>editPath</tabstop>
- </tabstops>
  <resources/>
  <connections/>
 </ui>
