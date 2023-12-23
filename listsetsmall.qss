@@ -37,6 +37,22 @@ QPushButton#backward {
     text-align: left; 
 }
 
+QPushButton#qa{
+     qproperty-icon: url(../XJCO2811_UserInterface/icons/QA.svg); 
+     qproperty-iconSize: 40px; 
+     border: none;
+     background-color: transparent;
+     icon-size: 64px 64px;
+}
+
+QPushButton#language{
+     qproperty-icon: url(../XJCO2811_UserInterface/icons/Chinese.svg); 
+     qproperty-iconSize: 40px; 
+     border: none;
+     background-color: transparent;
+     icon-size: 64px 64px;
+}
+
 QPushButton#findPath{
      border: none;
      background-color: transparent;
@@ -115,7 +131,7 @@ QGroupBox#groupBox_form {
     border: 1px solid white;
 }
 
-QGroupBox#groupBox_top {
+QGroupBox#groupBox_top, QGroupBox#groupBox {
     border: none;
 }
 

@@ -95,13 +95,22 @@
                  <height>30</height>
                 </size>
                </property>
+               <property name="styleSheet">
+                <string notr="true">border: none; /* 移除边框 */
+    background-color: transparent; /* 设置背景透明 */
+    icon-size: 64px 64px; /* 设置图标大小，根据需要进行调整 */
+    padding: 0px; /* 移除内边距 */</string>
+               </property>
                <property name="text">
-                <string>+</string>
+                <string/>
                </property>
               </widget>
              </item>
              <item>
               <widget class="QScrollArea" name="lists">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(73, 74, 74)</string>
+               </property>
                <property name="widgetResizable">
                 <bool>true</bool>
                </property>
@@ -122,6 +131,9 @@
           </item>
           <item>
            <widget class="QScrollArea" name="thumbnailList">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(73, 74, 74);</string>
+            </property>
             <property name="widgetResizable">
              <bool>true</bool>
             </property>
@@ -169,8 +181,10 @@
                 </size>
                </property>
                <property name="styleSheet">
-                <string notr="true">
-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0 rgba(0, 0, 0, 255), stop:0.19397 rgba(0, 0, 0, 255), stop:0.202312 rgba(122, 97, 0, 255), stop:0.495514 rgba(76, 58, 0, 255), stop:0.504819 rgba(255, 255, 255, 255), stop:0.79 rgba(255, 255, 255, 255), stop:1 rgba(255, 158, 158, 255));</string>
+                <string notr="true">border: none; /* 移除边框 */
+    background-color: transparent; /* 设置背景透明 */
+    icon-size: 64px 64px; /* 设置图标大小，根据需要进行调整 */
+    padding: 0px; /* 移除内边距 */</string>
                </property>
                <property name="text">
                 <string/>
@@ -285,8 +299,14 @@ color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, s
               <height>16777215</height>
              </size>
             </property>
+            <property name="styleSheet">
+             <string notr="true">border: none; /* 移除边框 */
+    background-color: transparent; /* 设置背景透明 */
+    icon-size: 64px 64px; /* 设置图标大小，根据需要进行调整 */
+    padding: 0px; /* 移除内边距 */</string>
+            </property>
             <property name="text">
-             <string>音量</string>
+             <string/>
             </property>
            </widget>
           </item>
@@ -311,8 +331,20 @@ color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, s
               <height>16777215</height>
              </size>
             </property>
+            <property name="styleSheet">
+             <string notr="true">border: none; /* 移除边框 */
+    background-color: transparent; /* 设置背景透明 */
+    icon-size: 64px 64px; /* 设置图标大小，根据需要进行调整 */
+    padding: 0px; /* 移除内边距 */</string>
+            </property>
             <property name="text">
-             <string>《《</string>
+             <string/>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>30</width>
+              <height>30</height>
+             </size>
             </property>
            </widget>
           </item>
@@ -330,8 +362,14 @@ color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, s
               <height>16777215</height>
              </size>
             </property>
+            <property name="styleSheet">
+             <string notr="true">border: none; /* 移除边框 */
+    background-color: transparent; /* 设置背景透明 */
+    icon-size: 64px 64px; /* 设置图标大小，根据需要进行调整 */
+    padding: 0px; /* 移除内边距 */</string>
+            </property>
             <property name="text">
-             <string>暂停</string>
+             <string/>
             </property>
            </widget>
           </item>
@@ -343,8 +381,14 @@ color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, s
               <height>16777215</height>
              </size>
             </property>
+            <property name="styleSheet">
+             <string notr="true">border: none; /* 移除边框 */
+    background-color: transparent; /* 设置背景透明 */
+    icon-size: 64px 64px; /* 设置图标大小，根据需要进行调整 */
+    padding: 0px; /* 移除内边距 */</string>
+            </property>
             <property name="text">
-             <string>》》</string>
+             <string/>
             </property>
            </widget>
           </item>

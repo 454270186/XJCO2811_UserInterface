@@ -5,6 +5,7 @@
 #include <QFileDialog>
 #include <QFileInfo>
 #include <QHBoxLayout>
+#include <QProcess>
 #include <QResizeEvent>
 #include <QVBoxLayout>
 #include "btnconvert.h"
@@ -117,7 +118,6 @@ MainWindow::MainWindow(QWidget* parent, MainWindowResource* cr)
 // Destructor
 MainWindow::~MainWindow() {
     delete ui;
-    delete commonResrc;
 }
 
 void MainWindow::renderBtnList(QHBoxLayout* btnLayout) {
@@ -127,7 +127,6 @@ void MainWindow::renderBtnList(QHBoxLayout* btnLayout) {
         newButton->setCheckable(true);
         newButton->setAutoExclusive(true);
 
-        // 设置按钮的最小和最大大小
         newButton->setMinimumSize(100, 30);
         newButton->setMaximumSize(100, 30);
 
@@ -136,6 +135,22 @@ void MainWindow::renderBtnList(QHBoxLayout* btnLayout) {
         // connect onClick hook
         connect(newButton, &QPushButton::clicked,
                 [this, i] { parseFolder(commonResrc->listinfo_[i].videoDirPath.c_str()); });
+    }
+}
+
+// keyPressEvent() handles various keyboard events within the window.
+// It performs specific actions based on the key pressed:
+// - Qt::Key_Escape: Triggers switchToPage() if the backward button is enabled and visible.
+// Other keys are handled by the default QMainWindow keyPressEvent handler.
+void MainWindow::keyPressEvent(QKeyEvent *event) {
+    switch (event->key()) {
+        case Qt::Key_Escape:
+            if (ui->addListBtn->isEnabled()) {
+                switchToPage();
+            }
+            break;
+        default:
+            QMainWindow::keyPressEvent(event);
     }
 }
 
@@ -279,7 +294,7 @@ void MainWindow::handleVideoSelection(const QStringList& videoPaths_, int curren
     qDebug() << "Button clicked. currentIndex:" << currentIndex;
 
     // Set commonResrc->videoPaths_ and commonResrc->currentVideoIndex_
-    this->commonResrc->videoPaths_ = commonResrc->videoPaths_;
+    this->commonResrc->videoPaths_ = videoPaths_;
     this->commonResrc->currentVideoIndex_ = currentIndex;
 
     // Reset the playback position
@@ -326,6 +341,31 @@ void MainWindow::parseFolder(const QString& folderPath) {
 
         // Check if preview images (.png or .jpg) exist for the current video
         if (QFileInfo::exists(imagePathPNG) || QFileInfo::exists(imagePathJPG)) {
+            // Create a BtnConvert button with the video path
+            BtnConvert* button = new BtnConvert(videoPath);
+
+            // Set the button icon to the existing preview image (.png or .jpg)
+            if (QFileInfo::exists(imagePathPNG)) {
+                button->setIcon(QIcon(imagePathPNG));
+            }
+            if (QFileInfo::exists(imagePathJPG)) {
+                button->setIcon(QIcon(imagePathJPG));
+            }
+
+            // Set the icon size and connect the button click signal to onButtonClicked slot
+            button->setIconSize(QSize(250, 250));
+            connect(button, &QPushButton::clicked, this, &MainWindow::onButtonClicked);
+
+            // Add the button to the layout
+            layout->addWidget(button);
+        } else {
+            std::cout << "video cover not found, make it..." << std::endl;
+            QProcess ffmpeg;
+            ffmpeg.setProgram("../XJCO2811_UserInterface/bin/ffmpeg");
+            ffmpeg.setArguments({"-i", videoPath, "-vframes", "1", imagePathPNG});
+            ffmpeg.start();
+            ffmpeg.waitForFinished();
+
             // Create a BtnConvert button with the video path
             BtnConvert* button = new BtnConvert(videoPath);
 

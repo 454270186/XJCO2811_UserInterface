@@ -126,8 +126,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>118</width>
-               <height>77</height>
+               <width>69</width>
+               <height>67</height>
               </rect>
              </property>
             </widget>
@@ -139,7 +139,7 @@
        <item>
         <widget class="QScrollArea" name="thumbnailList">
          <property name="styleSheet">
-          <string notr="true">background-color: rgb(73, 74, 74);border-radius: 20px</string>
+          <string notr="true">background-color: rgb(73, 74, 74);</string>
          </property>
          <property name="widgetResizable">
           <bool>true</bool>

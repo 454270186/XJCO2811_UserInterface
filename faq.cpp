@@ -1,10 +1,33 @@
+#include <QDebug>
+#include <QDir>
+#include <QFile>
 #include <QResizeEvent>
 
 #include "faq.h"
+#include "listset.h"
 #include "ui_faq.h"
 
 Faq::Faq(QWidget* parent) : QDialog(parent), ui(new Ui::Faq) {
     ui->setupUi(this);
+    QFile file1("../XJCO2811_UserInterface/faq.qss");
+    QString StyleSheet;
+    if (file1.open(QFile::ReadOnly)) {
+        StyleSheet += QLatin1String(file1.readAll());
+        file1.close();
+    } else {
+        qDebug() << "File does not exist: " << file1.fileName();
+    }
+
+    if (!StyleSheet.isEmpty()) {
+        this->setStyleSheet(StyleSheet);
+    } else {
+        qDebug() << "Current directory:" << QDir::currentPath();
+    }
+
+    connect(ui->backward, &QPushButton::clicked, this, &Faq::switchToPage);
+    connect(ui->language, &QPushButton::clicked, this, &Faq::toggleLanguage);
+    QResizeEvent resizeEvent(this->size(), QSize());
+    this->resizeEvent(&resizeEvent);
 }
 
 Faq::~Faq() {
@@ -18,7 +41,7 @@ Faq::~Faq() {
 // 4. If the width is greater than 460, it arranges the questions and answers in two columns, setting the second column's stretch factor to 1 to use available space.
 // Params:
 // - event: A QResizeEvent pointer that contains information about the resize event such as the new size of the window.
-void Faq::resizeEvent(QResizeEvent *event) {
+void Faq::resizeEvent(QResizeEvent* event) {
     QDialog::resizeEvent(event);
 
     int currentWidth = event->size().width();
@@ -43,5 +66,60 @@ void Faq::resizeEvent(QResizeEvent *event) {
         }
 
         ui->gridLayout->setColumnStretch(1, 1);
+    }
+}
+
+// keyPressEvent() handles various keyboard events within the window.
+// It performs specific actions based on the key pressed:
+// - Qt::Key_Escape: Triggers switchToPage() if the backward button is enabled and visible.
+// - Qt::Key_F2: Triggers switchToPage1() regardless of any conditions.
+// Other keys are handled by the default QDialog keyPressEvent handler.
+void Faq::keyPressEvent(QKeyEvent* event) {
+    switch (event->key()) {
+        case Qt::Key_Escape:
+            if (ui->backward->isEnabled() && ui->backward->isVisible()) {
+                switchToPage();
+            }
+            break;
+        case Qt::Key_CapsLock:
+            toggleLanguage();
+            break;
+        default:
+            QDialog::keyPressEvent(event);
+    }
+}
+
+void Faq::toggleLanguage() {
+    isChineseLanguage = !isChineseLanguage;
+    QString sheetName = isChineseLanguage ? "faq_ch.qss" : "faq.qss";
+    loadStyleSheet(sheetName);
+
+    if (isChineseLanguage) {
+        if (translator.load("../XJCO2811_UserInterface/Faq_CN.qm")) {
+            qApp->installTranslator(&translator);
+        } else {
+            qDebug() << "Failed to load translation file.";
+        }
+    } else {
+        qApp->removeTranslator(&translator);
+    }
+
+    ui->retranslateUi(this);
+}
+
+void Faq::loadStyleSheet(const QString& sheetName) {
+    QFile file("../XJCO2811_UserInterface/" + sheetName);
+    QString StyleSheet;
+    if (file.open(QFile::ReadOnly)) {
+        StyleSheet += QLatin1String(file.readAll());
+        file.close();
+    } else {
+        qDebug() << "File does not exist: " << file.fileName();
+    }
+
+    if (!StyleSheet.isEmpty()) {
+        this->setStyleSheet(StyleSheet);
+    } else {
+        qDebug() << "Failed to load stylesheet: " << sheetName;
     }
 }
