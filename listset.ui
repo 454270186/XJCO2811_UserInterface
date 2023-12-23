@@ -89,6 +89,9 @@
          <property name="cursor">
           <cursorShape>PointingHandCursor</cursorShape>
          </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
          <property name="styleSheet">
           <string notr="true"/>
          </property>
@@ -115,6 +118,9 @@
            <height>16777215</height>
           </size>
          </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
          <property name="styleSheet">
           <string notr="true"/>
          </property>
@@ -126,8 +132,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>302</width>
-            <height>612</height>
+            <width>282</width>
+            <height>596</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -144,6 +150,9 @@
              </property>
              <property name="cursor">
               <cursorShape>PointingHandCursor</cursorShape>
+             </property>
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
              </property>
              <property name="styleSheet">
               <string notr="true"/>
@@ -342,6 +351,9 @@
             <property name="cursor">
              <cursorShape>PointingHandCursor</cursorShape>
             </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
             <property name="styleSheet">
              <string notr="true"/>
             </property>
@@ -410,6 +422,14 @@
    </layout>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>addList</tabstop>
+  <tabstop>editName</tabstop>
+  <tabstop>editPath</tabstop>
+  <tabstop>Delete</tabstop>
+  <tabstop>submit</tabstop>
+  <tabstop>findPath</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

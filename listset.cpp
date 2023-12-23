@@ -37,40 +37,11 @@ ListSet::ListSet(QWidget* parent, ListSetResource* cr) : QMainWindow(parent), ui
     // init common resource
     commonResrc = cr;
 
-    // Load and process video list data from an XML file
-    //    const std::string XMLFilePath = "../XJCO2811_UserInterface/videolist_data.xml";
-    //    fileUtil = new FileUtil(XMLFilePath);
-    //    listsInfo = fileUtil->GetAllListsInfo();
-
     // Set the input form to invisible at first time
     ui->groupBox_right->setVisible(false);
     ui->midline->setVisible(false);
     ui->Delete->setVisible(false);
 
-    //    for (size_t i = 0; i < listsInfo.size(); i++) {
-    //        // initialize video list ui
-    //        QPushButton* newButton = new QPushButton();
-    //        newButton->setText(listsInfo[i].name.c_str());
-    //        newButton->setCheckable(true);
-    //        newButton->setAutoExclusive(true);
-    //        listLayout->addWidget(newButton);
-
-    //        connect(newButton, &QPushButton::clicked, [this, newButton] {
-    //            ui->groupBox_right->setVisible(true);
-    //            ui->midline->setVisible(true);
-    //            ui->Delete->setVisible(true);
-    //            ui->submit->setText(QString("Edit"));
-    //            isSubmitEnabled = false;
-    //            int index = listLayout->indexOf(newButton) - 1;
-    //            currentBtnIndex = index;
-    //            // Check if the index is valid
-    //            if (index != -1 && index < (int)this->listsInfo.size()) {
-    //                ListInfo info = this->listsInfo[index];
-    //                ui->editName->setText(QString::fromStdString(info.name));
-    //                ui->editPath->setText(QString::fromStdString(info.videoDirPath));
-    //            }
-    //        });
-    //    }
     renderList();
 
     connect(ui->backward, &QPushButton::clicked, this, &ListSet::switchToPage);
