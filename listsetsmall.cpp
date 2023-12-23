@@ -108,6 +108,32 @@ void ListSetSmall::renderList() {
     }
 }
 
+void ListSetSmall::keyPressEvent(QKeyEvent *event) {
+    switch (event->key()) {
+        case Qt::Key_Return:
+            if (ui->submit->isEnabled()) {
+                onSubmitClicked();
+            }
+            break;
+        case Qt::Key_Shift: 
+            if (ui->Delete->isEnabled() && ui->Delete->isVisible()) { 
+                onDeleteClicked(); 
+            }
+            break;
+        case Qt::Key_Escape:
+            if (ui->backward->isEnabled() && ui->backward->isVisible()) {
+                switchToPage();
+            }
+            break;
+        case Qt::Key_F1:
+            if (ui->addList->isEnabled()) {
+                on_addList_clicked();
+            }
+        default:
+            QMainWindow::keyPressEvent(event);
+    }
+}
+
 // on_addList_clicked() handles the event when the "Add List" button is clicked.
 // It performs the following steps:
 // 1. Checks if there is already an unfinished new list being added.

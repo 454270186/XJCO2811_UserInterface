@@ -44,6 +44,9 @@
            <height>16777215</height>
           </size>
          </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
          <property name="text">
           <string/>
          </property>
@@ -186,6 +189,9 @@
                  <height>16777215</height>
                 </size>
                </property>
+               <property name="focusPolicy">
+                <enum>Qt::NoFocus</enum>
+               </property>
                <property name="text">
                 <string/>
                </property>
@@ -223,6 +229,9 @@
                  <height>16777215</height>
                 </size>
                </property>
+               <property name="focusPolicy">
+                <enum>Qt::NoFocus</enum>
+               </property>
                <property name="text">
                 <string>Delete</string>
                </property>
@@ -235,6 +244,9 @@
                  <width>400</width>
                  <height>16777215</height>
                 </size>
+               </property>
+               <property name="focusPolicy">
+                <enum>Qt::NoFocus</enum>
                </property>
                <property name="text">
                 <string>Submit</string>
@@ -258,6 +270,9 @@
        </property>
        <item>
         <widget class="QScrollArea" name="scrollArea">
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
          <property name="styleSheet">
           <string notr="true"/>
          </property>
@@ -269,8 +284,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>424</width>
-            <height>145</height>
+            <width>404</width>
+            <height>136</height>
            </rect>
           </property>
           <layout class="QHBoxLayout" name="horizontalLayout_4">
@@ -287,6 +302,9 @@
                <width>400</width>
                <height>16777215</height>
               </size>
+             </property>
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
              </property>
              <property name="text">
               <string/>
