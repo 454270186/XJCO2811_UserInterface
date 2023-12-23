@@ -74,7 +74,9 @@ ListSet::ListSet(QWidget* parent, ListSetResource* cr) : QMainWindow(parent), ui
     renderList();
 
     connect(ui->backward, &QPushButton::clicked, this, &ListSet::switchToPage);
+    connect(ui->qa, &QPushButton::clicked, this, &ListSet::switchToPage1);
     connect(ui->findPath, &QPushButton::clicked, this, &ListSet::onFindPathClicked);
+    connect(ui->language, &QPushButton::clicked, this, &ListSet::toggleLanguage);
 }
 
 ListSet::~ListSet() {
@@ -336,5 +338,28 @@ void ListSet::onFindPathClicked() {
         QString relativePath = baseDir.relativeFilePath(directoryPath);
 
         ui->editPath->setText(relativePath);
+    }
+}
+
+void ListSet::toggleLanguage() {
+    isChineseLanguage = !isChineseLanguage;
+    QString sheetName = isChineseLanguage ? "listset_ch.qss" : "listset.qss";
+    loadStyleSheet(sheetName);
+}
+
+void ListSet::loadStyleSheet(const QString &sheetName) {
+    QFile file("../XJCO2811_UserInterface/" + sheetName);
+    QString StyleSheet;
+    if (file.open(QFile::ReadOnly)) {
+        StyleSheet += QLatin1String(file.readAll());
+        file.close();
+    } else {
+        qDebug() << "File does not exist: " << file.fileName();
+    }
+
+    if (!StyleSheet.isEmpty()) {
+        this->setStyleSheet(StyleSheet);
+    } else {
+        qDebug() << "Failed to load stylesheet: " << sheetName;
     }
 }

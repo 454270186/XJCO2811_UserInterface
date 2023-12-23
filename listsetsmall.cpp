@@ -74,6 +74,10 @@ ListSetSmall::ListSetSmall(QWidget* parent, ListSetResource* cr) : QMainWindow(p
     renderList();
     connect(ui->findPath, &QPushButton::clicked, this, &ListSetSmall::onFindPathClicked);
     connect(ui->backward, &QPushButton::clicked, this, &ListSetSmall::switchToPage);
+    connect(ui->qa, &QPushButton::clicked, this, &ListSetSmall::switchToPage1);
+    connect(ui->language, &QPushButton::clicked, this, &ListSetSmall::toggleLanguage);
+
+
 }
 
 ListSetSmall::~ListSetSmall() {
@@ -328,5 +332,28 @@ void ListSetSmall::onFindPathClicked() {
         QString relativePath = baseDir.relativeFilePath(directoryPath);
 
         ui->editPath->setText(relativePath);
+    }
+}
+
+void ListSetSmall::toggleLanguage() {
+    isChineseLanguage = !isChineseLanguage;
+    QString sheetName = isChineseLanguage ? "listsetsmall_ch.qss" : "listsetsmall.qss";
+    loadStyleSheet(sheetName);
+}
+
+void ListSetSmall::loadStyleSheet(const QString &sheetName) {
+    QFile file("../XJCO2811_UserInterface/" + sheetName);
+    QString StyleSheet;
+    if (file.open(QFile::ReadOnly)) {
+        StyleSheet += QLatin1String(file.readAll());
+        file.close();
+    } else {
+        qDebug() << "File does not exist: " << file.fileName();
+    }
+
+    if (!StyleSheet.isEmpty()) {
+        this->setStyleSheet(StyleSheet);
+    } else {
+        qDebug() << "Failed to load stylesheet: " << sheetName;
     }
 }

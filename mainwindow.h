@@ -38,7 +38,6 @@ signals:
     void switchPage(int pageIndex);
 
 public slots:
-
     // Slot to switch between windows
     void switchToListset();
 

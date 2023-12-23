@@ -2,6 +2,8 @@
 #define FAQ_H
 
 #include <QDialog>
+#include <QListWidgetItem>
+#include <QPushButton>
 
 namespace Ui {
 class Faq;
@@ -14,9 +16,21 @@ public:
     explicit Faq(QWidget* parent = nullptr);
     ~Faq();
 
+signals:
+    void switchPage(int pageIndex);
+
+public slots:
+    void switchToListset();
+    void toggleLanguage();
+
+private slots:
+    void switchToPage() { emit switchPage(1); }
+
 private:
     Ui::Faq* ui;
     void resizeEvent(QResizeEvent* event) override;
+    bool isChineseLanguage;
+    void loadStyleSheet(const QString &sheetName);
 };
 
 #endif  // FAQ_H

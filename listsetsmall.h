@@ -34,16 +34,15 @@ signals:
 
 public slots:
     void switchToMainWindow();
+    void toggleLanguage();
 
 private slots:
     int on_addList_clicked();
     void onSubmitClicked();
     void onDeleteClicked();
     void onFindPathClicked();
-    void switchToPage() {
-        std::cout << "hereherehere" << std::endl;
-        emit switchPage(2);
-    }
+    void switchToPage() { emit switchPage(2); }
+    void switchToPage1() { emit switchPage(4); }
 
 private:
     Ui::ListSetSmall* ui;
@@ -53,6 +52,9 @@ private:
     void showError(int errorCode);
 
     ListSetResource* commonResrc;
+    bool isChineseLanguage;
+    void loadStyleSheet(const QString &sheetName);
+
 };
 
 #endif  // LISTSETSMALL_H
