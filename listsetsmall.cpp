@@ -76,8 +76,6 @@ ListSetSmall::ListSetSmall(QWidget* parent, ListSetResource* cr) : QMainWindow(p
     connect(ui->backward, &QPushButton::clicked, this, &ListSetSmall::switchToPage);
     connect(ui->qa, &QPushButton::clicked, this, &ListSetSmall::switchToPage1);
     connect(ui->language, &QPushButton::clicked, this, &ListSetSmall::toggleLanguage);
-
-
 }
 
 ListSetSmall::~ListSetSmall() {
@@ -341,7 +339,7 @@ void ListSetSmall::toggleLanguage() {
     loadStyleSheet(sheetName);
 }
 
-void ListSetSmall::loadStyleSheet(const QString &sheetName) {
+void ListSetSmall::loadStyleSheet(const QString& sheetName) {
     QFile file("../XJCO2811_UserInterface/" + sheetName);
     QString StyleSheet;
     if (file.open(QFile::ReadOnly)) {

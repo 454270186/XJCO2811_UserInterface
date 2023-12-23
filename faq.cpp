@@ -1,11 +1,11 @@
-#include <QResizeEvent>
+#include <QDebug>
 #include <QDir>
 #include <QFile>
-#include <QDebug>
+#include <QResizeEvent>
 
 #include "faq.h"
-#include "ui_faq.h"
 #include "listset.h"
+#include "ui_faq.h"
 
 Faq::Faq(QWidget* parent) : QDialog(parent), ui(new Ui::Faq) {
     ui->setupUi(this);
@@ -26,7 +26,6 @@ Faq::Faq(QWidget* parent) : QDialog(parent), ui(new Ui::Faq) {
 
     connect(ui->backward, &QPushButton::clicked, this, &Faq::switchToPage);
     connect(ui->language, &QPushButton::clicked, this, &Faq::toggleLanguage);
-
 }
 
 Faq::~Faq() {
@@ -40,7 +39,7 @@ Faq::~Faq() {
 // 4. If the width is greater than 460, it arranges the questions and answers in two columns, setting the second column's stretch factor to 1 to use available space.
 // Params:
 // - event: A QResizeEvent pointer that contains information about the resize event such as the new size of the window.
-void Faq::resizeEvent(QResizeEvent *event) {
+void Faq::resizeEvent(QResizeEvent* event) {
     QDialog::resizeEvent(event);
 
     int currentWidth = event->size().width();
@@ -82,7 +81,7 @@ void Faq::toggleLanguage() {
     loadStyleSheet(sheetName);
 }
 
-void Faq::loadStyleSheet(const QString &sheetName) {
+void Faq::loadStyleSheet(const QString& sheetName) {
     QFile file("../XJCO2811_UserInterface/" + sheetName);
     QString StyleSheet;
     if (file.open(QFile::ReadOnly)) {

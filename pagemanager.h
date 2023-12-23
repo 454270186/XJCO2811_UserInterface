@@ -4,11 +4,11 @@
 #include <QMainWindow>
 #include <QResizeEvent>
 #include <QStackedWidget>
+#include "faq.h"
 #include "listset.h"
 #include "listsetsmall.h"
 #include "mainwindow.h"
 #include "mainwindowm.h"
-#include "faq.h"
 
 #include <iostream>
 
@@ -31,9 +31,11 @@ private slots:
         } else if (pageIndex == 0 || pageIndex == 2) {
             // refresh video list before page switch
             if (pageIndex == 0) {
+                commonResrc->mediaPlayer_->setVideoOutput(mainwindow->getVideoOutput());
                 mainwindow->RefreshList();
                 mainwindow->Play();
             } else {
+                commonResrc->mediaPlayer_->setVideoOutput(mainwindowSmall->getVideoOutput());
                 mainwindowSmall->RefreshList();
                 mainwindowSmall->Play();
             }
