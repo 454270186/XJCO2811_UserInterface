@@ -4,6 +4,8 @@
 #include <QDialog>
 #include <QListWidgetItem>
 #include <QPushButton>
+#include <QWidget>
+#include <QKeyEvent>
 
 namespace Ui {
 class Faq;
@@ -20,7 +22,6 @@ signals:
     void switchPage(int pageIndex);
 
 public slots:
-    void switchToListset();
     void toggleLanguage();
 
 private slots:
@@ -31,6 +32,7 @@ private:
     void resizeEvent(QResizeEvent* event) override;
     bool isChineseLanguage;
     void loadStyleSheet(const QString &sheetName);
+    void keyPressEvent(QKeyEvent *event);
 };
 
 #endif  // FAQ_H

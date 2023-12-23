@@ -27,6 +27,8 @@ Faq::Faq(QWidget* parent) : QDialog(parent), ui(new Ui::Faq) {
     connect(ui->backward, &QPushButton::clicked, this, &Faq::switchToPage);
     connect(ui->language, &QPushButton::clicked, this, &Faq::toggleLanguage);
 
+    QResizeEvent resizeEvent(this->size(), QSize());
+    this->resizeEvent(&resizeEvent);
 }
 
 Faq::~Faq() {
@@ -68,12 +70,24 @@ void Faq::resizeEvent(QResizeEvent *event) {
     }
 }
 
-// switchToListset() is called to switch to the ListSet window.
-// It hides the current MainWindow and shows a new ListSet window.
-void Faq::switchToListset() {
-    hide();
-    ListSet* listsetWindow = new ListSet();
-    listsetWindow->show();
+// keyPressEvent() handles various keyboard events within the window.
+// It performs specific actions based on the key pressed:
+// - Qt::Key_Escape: Triggers switchToPage() if the backward button is enabled and visible.
+// - Qt::Key_F2: Triggers switchToPage1() regardless of any conditions.
+// Other keys are handled by the default QDialog keyPressEvent handler.
+void Faq::keyPressEvent(QKeyEvent *event) {
+    switch (event->key()) {
+        case Qt::Key_Escape:
+            if (ui->backward->isEnabled() && ui->backward->isVisible()) {
+                switchToPage();
+            }
+            break;
+        case Qt::Key_CapsLock:
+            toggleLanguage();
+            break;
+        default:
+            QDialog::keyPressEvent(event);
+    }
 }
 
 void Faq::toggleLanguage() {

@@ -82,6 +82,15 @@ void ListSet::renderList() {
     }
 }
 
+// keyPressEvent() handles various keyboard events within the window.
+// It performs specific actions based on the key pressed:
+// - Qt::Key_Return: Triggers onSubmitClicked() if the submit button is enabled.
+// - Qt::Key_Shift: Triggers onDeleteClicked() if the delete button is enabled and visible.
+// - Qt::Key_Escape: Triggers switchToPage() if the backward button is enabled and visible.
+// - Qt::Key_F1: Triggers on_addList_clicked() if the addList button is enabled.
+// - Qt::Key_F2: Triggers switchToPage1() regardless of any conditions.
+// - Qt::Key_CapsLock: Toggles the language settings by calling toggleLanguage().
+// Other keys are handled by the default QMainWindow keyPressEvent handler.
 void ListSet::keyPressEvent(QKeyEvent *event) {
     switch (event->key()) {
         case Qt::Key_Return:
@@ -103,6 +112,12 @@ void ListSet::keyPressEvent(QKeyEvent *event) {
             if (ui->addList->isEnabled()) {
                 on_addList_clicked();
             }
+        case Qt::Key_F2:
+            switchToPage1();
+            break;
+        case Qt::Key_CapsLock:
+            toggleLanguage();
+            break;
         default:
             QMainWindow::keyPressEvent(event);
     }

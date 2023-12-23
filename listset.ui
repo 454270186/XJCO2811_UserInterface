@@ -95,6 +95,9 @@
             <property name="cursor">
              <cursorShape>PointingHandCursor</cursorShape>
             </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
             <property name="styleSheet">
              <string notr="true"/>
             </property>
@@ -124,6 +127,9 @@
             <property name="cursor">
              <cursorShape>PointingHandCursor</cursorShape>
             </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
             <property name="text">
              <string/>
             </property>
@@ -139,6 +145,9 @@
             </property>
             <property name="cursor">
              <cursorShape>PointingHandCursor</cursorShape>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
             </property>
             <property name="text">
              <string/>
@@ -156,6 +165,9 @@
            <height>16777215</height>
           </size>
          </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
          <property name="styleSheet">
           <string notr="true"/>
          </property>
@@ -167,8 +179,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>302</width>
-            <height>589</height>
+            <width>282</width>
+            <height>566</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -185,6 +197,9 @@
              </property>
              <property name="cursor">
               <cursorShape>PointingHandCursor</cursorShape>
+             </property>
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
              </property>
              <property name="styleSheet">
               <string notr="true"/>
@@ -383,6 +398,9 @@
             <property name="cursor">
              <cursorShape>PointingHandCursor</cursorShape>
             </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
             <property name="styleSheet">
              <string notr="true"/>
             </property>
@@ -427,6 +445,9 @@
             <property name="cursor">
              <cursorShape>PointingHandCursor</cursorShape>
             </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
             <property name="text">
              <string>Delete</string>
             </property>
@@ -443,6 +464,9 @@
             <property name="cursor">
              <cursorShape>PointingHandCursor</cursorShape>
             </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
             <property name="text">
              <string>Submit</string>
             </property>
@@ -457,6 +481,11 @@
    </layout>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>editName</tabstop>
+  <tabstop>editPath</tabstop>
+  <tabstop>findPath</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
