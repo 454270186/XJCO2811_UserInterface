@@ -9,6 +9,9 @@
 #include <QSlider>
 #include <QStringList>
 #include <QVideoWidget>
+#include <QWidget>
+#include <QKeyEvent>
+
 #include <vector>
 
 #include "fileutil.h"
@@ -72,6 +75,7 @@ private:
     void startPlaylistFromParameters(const QStringList& videoPaths, int currentIndex);
     void resizeEvent(QResizeEvent* event) override;
     void renderBtnList(QHBoxLayout* btnLayout);
+    void keyPressEvent(QKeyEvent *event);
 
     QVideoWidget* videoWidget;
     QHBoxLayout* listsBtnsLayout;

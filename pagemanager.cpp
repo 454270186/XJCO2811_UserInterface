@@ -34,9 +34,13 @@ PageManager::PageManager(QWidget* parent) : QMainWindow{parent} {
 }
 
 PageManager::~PageManager() {
+    // stop video play
     commonResrc->mediaPlayer_->pause();
+
+    // release resoucre
     delete commonResrc;
     delete listsetResrc;
+    delete faq;
     delete mainwindow;
     delete mainwindowSmall;
     delete listset;

@@ -15,6 +15,21 @@ QScrollArea#scrollArea QWidget {
     border-radius: 20px;
 }
 
+QScrollArea#scrollArea QScrollBar {
+    background: transparent;
+    width: 8px;
+    height: 5px;
+}
+
+QScrollArea#scrollArea QScrollBar::handle {
+    background: gray;
+    border-radius: 3px;
+}
+
+QScrollArea#scrollArea QScrollBar::handle:hover {
+    background: darkgray;
+}
+
 QPushButton#backward {
     border: none;
     background-color: transparent;
@@ -38,14 +53,14 @@ QGroupBox#groupBox {
 
 QLabel[objectName^='question'] {
     color: white;
-    font: bold 25px Arial;
+    font: bold 22px Arial;
     padding: 2px;
     margin: 6px;
 }
 
 QLabel[objectName^='answer'] {
     color: lightcoral;
-    font: 20px Arial;
+    font: 18px Arial;
     border: 1px solid white;
     border-radius: 10px;
     padding: 8px;

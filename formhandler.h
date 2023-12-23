@@ -10,13 +10,13 @@
 namespace FORMHANDLER_ERROR {
 
 /* Client Error */
-const int ErrListNameNotUnique = 10004; // List name is not unique
-const int ErrEmptyFields = 10005;        // One or both fields (listName, videoDirPath) are empty
-const int ErrListNameTooLong = 10006;    // listName length is greater than 20 characters
-const int ErrInvalidListNameChars = 10007; // listName contains invalid characters
-const int ErrVideoDirPathTooLong = 10008; // videoDirPath length is greater than 255 characters
-const int ErrInvalidVideoDirPathFormat = 10009; // videoDirPath does not match the required format
-const int ErrUnexpect = 10010; // unexpect error
+const int ErrListNameNotUnique = 10004;          // List name is not unique
+const int ErrEmptyFields = 10005;                // One or both fields (listName, videoDirPath) are empty
+const int ErrListNameTooLong = 10006;            // listName length is greater than 20 characters
+const int ErrInvalidListNameChars = 10007;       // listName contains invalid characters
+const int ErrVideoDirPathTooLong = 10008;        // videoDirPath length is greater than 255 characters
+const int ErrInvalidVideoDirPathFormat = 10009;  // videoDirPath does not match the required format
+const int ErrUnexpect = 10010;                   // unexpect error
 
 /* No Error */
 const int SUCCESS = 1;
