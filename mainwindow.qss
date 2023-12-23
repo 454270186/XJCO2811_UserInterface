@@ -1,10 +1,4 @@
-#lists QScrollBar:horizontal {
-    border: none;
-    background: #32CC99;
-    height: 10px; /* 使水平滚动条更细 */
-    margin: 0 15px 0 15px;
-    border-radius: 0px;
-}
+
 
 #lists QScrollBar::handle:horizontal {
     background: #9aa3ad;
@@ -32,13 +26,7 @@
     background: none;
 }
 
-#thumbnailList QScrollBar:vertical {
-    border: none;
-    background: #32CC99;
-    width: 14px;
-    margin: 15px 0 15px 0;
-    border-radius: 0px;
-}
+
 
 #thumbnailList QScrollBar::handle:vertical {
     background: #9aa3ad;
@@ -94,6 +82,12 @@ QPushButton#addListBtn{
 
 QPushButton#fullScreen{
     qproperty-icon: url(../XJCO2811_UserInterface/icons/arrows-fullscreen.svg); 
+    qproperty-iconSize: 24px; 
+    
+}
+
+QPushButton#voice{
+    qproperty-icon: url(../XJCO2811_UserInterface/icons/volume-up.svg); 
     qproperty-iconSize: 24px; 
     
 }
