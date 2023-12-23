@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <QListWidgetItem>
 #include <QPushButton>
+#include <QTranslator>
 
 namespace Ui {
 class Faq;
@@ -31,6 +32,7 @@ private:
     void resizeEvent(QResizeEvent* event) override;
     bool isChineseLanguage;
     void loadStyleSheet(const QString &sheetName);
+    QTranslator translator;
 };
 
 #endif  // FAQ_H

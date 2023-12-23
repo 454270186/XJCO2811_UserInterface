@@ -6,6 +6,7 @@
 #include <QMainWindow>
 #include <QPushButton>
 #include <QString>
+#include <QLabel>
 #include <map>
 #include <vector>
 
@@ -51,8 +52,11 @@ private:
     void renderList();
     void showError(int errorCode);
 
+    QLabel *labelName;
+    QLabel *labelPath;
     ListSetResource* commonResrc;
     bool isChineseLanguage;
+    std::map<int, QString> errorMessages;
     void loadStyleSheet(const QString &sheetName);
 
 };

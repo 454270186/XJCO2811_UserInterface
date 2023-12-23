@@ -8,6 +8,7 @@
 #include <QMessageBox>
 
 #include "formhandler.h"
+#include "listset.h"
 #include "listsetsmall.h"
 #include "mainwindow.h"
 #include "ui_listsetsmall.h"
@@ -72,6 +73,8 @@ ListSetSmall::ListSetSmall(QWidget* parent, ListSetResource* cr) : QMainWindow(p
     //        });
     //    }
     renderList();
+    labelName = findChild<QLabel*>("label_name");
+    labelPath = findChild<QLabel*>("label_path");
     connect(ui->findPath, &QPushButton::clicked, this, &ListSetSmall::onFindPathClicked);
     connect(ui->backward, &QPushButton::clicked, this, &ListSetSmall::switchToPage);
     connect(ui->qa, &QPushButton::clicked, this, &ListSetSmall::switchToPage1);
@@ -141,7 +144,11 @@ int ListSetSmall::on_addList_clicked() {
             isSubmitEnabled = true;
         });
     } else {
-        QMessageBox::warning(this, "Warning", "There is already a new list.");
+        if (isChineseLanguage) {
+            QMessageBox::warning(this, "警告", "已经存在新列表！");
+        } else {
+            QMessageBox::warning(this, "Warning", "There is already a new list!");
+        }
     }
 
     return 0;
@@ -168,7 +175,11 @@ void ListSetSmall::onSubmitClicked() {
         int result =
             formHandler.editForm(commonResrc->ListInfo_[commonResrc->currentBtnIndex_].id, listName, videoDirPath);
         if (result == FORMHANDLER_ERROR::SUCCESS) {
-            QMessageBox::information(this, "Success", "List edited successfully!\n");
+            if (isChineseLanguage) {
+                QMessageBox::information(this, "完成", "列表修改成功！\n");
+            } else {
+                QMessageBox::information(this, "Success", "List edited successfully!\n");
+            }
             QPushButton* button =
                 qobject_cast<QPushButton*>(listLayout->itemAt(commonResrc->currentBtnIndex_ + 1)->widget());
             if (button) {
@@ -186,7 +197,11 @@ void ListSetSmall::onSubmitClicked() {
         int result = formHandler.submitForm(listName, videoDirPath);
         if (result == FORMHANDLER_ERROR::SUCCESS) {
             commonResrc->hasUnfinishedNewList_ = false;
-            QMessageBox::information(this, "Success", "List added successfully!\n");
+            if (isChineseLanguage) {
+                QMessageBox::information(this, "完成", "列表添加成功！\n");
+            } else {
+                QMessageBox::information(this, "Success", "List added successfully!\n");
+            }
             QPushButton* newButton = new QPushButton(QString::fromStdString(listName));
             newButton->setObjectName("newButton");
             newButton->setCheckable(true);
@@ -236,7 +251,11 @@ void ListSetSmall::onSubmitClicked() {
 // - If the deletion fails (result <= 0), displays an error message.
 void ListSetSmall::onDeleteClicked() {
     if (commonResrc->currentBtnIndex_ < 0 || commonResrc->currentBtnIndex_ >= commonResrc->ListInfo_.size()) {
-        QMessageBox::warning(this, "Error", "No list selected or invalid list index");
+        if (isChineseLanguage) {
+            QMessageBox::warning(this, "错误", "未选择列表或列表索引无效");
+        } else {
+            QMessageBox::warning(this, "Error", "No list selected or invalid list index");
+        }
         return;
     }
 
@@ -245,7 +264,11 @@ void ListSetSmall::onDeleteClicked() {
     int result = commonResrc->fileUtil_->DelListByID(listID, &error);
 
     if (result == FORMHANDLER_ERROR::SUCCESS) {
-        QMessageBox::information(this, "Success", "List deleted successfully");
+        if (isChineseLanguage) {
+            QMessageBox::information(this, "完成", "列表删除成功");
+        } else {
+            QMessageBox::information(this, "Success", "List deleted successfully");
+        }
         // Remove the corresponding button from the UI
         QWidget* widget = listLayout->itemAt(commonResrc->currentBtnIndex_ + 1)->widget();
         if (widget) {
@@ -339,6 +362,21 @@ void ListSetSmall::toggleLanguage() {
     isChineseLanguage = !isChineseLanguage;
     QString sheetName = isChineseLanguage ? "listsetsmall_ch.qss" : "listsetsmall.qss";
     loadStyleSheet(sheetName);
+
+    // Switch error messages
+    if (isChineseLanguage) {
+        errorMessages = errorMessagesCN;
+        labelName->setText("列表名称");
+        labelPath->setText("列表路径");
+        ui->Delete->setText("删除");
+        ui->submit->setText(isSubmitEnabled ? "提交" : "编辑");
+    } else {
+        errorMessages = errorMessagesEN;
+        labelName->setText("List Name");
+        labelPath->setText("List Path");
+        ui->Delete->setText("Delete");
+        ui->submit->setText(isSubmitEnabled ? "Submit" : "Edit");
+    }
 }
 
 void ListSetSmall::loadStyleSheet(const QString &sheetName) {

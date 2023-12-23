@@ -73,10 +73,13 @@ ListSet::ListSet(QWidget* parent, ListSetResource* cr) : QMainWindow(parent), ui
     //    }
     renderList();
 
+    labelName = findChild<QLabel*>("label_name");
+    labelPath = findChild<QLabel*>("label_path");
     connect(ui->backward, &QPushButton::clicked, this, &ListSet::switchToPage);
     connect(ui->qa, &QPushButton::clicked, this, &ListSet::switchToPage1);
     connect(ui->findPath, &QPushButton::clicked, this, &ListSet::onFindPathClicked);
     connect(ui->language, &QPushButton::clicked, this, &ListSet::toggleLanguage);
+
 }
 
 ListSet::~ListSet() {
@@ -140,7 +143,11 @@ int ListSet::on_addList_clicked() {
             isSubmitEnabled = true;
         });
     } else {
-        QMessageBox::warning(this, "Warning", "There is already a new list.");
+        if (isChineseLanguage) {
+            QMessageBox::warning(this, "警告", "已经存在新列表！");
+        } else {
+            QMessageBox::warning(this, "Warning", "There is already a new list!");
+        }
     }
 
     return 0;
@@ -167,7 +174,11 @@ void ListSet::onSubmitClicked() {
         int result =
             formHandler.editForm(commonResrc->ListInfo_[commonResrc->currentBtnIndex_].id, listName, videoDirPath);
         if (result == FORMHANDLER_ERROR::SUCCESS) {
-            QMessageBox::information(this, "Success", "List edited successfully!\n");
+            if (isChineseLanguage) {
+                QMessageBox::information(this, "完成", "列表修改成功！\n");
+            } else {
+                QMessageBox::information(this, "Success", "List edited successfully!\n");
+            }
             QPushButton* button =
                 qobject_cast<QPushButton*>(listLayout->itemAt(commonResrc->currentBtnIndex_ + 1)->widget());
             if (button) {
@@ -185,7 +196,11 @@ void ListSet::onSubmitClicked() {
         int result = formHandler.submitForm(listName, videoDirPath);
         if (result == FORMHANDLER_ERROR::SUCCESS) {
             commonResrc->hasUnfinishedNewList_ = false;
-            QMessageBox::information(this, "Success", "List added successfully!\n");
+            if (isChineseLanguage) {
+                QMessageBox::information(this, "完成", "列表添加成功！\n");
+            } else {
+                QMessageBox::information(this, "Success", "List added successfully!\n");
+            }
             QPushButton* newButton = new QPushButton(QString::fromStdString(listName));
             newButton->setObjectName("newButton");
             newButton->setCheckable(true);
@@ -212,7 +227,11 @@ void ListSet::onSubmitClicked() {
                 ui->editName->setText(listName.c_str());
                 ui->editPath->setText(videoDirPath.c_str());
                 ui->Delete->setVisible(true);
-                ui->submit->setText(QString("Edit"));
+                if (isChineseLanguage) {
+                    ui->submit->setText(QString("编辑"));
+                } else {
+                    ui->submit->setText(QString("Edit"));
+                }
                 isSubmitEnabled = false;
                 commonResrc->currentBtnIndex_ = listLayout->indexOf(newButton) - 1;
             });
@@ -235,7 +254,11 @@ void ListSet::onSubmitClicked() {
 // - If the deletion fails (result <= 0), displays an error message.
 void ListSet::onDeleteClicked() {
     if (commonResrc->currentBtnIndex_ < 0 || commonResrc->currentBtnIndex_ >= commonResrc->ListInfo_.size()) {
-        QMessageBox::warning(this, "Error", "No list selected or invalid list index");
+        if (isChineseLanguage) {
+            QMessageBox::warning(this, "错误", "未选择列表或列表索引无效");
+        } else {
+            QMessageBox::warning(this, "Error", "No list selected or invalid list index");
+        }
         return;
     }
 
@@ -244,7 +267,11 @@ void ListSet::onDeleteClicked() {
     int result = commonResrc->fileUtil_->DelListByID(listID, &error);
 
     if (result == FORMHANDLER_ERROR::SUCCESS) {
-        QMessageBox::information(this, "Success", "List deleted successfully");
+        if (isChineseLanguage) {
+            QMessageBox::information(this, "完成", "列表删除成功");
+        } else {
+            QMessageBox::information(this, "Success", "List deleted successfully");
+        }
         // Remove the corresponding button from the UI
         QWidget* widget = listLayout->itemAt(commonResrc->currentBtnIndex_ + 1)->widget();
         if (widget) {
@@ -309,10 +336,14 @@ void ListSet::RefreshList() {
 
 void ListSet::showError(int errorCode) {
     QString errorMsg = errorMessages.count(errorCode) ? errorMessages[errorCode] : errorMessages[0];
-    QMessageBox::warning(this, "Error", errorMsg);
+    if (isChineseLanguage) {
+        QMessageBox::warning(this, "错误", errorMsg);
+    } else {
+        QMessageBox::warning(this, "Error", errorMsg);
+    }
 }
 
-std::map<int, QString> errorMessages = {
+std::map<int, QString> errorMessagesEN = {
     {FORMHANDLER_ERROR::ErrEmptyFields, "Error: One or more fields are empty!\n"},
     {FORMHANDLER_ERROR::ErrListNameTooLong, "Error: List name is too long!\n"},
     {FORMHANDLER_ERROR::ErrInvalidListNameChars, "Error: List name contains invalid characters!\n"},
@@ -326,6 +357,22 @@ std::map<int, QString> errorMessages = {
     {ERROR::ErrUnexpect, "Error: Unexpected result of file utility!\n"},
     {ERROR::ErrListIDNotFound, "Error: List ID not found!\n"},
     {0, "Error: Unexpected result of list set!\n"}  // Default error message
+};
+
+std::map<int, QString> errorMessagesCN = {
+    {FORMHANDLER_ERROR::ErrEmptyFields, "错误： 一个或多个字段为空！\n"},
+    {FORMHANDLER_ERROR::ErrListNameTooLong, "错误： 列表名称太长！\n"},
+    {FORMHANDLER_ERROR::ErrInvalidListNameChars, "错误： 列表名称包含无效字符！\n"},
+    {FORMHANDLER_ERROR::ErrVideoDirPathTooLong, "错误： 视频目录路径太长！\n"},
+    {FORMHANDLER_ERROR::ErrInvalidVideoDirPathFormat, "错误： 视频目录路径格式无效！\n"},
+    {FORMHANDLER_ERROR::ErrListNameNotUnique, "错误： 列表名称不唯一！\n"},
+    {FORMHANDLER_ERROR::ErrUnexpect, "错误： 表单处理程序出现异常！\n"},
+    {ERROR::ErrXMLParserInit, "错误： 初始化 XML 解析器出错！\n"},
+    {ERROR::ErrXMLChangeSave, "错误： 保存到 XML 文件的更改出错！\n"},
+    {ERROR::ErrInvalidXML, "错误： XML 文件格式无效！\n"},
+    {ERROR::ErrUnexpect, "错误： 文件实用程序出现异常！\n"},
+    {ERROR::ErrListIDNotFound, "错误： 未找到列表 ID！\n"},
+    {0, "错误： 列表集出现异常！\n"}  // Default error message
 };
 
 void ListSet::onFindPathClicked() {
@@ -345,7 +392,23 @@ void ListSet::toggleLanguage() {
     isChineseLanguage = !isChineseLanguage;
     QString sheetName = isChineseLanguage ? "listset_ch.qss" : "listset.qss";
     loadStyleSheet(sheetName);
+
+    // Switch error messages
+    if (isChineseLanguage) {
+        errorMessages = errorMessagesCN;
+        labelName->setText("列表名称");
+        labelPath->setText("列表路径");
+        ui->Delete->setText("删除");
+        ui->submit->setText(isSubmitEnabled ? "提交" : "编辑");
+    } else {
+        errorMessages = errorMessagesEN;
+        labelName->setText("List Name");
+        labelPath->setText("List Path");
+        ui->Delete->setText("Delete");
+        ui->submit->setText(isSubmitEnabled ? "Submit" : "Edit");
+    }
 }
+
 
 void ListSet::loadStyleSheet(const QString &sheetName) {
     QFile file("../XJCO2811_UserInterface/" + sheetName);
