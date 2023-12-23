@@ -8,6 +8,7 @@
 #include <QMessageBox>
 
 #include "formhandler.h"
+#include "listset.h"
 #include "listsetsmall.h"
 #include "mainwindow.h"
 #include "ui_listsetsmall.h"
@@ -18,11 +19,6 @@ ListSetSmall::ListSetSmall(QWidget* parent, ListSetResource* cr) : QMainWindow(p
 
     connect(ui->submit, &QPushButton::clicked, this, &ListSetSmall::onSubmitClicked);
     connect(ui->Delete, &QPushButton::clicked, this, &ListSetSmall::onDeleteClicked);
-
-    // Load and process video list data from an XML file
-    //    const std::string XMLFilePath = "../XJCO2811_UserInterface/videolist_data.xml";
-    //    fileUtil = new FileUtil(XMLFilePath);
-    //    listsInfo = fileUtil->GetAllListsInfo();
 
     // init common resource
     commonResrc = cr;
@@ -47,33 +43,13 @@ ListSetSmall::ListSetSmall(QWidget* parent, ListSetResource* cr) : QMainWindow(p
     ui->placeholderWidget->setVisible(true);
     ui->Delete->setVisible(false);
 
-    //    for (size_t i = 0; i < listsInfo.size(); i++) {
-    //        // initialize video list ui
-    //        QPushButton* newButton = new QPushButton();
-    //        newButton->setText(listsInfo[i].name.c_str());
-    //        newButton->setCheckable(true);
-    //        newButton->setAutoExclusive(true);
-    //        listLayout->addWidget(newButton);
-
-    //        connect(newButton, &QPushButton::clicked, [this, newButton] {
-    //            ui->groupBox_form->setVisible(true);
-    //            ui->placeholderWidget->setVisible(false);
-    //            ui->Delete->setVisible(true);
-    //            ui->submit->setText(QString("Edit"));
-    //            isSubmitEnabled = false;
-    //            int index = listLayout->indexOf(newButton) - 1;
-    //            currentBtnIndex = index;
-    //            // Check if the index is valid
-    //            if (index != -1 && index < (int)this->listsInfo.size()) {
-    //                ListInfo info = this->listsInfo[index];
-    //                ui->editName->setText(QString::fromStdString(info.name));
-    //                ui->editPath->setText(QString::fromStdString(info.videoDirPath));
-    //            }
-    //        });
-    //    }
     renderList();
+    labelName = findChild<QLabel*>("label_name");
+    labelPath = findChild<QLabel*>("label_path");
     connect(ui->findPath, &QPushButton::clicked, this, &ListSetSmall::onFindPathClicked);
     connect(ui->backward, &QPushButton::clicked, this, &ListSetSmall::switchToPage);
+    connect(ui->qa, &QPushButton::clicked, this, &ListSetSmall::switchToPage1);
+    connect(ui->language, &QPushButton::clicked, this, &ListSetSmall::toggleLanguage);
 }
 
 ListSetSmall::~ListSetSmall() {
@@ -108,6 +84,47 @@ void ListSetSmall::renderList() {
     }
 }
 
+// keyPressEvent() handles various keyboard events within the window.
+// It performs specific actions based on the key pressed:
+// - Qt::Key_Return: Triggers onSubmitClicked() if the submit button is enabled.
+// - Qt::Key_Shift: Triggers onDeleteClicked() if the delete button is enabled and visible.
+// - Qt::Key_Escape: Triggers switchToPage() if the backward button is enabled and visible.
+// - Qt::Key_F1: Triggers on_addList_clicked() if the addList button is enabled.
+// - Qt::Key_F2: Triggers switchToPage1() regardless of any conditions.
+// - Qt::Key_CapsLock: Toggles the language settings by calling toggleLanguage().
+// Other keys are handled by the default QMainWindow keyPressEvent handler.
+void ListSetSmall::keyPressEvent(QKeyEvent* event) {
+    switch (event->key()) {
+        case Qt::Key_Return:
+            if (ui->submit->isEnabled()) {
+                onSubmitClicked();
+            }
+            break;
+        case Qt::Key_Shift:
+            if (ui->Delete->isEnabled() && ui->Delete->isVisible()) {
+                onDeleteClicked();
+            }
+            break;
+        case Qt::Key_Escape:
+            if (ui->backward->isEnabled() && ui->backward->isVisible()) {
+                switchToPage();
+            }
+            break;
+        case Qt::Key_F1:
+            if (ui->addList->isEnabled()) {
+                on_addList_clicked();
+            }
+        case Qt::Key_F2:
+            switchToPage1();
+            break;
+        case Qt::Key_CapsLock:
+            toggleLanguage();
+            break;
+        default:
+            QMainWindow::keyPressEvent(event);
+    }
+}
+
 // on_addList_clicked() handles the event when the "Add List" button is clicked.
 // It performs the following steps:
 // 1. Checks if there is already an unfinished new list being added.
@@ -137,7 +154,11 @@ int ListSetSmall::on_addList_clicked() {
             isSubmitEnabled = true;
         });
     } else {
-        QMessageBox::warning(this, "Warning", "There is already a new list.");
+        if (isChineseLanguage) {
+            QMessageBox::warning(this, "警告", "已经存在新列表！");
+        } else {
+            QMessageBox::warning(this, "Warning", "There is already a new list!");
+        }
     }
 
     return 0;
@@ -164,7 +185,11 @@ void ListSetSmall::onSubmitClicked() {
         int result =
             formHandler.editForm(commonResrc->ListInfo_[commonResrc->currentBtnIndex_].id, listName, videoDirPath);
         if (result == FORMHANDLER_ERROR::SUCCESS) {
-            QMessageBox::information(this, "Success", "List edited successfully!\n");
+            if (isChineseLanguage) {
+                QMessageBox::information(this, "完成", "列表修改成功！\n");
+            } else {
+                QMessageBox::information(this, "Success", "List edited successfully!\n");
+            }
             QPushButton* button =
                 qobject_cast<QPushButton*>(listLayout->itemAt(commonResrc->currentBtnIndex_ + 1)->widget());
             if (button) {
@@ -182,7 +207,11 @@ void ListSetSmall::onSubmitClicked() {
         int result = formHandler.submitForm(listName, videoDirPath);
         if (result == FORMHANDLER_ERROR::SUCCESS) {
             commonResrc->hasUnfinishedNewList_ = false;
-            QMessageBox::information(this, "Success", "List added successfully!\n");
+            if (isChineseLanguage) {
+                QMessageBox::information(this, "完成", "列表添加成功！\n");
+            } else {
+                QMessageBox::information(this, "Success", "List added successfully!\n");
+            }
             QPushButton* newButton = new QPushButton(QString::fromStdString(listName));
             newButton->setObjectName("newButton");
             newButton->setCheckable(true);
@@ -232,7 +261,11 @@ void ListSetSmall::onSubmitClicked() {
 // - If the deletion fails (result <= 0), displays an error message.
 void ListSetSmall::onDeleteClicked() {
     if (commonResrc->currentBtnIndex_ < 0 || commonResrc->currentBtnIndex_ >= commonResrc->ListInfo_.size()) {
-        QMessageBox::warning(this, "Error", "No list selected or invalid list index");
+        if (isChineseLanguage) {
+            QMessageBox::warning(this, "错误", "未选择列表或列表索引无效");
+        } else {
+            QMessageBox::warning(this, "Error", "No list selected or invalid list index");
+        }
         return;
     }
 
@@ -241,7 +274,11 @@ void ListSetSmall::onDeleteClicked() {
     int result = commonResrc->fileUtil_->DelListByID(listID, &error);
 
     if (result == FORMHANDLER_ERROR::SUCCESS) {
-        QMessageBox::information(this, "Success", "List deleted successfully");
+        if (isChineseLanguage) {
+            QMessageBox::information(this, "完成", "列表删除成功");
+        } else {
+            QMessageBox::information(this, "Success", "List deleted successfully");
+        }
         // Remove the corresponding button from the UI
         QWidget* widget = listLayout->itemAt(commonResrc->currentBtnIndex_ + 1)->widget();
         if (widget) {
@@ -328,5 +365,43 @@ void ListSetSmall::onFindPathClicked() {
         QString relativePath = baseDir.relativeFilePath(directoryPath);
 
         ui->editPath->setText(relativePath);
+    }
+}
+
+void ListSetSmall::toggleLanguage() {
+    isChineseLanguage = !isChineseLanguage;
+    QString sheetName = isChineseLanguage ? "listsetsmall_ch.qss" : "listsetsmall.qss";
+    loadStyleSheet(sheetName);
+
+    // Switch error messages
+    if (isChineseLanguage) {
+        errorMessages = errorMessagesCN;
+        labelName->setText("列表名称");
+        labelPath->setText("列表路径");
+        ui->Delete->setText("删除");
+        ui->submit->setText(isSubmitEnabled ? "提交" : "编辑");
+    } else {
+        errorMessages = errorMessagesEN;
+        labelName->setText("List Name");
+        labelPath->setText("List Path");
+        ui->Delete->setText("Delete");
+        ui->submit->setText(isSubmitEnabled ? "Submit" : "Edit");
+    }
+}
+
+void ListSetSmall::loadStyleSheet(const QString& sheetName) {
+    QFile file("../XJCO2811_UserInterface/" + sheetName);
+    QString StyleSheet;
+    if (file.open(QFile::ReadOnly)) {
+        StyleSheet += QLatin1String(file.readAll());
+        file.close();
+    } else {
+        qDebug() << "File does not exist: " << file.fileName();
+    }
+
+    if (!StyleSheet.isEmpty()) {
+        this->setStyleSheet(StyleSheet);
+    } else {
+        qDebug() << "Failed to load stylesheet: " << sheetName;
     }
 }

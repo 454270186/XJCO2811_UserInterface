@@ -1,18 +1,21 @@
 #ifndef LISTSET_H
 #define LISTSET_H
 
+#include <QKeyEvent>
+#include <QLabel>
 #include <QListWidgetItem>
 #include <QMainWindow>
 #include <QPushButton>
 #include <QString>
 #include <QVBoxLayout>
-#include <map>
-#include <vector>
+#include <QWidget>
 
-#include "fileutil.h"
+#include <map>
+
 #include "listsetresource.h"
 
-extern std::map<int, QString> errorMessages;
+extern std::map<int, QString> errorMessagesEN;
+extern std::map<int, QString> errorMessagesCN;
 
 namespace Ui {
 class ListSet;
@@ -33,12 +36,14 @@ signals:
 
 public slots:
     void switchToMainWindow();
+    void toggleLanguage();
 
 private slots:
     int on_addList_clicked();
     void onSubmitClicked();
     void onDeleteClicked();
     void switchToPage() { emit switchPage(0); }
+    void switchToPage1() { emit switchPage(4); }
     void onFindPathClicked();
 
 private:
@@ -47,8 +52,14 @@ private:
 
     void renderList();
     void showError(int errorCode);
+    void keyPressEvent(QKeyEvent* event);
 
+    QLabel* labelName;
+    QLabel* labelPath;
     ListSetResource* commonResrc;
+    bool isChineseLanguage;
+    std::map<int, QString> errorMessages;
+    void loadStyleSheet(const QString& sheetName);
 };
 
 #endif  //LISTSET_H

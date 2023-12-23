@@ -135,7 +135,6 @@ void mainwindowm::renderBtnList(QHBoxLayout* btnLayout) {
         newButton->setCheckable(true);
         newButton->setAutoExclusive(true);
 
-        // 设置按钮的最小和最大大小
         newButton->setMinimumSize(100, 30);
         newButton->setMaximumSize(100, 30);
 
@@ -144,6 +143,22 @@ void mainwindowm::renderBtnList(QHBoxLayout* btnLayout) {
         // connect onClick hook
         connect(newButton, &QPushButton::clicked,
                 [this, i] { parseFolder(commonResrc->listinfo_[i].videoDirPath.c_str()); });
+    }
+}
+
+// keyPressEvent() handles various keyboard events within the window.
+// It performs specific actions based on the key pressed:
+// - Qt::Key_Escape: Triggers switchToPage() if the backward button is enabled and visible.
+// Other keys are handled by the default QMainWindow keyPressEvent handler.
+void mainwindowm::keyPressEvent(QKeyEvent *event) {
+    switch (event->key()) {
+        case Qt::Key_Escape:
+            if (ui->addListBtn->isEnabled()) {
+                switchToPage();
+            }
+            break;
+        default:
+            QMainWindow::keyPressEvent(event);
     }
 }
 

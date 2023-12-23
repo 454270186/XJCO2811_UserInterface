@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QHBoxLayout>
+#include <QKeyEvent>
 #include <QMainWindow>
 #include <QMediaPlayer>
 #include <QPropertyAnimation>
@@ -9,6 +10,8 @@
 #include <QSlider>
 #include <QStringList>
 #include <QVideoWidget>
+#include <QWidget>
+
 #include <vector>
 
 #include "mainwindowresource.h"
@@ -38,7 +41,6 @@ signals:
     void switchPage(int pageIndex);
 
 public slots:
-
     // Slot to switch between windows
     void switchToListset();
 
@@ -72,6 +74,7 @@ private:
     void renderBtnList(QHBoxLayout* btnLayout);
     void resizeEvent(QResizeEvent* event) override;
     virtual bool eventFilter(QObject* obj, QEvent* event) override;
+    void keyPressEvent(QKeyEvent* event) override;
 
     QVideoWidget* videoWidget;
     QHBoxLayout* listsBtnsLayout;

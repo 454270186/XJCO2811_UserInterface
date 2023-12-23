@@ -2,10 +2,14 @@
 #define LISTSETSMALL_H
 
 #include <QHBoxLayout>
+#include <QKeyEvent>
+#include <QLabel>
 #include <QListWidgetItem>
 #include <QMainWindow>
 #include <QPushButton>
 #include <QString>
+#include <QWidget>
+
 #include <map>
 #include <vector>
 
@@ -34,16 +38,15 @@ signals:
 
 public slots:
     void switchToMainWindow();
+    void toggleLanguage();
 
 private slots:
     int on_addList_clicked();
     void onSubmitClicked();
     void onDeleteClicked();
     void onFindPathClicked();
-    void switchToPage() {
-        std::cout << "hereherehere" << std::endl;
-        emit switchPage(2);
-    }
+    void switchToPage() { emit switchPage(2); }
+    void switchToPage1() { emit switchPage(4); }
 
 private:
     Ui::ListSetSmall* ui;
@@ -51,8 +54,14 @@ private:
 
     void renderList();
     void showError(int errorCode);
+    void keyPressEvent(QKeyEvent* event);
 
+    QLabel* labelName;
+    QLabel* labelPath;
     ListSetResource* commonResrc;
+    bool isChineseLanguage;
+    std::map<int, QString> errorMessages;
+    void loadStyleSheet(const QString& sheetName);
 };
 
 #endif  // LISTSETSMALL_H
