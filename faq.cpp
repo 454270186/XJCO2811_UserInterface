@@ -1,10 +1,32 @@
 #include <QResizeEvent>
+#include <QDir>
+#include <QFile>
+#include <QDebug>
 
 #include "faq.h"
 #include "ui_faq.h"
+#include "listset.h"
 
 Faq::Faq(QWidget* parent) : QDialog(parent), ui(new Ui::Faq) {
     ui->setupUi(this);
+    QFile file1("../XJCO2811_UserInterface/faq.qss");
+    QString StyleSheet;
+    if (file1.open(QFile::ReadOnly)) {
+        StyleSheet += QLatin1String(file1.readAll());
+        file1.close();
+    } else {
+        qDebug() << "File does not exist: " << file1.fileName();
+    }
+
+    if (!StyleSheet.isEmpty()) {
+        this->setStyleSheet(StyleSheet);
+    } else {
+        qDebug() << "Current directory:" << QDir::currentPath();
+    }
+
+    connect(ui->backward, &QPushButton::clicked, this, &Faq::switchToPage);
+    connect(ui->language, &QPushButton::clicked, this, &Faq::toggleLanguage);
+
 }
 
 Faq::~Faq() {
@@ -43,5 +65,36 @@ void Faq::resizeEvent(QResizeEvent *event) {
         }
 
         ui->gridLayout->setColumnStretch(1, 1);
+    }
+}
+
+// switchToListset() is called to switch to the ListSet window.
+// It hides the current MainWindow and shows a new ListSet window.
+void Faq::switchToListset() {
+    hide();
+    ListSet* listsetWindow = new ListSet();
+    listsetWindow->show();
+}
+
+void Faq::toggleLanguage() {
+    isChineseLanguage = !isChineseLanguage;
+    QString sheetName = isChineseLanguage ? "faq_ch.qss" : "faq.qss";
+    loadStyleSheet(sheetName);
+}
+
+void Faq::loadStyleSheet(const QString &sheetName) {
+    QFile file("../XJCO2811_UserInterface/" + sheetName);
+    QString StyleSheet;
+    if (file.open(QFile::ReadOnly)) {
+        StyleSheet += QLatin1String(file.readAll());
+        file.close();
+    } else {
+        qDebug() << "File does not exist: " << file.fileName();
+    }
+
+    if (!StyleSheet.isEmpty()) {
+        this->setStyleSheet(StyleSheet);
+    } else {
+        qDebug() << "Failed to load stylesheet: " << sheetName;
     }
 }

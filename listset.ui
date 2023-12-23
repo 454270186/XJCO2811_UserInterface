@@ -79,35 +79,73 @@
         <number>4</number>
        </property>
        <item>
-        <widget class="QPushButton" name="backward">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="cursor">
-          <cursorShape>PointingHandCursor</cursorShape>
-         </property>
-         <property name="focusPolicy">
-          <enum>Qt::NoFocus</enum>
-         </property>
-         <property name="styleSheet">
-          <string notr="true"/>
-         </property>
-         <property name="text">
+        <widget class="QGroupBox" name="groupBox">
+         <property name="title">
           <string/>
          </property>
-         <property name="icon">
-          <iconset>
-           <normaloff>icons/house-door.svg</normaloff>icons/house-door.svg</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>40</width>
-           <height>40</height>
-          </size>
-         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <item>
+           <widget class="QPushButton" name="backward">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>icons/house-door.svg</normaloff>icons/house-door.svg</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>40</width>
+              <height>40</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="language">
+            <property name="maximumSize">
+             <size>
+              <width>50</width>
+              <height>45</height>
+             </size>
+            </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="qa">
+            <property name="maximumSize">
+             <size>
+              <width>50</width>
+              <height>45</height>
+             </size>
+            </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
        <item>
@@ -132,8 +170,13 @@
            <rect>
             <x>0</x>
             <y>0</y>
+<<<<<<< HEAD
             <width>282</width>
             <height>596</height>
+=======
+            <width>302</width>
+            <height>589</height>
+>>>>>>> main
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -395,8 +438,13 @@
           </property>
           <item>
            <widget class="QPushButton" name="Delete">
+<<<<<<< HEAD
             <property name="focusPolicy">
              <enum>Qt::NoFocus</enum>
+=======
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+>>>>>>> main
             </property>
             <property name="text">
              <string>Delete</string>
@@ -411,8 +459,13 @@
               <height>16777215</height>
              </size>
             </property>
+<<<<<<< HEAD
             <property name="focusPolicy">
              <enum>Qt::NoFocus</enum>
+=======
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+>>>>>>> main
             </property>
             <property name="text">
              <string>Submit</string>

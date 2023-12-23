@@ -10,9 +10,7 @@
 #include <QKeyEvent>
 
 #include <map>
-#include <vector>
 
-#include "fileutil.h"
 #include "listsetresource.h"
 
 extern std::map<int, QString> errorMessages;
@@ -36,12 +34,14 @@ signals:
 
 public slots:
     void switchToMainWindow();
+    void toggleLanguage();
 
 private slots:
     int on_addList_clicked();
     void onSubmitClicked();
     void onDeleteClicked();
     void switchToPage() { emit switchPage(0); }
+    void switchToPage1() { emit switchPage(4); }
     void onFindPathClicked();
 
 private:
@@ -53,6 +53,8 @@ private:
     void keyPressEvent(QKeyEvent *event);
 
     ListSetResource* commonResrc;
+    bool isChineseLanguage;
+    void loadStyleSheet(const QString &sheetName);
 };
 
 #endif  //LISTSET_H

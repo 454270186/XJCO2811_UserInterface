@@ -8,6 +8,7 @@
 #include "listsetsmall.h"
 #include "mainwindow.h"
 #include "mainwindowm.h"
+#include "faq.h"
 
 #include <iostream>
 
@@ -84,6 +85,7 @@ private:
     ListSet* listset;              // page index 1
     mainwindowm* mainwindowSmall;  // page index 2
     ListSetSmall* listsetSmall;    // page index 3
+    Faq* faq;                      // page index 4
 };
 
 #endif  // PAGEMANAGER_H
