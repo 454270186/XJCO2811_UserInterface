@@ -2,10 +2,10 @@
 #define FAQ_H
 
 #include <QDialog>
+#include <QKeyEvent>
 #include <QListWidgetItem>
 #include <QPushButton>
 #include <QWidget>
-#include <QKeyEvent>
 
 namespace Ui {
 class Faq;
@@ -31,8 +31,8 @@ private:
     Ui::Faq* ui;
     void resizeEvent(QResizeEvent* event) override;
     bool isChineseLanguage;
-    void loadStyleSheet(const QString &sheetName);
-    void keyPressEvent(QKeyEvent *event);
+    void loadStyleSheet(const QString& sheetName);
+    void keyPressEvent(QKeyEvent* event);
 };
 
 #endif  // FAQ_H

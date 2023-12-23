@@ -47,8 +47,6 @@ ListSetSmall::ListSetSmall(QWidget* parent, ListSetResource* cr) : QMainWindow(p
     connect(ui->backward, &QPushButton::clicked, this, &ListSetSmall::switchToPage);
     connect(ui->qa, &QPushButton::clicked, this, &ListSetSmall::switchToPage1);
     connect(ui->language, &QPushButton::clicked, this, &ListSetSmall::toggleLanguage);
-
-
 }
 
 ListSetSmall::~ListSetSmall() {
@@ -92,16 +90,16 @@ void ListSetSmall::renderList() {
 // - Qt::Key_F2: Triggers switchToPage1() regardless of any conditions.
 // - Qt::Key_CapsLock: Toggles the language settings by calling toggleLanguage().
 // Other keys are handled by the default QMainWindow keyPressEvent handler.
-void ListSetSmall::keyPressEvent(QKeyEvent *event) {
+void ListSetSmall::keyPressEvent(QKeyEvent* event) {
     switch (event->key()) {
         case Qt::Key_Return:
             if (ui->submit->isEnabled()) {
                 onSubmitClicked();
             }
             break;
-        case Qt::Key_Shift: 
-            if (ui->Delete->isEnabled() && ui->Delete->isVisible()) { 
-                onDeleteClicked(); 
+        case Qt::Key_Shift:
+            if (ui->Delete->isEnabled() && ui->Delete->isVisible()) {
+                onDeleteClicked();
             }
             break;
         case Qt::Key_Escape:
@@ -353,7 +351,7 @@ void ListSetSmall::toggleLanguage() {
     loadStyleSheet(sheetName);
 }
 
-void ListSetSmall::loadStyleSheet(const QString &sheetName) {
+void ListSetSmall::loadStyleSheet(const QString& sheetName) {
     QFile file("../XJCO2811_UserInterface/" + sheetName);
     QString StyleSheet;
     if (file.open(QFile::ReadOnly)) {

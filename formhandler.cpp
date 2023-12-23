@@ -43,8 +43,7 @@ int FormHandler::validateFormData(const std::string& listName, const std::string
         return FORMHANDLER_ERROR::ErrListNameTooLong;
     }
 
-    if (!std::all_of(listName.begin(), listName.end(), [](char c) { 
-        return std::isalnum(c) || c == ' '; })) {
+    if (!std::all_of(listName.begin(), listName.end(), [](char c) { return std::isalnum(c) || c == ' '; })) {
         return FORMHANDLER_ERROR::ErrInvalidListNameChars;
     }
 
@@ -96,9 +95,9 @@ bool FormHandler::isListNameUnique(const std::string& newListName, int currentLi
 }
 
 // submitForm() handles the submission of a new list. It performs the following steps:
-// 1. Validates the form data using the validateFormData function. If validation fails, 
+// 1. Validates the form data using the validateFormData function. If validation fails,
 //    returns the corresponding error code from validateFormData.
-// 2. Checks if the list name is unique among all lists using the isListNameUnique function. 
+// 2. Checks if the list name is unique among all lists using the isListNameUnique function.
 //    If the list name is not unique, returns ErrListNameNotUnique.
 // 3. Attempts to add a new list using the AddNewList method of the FileUtil class.
 // Params:
@@ -115,19 +114,17 @@ int FormHandler::submitForm(const std::string& listName, const std::string& vide
         return validationResult;
     }
 
-
     if (!isListNameUnique(listName)) {
         return FORMHANDLER_ERROR::ErrListNameNotUnique;
     }
-
 
     return fileUtil_->AddNewList(listName, videoDirPath, &error);
 }
 
 // editForm() handles the editing of an existing list. It performs the following steps:
-// 1. Validates the new form data using the validateFormData function. If validation fails, 
+// 1. Validates the new form data using the validateFormData function. If validation fails,
 //    returns the corresponding error code from validateFormData.
-// 2. Checks if the new list name is unique among all lists except the current list using 
+// 2. Checks if the new list name is unique among all lists except the current list using
 //    the isListNameUnique function. If the new list name is not unique, returns ErrListNameNotUnique.
 // 3. Attempts to edit the list using the EditList method of the FileUtil class.
 // Params:
@@ -140,7 +137,6 @@ int FormHandler::submitForm(const std::string& listName, const std::string& vide
 int FormHandler::editForm(int listID, const std::string& newListName, const std::string& newVideoDirPath) {
     std::string error;
     int validationResult = validateFormData(newListName, newVideoDirPath);
-
 
     if (validationResult != FORMHANDLER_ERROR::SUCCESS) {
         return validationResult;

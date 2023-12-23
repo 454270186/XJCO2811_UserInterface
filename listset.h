@@ -1,13 +1,13 @@
 #ifndef LISTSET_H
 #define LISTSET_H
 
+#include <QKeyEvent>
 #include <QListWidgetItem>
 #include <QMainWindow>
 #include <QPushButton>
 #include <QString>
 #include <QVBoxLayout>
 #include <QWidget>
-#include <QKeyEvent>
 
 #include <map>
 
@@ -50,11 +50,11 @@ private:
 
     void renderList();
     void showError(int errorCode);
-    void keyPressEvent(QKeyEvent *event);
+    void keyPressEvent(QKeyEvent* event);
 
     ListSetResource* commonResrc;
     bool isChineseLanguage;
-    void loadStyleSheet(const QString &sheetName);
+    void loadStyleSheet(const QString& sheetName);
 };
 
 #endif  //LISTSET_H

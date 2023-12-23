@@ -91,16 +91,16 @@ void ListSet::renderList() {
 // - Qt::Key_F2: Triggers switchToPage1() regardless of any conditions.
 // - Qt::Key_CapsLock: Toggles the language settings by calling toggleLanguage().
 // Other keys are handled by the default QMainWindow keyPressEvent handler.
-void ListSet::keyPressEvent(QKeyEvent *event) {
+void ListSet::keyPressEvent(QKeyEvent* event) {
     switch (event->key()) {
         case Qt::Key_Return:
             if (ui->submit->isEnabled()) {
                 onSubmitClicked();
             }
             break;
-        case Qt::Key_Shift: 
-            if (ui->Delete->isEnabled() && ui->Delete->isVisible()) { 
-                onDeleteClicked(); 
+        case Qt::Key_Shift:
+            if (ui->Delete->isEnabled() && ui->Delete->isVisible()) {
+                onDeleteClicked();
             }
             break;
         case Qt::Key_Escape:
@@ -359,7 +359,7 @@ void ListSet::toggleLanguage() {
     loadStyleSheet(sheetName);
 }
 
-void ListSet::loadStyleSheet(const QString &sheetName) {
+void ListSet::loadStyleSheet(const QString& sheetName) {
     QFile file("../XJCO2811_UserInterface/" + sheetName);
     QString StyleSheet;
     if (file.open(QFile::ReadOnly)) {

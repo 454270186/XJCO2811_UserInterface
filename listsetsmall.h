@@ -2,12 +2,12 @@
 #define LISTSETSMALL_H
 
 #include <QHBoxLayout>
+#include <QKeyEvent>
 #include <QListWidgetItem>
 #include <QMainWindow>
 #include <QPushButton>
 #include <QString>
 #include <QWidget>
-#include <QKeyEvent>
 
 #include <map>
 #include <vector>
@@ -53,12 +53,11 @@ private:
 
     void renderList();
     void showError(int errorCode);
-    void keyPressEvent(QKeyEvent *event);
+    void keyPressEvent(QKeyEvent* event);
 
     ListSetResource* commonResrc;
     bool isChineseLanguage;
-    void loadStyleSheet(const QString &sheetName);
-
+    void loadStyleSheet(const QString& sheetName);
 };
 
 #endif  // LISTSETSMALL_H
