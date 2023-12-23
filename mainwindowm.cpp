@@ -371,6 +371,7 @@ void mainwindowm::switchToListset() {
 // togglePictureList() toggles the visibility of the picturelist.
 void mainwindowm::toggleFullScreen() {
     ui->picturelist->setHidden(!ui->picturelist->isHidden());
+    ui->video->setHidden(!ui->video->isHidden());
     updateGeometry();  // 强制更新布局
     repaint();         // 强制重绘
 
@@ -385,7 +386,7 @@ void mainwindowm::resizeEvent(QResizeEvent* event) {
     // 如果 picturelist 和 videoplayer 都没有被隐藏
     if (!ui->picturelist->isHidden() && !ui->video->isHidden()) {
         // 获取 QGroupBox 的初始宽度比例，可以根据需要进行调整
-        float initialPicturelistWidthRatio = 0.3;
+        float initialPicturelistWidthRatio = 1.0;
 
         // 获取 central 的宽度
         int centralWidth = this->width();
