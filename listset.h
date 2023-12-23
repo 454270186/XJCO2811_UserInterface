@@ -50,7 +50,7 @@ private:
 
     ListSetResource* commonResrc;
     bool isChineseLanguage;
-    void loadStyleSheet(const QString &sheetName);
+    void loadStyleSheet(const QString& sheetName);
 };
 
 #endif  //LISTSET_H

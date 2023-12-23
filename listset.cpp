@@ -347,7 +347,7 @@ void ListSet::toggleLanguage() {
     loadStyleSheet(sheetName);
 }
 
-void ListSet::loadStyleSheet(const QString &sheetName) {
+void ListSet::loadStyleSheet(const QString& sheetName) {
     QFile file("../XJCO2811_UserInterface/" + sheetName);
     QString StyleSheet;
     if (file.open(QFile::ReadOnly)) {

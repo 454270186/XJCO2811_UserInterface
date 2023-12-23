@@ -30,7 +30,7 @@ private:
     Ui::Faq* ui;
     void resizeEvent(QResizeEvent* event) override;
     bool isChineseLanguage;
-    void loadStyleSheet(const QString &sheetName);
+    void loadStyleSheet(const QString& sheetName);
 };
 
 #endif  // FAQ_H
