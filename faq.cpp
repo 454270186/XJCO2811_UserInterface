@@ -93,6 +93,18 @@ void Faq::toggleLanguage() {
     isChineseLanguage = !isChineseLanguage;
     QString sheetName = isChineseLanguage ? "faq_ch.qss" : "faq.qss";
     loadStyleSheet(sheetName);
+
+    if (isChineseLanguage) {
+        if (translator.load("../XJCO2811_UserInterface/Faq_CN.qm")) {
+            qApp->installTranslator(&translator);
+        } else {
+            qDebug() << "Failed to load translation file.";
+        }
+    } else {
+        qApp->removeTranslator(&translator);
+    }
+
+    ui->retranslateUi(this);
 }
 
 void Faq::loadStyleSheet(const QString& sheetName) {

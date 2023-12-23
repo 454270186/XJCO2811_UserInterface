@@ -2,6 +2,7 @@
 #define LISTSET_H
 
 #include <QKeyEvent>
+#include <QLabel>
 #include <QListWidgetItem>
 #include <QMainWindow>
 #include <QPushButton>
@@ -13,7 +14,8 @@
 
 #include "listsetresource.h"
 
-extern std::map<int, QString> errorMessages;
+extern std::map<int, QString> errorMessagesEN;
+extern std::map<int, QString> errorMessagesCN;
 
 namespace Ui {
 class ListSet;
@@ -52,8 +54,11 @@ private:
     void showError(int errorCode);
     void keyPressEvent(QKeyEvent* event);
 
+    QLabel* labelName;
+    QLabel* labelPath;
     ListSetResource* commonResrc;
     bool isChineseLanguage;
+    std::map<int, QString> errorMessages;
     void loadStyleSheet(const QString& sheetName);
 };
 

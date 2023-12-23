@@ -5,6 +5,7 @@
 #include <QKeyEvent>
 #include <QListWidgetItem>
 #include <QPushButton>
+#include <QTranslator>
 #include <QWidget>
 
 namespace Ui {
@@ -30,9 +31,10 @@ private slots:
 private:
     Ui::Faq* ui;
     void resizeEvent(QResizeEvent* event) override;
+    void keyPressEvent(QKeyEvent* event) override;
     bool isChineseLanguage;
     void loadStyleSheet(const QString& sheetName);
-    void keyPressEvent(QKeyEvent* event);
+    QTranslator translator;
 };
 
 #endif  // FAQ_H

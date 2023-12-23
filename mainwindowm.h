@@ -2,6 +2,7 @@
 #define MAINWINDOWM_H
 
 #include <QHBoxLayout>
+#include <QKeyEvent>
 #include <QMainWindow>
 #include <QMediaPlayer>
 #include <QPropertyAnimation>
@@ -10,11 +11,9 @@
 #include <QStringList>
 #include <QVideoWidget>
 #include <QWidget>
-#include <QKeyEvent>
 
 #include <vector>
 
-#include "fileutil.h"
 #include "mainwindowresource.h"
 
 namespace Ui {
@@ -75,7 +74,7 @@ private:
     void startPlaylistFromParameters(const QStringList& videoPaths, int currentIndex);
     void resizeEvent(QResizeEvent* event) override;
     void renderBtnList(QHBoxLayout* btnLayout);
-    void keyPressEvent(QKeyEvent *event);
+    void keyPressEvent(QKeyEvent* event) override;
 
     QVideoWidget* videoWidget;
     QHBoxLayout* listsBtnsLayout;

@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QHBoxLayout>
+#include <QKeyEvent>
 #include <QMainWindow>
 #include <QMediaPlayer>
 #include <QPropertyAnimation>
@@ -10,7 +11,6 @@
 #include <QStringList>
 #include <QVideoWidget>
 #include <QWidget>
-#include <QKeyEvent>
 
 #include <vector>
 
@@ -74,7 +74,7 @@ private:
     void renderBtnList(QHBoxLayout* btnLayout);
     void resizeEvent(QResizeEvent* event) override;
     virtual bool eventFilter(QObject* obj, QEvent* event) override;
-    void keyPressEvent(QKeyEvent *event);
+    void keyPressEvent(QKeyEvent* event) override;
 
     QVideoWidget* videoWidget;
     QHBoxLayout* listsBtnsLayout;

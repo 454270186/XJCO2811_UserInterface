@@ -3,6 +3,7 @@
 
 #include <QHBoxLayout>
 #include <QKeyEvent>
+#include <QLabel>
 #include <QListWidgetItem>
 #include <QMainWindow>
 #include <QPushButton>
@@ -55,8 +56,11 @@ private:
     void showError(int errorCode);
     void keyPressEvent(QKeyEvent* event);
 
+    QLabel* labelName;
+    QLabel* labelPath;
     ListSetResource* commonResrc;
     bool isChineseLanguage;
+    std::map<int, QString> errorMessages;
     void loadStyleSheet(const QString& sheetName);
 };
 

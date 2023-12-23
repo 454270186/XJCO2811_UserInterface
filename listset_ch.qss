@@ -33,6 +33,15 @@ QPushButton#language{
      icon-size: 64px 64px;
 }
 
+QPushButton#findPath{
+     border: none;
+     background-color: transparent;
+     icon-size: 64px 64px;
+     padding: 0px;
+     qproperty-icon: url(../XJCO2811_UserInterface/icons/folder-plus.svg); 
+     qproperty-iconSize: 40px; 
+}
+
 QGroupBox#groupBox {
     border: none;
 }
