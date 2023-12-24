@@ -486,17 +486,6 @@ void mainwindowm::adjustVolume(int volume) {
 
 // RefreshList() refreshes the videolist and video path
 void mainwindowm::RefreshList() {
-    // Assuming ui->lists is now a QScrollArea
-    QScrollArea* listsScrollArea = ui->lists;
-
-    // Create a QWidget to serve as the container for the buttons
-    QWidget* listsContainer = new QWidget(listsScrollArea);
-
-    // Create a QHBoxLayout for the buttons
-    if (listsBtnsLayout == nullptr) {
-        listsBtnsLayout = new QHBoxLayout(listsContainer);
-    }
-
     // Clear existing buttons
     QLayoutItem* child;
     while ((child = listsBtnsLayout->takeAt(0)) != nullptr) {
