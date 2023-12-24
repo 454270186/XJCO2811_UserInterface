@@ -10,9 +10,14 @@
 #include <QResizeEvent>
 #include <QVBoxLayout>
 
+#include "share.h"
 #include "btnconvert.h"
 #include "listset.h"
+<<<<<<< HEAD
 #include "mainwindowm.h"
+=======
+#include "share.h"
+>>>>>>> main
 #include "ui_mainwindowm.h"
 
 // MainWindow constructor initializes the main window and its components.
@@ -99,6 +104,7 @@ mainwindowm::mainwindowm(QWidget* parent, MainWindowResource* cr)
     connect(ui->fullScreen, &QPushButton::clicked, this, &mainwindowm::toggleFullScreen);
     connect(ui->voicecontrolstrip, &QSlider::valueChanged, this, &mainwindowm::adjustVolume);
     connect(ui->voice, &QPushButton::clicked, this, &mainwindowm::toggleVoiceControlStrip);
+    connect(ui->screenshot, &QPushButton::clicked, this, &mainwindowm::onScreenShotClicked);
 }
 
 mainwindowm::~mainwindowm() {
@@ -220,9 +226,15 @@ void mainwindowm::onPauseClicked() {
     if (commonResrc->mediaPlayer_->state() == QMediaPlayer::PlayingState) {
         // If the media player is currently in the playing state, pause playback
         commonResrc->mediaPlayer_->pause();
+
+        // Set the pause icon
+        ui->pause->setIcon(QIcon("../XJCO2811_UserInterface/icons/play-circle.svg"));
     } else {
         // If the media player is not in the playing state, start or resume playback
         commonResrc->mediaPlayer_->play();
+
+        // Set the play icon
+        ui->pause->setIcon(QIcon("../XJCO2811_UserInterface/icons/pause.svg"));
     }
 }
 
@@ -580,8 +592,8 @@ void mainwindowm::RenderTheme() {
     parseFolder(commonResrc->listinfo_[commonResrc->currentListButtonIndex_].videoDirPath.c_str());
 }
 
-void mainwindowm::onScreenShotClicked()
-{
-
+void mainwindowm::onScreenShotClicked() {
+    share* s = new share(this);
+    std::cout << "share" << std::endl;
+    s->show();
 }
-
