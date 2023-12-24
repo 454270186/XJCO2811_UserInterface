@@ -115,7 +115,7 @@
           <item>
            <widget class="QScrollArea" name="lists">
             <property name="statusTip">
-             <string>  </string>
+             <string/>
             </property>
             <property name="styleSheet">
              <string notr="true"/>
@@ -128,7 +128,7 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>69</width>
+               <width>72</width>
                <height>67</height>
               </rect>
              </property>

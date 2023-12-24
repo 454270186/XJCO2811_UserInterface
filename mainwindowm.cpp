@@ -160,9 +160,53 @@ void mainwindowm::keyPressEvent(QKeyEvent* event) {
                 switchToPage();
             }
             break;
+        case Qt::Key_P:
+            if (ui->pause->isEnabled()) {
+                onPauseClicked();
+            }
+            event->accept();
+            break;
+        case Qt::Key_A:
+            if (ui->retreat->isEnabled()){
+                onRetreatClicked();
+            }
+            break;
+        case Qt::Key_D:
+            if (ui->forward->isEnabled()) {
+                onForwardClicked();
+            }
+            break;
+        case Qt::Key_W:
+            if (ui->voicecontrolstrip->isEnabled()) {
+                increaseVolume();
+            }
+            break;
+        case Qt::Key_S:
+            if (ui->voicecontrolstrip->isEnabled()) {
+                decreaseVolume();
+            }
+            break;
         default:
             QMainWindow::keyPressEvent(event);
     }
+}
+
+void mainwindowm::increaseVolume() {
+    int volume = commonResrc->mediaPlayer_->volume();
+    int newVolume = qMin(volume + 10, 100);
+    commonResrc->mediaPlayer_->setVolume(newVolume);
+    ui->voicecontrolstrip->setValue(newVolume);
+    ui->voicecontrolstrip->show();
+    ui->voicecontrolstrip->hide();
+}
+
+void mainwindowm::decreaseVolume() {
+    int volume = commonResrc->mediaPlayer_->volume();
+    int newVolume = qMax(volume - 10, 0);
+    commonResrc->mediaPlayer_->setVolume(newVolume);
+    ui->voicecontrolstrip->setValue(newVolume);
+    ui->voicecontrolstrip->show();
+    ui->voicecontrolstrip->hide();
 }
 
 // onPauseClicked() toggles the play/pause state of the media player.

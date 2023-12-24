@@ -76,6 +76,8 @@ private:
     void resizeEvent(QResizeEvent* event) override;
     virtual bool eventFilter(QObject* obj, QEvent* event) override;
     void keyPressEvent(QKeyEvent* event) override;
+    void increaseVolume();
+    void decreaseVolume();
 
     QVideoWidget* videoWidget;
     QHBoxLayout* listsBtnsLayout;
