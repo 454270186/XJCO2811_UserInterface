@@ -526,3 +526,9 @@ void MainWindow::RenderTheme() {
     // render thumbnails
     parseFolder(commonResrc->listinfo_[commonResrc->currentListButtonIndex_].videoDirPath.c_str());
 }
+
+void MainWindow::onScreenShotClicked()
+{
+
+}
+
