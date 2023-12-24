@@ -197,7 +197,6 @@ void mainwindowm::increaseVolume() {
     commonResrc->mediaPlayer_->setVolume(newVolume);
     ui->voicecontrolstrip->setValue(newVolume);
     ui->voicecontrolstrip->show();
-    ui->voicecontrolstrip->hide();
 }
 
 void mainwindowm::decreaseVolume() {
@@ -206,7 +205,6 @@ void mainwindowm::decreaseVolume() {
     commonResrc->mediaPlayer_->setVolume(newVolume);
     ui->voicecontrolstrip->setValue(newVolume);
     ui->voicecontrolstrip->show();
-    ui->voicecontrolstrip->hide();
 }
 
 // onPauseClicked() toggles the play/pause state of the media player.
