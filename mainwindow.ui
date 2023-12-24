@@ -51,7 +51,7 @@
        </size>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color: rgb(72, 73, 73);</string>
+       <string notr="true"/>
       </property>
       <property name="title">
        <string/>
@@ -75,7 +75,7 @@
           <cursorShape>ArrowCursor</cursorShape>
          </property>
          <property name="styleSheet">
-          <string notr="true">background-color: rgb(237，237，237);</string>
+          <string notr="true"/>
          </property>
          <property name="title">
           <string/>
@@ -96,7 +96,7 @@
              </size>
             </property>
             <property name="cursor">
-             <cursorShape>OpenHandCursor</cursorShape>
+             <cursorShape>PointingHandCursor</cursorShape>
             </property>
             <property name="autoFillBackground">
              <bool>false</bool>
@@ -114,9 +114,11 @@
           </item>
           <item>
            <widget class="QScrollArea" name="lists">
+            <property name="statusTip">
+             <string>  </string>
+            </property>
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(73, 74, 74);
-</string>
+             <string notr="true"/>
             </property>
             <property name="widgetResizable">
              <bool>true</bool>
@@ -129,6 +131,9 @@
                <width>69</width>
                <height>67</height>
               </rect>
+             </property>
+             <property name="styleSheet">
+              <string notr="true"/>
              </property>
             </widget>
            </widget>
@@ -195,6 +200,9 @@
                  <width>30</width>
                  <height>30</height>
                 </size>
+               </property>
+               <property name="cursor">
+                <cursorShape>PointingHandCursor</cursorShape>
                </property>
                <property name="styleSheet">
                 <string notr="true">border: none; /* 移除边框 */
@@ -270,7 +278,7 @@
                 </size>
                </property>
                <property name="cursor">
-                <cursorShape>OpenHandCursor</cursorShape>
+                <cursorShape>PointingHandCursor</cursorShape>
                </property>
                <property name="styleSheet">
                 <string notr="true">border: none; /* 移除边框 */
@@ -298,7 +306,7 @@
                 </size>
                </property>
                <property name="cursor">
-                <cursorShape>OpenHandCursor</cursorShape>
+                <cursorShape>PointingHandCursor</cursorShape>
                </property>
                <property name="styleSheet">
                 <string notr="true">border: none; /* 移除边框 */
@@ -326,7 +334,7 @@
                 </size>
                </property>
                <property name="cursor">
-                <cursorShape>OpenHandCursor</cursorShape>
+                <cursorShape>PointingHandCursor</cursorShape>
                </property>
                <property name="styleSheet">
                 <string notr="true">border: none; /* 移除边框 */
@@ -352,6 +360,9 @@
                  <width>50</width>
                  <height>0</height>
                 </size>
+               </property>
+               <property name="cursor">
+                <cursorShape>PointingHandCursor</cursorShape>
                </property>
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>

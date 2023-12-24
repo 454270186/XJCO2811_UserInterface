@@ -1,5 +1,4 @@
 
-
 #lists QScrollBar::handle:horizontal {
     background: #9aa3ad;
     min-width: 30px; /* 适用于水平滚动条 */
@@ -99,9 +98,12 @@ QPushButton#addListBtn:hover {
 
 QScrollArea#lists QPushButton{
     border-radius: 20px;
-    background-color: #272828; 
     color: white; 
     border: 1px solid white;
+    background-color: rgb(39, 40, 40);
+    border-radius: 10px;
+    font-weight: bold;
+
 }
 
 #thumbnailList QPushButton {
@@ -112,5 +114,33 @@ QScrollArea#lists QPushButton{
     background-position: center; 
     background-clip: content-box; 
 }
+QScrollArea#lists QPushButton:checked {
+    background-color: rgb(75, 77, 77);
+    font-weight: bold;
+    text-transform: uppercase;
+    border: 2px solid #4aa1ff;
+    border-radius: 10px;
+}
+
+QScrollArea#lists QPushButton:hover {
+    background-color: rgb(75, 77, 77);
+    border: 1px solid white;
+    color: #F0F0F0;
+    font-weight: bold;
+    text-transform: uppercase;
+    border-radius: 10px;
+}
 
 
+QScrollArea#lists QWidget {
+    background-color: rgb(75, 77, 77);
+}
+QScrollArea#lists QPushButton{
+    border-radius: 20px;
+    color: white; 
+    border: 1px solid white;
+    background-color: rgb(39, 40, 40);
+    border-radius: 10px;
+    font-weight: bold;
+
+}
