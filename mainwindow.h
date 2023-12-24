@@ -36,6 +36,7 @@ public:
     QVideoWidget* getVideoOutput() { return this->videoWidget; }
 
     void RefreshList();
+    void RenderTheme();
 
 signals:
     void switchPage(int pageIndex);

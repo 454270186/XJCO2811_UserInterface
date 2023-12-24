@@ -5,6 +5,7 @@
 #include <QFileDialog>
 #include <QFileInfo>
 #include <QHBoxLayout>
+#include <QProcess>
 #include <QResizeEvent>
 #include <QVBoxLayout>
 #include "btnconvert.h"
@@ -150,7 +151,7 @@ void mainwindowm::renderBtnList(QHBoxLayout* btnLayout) {
 // It performs specific actions based on the key pressed:
 // - Qt::Key_Escape: Triggers switchToPage() if the backward button is enabled and visible.
 // Other keys are handled by the default QMainWindow keyPressEvent handler.
-void mainwindowm::keyPressEvent(QKeyEvent *event) {
+void mainwindowm::keyPressEvent(QKeyEvent* event) {
     switch (event->key()) {
         case Qt::Key_Escape:
             if (ui->addListBtn->isEnabled()) {
@@ -358,6 +359,31 @@ void mainwindowm::parseFolder(const QString& folderPath) {
 
             // Add the button to the layout
             layout->addWidget(button);
+        } else {
+            std::cout << "video cover not found, make it..." << std::endl;
+            QProcess ffmpeg;
+            ffmpeg.setProgram("../XJCO2811_UserInterface/bin/ffmpeg");
+            ffmpeg.setArguments({"-i", videoPath, "-vframes", "1", imagePathPNG});
+            ffmpeg.start();
+            ffmpeg.waitForFinished();
+
+            // Create a BtnConvert button with the video path
+            BtnConvert* button = new BtnConvert(videoPath);
+
+            // Set the button icon to the existing preview image (.png or .jpg)
+            if (QFileInfo::exists(imagePathPNG)) {
+                button->setIcon(QIcon(imagePathPNG));
+            }
+            if (QFileInfo::exists(imagePathJPG)) {
+                button->setIcon(QIcon(imagePathJPG));
+            }
+
+            // Set the icon size and connect the button click signal to onButtonClicked slot
+            button->setIconSize(QSize(250, 250));
+            connect(button, &QPushButton::clicked, this, &mainwindowm::onButtonClicked);
+
+            // Add the button to the layout
+            layout->addWidget(button);
         }
     }
 
@@ -372,6 +398,8 @@ void mainwindowm::onButtonClicked() {
     // Attempt to cast the sender to BtnConvert
     BtnConvert* button = qobject_cast<BtnConvert*>(sender());
     if (button) {
+        commonResrc->isPictureListOpen_ = false;
+
         // Retrieve the video path from the clicked button
         QString videoPath = button->getVideoPath();
 
@@ -399,6 +427,12 @@ void mainwindowm::switchToListset() {
 
 // togglePictureList() toggles the visibility of the picturelist.
 void mainwindowm::toggleFullScreen() {
+    if (ui->picturelist->isHidden()) {
+        commonResrc->isPictureListOpen_ = true;
+    } else {
+        commonResrc->isPictureListOpen_ = false;
+    }
+
     ui->picturelist->setHidden(!ui->picturelist->isHidden());
     ui->video->setHidden(!ui->video->isHidden());
     updateGeometry();  // 强制更新布局
@@ -477,4 +511,16 @@ void mainwindowm::RefreshList() {
         std::cout << commonResrc->listinfo_[i].name << std::endl;
     }
     renderBtnList(listsBtnsLayout);
+}
+
+// RenderTheme() will check all bool flags, and rerender the page when page switch
+// Need to be called Explicitly in PageManager
+void mainwindowm::RenderTheme() {
+    if (commonResrc->isPictureListOpen_) {
+        std::cout << "mainwindowm: picturelist is open" << std::endl;
+        ui->picturelist->setVisible(true);
+    } else {
+        std::cout << "mainwindowm: picturelist is not open" << std::endl;
+        ui->picturelist->setVisible(false);
+    }
 }

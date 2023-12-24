@@ -19,6 +19,7 @@ public:
     FileUtil* fileUtil_;
     std::vector<ListInfo> listinfo_;
     QStringList videoPaths_;
+    bool isPictureListOpen_{true};
 };
 
 #endif  // MAINWINDOWRESOURCE_H

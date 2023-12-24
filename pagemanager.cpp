@@ -84,6 +84,7 @@ void PageManager::changeWindows(const QSize& size) {
             if (stackPage->currentIndex() == PageIndex::MAINWINDOW_SMALL) {
                 commonResrc->mediaPlayer_->setVideoOutput(mainwindow->getVideoOutput());
                 mainwindow->RefreshList();
+                mainwindow->RenderTheme();
                 stackPage->setCurrentIndex(PageIndex::MAINWINDOW);
             } else if (stackPage->currentIndex() == PageIndex::LISTSET_SMALL) {
                 listset->RefreshList();
@@ -97,6 +98,7 @@ void PageManager::changeWindows(const QSize& size) {
             if (stackPage->currentIndex() == PageIndex::MAINWINDOW) {
                 commonResrc->mediaPlayer_->setVideoOutput(mainwindowSmall->getVideoOutput());
                 mainwindowSmall->RefreshList();
+                mainwindowSmall->RenderTheme();
                 stackPage->setCurrentIndex(PageIndex::MAINWINDOW_SMALL);
             } else if (stackPage->currentIndex() == PageIndex::LISTSET) {
                 listsetSmall->RefreshList();
