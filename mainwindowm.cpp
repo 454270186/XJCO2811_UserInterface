@@ -151,7 +151,7 @@ void mainwindowm::renderBtnList(QHBoxLayout* btnLayout) {
 
 // keyPressEvent() handles various keyboard events within the window.
 // It performs specific actions based on the key pressed:
-// - Qt::Key_Escape: Triggers switchToPage() if the backward button is enabled and visible.
+// - Qt::Key_Escape: Triggers switchToPage() if the addListBtn button is enabled.
 // Other keys are handled by the default QMainWindow keyPressEvent handler.
 void mainwindowm::keyPressEvent(QKeyEvent* event) {
     switch (event->key()) {

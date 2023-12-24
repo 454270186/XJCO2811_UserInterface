@@ -50,15 +50,14 @@ private slots:
 private:
     Ui::ListSet* ui;
     QVBoxLayout* listLayout;
-
-    void renderList();
-    void showError(int errorCode);
-    void keyPressEvent(QKeyEvent* event);
-
     QLabel* labelName;
     QLabel* labelPath;
     ListSetResource* commonResrc;
     std::map<int, QString> errorMessages;
+
+    void renderList();
+    void showError(int errorCode);
+    void keyPressEvent(QKeyEvent* event);
     void loadStyleSheet(const QString& sheetName);
 };
 

@@ -27,6 +27,7 @@ PageManager::PageManager(QWidget* parent) : QMainWindow{parent} {
     connect(listset, &ListSet::switchPage, this, &PageManager::switchToPage);
     connect(listsetSmall, &ListSetSmall::switchPage, this, &PageManager::switchToPage);
     connect(faq, &Faq::switchPage, this, &PageManager::switchToPage);
+    connect(faq, &Faq::stopReading, this, &PageManager::handleFaqStopReading);
     connect(this, &PageManager::resized, this, &PageManager::changeWindows);
 
     setCentralWidget(stackPage);
@@ -44,6 +45,10 @@ PageManager::~PageManager() {
     delete mainwindowSmall;
     delete listset;
     delete listsetSmall;
+}
+
+void PageManager::handleFaqStopReading() {
+    faq->stopReadingAndReset();
 }
 
 void PageManager::switchToPage(int pageIndex) {
