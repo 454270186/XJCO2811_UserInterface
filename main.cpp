@@ -1,11 +1,12 @@
+#include "share.h"
+#include "ui_share.h"
 #include <QApplication>
-#include "pagemanager.h"
 
-int main(int argc, char** argv) {
-    QApplication app(argc, argv);
+int main(int argc, char *argv[]) {
+    QApplication a(argc, argv);
 
-    PageManager pagemanager;
-    pagemanager.show();
+    share testShare;
+    testShare.show();
 
-    app.exec();
+    return a.exec();
 }
