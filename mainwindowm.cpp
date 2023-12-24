@@ -13,10 +13,7 @@
 #include "share.h"
 #include "btnconvert.h"
 #include "listset.h"
-<<<<<<< HEAD
 #include "mainwindowm.h"
-=======
->>>>>>> main
 #include "ui_mainwindowm.h"
 
 // MainWindow constructor initializes the main window and its components.
