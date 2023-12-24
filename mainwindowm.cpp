@@ -249,7 +249,6 @@ void mainwindowm::handleMediaStatusChanged(QMediaPlayer::MediaStatus status) {
     if (status == QMediaPlayer::LoadedMedia) {
         // Media has loaded successfully, start playback
         std::cout << "play video: " << commonResrc->currentVideoIndex_ << std::endl;
-        //        disconnect(mediaPlayer, &QMediaPlayer::mediaStatusChanged, this, &MainWindow::handleMediaStatusChanged);
         commonResrc->mediaPlayer_->play();
         isVideoPlaying = true;
         ui->video->show();
@@ -283,6 +282,8 @@ void mainwindowm::setMediaAndPlay() {
         commonResrc->mediaPlayer_->setMedia(QUrl::fromLocalFile(QFileInfo(videoPath).absoluteFilePath()));
 
         // Set up a signal-slot connection for media status changed
+        std::cout << "mainwindowm connect handlemediastatuschange" << std::endl;
+
         connect(commonResrc->mediaPlayer_, &QMediaPlayer::mediaStatusChanged, this,
                 &mainwindowm::handleMediaStatusChanged);
     }
@@ -408,6 +409,8 @@ void mainwindowm::onButtonClicked() {
         // Find the index of the video path in the list and handle the video selection
         int index = commonResrc->videoPaths_.indexOf(videoPath);
         if (index != -1) {
+            disconnect(commonResrc->mediaPlayer_, &QMediaPlayer::mediaStatusChanged, this,
+                       &mainwindowm::handleMediaStatusChanged);
             handleVideoSelection(commonResrc->videoPaths_, index);
         }
         ui->picturelist->hide();

@@ -12,6 +12,7 @@
 #include <QVideoWidget>
 #include <QWidget>
 
+#include <iostream>
 #include <vector>
 
 #include "mainwindowresource.h"
@@ -37,6 +38,15 @@ public:
 
     void RefreshList();
     void RenderTheme();
+
+    void DisconnectMediaplayerEvent() {
+        disconnect(commonResrc->mediaPlayer_, &QMediaPlayer::mediaStatusChanged, this,
+                   &MainWindow::handleMediaStatusChanged);
+    }
+    void ConnectMediaplayerEvent() {
+        connect(commonResrc->mediaPlayer_, &QMediaPlayer::mediaStatusChanged, this,
+                &MainWindow::handleMediaStatusChanged);
+    }
 
 signals:
     void switchPage(int pageIndex);

@@ -10,6 +10,7 @@
 #include <QVBoxLayout>
 #include "btnconvert.h"
 #include "listset.h"
+#include "mainwindowm.h"
 #include "ui_mainwindow.h"
 
 #include <iostream>
@@ -246,7 +247,6 @@ void MainWindow::handleMediaStatusChanged(QMediaPlayer::MediaStatus status) {
     if (status == QMediaPlayer::LoadedMedia) {
         // Media has loaded successfully, start playback
         std::cout << "play video: " << commonResrc->currentVideoIndex_ << std::endl;
-        //        disconnect(mediaPlayer, &QMediaPlayer::mediaStatusChanged, this, &MainWindow::handleMediaStatusChanged);
         commonResrc->mediaPlayer_->play();
         isVideoPlaying = true;
         ui->video->show();
@@ -407,6 +407,8 @@ void MainWindow::onButtonClicked() {
         // Find the index of the video path in the list and handle the video selection
         int index = commonResrc->videoPaths_.indexOf(videoPath);
         if (index != -1) {
+            disconnect(commonResrc->mediaPlayer_, &QMediaPlayer::mediaStatusChanged, this,
+                       &MainWindow::handleMediaStatusChanged);
             handleVideoSelection(commonResrc->videoPaths_, index);
         }
         ui->picturelist->hide();
