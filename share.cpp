@@ -25,13 +25,13 @@ share::share(QWidget* parent) : QMainWindow(parent), ui(new Ui::share) {
     //    setPicture(ui->picturefive, "five.jpg");
     //    setPicture(ui->picturesix, "six.jpg");
 
-    connect(ui->shareone, &QPushButton::clicked, this, &share::on_shareone_clicked);
-    connect(ui->sharetwo, &QPushButton::clicked, this, &share::on_sharetwo_clicked);
-    connect(ui->sharethree, &QPushButton::clicked, this, &share::on_sharethree_clicked);
-    connect(ui->sharefour, &QPushButton::clicked, this, &share::on_sharefour_clicked);
-    connect(ui->sharefive, &QPushButton::clicked, this, &share::on_sharefive_clicked);
-    connect(ui->sharesix, &QPushButton::clicked, this, &share::on_sharesix_clicked);
-    connect(ui->exit, &QPushButton::clicked, this, &share::on_exit_clicked);
+    connect(ui->shareone, &QPushButton::clicked, this, &share::onShareOneClicked);
+    connect(ui->sharetwo, &QPushButton::clicked, this, &share::onShareTwoClicked);
+    connect(ui->sharethree, &QPushButton::clicked, this, &share::onShareThreeClicked);
+    connect(ui->sharefour, &QPushButton::clicked, this, &share::onShareFourClicked);
+    connect(ui->sharefive, &QPushButton::clicked, this, &share::onShareFiveClicked);
+    connect(ui->sharesix, &QPushButton::clicked, this, &share::onShareSixClicked);
+    connect(ui->exit, &QPushButton::clicked, this, &share::onExitClicked);
 }
 
 share::~share() {
@@ -39,8 +39,14 @@ share::~share() {
 }
 
 void share::setPicture(QLabel* label, const QString& imageName) {
-    // 使用绝对路径
-    QString imagePath = "D:/OneDrive - University of Leeds/Documents/XJCO2811_UserInterface/picture/" + imageName;
+    // 获取应用程序的目录
+    QString appDirPath = QCoreApplication::applicationDirPath();
+
+    // 构建相对路径
+    QString relativePath = "../../XJCO2811_UserInterface/picture/" + imageName;
+
+    // 使用相对路径和应用程序的目录构建绝对路径
+    QString imagePath = QDir(appDirPath).filePath(relativePath);
 
     // 加载图片
     QImage image(imagePath);
@@ -58,36 +64,54 @@ void share::setPicture(QLabel* label, const QString& imageName) {
     }
 }
 
-void share::on_shareone_clicked() {
+void share::onShareOneClicked() {
     // 显示分享成功的弹窗
-    QMessageBox::information(this, "分享成功", "您的分享已成功!");
+    QMessageBox::information(this, "分享失败", "赵老师觉得你太菜了!");
+
+    // 添加事件循环，确保消息框的事件被处理
+    QCoreApplication::processEvents();
 }
 
-void share::on_sharetwo_clicked() {
+void share::onShareTwoClicked() {
     // 显示分享成功的弹窗
-    QMessageBox::information(this, "分享成功", "您的分享已成功!");
+    QMessageBox::information(this, "分享失败", "因为子豪把你拉黑了!");
+
+    // 添加事件循环，确保消息框的事件被处理
+    QCoreApplication::processEvents();
 }
 
-void share::on_sharethree_clicked() {
+void share::onShareThreeClicked() {
     // 显示分享成功的弹窗
-    QMessageBox::information(this, "分享成功", "您的分享已成功!");
+    QMessageBox::information(this, "分享成功", "大飞老师觉得你做得很好!");
+
+    // 添加事件循环，确保消息框的事件被处理
+    QCoreApplication::processEvents();
 }
 
-void share::on_sharefour_clicked() {
+void share::onShareFourClicked() {
     // 显示分享成功的弹窗
-    QMessageBox::information(this, "分享成功", "您的分享已成功!");
+    QMessageBox::information(this, "分享成功", "德克王决定用你的分享打胶!");
+
+    // 添加事件循环，确保消息框的事件被处理
+    QCoreApplication::processEvents();
 }
 
-void share::on_sharefive_clicked() {
+void share::onShareFiveClicked() {
     // 显示分享成功的弹窗
-    QMessageBox::information(this, "分享成功", "您的分享已成功!");
+    QMessageBox::information(this, "分享成功", "hy觉得你做得很好!");
+
+    // 添加事件循环，确保消息框的事件被处理
+    QCoreApplication::processEvents();
 }
 
-void share::on_sharesix_clicked() {
+void share::onShareSixClicked() {
     // 显示分享成功的弹窗
-    QMessageBox::information(this, "分享成功", "您的分享已成功!");
+    QMessageBox::information(this, "分享失败", "bi666正在跟男朋友过圣诞没空!");
+
+    // 添加事件循环，确保消息框的事件被处理
+    QCoreApplication::processEvents();
 }
 
-void share::on_exit_clicked() {
+void share::onExitClicked() {
     this->close();
 }
