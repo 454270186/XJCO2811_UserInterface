@@ -2,8 +2,8 @@
 #include <iostream>
 #include "pagemanager.h"
 
-int main(int argc, char** argv) {
-    QApplication app(argc, argv);
+int main(int argc, char *argv[]) {
+    QApplication a(argc, argv);
 
     std::cout << "\n\n\033[1;32mBuild Successfully\033[0m\n";
     std::cout << "\n"
@@ -19,5 +19,5 @@ int main(int argc, char** argv) {
     PageManager pagemanager;
     pagemanager.show();
 
-    app.exec();
+    return a.exec();
 }

@@ -16,19 +16,19 @@ public:
     ~share();
 
 private slots:
-    void on_shareone_clicked();
+    void onShareOneClicked();
 
-    void on_sharetwo_clicked();
+    void onShareTwoClicked();
 
-    void on_sharethree_clicked();
+    void onShareThreeClicked();
 
-    void on_sharefour_clicked();
+    void onShareFourClicked();
 
-    void on_sharefive_clicked();
+    void onShareFiveClicked();
 
-    void on_sharesix_clicked();
+    void onShareSixClicked();
 
-    void on_exit_clicked();
+    void onExitClicked();
 
 private:
     void setPicture(QLabel *label, const QString &imageName);
