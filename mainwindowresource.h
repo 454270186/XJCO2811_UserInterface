@@ -16,6 +16,7 @@ public:
 
     QMediaPlayer* mediaPlayer_;
     int currentVideoIndex_{0};
+    int currentListButtonIndex_{0};
     FileUtil* fileUtil_;
     std::vector<ListInfo> listinfo_;
     QStringList videoPaths_;

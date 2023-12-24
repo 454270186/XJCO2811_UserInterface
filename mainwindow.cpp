@@ -133,8 +133,10 @@ void MainWindow::renderBtnList(QHBoxLayout* btnLayout) {
         btnLayout->addWidget(newButton);
 
         // connect onClick hook
-        connect(newButton, &QPushButton::clicked,
-                [this, i] { parseFolder(commonResrc->listinfo_[i].videoDirPath.c_str()); });
+        connect(newButton, &QPushButton::clicked, [this, i] {
+            commonResrc->currentListButtonIndex_ = i;
+            parseFolder(commonResrc->listinfo_[i].videoDirPath.c_str());
+        });
     }
 }
 
@@ -526,5 +528,12 @@ void MainWindow::RenderTheme() {
     } else {
         std::cout << "mainwindow: picturelist is not open" << std::endl;
         ui->picturelist->setVisible(false);
+
+        std::cout << "play video: " << commonResrc->currentVideoIndex_ << std::endl;
+        commonResrc->mediaPlayer_->play();
+        ui->video->show();
     }
+
+    // render thumbnails
+    parseFolder(commonResrc->listinfo_[commonResrc->currentListButtonIndex_].videoDirPath.c_str());
 }
