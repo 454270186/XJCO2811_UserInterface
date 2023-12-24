@@ -1,10 +1,10 @@
 QMainWindow {
-    background-color: rgb(10, 25, 47); /* 深蓝色背景 */
+    background-color: rgb(10, 25, 47);
     font: 9pt "Arial";
 }
 
 QWidget#groupBox_left {
-    background-color: rgb(28, 49, 84); /* 浅一点的深蓝色背景 */
+    background-color: rgb(28, 49, 84);
     border: none;
 }
 
@@ -65,7 +65,7 @@ QMessageBox QLabel {
 }
 
 QMessageBox QPushButton {
-    background-color: rgb(28, 49, 84); /* 浅一点的深蓝色背景 */
+    background-color: rgb(28, 49, 84);
     color: white;
 }
 
@@ -73,12 +73,12 @@ QPushButton#Delete, QPushButton#submit {
     color: white;
     padding: 10px;
     border: 1px solid white;
-    background-color: rgb(28, 49, 84); /* 浅一点的深蓝色背景 */
+    background-color: rgb(28, 49, 84);
     border-radius: 20px;
 }
 
 QPushButton#Delete:hover, QPushButton#submit:hover {
-    background-color: #1c3154; /* 暗深蓝色 */
+    background-color: #1c3154;
     border-color: #555;
     border-radius: 20px;
 }
@@ -92,23 +92,23 @@ QPushButton:hover {
 }
 
 QLabel {
-    color: white; /* 白色文本 */
+    color: white;
 }
 
 QScrollArea#scrollArea {
-    background-color: rgb(28, 49, 84); /* 浅一点的深蓝色背景 */
+    background-color: rgb(28, 49, 84);
     border: 1px solid white;
     border-radius: 20px;
 }
 
 QScrollArea#scrollArea::vertical-scrollbar, QScrollArea#scrollArea::horizontal-scrollbar {
-    background-color: #2a3958; /* 深蓝色 */
+    background-color: #2a3958;
     width: 10px;
     height: 10px;
 }
 
 QScrollArea#scrollArea::vertical-scrollbar-handle, QScrollArea#scrollArea::horizontal-scrollbar-handle {
-    background-color: #506790; /* 浅深蓝色 */
+    background-color: #506790;
     border-radius: 19px;
 }
 
