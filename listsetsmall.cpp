@@ -67,6 +67,8 @@ void ListSetSmall::renderList() {
         listLayout->addWidget(newButton);
 
         connect(newButton, &QPushButton::clicked, [this, newButton] {
+            commonResrc->isListButtonClicked_ = true;
+
             ui->groupBox_form->setVisible(true);
             ui->placeholderWidget->setVisible(false);
             ui->Delete->setVisible(true);
@@ -145,6 +147,8 @@ int ListSetSmall::on_addList_clicked() {
         commonResrc->hasUnfinishedNewList_ = true;
 
         connect(newButton, &QPushButton::clicked, [this, newButton] {
+            commonResrc->isListButtonClicked_ = true;
+
             ui->groupBox_form->setVisible(true);
             ui->placeholderWidget->setVisible(false);
             ui->Delete->setVisible(false);
@@ -195,6 +199,8 @@ void ListSetSmall::onSubmitClicked() {
             if (button) {
                 button->setText(listName.c_str());
                 connect(button, &QPushButton::clicked, [this, listName, videoDirPath] {
+                    commonResrc->isListButtonClicked_ = true;
+
                     ui->editName->setText(listName.c_str());
                     ui->editPath->setText(videoDirPath.c_str());
                     isSubmitEnabled = false;
@@ -235,6 +241,8 @@ void ListSetSmall::onSubmitClicked() {
 
             // Connect new button and update currentBtnIndex
             connect(newButton, &QPushButton::clicked, [this, listName, videoDirPath, newButton] {
+                commonResrc->isListButtonClicked_ = true;
+
                 ui->editName->setText(listName.c_str());
                 ui->editPath->setText(videoDirPath.c_str());
                 ui->Delete->setVisible(true);
@@ -424,5 +432,11 @@ void ListSetSmall::RenderTheme() {
         labelPath->setText("List Path");
         ui->Delete->setText("Delete");
         ui->submit->setText(isSubmitEnabled ? "Submit" : "Edit");
+    }
+
+    if (commonResrc->isListButtonClicked_) {
+        ui->groupBox_form->setVisible(true);
+    } else {
+        ui->groupBox_form->setVisible(false);
     }
 }
