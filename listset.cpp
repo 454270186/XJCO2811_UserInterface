@@ -116,6 +116,7 @@ void ListSet::keyPressEvent(QKeyEvent* event) {
             if (ui->addList->isEnabled()) {
                 on_addList_clicked();
             }
+            break;
         case Qt::Key_F2:
             switchToPageFaq();
             break;
