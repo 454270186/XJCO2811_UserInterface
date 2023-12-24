@@ -1,12 +1,12 @@
 #include "share.h"
-#include "ui_share.h"
-#include <QPixmap>
+#include <QCoreApplication>
 #include <QDebug>
 #include <QDir>
-#include <QCoreApplication>
 #include <QMessageBox>
+#include <QPixmap>
+#include "ui_share.h"
 
-share::share(QWidget *parent) : QMainWindow(parent), ui(new Ui::share) {
+share::share(QWidget* parent) : QMainWindow(parent), ui(new Ui::share) {
     ui->setupUi(this);
 
     // 在构造函数中确保 QLabel 控件存在
@@ -18,12 +18,12 @@ share::share(QWidget *parent) : QMainWindow(parent), ui(new Ui::share) {
     ui->picturesix->show();
 
     // 构建正确的图片路径并设置到 QLabel
-    setPicture(ui->pictureone, "one.jpg");
-    setPicture(ui->picturetwo, "two.jpg");
-    setPicture(ui->picturethree, "three.jpg");
-    setPicture(ui->picturefour, "four.jpg");
-    setPicture(ui->picturefive, "five.jpg");
-    setPicture(ui->picturesix, "six.jpg");
+    //    setPicture(ui->pictureone, "one.jpg");
+    //    setPicture(ui->picturetwo, "two.jpg");
+    //    setPicture(ui->picturethree, "three.jpg");
+    //    setPicture(ui->picturefour, "four.jpg");
+    //    setPicture(ui->picturefive, "five.jpg");
+    //    setPicture(ui->picturesix, "six.jpg");
 
     connect(ui->shareone, &QPushButton::clicked, this, &share::on_shareone_clicked);
     connect(ui->sharetwo, &QPushButton::clicked, this, &share::on_sharetwo_clicked);
@@ -34,12 +34,11 @@ share::share(QWidget *parent) : QMainWindow(parent), ui(new Ui::share) {
     connect(ui->exit, &QPushButton::clicked, this, &share::on_exit_clicked);
 }
 
-
 share::~share() {
     delete ui;
 }
 
-void share::setPicture(QLabel *label, const QString &imageName) {
+void share::setPicture(QLabel* label, const QString& imageName) {
     // 使用绝对路径
     QString imagePath = "D:/OneDrive - University of Leeds/Documents/XJCO2811_UserInterface/picture/" + imageName;
 
@@ -59,51 +58,36 @@ void share::setPicture(QLabel *label, const QString &imageName) {
     }
 }
 
-void share::on_shareone_clicked()
-{
+void share::on_shareone_clicked() {
     // 显示分享成功的弹窗
     QMessageBox::information(this, "分享成功", "您的分享已成功!");
 }
 
-
-
-void share::on_sharetwo_clicked()
-{
+void share::on_sharetwo_clicked() {
     // 显示分享成功的弹窗
     QMessageBox::information(this, "分享成功", "您的分享已成功!");
 }
 
-
-void share::on_sharethree_clicked()
-{
+void share::on_sharethree_clicked() {
     // 显示分享成功的弹窗
     QMessageBox::information(this, "分享成功", "您的分享已成功!");
 }
 
-
-void share::on_sharefour_clicked()
-{
+void share::on_sharefour_clicked() {
     // 显示分享成功的弹窗
     QMessageBox::information(this, "分享成功", "您的分享已成功!");
 }
 
-
-void share::on_sharefive_clicked()
-{
+void share::on_sharefive_clicked() {
     // 显示分享成功的弹窗
     QMessageBox::information(this, "分享成功", "您的分享已成功!");
 }
 
-
-void share::on_sharesix_clicked()
-{
+void share::on_sharesix_clicked() {
     // 显示分享成功的弹窗
     QMessageBox::information(this, "分享成功", "您的分享已成功!");
 }
 
-
-void share::on_exit_clicked()
-{
+void share::on_exit_clicked() {
     this->close();
 }
-

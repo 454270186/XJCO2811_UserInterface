@@ -10,7 +10,7 @@
 #include <QVBoxLayout>
 #include "btnconvert.h"
 #include "listset.h"
-#include "mainwindowm.h"
+#include "share.h"
 #include "ui_mainwindow.h"
 
 #include <iostream>
@@ -114,6 +114,7 @@ MainWindow::MainWindow(QWidget* parent, MainWindowResource* cr)
     connect(ui->pause, &QPushButton::clicked, this, &MainWindow::onPauseClicked);
     connect(ui->fullScreen, &QPushButton::clicked, this, &MainWindow::toggleFullScreen);
     connect(ui->voicecontrolstrip, &QSlider::valueChanged, this, &MainWindow::adjustVolume);
+    connect(ui->screenshot, &QPushButton::clicked, this, &MainWindow::onScreenShotClicked);
 }
 
 // Destructor
@@ -529,8 +530,8 @@ void MainWindow::RenderTheme() {
     parseFolder(commonResrc->listinfo_[commonResrc->currentListButtonIndex_].videoDirPath.c_str());
 }
 
-void MainWindow::onScreenShotClicked()
-{
-
+void MainWindow::onScreenShotClicked() {
+    share* s = new share(this);
+    std::cout << "share" << std::endl;
+    s->show();
 }
-
