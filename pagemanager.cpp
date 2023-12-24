@@ -14,8 +14,7 @@ PageManager::PageManager(QWidget* parent) : QMainWindow{parent} {
     listsetResrc = new ListSetResource();
     listset = new ListSet(this, listsetResrc);
     listsetSmall = new ListSetSmall(this, listsetResrc);
-
-    faq = new Faq(this);
+    faq = new Faq(this, listsetResrc);
 
     stackPage->addWidget(mainwindow);
     stackPage->addWidget(listset);
@@ -45,4 +44,65 @@ PageManager::~PageManager() {
     delete mainwindowSmall;
     delete listset;
     delete listsetSmall;
+}
+
+void PageManager::switchToPage(int pageIndex) {
+    if (pageIndex == PageIndex::LISTSET || pageIndex == PageIndex::LISTSET_SMALL) {
+        if (pageIndex == PageIndex::LISTSET) {
+            listset->RenderTheme();
+            mainwindow->Pause();
+        } else {
+            listsetSmall->RenderTheme();
+            mainwindowSmall->Pause();
+        }
+    } else if (pageIndex == PageIndex::MAINWINDOW || pageIndex == PageIndex::MAINWINDOW_SMALL) {
+        // refresh video list before page switch
+        if (pageIndex == PageIndex::MAINWINDOW) {
+            commonResrc->mediaPlayer_->setVideoOutput(mainwindow->getVideoOutput());
+            mainwindow->RefreshList();
+            mainwindow->Play();
+        } else {
+            commonResrc->mediaPlayer_->setVideoOutput(mainwindowSmall->getVideoOutput());
+            mainwindowSmall->RefreshList();
+            mainwindowSmall->Play();
+        }
+    } else if (pageIndex == PageIndex::FAQ) {
+        faq->RenderTheme();
+    }
+
+    std::cout << "page index: " << pageIndex << std::endl;
+    stackPage->setCurrentIndex(pageIndex);
+}
+
+void PageManager::changeWindows(const QSize& size) {
+    QSize thresholdSize(600, 200000);
+
+    if (size.width() >= thresholdSize.width()) {
+        // from small to big
+        if (stackPage->currentIndex() == PageIndex::MAINWINDOW_SMALL ||
+            stackPage->currentIndex() == PageIndex::LISTSET_SMALL) {
+            if (stackPage->currentIndex() == PageIndex::MAINWINDOW_SMALL) {
+                commonResrc->mediaPlayer_->setVideoOutput(mainwindow->getVideoOutput());
+                mainwindow->RefreshList();
+                stackPage->setCurrentIndex(PageIndex::MAINWINDOW);
+            } else if (stackPage->currentIndex() == PageIndex::LISTSET_SMALL) {
+                listset->RefreshList();
+                listset->RenderTheme();
+                stackPage->setCurrentIndex(PageIndex::LISTSET);
+            }
+        }
+    } else {
+        // from big to small
+        if (stackPage->currentIndex() == PageIndex::MAINWINDOW || stackPage->currentIndex() == PageIndex::LISTSET) {
+            if (stackPage->currentIndex() == PageIndex::MAINWINDOW) {
+                commonResrc->mediaPlayer_->setVideoOutput(mainwindowSmall->getVideoOutput());
+                mainwindowSmall->RefreshList();
+                stackPage->setCurrentIndex(PageIndex::MAINWINDOW_SMALL);
+            } else if (stackPage->currentIndex() == PageIndex::LISTSET) {
+                listsetSmall->RefreshList();
+                listsetSmall->RenderTheme();
+                stackPage->setCurrentIndex(PageIndex::LISTSET_SMALL);
+            }
+        }
+    }
 }

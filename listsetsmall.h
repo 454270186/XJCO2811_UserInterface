@@ -32,6 +32,7 @@ public:
     ~ListSetSmall();
 
     void RefreshList();
+    void RenderTheme();
 
 signals:
     void switchPage(int pageIndex);
@@ -59,7 +60,6 @@ private:
     QLabel* labelName;
     QLabel* labelPath;
     ListSetResource* commonResrc;
-    bool isChineseLanguage;
     std::map<int, QString> errorMessages;
     void loadStyleSheet(const QString& sheetName);
 };
