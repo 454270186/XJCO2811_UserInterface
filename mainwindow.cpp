@@ -1,4 +1,5 @@
-#include "mainwindow.h"
+#include <iostream>
+
 #include <QCoreApplication>
 #include <QDebug>
 #include <QDir>
@@ -8,12 +9,12 @@
 #include <QProcess>
 #include <QResizeEvent>
 #include <QVBoxLayout>
+
 #include "btnconvert.h"
 #include "listset.h"
 #include "share.h"
 #include "ui_mainwindow.h"
-
-#include <iostream>
+#include "mainwindow.h"
 
 // MainWindow constructor initializes the main window and its components.
 MainWindow::MainWindow(QWidget* parent, MainWindowResource* cr)
@@ -72,10 +73,6 @@ MainWindow::MainWindow(QWidget* parent, MainWindowResource* cr)
     // Create a QHBoxLayout for the buttons
     listsBtnsLayout = new QHBoxLayout(listsContainer);
 
-    // Render all lists
-    //    fileUtil_ = new FileUtil("../XJCO2811_UserInterface/videolist_data.xml");
-    //    listInfos_ = fileUtil_->GetAllListsInfo();
-
     // Clear existing buttons
     QLayoutItem* child;
     while ((child = listsBtnsLayout->takeAt(0)) != nullptr) {
@@ -83,18 +80,6 @@ MainWindow::MainWindow(QWidget* parent, MainWindowResource* cr)
         delete child;
     }
 
-    // Create new buttons based on updated listInfos_
-    //    for (size_t i = 0; i < listInfos_.size(); i++) {
-    //        QPushButton* newButton = new QPushButton();
-    //        newButton->setText(listInfos_[i].name.c_str());
-    //        newButton->setCheckable(true);
-    //        newButton->setAutoExclusive(true);
-
-    //        listsLayout->addWidget(newButton);
-
-    //        // connect onClick hook
-    //        connect(newButton, &QPushButton::clicked, [this, i] { parseFolder(listInfos_[i].videoDirPath.c_str()); });
-    //    }
     renderBtnList(listsBtnsLayout);
 
     // Set the container QWidget as the widget for the QScrollArea
@@ -103,10 +88,11 @@ MainWindow::MainWindow(QWidget* parent, MainWindowResource* cr)
     // Set the video output of the media player to the video widget
     commonResrc->mediaPlayer_->setVideoOutput(videoWidget);
 
-    // Connect signals and slots for window switch
-    connect(ui->addListBtn, &QPushButton::clicked, this, &MainWindow::switchToPage);
+    volumeControlTimer = new QTimer(this);
+    volumeControlTimer->setSingleShot(true);
 
-    // Connect signals and slots for media playback control
+    connect(volumeControlTimer, &QTimer::timeout, this, &MainWindow::hideVolumeControl);
+    connect(ui->addListBtn, &QPushButton::clicked, this, &MainWindow::switchToPage);
     connect(commonResrc->mediaPlayer_, &QMediaPlayer::positionChanged, this, &MainWindow::updateProgressBar);
     connect(ui->progressbar, &QSlider::sliderMoved, this, &MainWindow::onProgressbarSliderMoved);
     connect(ui->forward, &QPushButton::clicked, this, &MainWindow::onForwardClicked);
@@ -117,7 +103,6 @@ MainWindow::MainWindow(QWidget* parent, MainWindowResource* cr)
     connect(ui->screenshot, &QPushButton::clicked, this, &MainWindow::onScreenShotClicked);
 }
 
-// Destructor
 MainWindow::~MainWindow() {
     delete ui;
 }
@@ -145,6 +130,11 @@ void MainWindow::renderBtnList(QHBoxLayout* btnLayout) {
 // keyPressEvent() handles various keyboard events within the window.
 // It performs specific actions based on the key pressed:
 // - Qt::Key_Escape: Triggers switchToPage() if the addListBtn button is enabled.
+// - Qt::Key_P: Toggles playback between pause and play if the pause button is enabled.
+// - Qt::Key_A: Triggers onRetreatClicked() to retreat in the media if the retreat button is enabled.
+// - Qt::Key_D: Triggers onForwardClicked() to advance in the media if the forward button is enabled.
+// - Qt::Key_W: Increases the volume if the voicecontrolstrip is enabled.
+// - Qt::Key_S: Decreases the volume if the voicecontrolstrip is enabled.
 // Other keys are handled by the default QMainWindow keyPressEvent handler.
 void MainWindow::keyPressEvent(QKeyEvent* event) {
     switch (event->key()) {
@@ -153,9 +143,75 @@ void MainWindow::keyPressEvent(QKeyEvent* event) {
                 switchToPage();
             }
             break;
+        case Qt::Key_P:
+            if (ui->pause->isEnabled()) {
+                onPauseClicked();
+            }
+            event->accept();
+            break;
+        case Qt::Key_A:
+            if (ui->retreat->isEnabled()){
+                onRetreatClicked();
+            }
+            break;
+        case Qt::Key_D:
+            if (ui->forward->isEnabled()) {
+                onForwardClicked();
+            }
+            break;
+        case Qt::Key_W:
+            if (ui->voicecontrolstrip->isEnabled()) {
+                increaseVolume();
+            }
+            break;
+        case Qt::Key_S:
+            if (ui->voicecontrolstrip->isEnabled()) {
+                decreaseVolume();
+            }
+            break;
         default:
             QMainWindow::keyPressEvent(event);
     }
+}
+
+// hideVolumeControl() hides the volume control slider.
+// This function is called after a delay to auto-hide the volume slider.
+void MainWindow::hideVolumeControl() {
+    ui->voicecontrolstrip->hide();
+}
+
+// increaseVolume() increases media player's volume by 10 units up to a maximum of 100.
+// It performs the following actions:
+// - Retrieves the current volume of the media player.
+// - Increases the volume by 10 units, ensuring it does not exceed 100.
+// - Sets the new volume to the media player.
+// - Updates the volume control slider to reflect the new volume.
+// - Shows the volume control slider and starts a timer to hide it after 1 second.
+// This function is typically connected to keyboard shortcut.
+void MainWindow::increaseVolume() {
+    int volume = commonResrc->mediaPlayer_->volume();
+    int newVolume = qMin(volume + 10, 100);
+    commonResrc->mediaPlayer_->setVolume(newVolume);
+    ui->voicecontrolstrip->setValue(newVolume);
+    ui->voicecontrolstrip->show();
+    volumeControlTimer->start(1000);
+}
+
+// decreaseVolume() decreases media player's volume by 10 units down to a minimum of 0.
+// It performs the following actions:
+// - Retrieves the current volume of the media player.
+// - Decreases the volume by 10 units, ensuring it does not go below 0.
+// - Sets the new volume to the media player.
+// - Updates the volume control slider to reflect the new volume.
+// - Shows the volume control slider and starts a timer to hide it after 1 second.
+// This function is typically connected to keyboard shortcut.
+void MainWindow::decreaseVolume() {
+    int volume = commonResrc->mediaPlayer_->volume();
+    int newVolume = qMax(volume - 10, 0);
+    commonResrc->mediaPlayer_->setVolume(newVolume);
+    ui->voicecontrolstrip->setValue(newVolume);
+    ui->voicecontrolstrip->show();
+    volumeControlTimer->start(1000);
 }
 
 // onPauseClicked() toggles the play/pause state of the media player.
