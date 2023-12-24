@@ -18,12 +18,12 @@ share::share(QWidget* parent) : QMainWindow(parent), ui(new Ui::share) {
     ui->picturesix->show();
 
     // 构建正确的图片路径并设置到 QLabel
-    //    setPicture(ui->pictureone, "one.jpg");
-    //    setPicture(ui->picturetwo, "two.jpg");
-    //    setPicture(ui->picturethree, "three.jpg");
-    //    setPicture(ui->picturefour, "four.jpg");
-    //    setPicture(ui->picturefive, "five.jpg");
-    //    setPicture(ui->picturesix, "six.jpg");
+    setPicture(ui->pictureone, "one.jpg");
+    setPicture(ui->picturetwo, "two.jpg");
+    setPicture(ui->picturethree, "three.jpg");
+    setPicture(ui->picturefour, "four.jpg");
+    setPicture(ui->picturefive, "five.jpg");
+    setPicture(ui->picturesix, "six.jpg");
 
     connect(ui->shareone, &QPushButton::clicked, this, &share::onShareOneClicked);
     connect(ui->sharetwo, &QPushButton::clicked, this, &share::onShareTwoClicked);
@@ -39,14 +39,11 @@ share::~share() {
 }
 
 void share::setPicture(QLabel* label, const QString& imageName) {
-    // 获取应用程序的目录
-    QString appDirPath = QCoreApplication::applicationDirPath();
-
     // 构建相对路径
-    QString relativePath = "../../XJCO2811_UserInterface/picture/" + imageName;
+    QString relativePath = "../XJCO2811_UserInterface/picture/" + imageName;
 
     // 使用相对路径和应用程序的目录构建绝对路径
-    QString imagePath = QDir(appDirPath).filePath(relativePath);
+    QString imagePath = relativePath;
 
     // 加载图片
     QImage image(imagePath);
