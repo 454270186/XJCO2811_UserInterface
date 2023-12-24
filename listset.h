@@ -1,6 +1,8 @@
 #ifndef LISTSET_H
 #define LISTSET_H
 
+#include <map>
+
 #include <QKeyEvent>
 #include <QLabel>
 #include <QListWidgetItem>
@@ -9,8 +11,6 @@
 #include <QString>
 #include <QVBoxLayout>
 #include <QWidget>
-
-#include <map>
 
 #include "listsetresource.h"
 

@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include <QCoreApplication>
 #include <QDebug>
 #include <QDir>
@@ -12,8 +14,6 @@
 #include "listset.h"
 #include "mainwindowm.h"
 #include "ui_mainwindowm.h"
-
-#include <iostream>
 
 // MainWindow constructor initializes the main window and its components.
 mainwindowm::mainwindowm(QWidget* parent, MainWindowResource* cr)
@@ -53,14 +53,10 @@ mainwindowm::mainwindowm(QWidget* parent, MainWindowResource* cr)
     QVBoxLayout* videoLayout = new QVBoxLayout(videoplayer);
     videoLayout->addWidget(videoWidget);
 
-    // 设置初始音量为 50
     commonResrc->mediaPlayer_->setVolume(50);
 
-    // 将 QSlider 初始值设置为 50
     ui->voicecontrolstrip->setValue(50);
-
     ui->videoBox->installEventFilter(this);
-
     ui->voicecontrolstrip->hide();
 
     isVideoPlaying = false;

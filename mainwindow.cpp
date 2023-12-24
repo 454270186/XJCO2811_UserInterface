@@ -1,4 +1,5 @@
-#include "mainwindow.h"
+#include <iostream>
+
 #include <QCoreApplication>
 #include <QDebug>
 #include <QDir>
@@ -8,12 +9,12 @@
 #include <QProcess>
 #include <QResizeEvent>
 #include <QVBoxLayout>
+
 #include "btnconvert.h"
 #include "listset.h"
 #include "share.h"
 #include "ui_mainwindow.h"
-
-#include <iostream>
+#include "mainwindow.h"
 
 // MainWindow constructor initializes the main window and its components.
 MainWindow::MainWindow(QWidget* parent, MainWindowResource* cr)
