@@ -133,8 +133,10 @@ void MainWindow::renderBtnList(QHBoxLayout* btnLayout) {
         btnLayout->addWidget(newButton);
 
         // connect onClick hook
-        connect(newButton, &QPushButton::clicked,
-                [this, i] { parseFolder(commonResrc->listinfo_[i].videoDirPath.c_str()); });
+        connect(newButton, &QPushButton::clicked, [this, i] {
+            commonResrc->currentListButtonIndex_ = i;
+            parseFolder(commonResrc->listinfo_[i].videoDirPath.c_str());
+        });
     }
 }
 
@@ -142,7 +144,7 @@ void MainWindow::renderBtnList(QHBoxLayout* btnLayout) {
 // It performs specific actions based on the key pressed:
 // - Qt::Key_Escape: Triggers switchToPage() if the addListBtn button is enabled.
 // Other keys are handled by the default QMainWindow keyPressEvent handler.
-void MainWindow::keyPressEvent(QKeyEvent *event) {
+void MainWindow::keyPressEvent(QKeyEvent* event) {
     switch (event->key()) {
         case Qt::Key_Escape:
             if (ui->addListBtn->isEnabled()) {
@@ -397,6 +399,8 @@ void MainWindow::onButtonClicked() {
     // Attempt to cast the sender to BtnConvert
     BtnConvert* button = qobject_cast<BtnConvert*>(sender());
     if (button) {
+        commonResrc->isPictureListOpen_ = false;
+
         // Retrieve the video path from the clicked button
         QString videoPath = button->getVideoPath();
 
@@ -424,6 +428,12 @@ void MainWindow::switchToListset() {
 
 // togglePictureList() toggles the visibility of the picturelist.
 void MainWindow::toggleFullScreen() {
+    if (ui->picturelist->isHidden()) {
+        commonResrc->isPictureListOpen_ = true;
+    } else {
+        commonResrc->isPictureListOpen_ = false;
+    }
+
     ui->picturelist->setHidden(!ui->picturelist->isHidden());
     updateGeometry();  // 强制更新布局
     repaint();         // 强制重绘
@@ -480,17 +490,6 @@ void MainWindow::adjustVolume(int volume) {
 
 // RefreshList() refreshes the videolist and video path
 void MainWindow::RefreshList() {
-    // Assuming ui->lists is now a QScrollArea
-    QScrollArea* listsScrollArea = ui->lists;
-
-    // Create a QWidget to serve as the container for the buttons
-    QWidget* listsContainer = new QWidget(listsScrollArea);
-
-    // Create a QHBoxLayout for the buttons
-    if (listsBtnsLayout == nullptr) {
-        listsBtnsLayout = new QHBoxLayout(listsContainer);
-    }
-
     // Clear existing buttons
     QLayoutItem* child;
     while ((child = listsBtnsLayout->takeAt(0)) != nullptr) {
@@ -507,4 +506,23 @@ void MainWindow::RefreshList() {
         std::cout << commonResrc->listinfo_[i].name << std::endl;
     }
     renderBtnList(listsBtnsLayout);
+}
+
+// RenderTheme() will check all bool flags, and rerender the page when page switch
+// Need to be called Explicitly in PageManager
+void MainWindow::RenderTheme() {
+    if (commonResrc->isPictureListOpen_) {
+        std::cout << "mainwindow: picturelist is open" << std::endl;
+        ui->picturelist->setVisible(true);
+    } else {
+        std::cout << "mainwindow: picturelist is not open" << std::endl;
+        ui->picturelist->setVisible(false);
+
+        std::cout << "play video: " << commonResrc->currentVideoIndex_ << std::endl;
+        commonResrc->mediaPlayer_->play();
+        ui->video->show();
+    }
+
+    // render thumbnails
+    parseFolder(commonResrc->listinfo_[commonResrc->currentListButtonIndex_].videoDirPath.c_str());
 }
