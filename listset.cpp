@@ -47,7 +47,7 @@ ListSet::ListSet(QWidget* parent, ListSetResource* cr) : QMainWindow(parent), ui
     labelName = findChild<QLabel*>("label_name");
     labelPath = findChild<QLabel*>("label_path");
     connect(ui->backward, &QPushButton::clicked, this, &ListSet::switchToPage);
-    connect(ui->qa, &QPushButton::clicked, this, &ListSet::switchToPage1);
+    connect(ui->qa, &QPushButton::clicked, this, &ListSet::switchToPageFaq);
     connect(ui->findPath, &QPushButton::clicked, this, &ListSet::onFindPathClicked);
     connect(ui->language, &QPushButton::clicked, this, &ListSet::toggleLanguage);
 }
@@ -115,7 +115,7 @@ void ListSet::keyPressEvent(QKeyEvent* event) {
                 on_addList_clicked();
             }
         case Qt::Key_F2:
-            switchToPage1();
+            switchToPageFaq();
             break;
         case Qt::Key_CapsLock:
             toggleLanguage();
@@ -154,7 +154,7 @@ int ListSet::on_addList_clicked() {
             isSubmitEnabled = true;
         });
     } else {
-        if (isChineseLanguage) {
+        if (commonResrc->isChineseLanguage_) {
             QMessageBox::warning(this, "警告", "已经存在新列表！");
         } else {
             QMessageBox::warning(this, "Warning", "There is already a new list!");
@@ -185,7 +185,7 @@ void ListSet::onSubmitClicked() {
         int result =
             formHandler.editForm(commonResrc->ListInfo_[commonResrc->currentBtnIndex_].id, listName, videoDirPath);
         if (result == FORMHANDLER_ERROR::SUCCESS) {
-            if (isChineseLanguage) {
+            if (commonResrc->isChineseLanguage_) {
                 QMessageBox::information(this, "完成", "列表修改成功！\n");
             } else {
                 QMessageBox::information(this, "Success", "List edited successfully!\n");
@@ -207,7 +207,7 @@ void ListSet::onSubmitClicked() {
         int result = formHandler.submitForm(listName, videoDirPath);
         if (result == FORMHANDLER_ERROR::SUCCESS) {
             commonResrc->hasUnfinishedNewList_ = false;
-            if (isChineseLanguage) {
+            if (commonResrc->isChineseLanguage_) {
                 QMessageBox::information(this, "完成", "列表添加成功！\n");
             } else {
                 QMessageBox::information(this, "Success", "List added successfully!\n");
@@ -238,7 +238,7 @@ void ListSet::onSubmitClicked() {
                 ui->editName->setText(listName.c_str());
                 ui->editPath->setText(videoDirPath.c_str());
                 ui->Delete->setVisible(true);
-                if (isChineseLanguage) {
+                if (commonResrc->isChineseLanguage_) {
                     ui->submit->setText(QString("编辑"));
                 } else {
                     ui->submit->setText(QString("Edit"));
@@ -265,7 +265,7 @@ void ListSet::onSubmitClicked() {
 // - If the deletion fails (result <= 0), displays an error message.
 void ListSet::onDeleteClicked() {
     if (commonResrc->currentBtnIndex_ < 0 || commonResrc->currentBtnIndex_ >= commonResrc->ListInfo_.size()) {
-        if (isChineseLanguage) {
+        if (commonResrc->isChineseLanguage_) {
             QMessageBox::warning(this, "错误", "未选择列表或列表索引无效");
         } else {
             QMessageBox::warning(this, "Error", "No list selected or invalid list index");
@@ -278,7 +278,7 @@ void ListSet::onDeleteClicked() {
     int result = commonResrc->fileUtil_->DelListByID(listID, &error);
 
     if (result == FORMHANDLER_ERROR::SUCCESS) {
-        if (isChineseLanguage) {
+        if (commonResrc->isChineseLanguage_) {
             QMessageBox::information(this, "完成", "列表删除成功");
         } else {
             QMessageBox::information(this, "Success", "List deleted successfully");
@@ -347,7 +347,7 @@ void ListSet::RefreshList() {
 
 void ListSet::showError(int errorCode) {
     QString errorMsg = errorMessages.count(errorCode) ? errorMessages[errorCode] : errorMessages[0];
-    if (isChineseLanguage) {
+    if (commonResrc->isChineseLanguage_) {
         QMessageBox::warning(this, "错误", errorMsg);
     } else {
         QMessageBox::warning(this, "Error", errorMsg);
@@ -400,12 +400,12 @@ void ListSet::onFindPathClicked() {
 }
 
 void ListSet::toggleLanguage() {
-    isChineseLanguage = !isChineseLanguage;
-    QString sheetName = isChineseLanguage ? "listset_ch.qss" : "listset.qss";
+    commonResrc->isChineseLanguage_ = !commonResrc->isChineseLanguage_;
+    QString sheetName = commonResrc->isChineseLanguage_ ? "listset_ch.qss" : "listset.qss";
     loadStyleSheet(sheetName);
 
     // Switch error messages
-    if (isChineseLanguage) {
+    if (commonResrc->isChineseLanguage_) {
         errorMessages = errorMessagesCN;
         labelName->setText("列表名称");
         labelPath->setText("列表路径");
@@ -434,5 +434,26 @@ void ListSet::loadStyleSheet(const QString& sheetName) {
         this->setStyleSheet(StyleSheet);
     } else {
         qDebug() << "Failed to load stylesheet: " << sheetName;
+    }
+}
+
+// RenderTheme() will check all bool flags, and rerender the page when page switch
+// Need to be called Explicitly in PageManager
+void ListSet::RenderTheme() {
+    // check language and theme
+    if (commonResrc->isChineseLanguage_) {
+        loadStyleSheet("listset_ch.qss");
+        errorMessages = errorMessagesCN;
+        labelName->setText("列表名称");
+        labelPath->setText("列表路径");
+        ui->Delete->setText("删除");
+        ui->submit->setText(isSubmitEnabled ? "提交" : "编辑");
+    } else {
+        loadStyleSheet("listset.qss");
+        errorMessages = errorMessagesEN;
+        labelName->setText("List Name");
+        labelPath->setText("List Path");
+        ui->Delete->setText("Delete");
+        ui->submit->setText(isSubmitEnabled ? "Submit" : "Edit");
     }
 }

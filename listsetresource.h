@@ -12,7 +12,8 @@ public:
     FileUtil* fileUtil_;
     std::vector<ListInfo> ListInfo_;
     int currentBtnIndex_{0};
-    bool hasUnfinishedNewList_ = false;
+    bool hasUnfinishedNewList_{false};
+    bool isChineseLanguage_{false};
 };
 
 #endif  // LISTSETRESOURCE_H

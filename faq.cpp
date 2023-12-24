@@ -7,7 +7,7 @@
 #include "listset.h"
 #include "ui_faq.h"
 
-Faq::Faq(QWidget* parent) : QDialog(parent), ui(new Ui::Faq) {
+Faq::Faq(QWidget* parent, ListSetResource* cr) : QDialog(parent), ui(new Ui::Faq) {
     ui->setupUi(this);
     QFile file1("../XJCO2811_UserInterface/faq.qss");
     QString StyleSheet;
@@ -23,6 +23,9 @@ Faq::Faq(QWidget* parent) : QDialog(parent), ui(new Ui::Faq) {
     } else {
         qDebug() << "Current directory:" << QDir::currentPath();
     }
+
+    // init common resource
+    commonResrc = cr;
 
     connect(ui->backward, &QPushButton::clicked, this, &Faq::switchToPage);
     connect(ui->language, &QPushButton::clicked, this, &Faq::toggleLanguage);
@@ -90,11 +93,11 @@ void Faq::keyPressEvent(QKeyEvent* event) {
 }
 
 void Faq::toggleLanguage() {
-    isChineseLanguage = !isChineseLanguage;
-    QString sheetName = isChineseLanguage ? "faq_ch.qss" : "faq.qss";
+    commonResrc->isChineseLanguage_ = !commonResrc->isChineseLanguage_;
+    QString sheetName = commonResrc->isChineseLanguage_ ? "faq_ch.qss" : "faq.qss";
     loadStyleSheet(sheetName);
 
-    if (isChineseLanguage) {
+    if (commonResrc->isChineseLanguage_) {
         if (translator.load("../XJCO2811_UserInterface/Faq_CN.qm")) {
             qApp->installTranslator(&translator);
         } else {
@@ -121,5 +124,22 @@ void Faq::loadStyleSheet(const QString& sheetName) {
         this->setStyleSheet(StyleSheet);
     } else {
         qDebug() << "Failed to load stylesheet: " << sheetName;
+    }
+}
+
+// RenderTheme() will check all bool flags, and rerender the page when page switch
+// Need to be called Explicitly in PageManager
+void Faq::RenderTheme() {
+    // check language and theme
+    if (commonResrc->isChineseLanguage_) {
+        loadStyleSheet("faq_ch.qss");
+        if (translator.load("../XJCO2811_UserInterface/Faq_CN.qm")) {
+            qApp->installTranslator(&translator);
+        } else {
+            qDebug() << "Failed to load translation file.";
+        }
+    } else {
+        loadStyleSheet("faq.qss");
+        qApp->removeTranslator(&translator);
     }
 }
