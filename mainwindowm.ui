@@ -180,6 +180,9 @@
                  <height>30</height>
                 </size>
                </property>
+               <property name="cursor">
+                <cursorShape>PointingHandCursor</cursorShape>
+               </property>
                <property name="styleSheet">
                 <string notr="true">border: none; /* 移除边框 */
     background-color: transparent; /* 设置背景透明 */
@@ -318,6 +321,9 @@
               <height>16777215</height>
              </size>
             </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
             <property name="styleSheet">
              <string notr="true">border: none; /* 移除边框 */
     background-color: transparent; /* 设置背景透明 */
@@ -350,6 +356,9 @@
               <height>16777215</height>
              </size>
             </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
             <property name="styleSheet">
              <string notr="true">border: none; /* 移除边框 */
     background-color: transparent; /* 设置背景透明 */
@@ -381,6 +390,9 @@
               <height>16777215</height>
              </size>
             </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
             <property name="styleSheet">
              <string notr="true">border: none; /* 移除边框 */
     background-color: transparent; /* 设置背景透明 */
@@ -399,6 +411,9 @@
               <width>40</width>
               <height>16777215</height>
              </size>
+            </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
             </property>
             <property name="styleSheet">
              <string notr="true">border: none; /* 移除边框 */

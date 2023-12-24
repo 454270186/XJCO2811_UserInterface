@@ -1,10 +1,5 @@
 <lists>
     <videolist>
-        <id>1</id>
-        <name>TikTok1</name>
-        <video_path>../XJCO2811_UserInterface/videos/demo</video_path>
-    </videolist>
-    <videolist>
         <id>2</id>
         <name>TikTok2</name>
         <video_path>../XJCO2811_UserInterface/videos/landscape/list3</video_path>

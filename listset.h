@@ -30,6 +30,7 @@ public:
     ~ListSet();
 
     void RefreshList();
+    void RenderTheme();
 
 signals:
     void switchPage(int pageIndex);
@@ -43,22 +44,20 @@ private slots:
     void onSubmitClicked();
     void onDeleteClicked();
     void switchToPage() { emit switchPage(0); }
-    void switchToPage1() { emit switchPage(4); }
+    void switchToPageFaq() { emit switchPage(4); }
     void onFindPathClicked();
 
 private:
     Ui::ListSet* ui;
     QVBoxLayout* listLayout;
+    QLabel* labelName;
+    QLabel* labelPath;
+    ListSetResource* commonResrc;
+    std::map<int, QString> errorMessages;
 
     void renderList();
     void showError(int errorCode);
     void keyPressEvent(QKeyEvent* event);
-
-    QLabel* labelName;
-    QLabel* labelPath;
-    ListSetResource* commonResrc;
-    bool isChineseLanguage;
-    std::map<int, QString> errorMessages;
     void loadStyleSheet(const QString& sheetName);
 };
 
