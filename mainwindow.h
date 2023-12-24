@@ -11,6 +11,7 @@
 #include <QStringList>
 #include <QVideoWidget>
 #include <QWidget>
+#include <QTimer>
 
 #include <vector>
 
@@ -63,7 +64,7 @@ private slots:
 
     void onButtonClicked();
     void parseFolder(const QString& folderPath);
-    void handleVideoSelection(const QStringList& videoPaths, int currentIndex);  // 接口函数
+    void handleVideoSelection(const QStringList& videoPaths, int currentIndex);
     void handleMediaStatusChanged(QMediaPlayer::MediaStatus status);
     void toggleFullScreen();
     void switchToPage() { emit switchPage(1); }
@@ -78,11 +79,12 @@ private:
     void keyPressEvent(QKeyEvent* event) override;
     void increaseVolume();
     void decreaseVolume();
+    void hideVolumeControl();
 
+    bool isVideoPlaying;
     QVideoWidget* videoWidget;
     QHBoxLayout* listsBtnsLayout;
-    bool isVideoPlaying;
-
+    QTimer *volumeControlTimer;
     MainWindowResource* commonResrc;
 };
 

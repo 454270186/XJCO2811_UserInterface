@@ -11,6 +11,7 @@
 #include <QStringList>
 #include <QVideoWidget>
 #include <QWidget>
+#include <QTimer>
 
 #include <vector>
 
@@ -79,11 +80,12 @@ private:
     void keyPressEvent(QKeyEvent* event) override;
     void increaseVolume();
     void decreaseVolume();
+    void hideVolumeControl();
 
+    bool isVideoPlaying;
     QVideoWidget* videoWidget;
     QHBoxLayout* listsBtnsLayout;
-    bool isVideoPlaying;
-
+    QTimer *volumeControlTimer;
     MainWindowResource* commonResrc;
 };
 

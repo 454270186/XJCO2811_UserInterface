@@ -102,10 +102,10 @@
              <bool>false</bool>
             </property>
             <property name="styleSheet">
-             <string notr="true">border: none; /* 移除边框 */
-    background-color: transparent; /* 设置背景透明 */
-    icon-size: 64px 64px; /* 设置图标大小，根据需要进行调整 */
-    padding: 0px; /* 移除内边距 */</string>
+             <string notr="true">border: none;
+    background-color: transparent;
+    icon-size: 64px 64px;
+    padding: 0px;</string>
             </property>
             <property name="text">
              <string/>
@@ -205,10 +205,10 @@
                 <cursorShape>PointingHandCursor</cursorShape>
                </property>
                <property name="styleSheet">
-                <string notr="true">border: none; /* 移除边框 */
-    background-color: transparent; /* 设置背景透明 */
-    icon-size: 64px 64px; /* 设置图标大小，根据需要进行调整 */
-    padding: 0px; /* 移除内边距 */
+                <string notr="true">border: none;
+    background-color: transparent;
+    icon-size: 64px 64px;
+    padding: 0px;
 </string>
                </property>
                <property name="text">
@@ -281,10 +281,10 @@
                 <cursorShape>PointingHandCursor</cursorShape>
                </property>
                <property name="styleSheet">
-                <string notr="true">border: none; /* 移除边框 */
-    background-color: transparent; /* 设置背景透明 */
-    icon-size: 64px 64px; /* 设置图标大小，根据需要进行调整 */
-    padding: 0px; /* 移除内边距 */</string>
+                <string notr="true">border: none;
+    background-color: transparent;
+    icon-size: 64px 64px;
+    padding: 0px;</string>
                </property>
                <property name="text">
                 <string/>
