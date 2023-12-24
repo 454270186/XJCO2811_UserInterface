@@ -90,7 +90,7 @@ void ListSetSmall::renderList() {
 // It performs specific actions based on the key pressed:
 // - Qt::Key_Return: Triggers onSubmitClicked() if the submit button is enabled.
 // - Qt::Key_Shift: Triggers onDeleteClicked() if the delete button is enabled and visible.
-// - Qt::Key_Escape: Triggers switchToPage() if the backward button is enabled and visible.
+// - Qt::Key_Escape: Triggers switchToPage() if the backward button is enabled.
 // - Qt::Key_F1: Triggers on_addList_clicked() if the addList button is enabled.
 // - Qt::Key_F2: Triggers switchToPage1() regardless of any conditions.
 // - Qt::Key_CapsLock: Toggles the language settings by calling toggleLanguage().
@@ -108,7 +108,7 @@ void ListSetSmall::keyPressEvent(QKeyEvent* event) {
             }
             break;
         case Qt::Key_Escape:
-            if (ui->backward->isEnabled() && ui->backward->isVisible()) {
+            if (ui->backward->isEnabled()) {
                 switchToPage();
             }
             break;

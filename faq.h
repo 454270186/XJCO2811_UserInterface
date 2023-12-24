@@ -7,6 +7,7 @@
 #include <QPushButton>
 #include <QTranslator>
 #include <QWidget>
+#include <QTextToSpeech>
 
 #include "listsetresource.h"
 
@@ -22,25 +23,30 @@ public:
     ~Faq();
 
     void RenderTheme();
+    void stopReadingAndReset();
 
 signals:
     void switchPage(int pageIndex);
+    void stopReading();
 
 public slots:
     void toggleLanguage();
 
 private slots:
-    void switchToPage() { emit switchPage(1); }
+    void switchToPage();
 
 private:
     Ui::Faq* ui;
+    QTextToSpeech *speech;
+    QTranslator translator;
+    ListSetResource* commonResrc;
+
+    bool isChineseLanguage;
+    bool isSpeaking;
     void resizeEvent(QResizeEvent* event) override;
     void keyPressEvent(QKeyEvent* event) override;
-    bool isChineseLanguage;
     void loadStyleSheet(const QString& sheetName);
-    QTranslator translator;
-
-    ListSetResource* commonResrc;
+    void textToSpeech();
 };
 
 #endif  // FAQ_H
