@@ -21,6 +21,7 @@ public:
     std::vector<ListInfo> listinfo_;
     QStringList videoPaths_;
     bool isPictureListOpen_{true};
+    int mediaInitor_{-1};
 };
 
 #endif  // MAINWINDOWRESOURCE_H
