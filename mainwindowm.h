@@ -13,6 +13,7 @@
 #include <QWidget>
 #include <QTimer>
 
+#include <iostream>
 #include <vector>
 
 #include "mainwindowresource.h"
@@ -38,6 +39,15 @@ public:
 
     void RefreshList();
     void RenderTheme();
+
+    void DisconnectMediaplayerEvent() {
+        disconnect(commonResrc->mediaPlayer_, &QMediaPlayer::mediaStatusChanged, this,
+                   &mainwindowm::handleMediaStatusChanged);
+    }
+    void ConnectMediaplayerEvent() {
+        connect(commonResrc->mediaPlayer_, &QMediaPlayer::mediaStatusChanged, this,
+                &mainwindowm::handleMediaStatusChanged);
+    }
 
 signals:
     void switchPage(int pageIndex);
@@ -71,6 +81,7 @@ private slots:
     void switchToPage() { emit switchPage(3); }
     void adjustVolume(int volume);
     void toggleVoiceControlStrip();
+    void onScreenShotClicked();
 
 private:
     void setMediaAndPlay();

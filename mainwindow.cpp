@@ -10,6 +10,7 @@
 #include <QVBoxLayout>
 #include "btnconvert.h"
 #include "listset.h"
+#include "share.h"
 #include "ui_mainwindow.h"
 
 #include <iostream>
@@ -98,6 +99,7 @@ MainWindow::MainWindow(QWidget* parent, MainWindowResource* cr)
     connect(ui->pause, &QPushButton::clicked, this, &MainWindow::onPauseClicked);
     connect(ui->fullScreen, &QPushButton::clicked, this, &MainWindow::toggleFullScreen);
     connect(ui->voicecontrolstrip, &QSlider::valueChanged, this, &MainWindow::adjustVolume);
+    connect(ui->screenshot, &QPushButton::clicked, this, &MainWindow::onScreenShotClicked);
 }
 
 MainWindow::~MainWindow() {
@@ -301,7 +303,6 @@ void MainWindow::handleMediaStatusChanged(QMediaPlayer::MediaStatus status) {
     if (status == QMediaPlayer::LoadedMedia) {
         // Media has loaded successfully, start playback
         std::cout << "play video: " << commonResrc->currentVideoIndex_ << std::endl;
-        //        disconnect(mediaPlayer, &QMediaPlayer::mediaStatusChanged, this, &MainWindow::handleMediaStatusChanged);
         commonResrc->mediaPlayer_->play();
         isVideoPlaying = true;
         ui->video->show();
@@ -462,6 +463,8 @@ void MainWindow::onButtonClicked() {
         // Find the index of the video path in the list and handle the video selection
         int index = commonResrc->videoPaths_.indexOf(videoPath);
         if (index != -1) {
+            disconnect(commonResrc->mediaPlayer_, &QMediaPlayer::mediaStatusChanged, this,
+                       &MainWindow::handleMediaStatusChanged);
             handleVideoSelection(commonResrc->videoPaths_, index);
         }
         ui->picturelist->hide();
@@ -580,4 +583,10 @@ void MainWindow::RenderTheme() {
 
     // render thumbnails
     parseFolder(commonResrc->listinfo_[commonResrc->currentListButtonIndex_].videoDirPath.c_str());
+}
+
+void MainWindow::onScreenShotClicked() {
+    share* s = new share(this);
+    std::cout << "share" << std::endl;
+    s->show();
 }

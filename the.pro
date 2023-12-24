@@ -21,6 +21,7 @@ SOURCES += \
     mainwindowresource.cpp \
     myvideowidget.cpp \
     pagemanager.cpp \
+    share.cpp \
     tinyxml2.cpp \
     listset.cpp \
     formhandler.cpp \
@@ -36,6 +37,7 @@ HEADERS += \
     mainwindowresource.h \
     myvideowidget.h \
     pagemanager.h \
+    share.h \
     tinyxml2.h \
     tinyxml2.h \
     listset.h \
@@ -54,4 +56,5 @@ FORMS += \
     listset.ui \
     mainwindow.ui \
     mainwindowm.ui \
-    listsetsmall.ui
+    listsetsmall.ui \
+    share.ui
