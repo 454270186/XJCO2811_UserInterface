@@ -68,6 +68,7 @@ private slots:
     void switchToPage() { emit switchPage(3); }
     void adjustVolume(int volume);
     void toggleVoiceControlStrip();
+    void onScreenShotClicked();
 
 private:
     void setMediaAndPlay();

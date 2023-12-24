@@ -478,3 +478,9 @@ void mainwindowm::RefreshList() {
     }
     renderBtnList(listsBtnsLayout);
 }
+
+void mainwindowm::onScreenShotClicked()
+{
+
+}
+

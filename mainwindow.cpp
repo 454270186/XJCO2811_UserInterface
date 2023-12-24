@@ -508,3 +508,9 @@ void MainWindow::RefreshList() {
     }
     renderBtnList(listsBtnsLayout);
 }
+
+void MainWindow::onScreenShotClicked()
+{
+
+}
+

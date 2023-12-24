@@ -67,6 +67,7 @@ private slots:
     void toggleFullScreen();
     void switchToPage() { emit switchPage(1); }
     void adjustVolume(int volume);
+    void onScreenShotClicked();
 
 private:
     void setMediaAndPlay();
