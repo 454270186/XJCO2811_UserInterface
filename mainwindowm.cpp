@@ -16,7 +16,6 @@
 <<<<<<< HEAD
 #include "mainwindowm.h"
 =======
-#include "share.h"
 >>>>>>> main
 #include "ui_mainwindowm.h"
 
