@@ -11,6 +11,7 @@
 #include "listsetsmall.h"
 #include "mainwindow.h"
 #include "mainwindowm.h"
+#include "share.h"
 
 #include <iostream>
 
@@ -44,6 +45,7 @@ private:
     mainwindowm* mainwindowSmall;  // page index 2
     ListSetSmall* listsetSmall;    // page index 3
     Faq* faq;                      // page index 4
+    share* s;                      // page index 5
 };
 
 #endif  // PAGEMANAGER_H

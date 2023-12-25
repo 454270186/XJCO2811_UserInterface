@@ -596,10 +596,6 @@ void mainwindowm::RenderTheme() {
 
 void mainwindowm::onScreenShotClicked() {
     emit snapshot();
-
-    share* s = new share(this, commonResrc->isChineseLanguage_);
-    std::cout << "share" << std::endl;
-    s->show();
 }
 
 void mainwindowm::loadStyleSheet(const QString& sheetName) {

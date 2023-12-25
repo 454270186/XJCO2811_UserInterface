@@ -13,6 +13,7 @@
 
 #include "mainwindowresource.h"
 #include "pagemanager.h"
+#include "share.h"
 
 PageManager::PageManager(QWidget* parent) : QMainWindow{parent} {
     stackPage = new QStackedWidget(this);
@@ -28,12 +29,14 @@ PageManager::PageManager(QWidget* parent) : QMainWindow{parent} {
     listset = new ListSet(this, listsetResrc);
     listsetSmall = new ListSetSmall(this, listsetResrc);
     faq = new Faq(this, listsetResrc);
+    s = new share(this);
 
     stackPage->addWidget(mainwindow);
     stackPage->addWidget(listset);
     stackPage->addWidget(mainwindowSmall);
     stackPage->addWidget(listsetSmall);
     stackPage->addWidget(faq);
+    stackPage->addWidget(s);
 
     connect(mainwindow, &MainWindow::switchPage, this, &PageManager::switchToPage);
     connect(mainwindowSmall, &mainwindowm::switchPage, this, &PageManager::switchToPage);
@@ -62,6 +65,7 @@ PageManager::~PageManager() {
     delete mainwindowSmall;
     delete listset;
     delete listsetSmall;
+    delete s;
 }
 
 void PageManager::handleFaqStopReading() {
@@ -90,6 +94,17 @@ void PageManager::handleScreenShot() {
         std::cout << "cover!!!" << std::endl;
         screenshot.save(snapPath);
     }
+
+    // pop share
+    s->setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint | Qt::WindowCloseButtonHint);
+
+    QPoint stackPageGlobalPos = stackPage->mapToGlobal(QPoint(0, 0));
+
+    int x = stackPageGlobalPos.x() + (stackPage->width() - s->width()) / 2;
+    int y = stackPageGlobalPos.y() + (stackPage->height() - s->height()) / 2;
+
+    s->move(x, y);
+    s->show();
 }
 
 void PageManager::switchToPage(int pageIndex) {
