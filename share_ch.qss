@@ -1,24 +1,50 @@
-
-QGroupBox[objectName^='groupBox'] {
-    background-color: rgb(99, 19, 19);
-    font: bold 50px Arial;
-    padding: 2px;
-    margin: 6px;
-}
-QScrollArea#scrollArea{
-    background-color: rgb(75, 77, 77);
-    color:rgb(75, 77, 77);
-}
 QMainWindow {
-    background: #375376;
+    background-color: rgb(10, 25, 47);
     font:Arial 9pt;
+    color: white;
 }
+
+.QScrollArea {
+    border: none; /* Remove border from QScrollArea */
+}
+
+.QScrollArea > QWidget > QWidget {
+    background-color: rgb(28, 49, 84);
+}
+
+.QGroupBox {
+    border: 1px solid #555555; 
+    margin-top: 1ex; /* Space above the group box */
+}
+
+.QGroupBox::title {
+    subcontrol-origin: margin;
+    left: 10px;
+    padding: 0 3px 0 3px;
+    background-color:  rgb(10, 25, 47);
+}
+
+QDialog {
+    background-color:  rgb(28, 49, 84);
+    color: white; /* 白色文字 */
+}
+
+.QPushButton {
+    background-color: rgb(28, 49, 84); 
+    color: white;
+    border: 1px solid #555555; /* Optional: if you want borders on your buttons */
+}
+
+.QLabel {
+    color: white;
+}
+
 QPushButton#shareone{
-    qproperty-icon: url(../../XJCO2811_UserInterface/icons/share.svg); 
+    qproperty-icon: url(../XJCO2811_UserInterface/icons/share.svg); 
     qproperty-iconSize: 24px; 
 }
 QPushButton#sharetwo{
-    qproperty-icon: url(../../XJCO2811_UserInterface/icons/share.svg); 
+    qproperty-icon: url(../XJCO2811_UserInterface/icons/share.svg); 
     qproperty-iconSize: 24px; 
 }
 QPushButton#sharethree{
@@ -36,4 +62,35 @@ QPushButton#sharefive{
 QPushButton#sharesix{
     qproperty-icon: url(../XJCO2811_UserInterface/icons/share.svg); 
     qproperty-iconSize: 24px; 
+}
+
+QScrollBar:vertical {
+    width: 20px;  
+    background: #4b729e;
+}
+
+QScrollBar::handle:vertical {
+    background: #4b729e;
+    min-height: 20px;  /* 滚动条手柄的最小高度 */
+    border-radius: 7px;
+}
+
+QScrollBar::handle:vertical :hover {
+    background: #375376;
+}
+
+QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
+    border: none;  /* 移除上下按钮的边框 */
+    background: none;  /* 移除上下按钮的背景 */
+}
+
+QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {
+    border: none;
+    width: 0px;
+    height: 0px;
+    background: none;
+}
+
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+    background: none;  /* 移除滚动条轨道的背景 */
 }

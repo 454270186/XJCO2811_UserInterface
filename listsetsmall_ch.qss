@@ -38,37 +38,39 @@ QPushButton#backward {
 }
 
 QPushButton#qa{
-     qproperty-icon: url(../XJCO2811_UserInterface/icons/QA.svg); 
-     qproperty-iconSize: 40px; 
-     border: none;
-     background-color: transparent;
-     icon-size: 64px 64px;
+    qproperty-icon: url(../XJCO2811_UserInterface/icons/QA.svg); 
+    qproperty-iconSize: 40px; 
+    border: none;
+    background-color: transparent;
+    icon-size: 64px 64px;
+    text-align: right; 
 }
 
 QPushButton#language{
-     qproperty-icon: url(../XJCO2811_UserInterface/icons/English.svg); 
-     qproperty-iconSize: 40px; 
-     border: none;
-     background-color: transparent;
-     icon-size: 64px 64px;
+    qproperty-icon: url(../XJCO2811_UserInterface/icons/English.svg); 
+    qproperty-iconSize: 40px; 
+    border: none;
+    background-color: transparent;
+    icon-size: 64px 64px;
+    text-align: center; 
 }
 
 QPushButton#findPath{
-     border: none;
-     background-color: transparent;
-     icon-size: 64px 64px;
-     padding: 0px;
-     qproperty-icon: url(../XJCO2811_UserInterface/icons/folder-plus.svg); 
-     qproperty-iconSize: 40px; 
+    border: none;
+    background-color: transparent;
+    icon-size: 64px 64px;
+    padding: 0px;
+    qproperty-icon: url(../XJCO2811_UserInterface/icons/folder-plus.svg); 
+    qproperty-iconSize: 40px; 
 }
 
 QPushButton#addList{
-     border: none;
-     background-color: transparent;
-     icon-size: 64px 64px;
-     padding: 0px;
-     qproperty-icon: url(../XJCO2811_UserInterface/icons/plus-circle.svg); 
-     qproperty-iconSize: 40px; 
+    border: none;
+    background-color: transparent;
+    icon-size: 64px 64px;
+    padding: 0px;
+    qproperty-icon: url(../XJCO2811_UserInterface/icons/plus-circle.svg); 
+    qproperty-iconSize: 40px; 
 }
 
 QLineEdit {
@@ -95,25 +97,25 @@ QMessageBox QPushButton {
 }
 
 QPushButton#Delete, QPushButton#submit {
-     color: white;
-     padding: 10px;
-     border: 1px solid white;
-     background-color: rgb(28, 49, 84); 
-     border-radius: 20px;
+    color: white;
+    padding: 10px;
+    border: 1px solid white;
+    background-color: rgb(28, 49, 84); 
+    border-radius: 20px;
 }
 
 QPushButton#Delete:hover, QPushButton#submit:hover {
-     background-color: #1c3154;
-     border-color: #555;
-     border-radius: 20px;
+    background-color: #1c3154;
+    border-color: #555;
+    border-radius: 20px;
 }
 
 QPushButton {
-     margin: 5px 5px 5px 5px;
+    margin: 5px 5px 5px 5px;
 }
 
 QPushButton:hover {
-     margin: 2px 5px 8px 5px;
+    margin: 2px 5px 8px 5px;
 }
 
 QLabel {
@@ -170,4 +172,30 @@ QPushButton#newButton:checked {
     text-transform: uppercase;
     border: 2px solid #4aa1ff;
     border-radius: 15px;
+}
+
+QScrollBar::handle:horizontal {
+    background: #4b729e;
+    min-width: 20px; /* 适用于水平滚动条 */
+    border-radius: 7px;
+}
+
+QScrollBar::handle:horizontal:hover {
+    background: #375376;
+}
+
+QScrollBar::sub-line:horizontal, QScrollBar::add-line:horizontal {
+    border: none;
+    background: none;
+}
+
+QScrollBar::left-arrow:horizontal, QScrollBar::right-arrow:horizontal {
+    border: none;
+    width: 0px;
+    height: 0px;
+    background: none;
+}
+
+QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {
+    background: none;
 }

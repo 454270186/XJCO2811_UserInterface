@@ -123,3 +123,19 @@ void share::onShareSixClicked() {
     QCoreApplication::processEvents();
 }
 
+void share::loadStyleSheet(const QString& sheetName) {
+    QFile file("../XJCO2811_UserInterface/" + sheetName);
+    QString StyleSheet;
+    if (file.open(QFile::ReadOnly)) {
+        StyleSheet += QLatin1String(file.readAll());
+        file.close();
+    } else {
+        qDebug() << "File does not exist: " << file.fileName();
+    }
+
+    if (!StyleSheet.isEmpty()) {
+        this->setStyleSheet(StyleSheet);
+    } else {
+        qDebug() << "Failed to load stylesheet: " << sheetName;
+    }
+}

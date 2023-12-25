@@ -13,6 +13,7 @@ class share : public QMainWindow {
 
 public:
     explicit share(QWidget *parent = nullptr);
+    void RenderTheme();
     ~share();
 
 private slots:
@@ -30,8 +31,9 @@ private slots:
 
 
 private:
-    void setPicture(QLabel *label, const QString &imageName);
     Ui::share *ui;
+    void setPicture(QLabel *label, const QString &imageName);
+    void loadStyleSheet(const QString& sheetName);
 };
 
 #endif // SHARE_H

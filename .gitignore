@@ -56,4 +56,9 @@ bin
 *.JPG
 *.jpg
 
+!listset.png
+!logo.png
+!setup.png
+!videoplayer.png
+
 snapshot

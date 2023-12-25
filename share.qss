@@ -1,12 +1,48 @@
 QMainWindow {
     background-color: rgb(39, 40, 40);
     font:Arial 9pt;
-
+    color: white;
 }
 
+.QScrollArea {
+    border: none; /* Remove border from QScrollArea */
+}
+
+.QScrollArea > QWidget > QWidget {
+    background-color: #333333; /* Dark grey background for scroll area contents */
+}
+
+.QGroupBox {
+    border: 1px solid #555555; /* Optional: if you want to see the group box borders */
+    margin-top: 1ex; /* Space above the group box */
+}
+
+.QGroupBox::title {
+    subcontrol-origin: margin;
+    left: 10px;
+    padding: 0 3px 0 3px;
+    background-color: #333333; /* Background color for group box title */
+}
+
+QDialog {
+    background-color:  #333333;
+    color: white; /* 白色文字 */
+}
+
+.QPushButton {
+    background-color: rgb(39, 40, 40); 
+    color: white;
+    border: 1px solid #555555; /* Optional: if you want borders on your buttons */
+}
+
+.QLabel {
+    color: white;
+}
+
+/* Add any additional styles for other widgets as needed */
 
 QPushButton#shareone{
-    qproperty-icon: url(../../XJCO2811_UserInterface/icons/share.svg); 
+    qproperty-icon: url(../XJCO2811_UserInterface/icons/share.svg); 
     qproperty-iconSize: 24px; 
 }
 QPushButton#sharetwo{
@@ -28,4 +64,35 @@ QPushButton#sharefive{
 QPushButton#sharesix{
     qproperty-icon: url(../XJCO2811_UserInterface/icons/share.svg); 
     qproperty-iconSize: 24px; 
+}
+
+QScrollBar:vertical {
+    width: 20px;  
+    background: #4b729e;
+}
+
+QScrollBar::handle:vertical {
+    background: #9aa3ad;
+    min-height: 20px;  /* 滚动条手柄的最小高度 */
+    border-radius: 7px;
+}
+
+QScrollBar::handle:vertical :hover {
+    background: #747b84;
+}
+
+QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
+    border: none;  /* 移除上下按钮的边框 */
+    background: none;  /* 移除上下按钮的背景 */
+}
+
+QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {
+    border: none;
+    width: 0px;
+    height: 0px;
+    background: none;
+}
+
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+    background: none;  /* 移除滚动条轨道的背景 */
 }
