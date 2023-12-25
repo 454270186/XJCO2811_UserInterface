@@ -36,7 +36,6 @@ PageManager::PageManager(QWidget* parent) : QMainWindow{parent} {
     stackPage->addWidget(mainwindowSmall);
     stackPage->addWidget(listsetSmall);
     stackPage->addWidget(faq);
-    stackPage->addWidget(s);
 
     connect(mainwindow, &MainWindow::switchPage, this, &PageManager::switchToPage);
     connect(mainwindowSmall, &mainwindowm::switchPage, this, &PageManager::switchToPage);
@@ -104,6 +103,7 @@ void PageManager::handleScreenShot() {
     int y = stackPageGlobalPos.y() + (stackPage->height() - s->height()) / 2;
 
     s->move(x, y);
+    s->RenderTheme(commonResrc->isChineseLanguage_);
     s->show();
 }
 

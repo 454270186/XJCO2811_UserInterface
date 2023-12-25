@@ -8,40 +8,8 @@
 
 #include <iostream>
 
-share::share(QWidget* parent, bool isChinese) : QMainWindow(parent), ui(new Ui::share) {
+share::share(QWidget* parent) : QMainWindow(parent), ui(new Ui::share) {
     ui->setupUi(this);
-
-    if (isChinese) {
-        QFile file1("../XJCO2811_UserInterface/share_ch.qss");
-        QString StyleSheet;
-        if (file1.open(QFile::ReadOnly)) {
-            StyleSheet += QLatin1String(file1.readAll());
-            file1.close();
-        } else {
-            qDebug() << "File does not exist: " << file1.fileName();
-        }
-
-        if (!StyleSheet.isEmpty()) {
-            this->setStyleSheet(StyleSheet);
-        } else {
-            qDebug() << "Current directory:" << QDir::currentPath();
-        }
-    } else {
-        QFile file1("../XJCO2811_UserInterface/share.qss");
-        QString StyleSheet;
-        if (file1.open(QFile::ReadOnly)) {
-            StyleSheet += QLatin1String(file1.readAll());
-            file1.close();
-        } else {
-            qDebug() << "File does not exist: " << file1.fileName();
-        }
-
-        if (!StyleSheet.isEmpty()) {
-            this->setStyleSheet(StyleSheet);
-        } else {
-            qDebug() << "Current directory:" << QDir::currentPath();
-        }
-    }
 
     // 在构造函数中确保 QLabel 控件存在
     ui->pictureone->show();
@@ -154,5 +122,39 @@ void share::loadStyleSheet(const QString& sheetName) {
         this->setStyleSheet(StyleSheet);
     } else {
         qDebug() << "Failed to load stylesheet: " << sheetName;
+    }
+}
+
+void share::RenderTheme(bool isChinese) {
+    if (isChinese) {
+        QFile file1("../XJCO2811_UserInterface/share_ch.qss");
+        QString StyleSheet;
+        if (file1.open(QFile::ReadOnly)) {
+            StyleSheet += QLatin1String(file1.readAll());
+            file1.close();
+        } else {
+            qDebug() << "File does not exist: " << file1.fileName();
+        }
+
+        if (!StyleSheet.isEmpty()) {
+            this->setStyleSheet(StyleSheet);
+        } else {
+            qDebug() << "Current directory:" << QDir::currentPath();
+        }
+    } else {
+        QFile file1("../XJCO2811_UserInterface/share.qss");
+        QString StyleSheet;
+        if (file1.open(QFile::ReadOnly)) {
+            StyleSheet += QLatin1String(file1.readAll());
+            file1.close();
+        } else {
+            qDebug() << "File does not exist: " << file1.fileName();
+        }
+
+        if (!StyleSheet.isEmpty()) {
+            this->setStyleSheet(StyleSheet);
+        } else {
+            qDebug() << "Current directory:" << QDir::currentPath();
+        }
     }
 }

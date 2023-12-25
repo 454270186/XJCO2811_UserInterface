@@ -12,8 +12,8 @@ class share : public QMainWindow {
     Q_OBJECT
 
 public:
-    explicit share(QWidget* parent = nullptr, bool isChinese = false);
-    void RenderTheme();
+    explicit share(QWidget* parent = nullptr);
+    void RenderTheme(bool isChinese);
     ~share();
 
 private slots:
