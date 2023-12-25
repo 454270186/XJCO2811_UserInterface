@@ -96,3 +96,9 @@ QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {
 QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
     background: none;  /* 移除滚动条轨道的背景 */
 }
+
+QScrollArea#ShareArea QScrollBar {
+    background: transparent;
+    width: 10px;
+    height: 8px;
+}
