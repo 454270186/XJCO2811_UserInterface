@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>288</width>
-    <height>323</height>
+    <width>368</width>
+    <height>398</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -119,8 +119,8 @@
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>98</width>
-                  <height>77</height>
+                  <width>64</width>
+                  <height>67</height>
                  </rect>
                 </property>
                </widget>
@@ -192,6 +192,12 @@
                <property name="text">
                 <string/>
                </property>
+               <property name="iconSize">
+                <size>
+                 <width>10</width>
+                 <height>10</height>
+                </size>
+               </property>
               </widget>
              </item>
              <item>
@@ -221,8 +227,14 @@
                  <height>20</height>
                 </size>
                </property>
+               <property name="styleSheet">
+                <string notr="true">border: none; /* 移除边框 */
+    background-color: transparent; /* 设置背景透明 */
+    icon-size: 64px 64px; /* 设置图标大小，根据需要进行调整 */
+    padding: 0px; /* 移除内边距 */</string>
+               </property>
                <property name="text">
-                <string>截图</string>
+                <string/>
                </property>
               </widget>
              </item>
