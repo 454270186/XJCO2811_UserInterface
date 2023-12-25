@@ -141,6 +141,9 @@
             <property name="lineWidth">
              <number>0</number>
             </property>
+            <property name="verticalScrollBarPolicy">
+             <enum>Qt::ScrollBarAlwaysOff</enum>
+            </property>
             <property name="widgetResizable">
              <bool>true</bool>
             </property>
@@ -149,8 +152,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>69</width>
-               <height>61</height>
+               <width>80</width>
+               <height>59</height>
               </rect>
              </property>
              <property name="cursor">
