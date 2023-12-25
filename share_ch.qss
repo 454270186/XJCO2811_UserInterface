@@ -1,5 +1,5 @@
 QMainWindow {
-    background-color: rgb(39, 40, 40);
+    background-color: rgb(10, 25, 47);
     font:Arial 9pt;
     color: white;
 }
@@ -9,11 +9,11 @@ QMainWindow {
 }
 
 .QScrollArea > QWidget > QWidget {
-    background-color: #333333; /* Dark grey background for scroll area contents */
+    background-color: rgb(28, 49, 84);
 }
 
 .QGroupBox {
-    border: 1px solid #555555; /* Optional: if you want to see the group box borders */
+    border: 1px solid #555555; 
     margin-top: 1ex; /* Space above the group box */
 }
 
@@ -21,16 +21,16 @@ QMainWindow {
     subcontrol-origin: margin;
     left: 10px;
     padding: 0 3px 0 3px;
-    background-color: #333333; /* Background color for group box title */
+    background-color:  rgb(10, 25, 47);
 }
 
 QDialog {
-    background-color:  #333333;
+    background-color:  rgb(28, 49, 84);
     color: white; /* 白色文字 */
 }
 
 .QPushButton {
-    background-color: rgb(39, 40, 40); 
+    background-color: rgb(28, 49, 84); 
     color: white;
     border: 1px solid #555555; /* Optional: if you want borders on your buttons */
 }
@@ -38,8 +38,6 @@ QDialog {
 .QLabel {
     color: white;
 }
-
-/* Add any additional styles for other widgets as needed */
 
 QPushButton#shareone{
     qproperty-icon: url(../XJCO2811_UserInterface/icons/share.svg); 
@@ -72,13 +70,13 @@ QScrollBar:vertical {
 }
 
 QScrollBar::handle:vertical {
-    background: #9aa3ad;
+    background: #4b729e;
     min-height: 20px;  /* 滚动条手柄的最小高度 */
     border-radius: 7px;
 }
 
 QScrollBar::handle:vertical :hover {
-    background: #747b84;
+    background: #375376;
 }
 
 QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
