@@ -165,3 +165,8 @@ QScrollArea#lists QPushButton{
     font-weight: bold;
 
 }
+
+#thumbnailList{
+    background-color: rgb(75, 77, 77);
+    color:rgb(75, 77, 77);
+}

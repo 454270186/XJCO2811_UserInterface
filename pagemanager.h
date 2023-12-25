@@ -28,6 +28,7 @@ private slots:
     void switchToPage(int pageIndex);
     void changeWindows(const QSize& size);
     void handleFaqStopReading();
+    void handleScreenShot();
 
 protected:
     void resizeEvent(QResizeEvent* event) override { emit resized(event->size()); }

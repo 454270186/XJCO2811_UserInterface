@@ -1,5 +1,18 @@
-#include "pagemanager.h"
+#include <QApplication>
+#include <QDebug>
+#include <QDir>
+#include <QFileDialog>
+#include <QFileInfo>
+#include <QHBoxLayout>
+#include <QPixmap>
+#include <QProcess>
+#include <QResizeEvent>
+#include <QScreen>
+#include <QUuid>
+#include <QVBoxLayout>
+
 #include "mainwindowresource.h"
+#include "pagemanager.h"
 
 PageManager::PageManager(QWidget* parent) : QMainWindow{parent} {
     stackPage = new QStackedWidget(this);
@@ -30,6 +43,10 @@ PageManager::PageManager(QWidget* parent) : QMainWindow{parent} {
     connect(faq, &Faq::stopReading, this, &PageManager::handleFaqStopReading);
     connect(this, &PageManager::resized, this, &PageManager::changeWindows);
 
+    // snapshot
+    connect(mainwindow, &MainWindow::snapshot, this, &PageManager::handleScreenShot);
+    connect(mainwindowSmall, &mainwindowm::snapshot, this, &PageManager::handleScreenShot);
+
     setCentralWidget(stackPage);
 }
 
@@ -51,6 +68,30 @@ void PageManager::handleFaqStopReading() {
     faq->stopReadingAndReset();
 }
 
+void PageManager::handleScreenShot() {
+    QScreen* screen = QGuiApplication::primaryScreen();
+
+    QRect videoRect = this->geometry();
+
+    QPixmap screenshot = screen->grabWindow(0, videoRect.x(), videoRect.y(), videoRect.width(), videoRect.height());
+
+    QString directory = "../XJCO2811_UserInterface/snapshot";
+    QDir dir(directory);
+    if (!dir.exists()) {
+        if (!dir.mkpath(directory)) {
+            std::cerr << "Error: Failed to create directory: " << directory.toStdString() << std::endl;
+            return;
+        }
+    }
+
+    QUuid uuid = QUuid::createUuid();
+    QString snapPath = "../XJCO2811_UserInterface/snapshot/" + uuid.toString() + ".jpg";
+    if (!snapPath.isEmpty()) {
+        std::cout << "cover!!!" << std::endl;
+        screenshot.save(snapPath);
+    }
+}
+
 void PageManager::switchToPage(int pageIndex) {
     if (pageIndex == PageIndex::LISTSET || pageIndex == PageIndex::LISTSET_SMALL) {
         if (pageIndex == PageIndex::LISTSET) {
@@ -62,12 +103,16 @@ void PageManager::switchToPage(int pageIndex) {
         }
     } else if (pageIndex == PageIndex::MAINWINDOW || pageIndex == PageIndex::MAINWINDOW_SMALL) {
         // refresh video list before page switch
+        // sync theme
+        commonResrc->isChineseLanguage_ = listsetResrc->isChineseLanguage_;
         if (pageIndex == PageIndex::MAINWINDOW) {
             commonResrc->mediaPlayer_->setVideoOutput(mainwindow->getVideoOutput());
+            mainwindow->RenderTheme();
             mainwindow->RefreshList();
             mainwindow->Play();
         } else {
             commonResrc->mediaPlayer_->setVideoOutput(mainwindowSmall->getVideoOutput());
+            mainwindowSmall->RenderTheme();
             mainwindowSmall->RefreshList();
             mainwindowSmall->Play();
         }
@@ -80,7 +125,7 @@ void PageManager::switchToPage(int pageIndex) {
 }
 
 void PageManager::changeWindows(const QSize& size) {
-    QSize thresholdSize(600, 200000);
+    QSize thresholdSize(550, 200000);
 
     if (size.width() >= thresholdSize.width()) {
         // from small to big
