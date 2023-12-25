@@ -132,8 +132,6 @@ QScrollArea#lists QPushButton:hover {
     border-radius: 10px;
 }
 
-
-
 #thumbnailList QPushButton:pressed {
     border: 2px solid #4aa1ff; 
 }
