@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>700</width>
+    <width>300</width>
     <height>500</height>
    </rect>
   </property>
@@ -18,7 +18,7 @@
   </property>
   <property name="maximumSize">
    <size>
-    <width>700</width>
+    <width>300</width>
     <height>500</height>
    </size>
   </property>
@@ -28,8 +28,14 @@
   <widget class="QWidget" name="centralwidget">
    <property name="minimumSize">
     <size>
-     <width>700</width>
+     <width>0</width>
      <height>0</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>16777215</width>
+     <height>16777215</height>
     </size>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -44,7 +50,7 @@
       <property name="maximumSize">
        <size>
         <width>16777215</width>
-        <height>700</height>
+        <height>16777215</height>
        </size>
       </property>
       <property name="widgetResizable">
@@ -55,9 +61,15 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>674</width>
-         <height>884</height>
+         <width>286</width>
+         <height>486</height>
         </rect>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>16777215</height>
+        </size>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout">
         <item>
@@ -70,8 +82,8 @@
             <widget class="QLabel" name="pictureone">
              <property name="minimumSize">
               <size>
-               <width>100</width>
-               <height>100</height>
+               <width>35</width>
+               <height>35</height>
               </size>
              </property>
              <property name="text">
@@ -82,7 +94,7 @@
            <item>
             <widget class="QLabel" name="nameone">
              <property name="text">
-              <string>软件工程赵老师</string>
+              <string>Mr.zhao</string>
              </property>
             </widget>
            </item>
@@ -101,6 +113,18 @@
            </item>
            <item>
             <widget class="QPushButton" name="shareone">
+             <property name="minimumSize">
+              <size>
+               <width>35</width>
+               <height>35</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>35</width>
+               <height>35</height>
+              </size>
+             </property>
              <property name="text">
               <string>分享</string>
              </property>
@@ -119,8 +143,8 @@
             <widget class="QLabel" name="picturetwo">
              <property name="minimumSize">
               <size>
-               <width>100</width>
-               <height>100</height>
+               <width>35</width>
+               <height>35</height>
               </size>
              </property>
              <property name="text">
@@ -131,7 +155,7 @@
            <item>
             <widget class="QLabel" name="nametwo">
              <property name="text">
-              <string>尼古拉斯三生三世十里桃花游</string>
+              <string>Mr.you</string>
              </property>
             </widget>
            </item>
@@ -150,6 +174,18 @@
            </item>
            <item>
             <widget class="QPushButton" name="sharetwo">
+             <property name="minimumSize">
+              <size>
+               <width>35</width>
+               <height>35</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>35</width>
+               <height>35</height>
+              </size>
+             </property>
              <property name="text">
               <string>分享</string>
              </property>
@@ -168,8 +204,8 @@
             <widget class="QLabel" name="picturethree">
              <property name="minimumSize">
               <size>
-               <width>100</width>
-               <height>100</height>
+               <width>35</width>
+               <height>35</height>
               </size>
              </property>
              <property name="text">
@@ -180,7 +216,7 @@
            <item>
             <widget class="QLabel" name="namethree">
              <property name="text">
-              <string>big fly大飞老师</string>
+              <string>Mr.fly</string>
              </property>
             </widget>
            </item>
@@ -199,6 +235,18 @@
            </item>
            <item>
             <widget class="QPushButton" name="sharethree">
+             <property name="minimumSize">
+              <size>
+               <width>35</width>
+               <height>35</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>35</width>
+               <height>35</height>
+              </size>
+             </property>
              <property name="text">
               <string>分享</string>
              </property>
@@ -217,8 +265,8 @@
             <widget class="QLabel" name="picturefour">
              <property name="minimumSize">
               <size>
-               <width>100</width>
-               <height>100</height>
+               <width>35</width>
+               <height>35</height>
               </size>
              </property>
              <property name="text">
@@ -229,7 +277,7 @@
            <item>
             <widget class="QLabel" name="namefour">
              <property name="text">
-              <string>德尔克萨克斯王德法女士</string>
+              <string>Mrs.dick</string>
              </property>
             </widget>
            </item>
@@ -248,6 +296,18 @@
            </item>
            <item>
             <widget class="QPushButton" name="sharefour">
+             <property name="minimumSize">
+              <size>
+               <width>35</width>
+               <height>35</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>35</width>
+               <height>35</height>
+              </size>
+             </property>
              <property name="text">
               <string>分享</string>
              </property>
@@ -266,8 +326,8 @@
             <widget class="QLabel" name="picturefive">
              <property name="minimumSize">
               <size>
-               <width>100</width>
-               <height>100</height>
+               <width>35</width>
+               <height>35</height>
               </size>
              </property>
              <property name="text">
@@ -278,7 +338,7 @@
            <item>
             <widget class="QLabel" name="namefive">
              <property name="text">
-              <string>小岳岳</string>
+              <string>Mrs.hy</string>
              </property>
             </widget>
            </item>
@@ -297,6 +357,18 @@
            </item>
            <item>
             <widget class="QPushButton" name="sharefive">
+             <property name="minimumSize">
+              <size>
+               <width>35</width>
+               <height>35</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>35</width>
+               <height>35</height>
+              </size>
+             </property>
              <property name="text">
               <string>分享</string>
              </property>
@@ -315,8 +387,8 @@
             <widget class="QLabel" name="picturesix">
              <property name="minimumSize">
               <size>
-               <width>100</width>
-               <height>100</height>
+               <width>35</width>
+               <height>35</height>
               </size>
              </property>
              <property name="text">
@@ -327,7 +399,7 @@
            <item>
             <widget class="QLabel" name="namesix">
              <property name="text">
-              <string>biliu666666</string>
+              <string>Mr.bi6</string>
              </property>
             </widget>
            </item>
@@ -346,6 +418,18 @@
            </item>
            <item>
             <widget class="QPushButton" name="sharesix">
+             <property name="minimumSize">
+              <size>
+               <width>35</width>
+               <height>35</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>35</width>
+               <height>35</height>
+              </size>
+             </property>
              <property name="text">
               <string>分享</string>
              </property>
@@ -356,48 +440,6 @@
         </item>
        </layout>
       </widget>
-     </widget>
-    </item>
-    <item>
-     <widget class="QGroupBox" name="groupBox_7">
-      <property name="title">
-       <string/>
-      </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_7">
-       <item>
-        <spacer name="horizontalSpacer">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>122</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
-        <widget class="QPushButton" name="exit">
-         <property name="text">
-          <string>返回</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <spacer name="horizontalSpacer_2">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>122</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-      </layout>
      </widget>
     </item>
    </layout>
