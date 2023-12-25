@@ -28,7 +28,6 @@ private slots:
 
     void onShareSixClicked();
 
-    void onExitClicked();
 
 private:
     void setPicture(QLabel *label, const QString &imageName);

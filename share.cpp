@@ -31,7 +31,6 @@ share::share(QWidget* parent) : QMainWindow(parent), ui(new Ui::share) {
     connect(ui->sharefour, &QPushButton::clicked, this, &share::onShareFourClicked);
     connect(ui->sharefive, &QPushButton::clicked, this, &share::onShareFiveClicked);
     connect(ui->sharesix, &QPushButton::clicked, this, &share::onShareSixClicked);
-    connect(ui->exit, &QPushButton::clicked, this, &share::onExitClicked);
 }
 
 share::~share() {
@@ -109,6 +108,3 @@ void share::onShareSixClicked() {
     QCoreApplication::processEvents();
 }
 
-void share::onExitClicked() {
-    this->close();
-}
