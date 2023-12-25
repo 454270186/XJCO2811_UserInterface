@@ -87,13 +87,10 @@ void PageManager::changeWindows(const QSize& size) {
         if (stackPage->currentIndex() == PageIndex::MAINWINDOW_SMALL ||
             stackPage->currentIndex() == PageIndex::LISTSET_SMALL) {
             if (stackPage->currentIndex() == PageIndex::MAINWINDOW_SMALL) {
-<<<<<<< HEAD
-=======
                 // disconnect mediaplayer's slot in MainWindow
                 mainwindow->DisconnectMediaplayerEvent();
                 mainwindowSmall->ConnectMediaplayerEvent();
 
->>>>>>> main
                 commonResrc->mediaPlayer_->setVideoOutput(mainwindow->getVideoOutput());
                 mainwindow->RefreshList();
                 mainwindow->RenderTheme();
@@ -108,13 +105,10 @@ void PageManager::changeWindows(const QSize& size) {
         // from big to small
         if (stackPage->currentIndex() == PageIndex::MAINWINDOW || stackPage->currentIndex() == PageIndex::LISTSET) {
             if (stackPage->currentIndex() == PageIndex::MAINWINDOW) {
-<<<<<<< HEAD
-=======
                 // disconnect mediaplayer's slot in MainWindow_Small
                 mainwindowSmall->DisconnectMediaplayerEvent();
                 mainwindow->ConnectMediaplayerEvent();
 
->>>>>>> main
                 commonResrc->mediaPlayer_->setVideoOutput(mainwindowSmall->getVideoOutput());
                 mainwindowSmall->RefreshList();
                 mainwindowSmall->RenderTheme();

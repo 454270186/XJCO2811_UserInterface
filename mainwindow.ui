@@ -149,8 +149,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>84</width>
-               <height>77</height>
+               <width>69</width>
+               <height>61</height>
               </rect>
              </property>
              <property name="cursor">
@@ -247,12 +247,18 @@
                <property name="styleSheet">
                 <string notr="true">border: none;
     background-color: transparent;
-    icon-size: 64px 64px;
+    icon-size: 20px 20px;
     padding: 0px;
 </string>
                </property>
                <property name="text">
                 <string/>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>10</width>
+                 <height>10</height>
+                </size>
                </property>
               </widget>
              </item>
@@ -283,8 +289,15 @@
                  <height>30</height>
                 </size>
                </property>
+               <property name="styleSheet">
+                <string notr="true">border: none;
+    background-color: transparent;
+    icon-size: 64px 64px;
+    padding: 0px;
+</string>
+               </property>
                <property name="text">
-                <string>截图</string>
+                <string/>
                </property>
               </widget>
              </item>

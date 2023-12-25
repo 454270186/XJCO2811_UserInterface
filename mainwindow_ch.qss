@@ -84,7 +84,7 @@ QPushButton#addListBtn{
 
 QPushButton#fullScreen{
     qproperty-icon: url(../XJCO2811_UserInterface/icons/arrows-fullscreen.svg); 
-    qproperty-iconSize: 24px; 
+    qproperty-iconSize: 18px; 
     
 }
 
@@ -162,4 +162,8 @@ QScrollArea#thumbnailList QWidget{
 #thumbnailList{
     background-color: rgb(28, 49, 84);
     color:rgb(28, 49, 84);
+}
+QPushButton#screenshot{
+    qproperty-icon: url(../XJCO2811_UserInterface/icons/reply.svg); 
+    qproperty-iconSize: 24px; 
 }

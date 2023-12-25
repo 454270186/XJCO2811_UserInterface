@@ -56,7 +56,10 @@
 QMainWindow {
     background-color: rgb(39, 40, 40);
 }
-
+QPushButton#screenshot{
+    qproperty-icon: url(../XJCO2811_UserInterface/icons/reply.svg); 
+    qproperty-iconSize: 24px; 
+}
 QPushButton#retreat{
     qproperty-icon: url(../XJCO2811_UserInterface/icons/rewind.svg); 
     qproperty-iconSize: 24px; 
@@ -80,7 +83,7 @@ QPushButton#addListBtn{
 
 QPushButton#fullScreen{
     qproperty-icon: url(../XJCO2811_UserInterface/icons/arrows-fullscreen.svg); 
-    qproperty-iconSize: 24px; 
+    qproperty-iconSize: 18px; 
     
 }
 
@@ -110,7 +113,6 @@ QScrollArea#lists QPushButton{
     border: 1px solid white;
     border-radius: 10px;
     font-weight: bold;
-
 }
 
 QScrollArea#lists QPushButton:checked {
@@ -146,4 +148,20 @@ QScrollArea#thumbnailList QWidget{
 #lists{
     background-color: rgb(75, 77, 77);
     color:rgb(75, 77, 77);
+}
+QPushButton#screenshot{
+    qproperty-icon: url(../XJCO2811_UserInterface/icons/reply.svg); 
+    qproperty-iconSize: 24px; 
+}
+QScrollArea#lists QWidget{
+    background-color: rgb(75, 77, 77);
+}
+QScrollArea#lists QPushButton{
+    border-radius: 20px;
+    color: white; 
+    border: 1px solid white;
+    background-color: rgb(39, 40, 40);
+    border-radius: 10px;
+    font-weight: bold;
+
 }
