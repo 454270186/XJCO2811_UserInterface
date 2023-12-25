@@ -9,9 +9,9 @@
 #include <QPushButton>
 #include <QSlider>
 #include <QStringList>
+#include <QTimer>
 #include <QVideoWidget>
 #include <QWidget>
-#include <QTimer>
 
 #include <iostream>
 #include <vector>
@@ -91,11 +91,12 @@ private:
     void increaseVolume();
     void decreaseVolume();
     void hideVolumeControl();
+    void loadStyleSheet(const QString& sheetName);
 
     bool isVideoPlaying;
     QVideoWidget* videoWidget;
     QHBoxLayout* listsBtnsLayout;
-    QTimer *volumeControlTimer;
+    QTimer* volumeControlTimer;
     MainWindowResource* commonResrc;
 };
 

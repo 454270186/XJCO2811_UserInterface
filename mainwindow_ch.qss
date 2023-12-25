@@ -1,12 +1,12 @@
 
 #lists QScrollBar::handle:horizontal {
-    background: #9aa3ad;
+    background: #4b729e;
     min-width: 30px; /* 适用于水平滚动条 */
     border-radius: 7px;
 }
 
 #lists QScrollBar::handle:horizontal:hover {
-    background: #747b84;
+    background: #375376;
 }
 
 #lists QScrollBar::sub-line:horizontal, QScrollBar::add-line:horizontal {
@@ -28,13 +28,13 @@
 
 
 #thumbnailList QScrollBar::handle:vertical {
-    background: #9aa3ad;
+    background: #4b729e;
     min-height: 30px;
     border-radius: 7px;
 }
 
 #thumbnailList QScrollBar::handle:vertical:hover {
-    background: #747b84;
+    background: #375376;
 }
 
 #thumbnailList QScrollBar::sub-line:vertical, QScrollBar::add-line:vertical {
@@ -54,8 +54,8 @@
 }
 
 QMainWindow {
-    background-color: rgb(39, 40, 40);
-    font: 9pt "Arial";
+    background-color: rgb(10, 25, 47); 
+
 }
 
 QPushButton#retreat{
@@ -96,15 +96,6 @@ QPushButton#addListBtn:hover {
     margin: 2px 5px 8px 5px;
 }
 
-QScrollArea#lists QPushButton{
-    border-radius: 20px;
-    color: white; 
-    border: 1px solid white;
-    background-color: rgb(39, 40, 40);
-    border-radius: 10px;
-    font-weight: bold;
-
-}
 
 #thumbnailList QPushButton {
     width: 100px; 
@@ -114,8 +105,17 @@ QScrollArea#lists QPushButton{
     background-position: center; 
     background-clip: content-box; 
 }
+
+QScrollArea#lists QPushButton{
+    color: white; 
+    border: 1px solid white;
+    border-radius: 10px;
+    font-weight: bold;
+
+}
+
 QScrollArea#lists QPushButton:checked {
-    background-color: rgb(75, 77, 77);
+    background-color: rgb(10, 25, 47);
     font-weight: bold;
     text-transform: uppercase;
     border: 2px solid #4aa1ff;
@@ -123,7 +123,8 @@ QScrollArea#lists QPushButton:checked {
 }
 
 QScrollArea#lists QPushButton:hover {
-    background-color: rgb(75, 77, 77);
+    background-color: rgb(28, 49, 84); 
+
     border: 1px solid white;
     color: #F0F0F0;
     font-weight: bold;
@@ -132,20 +133,23 @@ QScrollArea#lists QPushButton:hover {
 }
 
 
-QScrollArea#lists QWidget {
-    background-color: rgb(75, 77, 77);
-}
-QScrollArea#lists QPushButton{
-    border-radius: 20px;
-    color: white; 
-    border: 1px solid white;
-    background-color: rgb(39, 40, 40);
-    border-radius: 10px;
-    font-weight: bold;
 
+#thumbnailList QPushButton:pressed {
+    border: 2px solid #4aa1ff; 
+}
+#thumbnailList QWidget{
+    background-color: rgb(28, 49, 84);
+    color:rgb(28, 49, 84);
+}
+#lists QWidget{
+    background-color: rgb(28, 49, 84);
+}
+QMainwindow{
+    background-color: rgb(10, 25, 47);
+    color:rgb(10, 25, 47);
 }
 
-#thumbnailList{
-    background-color: rgb(75, 77, 77);
-    color:rgb(75, 77, 77);
+#thumbnailList {
+    background-color: rgb(28, 49, 84);
+    color:rgb(28, 49, 84);
 }

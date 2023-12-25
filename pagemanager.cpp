@@ -62,12 +62,16 @@ void PageManager::switchToPage(int pageIndex) {
         }
     } else if (pageIndex == PageIndex::MAINWINDOW || pageIndex == PageIndex::MAINWINDOW_SMALL) {
         // refresh video list before page switch
+        // sync theme
+        commonResrc->isChineseLanguage_ = listsetResrc->isChineseLanguage_;
         if (pageIndex == PageIndex::MAINWINDOW) {
             commonResrc->mediaPlayer_->setVideoOutput(mainwindow->getVideoOutput());
+            mainwindow->RenderTheme();
             mainwindow->RefreshList();
             mainwindow->Play();
         } else {
             commonResrc->mediaPlayer_->setVideoOutput(mainwindowSmall->getVideoOutput());
+            mainwindowSmall->RenderTheme();
             mainwindowSmall->RefreshList();
             mainwindowSmall->Play();
         }
@@ -80,7 +84,7 @@ void PageManager::switchToPage(int pageIndex) {
 }
 
 void PageManager::changeWindows(const QSize& size) {
-    QSize thresholdSize(600, 200000);
+    QSize thresholdSize(550, 200000);
 
     if (size.width() >= thresholdSize.width()) {
         // from small to big

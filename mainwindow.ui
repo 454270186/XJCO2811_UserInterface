@@ -20,7 +20,7 @@
    <string>MainWindow</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgb(39, 40, 40);</string>
+   <string notr="true"/>
   </property>
   <property name="iconSize">
    <size>
@@ -128,8 +128,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>84</width>
-               <height>77</height>
+               <width>72</width>
+               <height>67</height>
               </rect>
              </property>
              <property name="styleSheet">
@@ -144,7 +144,7 @@
        <item>
         <widget class="QScrollArea" name="thumbnailList">
          <property name="styleSheet">
-          <string notr="true">background-color: rgb(73, 74, 74);</string>
+          <string notr="true"/>
          </property>
          <property name="widgetResizable">
           <bool>true</bool>
