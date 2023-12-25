@@ -20,9 +20,10 @@
 ## About The APP
 
 <div style="display: inline-block;">
-    <img src="./img/videoplayer.png" alt="mainwindow" style="zoom:30%;" />
-    <img src="./img/listset.png" alt="listset" style="zoom:30%;" />
+    <img src="./img/videoplayer.png" alt="mainwindow" width="300" height="400" />
+	<img src="./img/listset.png" alt="listset" width="300" height="400" />
 </div>
+
 
 
 
