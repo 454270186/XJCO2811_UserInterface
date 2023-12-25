@@ -64,8 +64,6 @@ void share::setPicture(QLabel* label, const QString& imageName) {
     if (image.isNull()) {
         qDebug() << "加载图片失败。错误信息: " << image.text() << " 文件路径：" << imagePath;
     } else {
-        qDebug() << "成功加载图片!";
-
         // 调整图像大小
         QSize labelSize = label->size();
         QImage scaledImage = image.scaled(labelSize, Qt::KeepAspectRatio);
