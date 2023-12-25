@@ -8,13 +8,14 @@
 #include <QHBoxLayout>
 #include <QProcess>
 #include <QResizeEvent>
+#include <QScreen>
 #include <QVBoxLayout>
 
 #include "btnconvert.h"
 #include "listset.h"
+#include "mainwindow.h"
 #include "share.h"
 #include "ui_mainwindow.h"
-#include "mainwindow.h"
 
 // MainWindow constructor initializes the main window and its components.
 MainWindow::MainWindow(QWidget* parent, MainWindowResource* cr)
@@ -150,7 +151,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event) {
             event->accept();
             break;
         case Qt::Key_A:
-            if (ui->retreat->isEnabled()){
+            if (ui->retreat->isEnabled()) {
                 onRetreatClicked();
             }
             break;
@@ -570,6 +571,12 @@ void MainWindow::RefreshList() {
 // RenderTheme() will check all bool flags, and rerender the page when page switch
 // Need to be called Explicitly in PageManager
 void MainWindow::RenderTheme() {
+    if (commonResrc->isChineseLanguage_) {
+        loadStyleSheet("mainwindow_ch.qss");
+    } else {
+        loadStyleSheet("mainwindow.qss");
+    }
+
     if (commonResrc->isPictureListOpen_) {
         std::cout << "mainwindow: picturelist is open" << std::endl;
         ui->picturelist->setVisible(true);
@@ -587,7 +594,26 @@ void MainWindow::RenderTheme() {
 }
 
 void MainWindow::onScreenShotClicked() {
+    emit snapshot();
+
     share* s = new share(this);
     std::cout << "share" << std::endl;
     s->show();
+}
+
+void MainWindow::loadStyleSheet(const QString& sheetName) {
+    QFile file("../XJCO2811_UserInterface/" + sheetName);
+    QString StyleSheet;
+    if (file.open(QFile::ReadOnly)) {
+        StyleSheet += QLatin1String(file.readAll());
+        file.close();
+    } else {
+        qDebug() << "File does not exist: " << file.fileName();
+    }
+
+    if (!StyleSheet.isEmpty()) {
+        this->setStyleSheet(StyleSheet);
+    } else {
+        qDebug() << "Failed to load stylesheet: " << sheetName;
+    }
 }
