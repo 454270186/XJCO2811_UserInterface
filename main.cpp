@@ -20,6 +20,7 @@ int main(int argc, char* argv[]) {
     pagemanager.setMaximumWidth(1000);
     pagemanager.setMinimumWidth(390);
     pagemanager.setFixedHeight(700);
+    pagemanager.resize(390, 700);
     pagemanager.show();
 
     return a.exec();

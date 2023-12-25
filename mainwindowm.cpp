@@ -45,7 +45,7 @@ mainwindowm::mainwindowm(QWidget* parent, MainWindowResource* cr)
     ui->videoBox->setStyleSheet("QGroupBox { border: 0; }");
 
     // Set the minimum size to 460x700
-    setMinimumSize(460, 700);
+    setMinimumSize(390, 700);
 
     // Assuming that "videoplayer" is the name of the QWidget in your UI file
     QWidget* videoplayer = ui->videoplayer;
