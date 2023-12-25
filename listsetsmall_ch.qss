@@ -174,28 +174,30 @@ QPushButton#newButton:checked {
     border-radius: 15px;
 }
 
- QScrollBar::handle:horizontal {
+#scrollArea  QScrollBar::handle:horizontal {
     background: #4b729e;
-    min-width: 30px; /* 适用于水平滚动条 */
+    min-width: 20px; /* 适用于水平滚动条 */
     border-radius: 7px;
 }
 
-QScrollBar::handle:horizontal:hover {
+#scrollArea QScrollBar::handle:horizontal:hover {
     background: #375376;
 }
 
-QScrollBar::sub-line:horizontal, QScrollBar::add-line:horizontal {
+#scrollArea QScrollBar::sub-line:horizontal, QScrollBar::add-line:horizontal {
     border: none;
     background: none;
 }
 
-QScrollBar::left-arrow:horizontal, QScrollBar::right-arrow:horizontal {
+#scrollArea QScrollBar::left-arrow:horizontal, QScrollBar::right-arrow:horizontal {
     border: none;
     width: 0px;
     height: 0px;
     background: none;
 }
 
-QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {
-    background: none;
+QScrollArea#scrollArea QScrollBar {
+    background: transparent;
+    width: 8px;
+    height: 10px;
 }
