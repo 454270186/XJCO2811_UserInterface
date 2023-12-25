@@ -24,7 +24,7 @@
     background: none;
 }
 
-#lists QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {
+#scrollArea QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {
     background: none;
 }
 
