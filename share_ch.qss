@@ -4,11 +4,11 @@ QMainWindow {
     color: white;
 }
 
-.QScrollArea {
+.QScrollArea#ShareArea {
     border: none; /* Remove border from QScrollArea */
 }
 
-.QScrollArea > QWidget > QWidget {
+.QScrollArea#ShareArea > QWidget > QWidget {
     background-color: rgb(28, 49, 84);
 }
 
