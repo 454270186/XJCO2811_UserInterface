@@ -9,9 +9,9 @@
 #include <QPushButton>
 #include <QSlider>
 #include <QStringList>
+#include <QTimer>
 #include <QVideoWidget>
 #include <QWidget>
-#include <QTimer>
 
 #include <iostream>
 #include <vector>
@@ -51,6 +51,7 @@ public:
 
 signals:
     void switchPage(int pageIndex);
+    void snapshot();
 
 public slots:
     // Slot to switch between windows
@@ -91,11 +92,12 @@ private:
     void increaseVolume();
     void decreaseVolume();
     void hideVolumeControl();
+    void loadStyleSheet(const QString& sheetName);
 
     bool isVideoPlaying;
     QVideoWidget* videoWidget;
     QHBoxLayout* listsBtnsLayout;
-    QTimer *volumeControlTimer;
+    QTimer* volumeControlTimer;
     MainWindowResource* commonResrc;
 };
 

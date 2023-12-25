@@ -1,10 +1,18 @@
-QMainWindow {
-    background-color: rgb(39, 40, 40);
-    font:Arial 9pt;
 
+QGroupBox[objectName^='groupBox'] {
+    background-color: rgb(99, 19, 19);
+    font: bold 50px Arial;
+    padding: 2px;
+    margin: 6px;
 }
-
-
+QScrollArea#scrollArea{
+    background-color: rgb(75, 77, 77);
+    color:rgb(75, 77, 77);
+}
+QMainWindow {
+    background: #375376;
+    font:Arial 9pt;
+}
 QPushButton#shareone{
     qproperty-icon: url(../../XJCO2811_UserInterface/icons/share.svg); 
     qproperty-iconSize: 24px; 

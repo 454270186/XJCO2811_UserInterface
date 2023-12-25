@@ -132,7 +132,7 @@
           <item>
            <widget class="QScrollArea" name="thumbnailList">
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(73, 74, 74);</string>
+             <string notr="true"/>
             </property>
             <property name="widgetResizable">
              <bool>true</bool>

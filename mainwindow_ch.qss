@@ -1,10 +1,6 @@
-#thumbnailList QScrollArea{
-    background-color: rgb(28, 49, 84);
-    color:rgb(28, 49, 84);
-}
 #lists QScrollBar::handle:horizontal {
     background: #4b729e;
-    min-width: 30px; /* 适用于水平滚动条 */
+    min-width: 20px; /* 适用于水平滚动条 */
     border-radius: 7px;
 }
 
@@ -32,7 +28,7 @@
 
 #thumbnailList QScrollBar::handle:vertical {
     background: #4b729e;
-    min-height: 30px;
+    min-height: 20px;
     border-radius: 7px;
 }
 
