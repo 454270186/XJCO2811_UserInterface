@@ -38,37 +38,39 @@ QPushButton#backward {
 }
 
 QPushButton#qa{
-     qproperty-icon: url(../XJCO2811_UserInterface/icons/QA.svg); 
-     qproperty-iconSize: 40px; 
-     border: none;
-     background-color: transparent;
-     icon-size: 64px 64px;
+    qproperty-icon: url(../XJCO2811_UserInterface/icons/QA.svg); 
+    qproperty-iconSize: 40px; 
+    border: none;
+    background-color: transparent;
+    icon-size: 64px 64px;
+    text-align: right; 
 }
 
 QPushButton#language{
-     qproperty-icon: url(../XJCO2811_UserInterface/icons/Chinese.svg); 
-     qproperty-iconSize: 40px; 
-     border: none;
-     background-color: transparent;
-     icon-size: 64px 64px;
+    qproperty-icon: url(../XJCO2811_UserInterface/icons/Chinese.svg); 
+    qproperty-iconSize: 40px; 
+    border: none;
+    background-color: transparent;
+    icon-size: 64px 64px;
+    text-align: center; 
 }
 
 QPushButton#findPath{
-     border: none;
-     background-color: transparent;
-     icon-size: 64px 64px;
-     padding: 0px;
-     qproperty-icon: url(../XJCO2811_UserInterface/icons/folder-plus.svg); 
-     qproperty-iconSize: 40px; 
+    border: none;
+    background-color: transparent;
+    icon-size: 64px 64px;
+    padding: 0px;
+    qproperty-icon: url(../XJCO2811_UserInterface/icons/folder-plus.svg); 
+    qproperty-iconSize: 40px; 
 }
 
 QPushButton#addList{
-     border: none;
-     background-color: transparent;
-     icon-size: 64px 64px;
-     padding: 0px;
-     qproperty-icon: url(../XJCO2811_UserInterface/icons/plus-circle.svg); 
-     qproperty-iconSize: 40px; 
+    border: none;
+    background-color: transparent;
+    icon-size: 64px 64px;
+    padding: 0px;
+    qproperty-icon: url(../XJCO2811_UserInterface/icons/plus-circle.svg); 
+    qproperty-iconSize: 40px; 
 }
 
 QLineEdit {
@@ -95,25 +97,25 @@ QMessageBox QPushButton {
 }
 
 QPushButton#Delete, QPushButton#submit {
-     color: white;
-     padding: 10px;
-     border: 1px solid white;
-     background-color: #444;
-     border-radius: 20px;
+    color: white;
+    padding: 10px;
+    border: 1px solid white;
+    background-color: #444;
+    border-radius: 20px;
 }
 
 QPushButton#Delete:hover, QPushButton#submit:hover {
-     background-color: #333;
-     border-color: #555;
-     border-radius: 20px;
+    background-color: #333;
+    border-color: #555;
+    border-radius: 20px;
 }
 
 QPushButton {
-     margin: 5px 5px 5px 5px;
+    margin: 5px 5px 5px 5px;
 }
 
 QPushButton:hover {
-     margin: 2px 5px 8px 5px;
+    margin: 2px 5px 8px 5px;
 }
 
 QLabel {
