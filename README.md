@@ -91,6 +91,31 @@ Download the latest source code and decompress
 
 
 
+### Keyboard Shortcuts
+
+SportX provides many keyboard shortcuts：
+
+**MainWindow**
+
+- `w`: increase volume
+- `s`: decrease volume
+- `a`: Switch to the previous video
+- `d`: Switch to the next video
+- `p`: Play / Pause
+
+**List Edit Window**
+
+- `F1`: Add new list
+- `F2`: Switch to FAQ page
+- `Caps Lock`: Switch Chinese/English
+- `Enter`: Submit / Edit
+- `Shift`: Delete
+- `tab`: Keyboard Navigation
+
+**FAQ Window**
+
+- `space`: Turn on Screen Reader
+
 
 
 <br/>
