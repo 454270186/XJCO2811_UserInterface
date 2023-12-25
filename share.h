@@ -1,8 +1,8 @@
 #ifndef SHARE_H
 #define SHARE_H
 
-#include <QMainWindow>
 #include <QLabel>
+#include <QMainWindow>
 
 namespace Ui {
 class share;
@@ -12,7 +12,7 @@ class share : public QMainWindow {
     Q_OBJECT
 
 public:
-    explicit share(QWidget *parent = nullptr);
+    explicit share(QWidget* parent = nullptr, bool isChinese = false);
     void RenderTheme();
     ~share();
 
@@ -29,11 +29,10 @@ private slots:
 
     void onShareSixClicked();
 
-
 private:
-    Ui::share *ui;
-    void setPicture(QLabel *label, const QString &imageName);
+    Ui::share* ui;
+    void setPicture(QLabel* label, const QString& imageName);
     void loadStyleSheet(const QString& sheetName);
 };
 
-#endif // SHARE_H
+#endif  // SHARE_H

@@ -22,9 +22,7 @@ share::share(QWidget* parent, bool isChinese) : QMainWindow(parent), ui(new Ui::
         }
 
         if (!StyleSheet.isEmpty()) {
-
             this->setStyleSheet(StyleSheet);
-            std::cout << StyleSheet.toStdString() << std::endl;
         } else {
             qDebug() << "Current directory:" << QDir::currentPath();
         }
@@ -39,9 +37,7 @@ share::share(QWidget* parent, bool isChinese) : QMainWindow(parent), ui(new Ui::
         }
 
         if (!StyleSheet.isEmpty()) {
-
             this->setStyleSheet(StyleSheet);
-            std::cout << StyleSheet.toStdString() << std::endl;
         } else {
             qDebug() << "Current directory:" << QDir::currentPath();
         }

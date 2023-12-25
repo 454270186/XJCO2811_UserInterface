@@ -596,7 +596,7 @@ void MainWindow::RenderTheme() {
 void MainWindow::onScreenShotClicked() {
     emit snapshot();
 
-    share* s = new share(this);
+    share* s = new share(this, commonResrc->isChineseLanguage_);
     std::cout << "share" << std::endl;
     s->show();
 }
