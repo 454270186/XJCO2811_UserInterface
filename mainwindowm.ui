@@ -135,7 +135,7 @@
           <item>
            <widget class="QScrollArea" name="thumbnailList">
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(73, 74, 74);</string>
+             <string notr="true"/>
             </property>
             <property name="widgetResizable">
              <bool>true</bool>
@@ -229,6 +229,9 @@
                  <width>20</width>
                  <height>20</height>
                 </size>
+               </property>
+               <property name="cursor">
+                <cursorShape>PointingHandCursor</cursorShape>
                </property>
                <property name="styleSheet">
                 <string notr="true">border: none; /* 移除边框 */
