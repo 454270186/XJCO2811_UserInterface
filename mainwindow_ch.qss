@@ -24,10 +24,11 @@
     background: none;
 }
 
-#lists QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {
-    background: none;
+QScrollArea#lists QScrollBar {
+    background: transparent;
+    width: 8px;
+    height: 10px;
 }
-
 
 
 #thumbnailList QScrollBar::handle:vertical {

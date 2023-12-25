@@ -111,6 +111,9 @@
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(73, 74, 74)</string>
                </property>
+               <property name="verticalScrollBarPolicy">
+                <enum>Qt::ScrollBarAlwaysOff</enum>
+               </property>
                <property name="widgetResizable">
                 <bool>true</bool>
                </property>
@@ -119,8 +122,8 @@
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>64</width>
-                  <height>67</height>
+                  <width>93</width>
+                  <height>75</height>
                  </rect>
                 </property>
                </widget>
