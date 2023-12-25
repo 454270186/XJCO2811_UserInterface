@@ -120,10 +120,10 @@
              <bool>false</bool>
             </property>
             <property name="styleSheet">
-             <string notr="true">border: none; /* 移除边框 */
-    background-color: transparent; /* 设置背景透明 */
-    icon-size: 64px 64px; /* 设置图标大小，根据需要进行调整 */
-    padding: 0px; /* 移除内边距 */</string>
+             <string notr="true">border: none;
+    background-color: transparent;
+    icon-size: 64px 64px;
+    padding: 0px;</string>
             </property>
             <property name="text">
              <string/>
@@ -134,9 +134,6 @@
            <widget class="QScrollArea" name="lists">
             <property name="statusTip">
              <string/>
-            </property>
-            <property name="autoFillBackground">
-             <bool>true</bool>
             </property>
             <property name="styleSheet">
              <string notr="true"/>
@@ -152,8 +149,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>69</width>
-               <height>61</height>
+               <width>84</width>
+               <height>77</height>
               </rect>
              </property>
              <property name="cursor">
@@ -248,10 +245,10 @@
                 <cursorShape>PointingHandCursor</cursorShape>
                </property>
                <property name="styleSheet">
-                <string notr="true">border: none; /* 移除边框 */
-    background-color: transparent; /* 设置背景透明 */
-    icon-size: 64px 64px; /* 设置图标大小，根据需要进行调整 */
-    padding: 0px; /* 移除内边距 */
+                <string notr="true">border: none;
+    background-color: transparent;
+    icon-size: 64px 64px;
+    padding: 0px;
 </string>
                </property>
                <property name="text">
@@ -271,6 +268,25 @@
                 </size>
                </property>
               </spacer>
+             </item>
+             <item>
+              <widget class="QPushButton" name="screenshot">
+               <property name="minimumSize">
+                <size>
+                 <width>30</width>
+                 <height>30</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>30</width>
+                 <height>30</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>截图</string>
+               </property>
+              </widget>
              </item>
             </layout>
            </widget>
@@ -324,10 +340,10 @@
                 <cursorShape>PointingHandCursor</cursorShape>
                </property>
                <property name="styleSheet">
-                <string notr="true">border: none; /* 移除边框 */
-    background-color: transparent; /* 设置背景透明 */
-    icon-size: 64px 64px; /* 设置图标大小，根据需要进行调整 */
-    padding: 0px; /* 移除内边距 */</string>
+                <string notr="true">border: none;
+    background-color: transparent;
+    icon-size: 64px 64px;
+    padding: 0px;</string>
                </property>
                <property name="text">
                 <string/>

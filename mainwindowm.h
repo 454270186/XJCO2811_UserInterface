@@ -11,7 +11,9 @@
 #include <QStringList>
 #include <QVideoWidget>
 #include <QWidget>
+#include <QTimer>
 
+#include <iostream>
 #include <vector>
 
 #include "mainwindowresource.h"
@@ -38,30 +40,27 @@ public:
     void RefreshList();
     void RenderTheme();
 
+    void DisconnectMediaplayerEvent() {
+        disconnect(commonResrc->mediaPlayer_, &QMediaPlayer::mediaStatusChanged, this,
+                   &mainwindowm::handleMediaStatusChanged);
+    }
+    void ConnectMediaplayerEvent() {
+        connect(commonResrc->mediaPlayer_, &QMediaPlayer::mediaStatusChanged, this,
+                &mainwindowm::handleMediaStatusChanged);
+    }
+
 signals:
     void switchPage(int pageIndex);
 
 public slots:
-
-    // Slot to switch between windows
     void switchToListset();
 
 private slots:
-    // Slot for the pause button click event
     void onPauseClicked();
-
-    // Slot for the forward button click event
     void onForwardClicked();
-
-    // Slot for the retreat button click event
     void onRetreatClicked();
-
-    // Slot for the progress bar slider move event
     void onProgressbarSliderMoved(int position);
-
-    // Slot to update the progress bar based on media position
     void updateProgressBar(qint64 position);
-
     void onButtonClicked();
     void parseFolder(const QString& folderPath);
     void handleVideoSelection(const QStringList& videoPaths, int currentIndex);  // 接口函数
@@ -70,6 +69,7 @@ private slots:
     void switchToPage() { emit switchPage(3); }
     void adjustVolume(int volume);
     void toggleVoiceControlStrip();
+    void onScreenShotClicked();
 
 private:
     void setMediaAndPlay();
@@ -77,11 +77,14 @@ private:
     void resizeEvent(QResizeEvent* event) override;
     void renderBtnList(QHBoxLayout* btnLayout);
     void keyPressEvent(QKeyEvent* event) override;
+    void increaseVolume();
+    void decreaseVolume();
+    void hideVolumeControl();
 
+    bool isVideoPlaying;
     QVideoWidget* videoWidget;
     QHBoxLayout* listsBtnsLayout;
-    bool isVideoPlaying;
-
+    QTimer *volumeControlTimer;
     MainWindowResource* commonResrc;
 };
 

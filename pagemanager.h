@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include <QResizeEvent>
 #include <QStackedWidget>
+#include <QTextToSpeech>
+
 #include "faq.h"
 #include "listset.h"
 #include "listsetsmall.h"
@@ -25,6 +27,7 @@ signals:
 private slots:
     void switchToPage(int pageIndex);
     void changeWindows(const QSize& size);
+    void handleFaqStopReading();
 
 protected:
     void resizeEvent(QResizeEvent* event) override { emit resized(event->size()); }

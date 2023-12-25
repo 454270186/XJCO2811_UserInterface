@@ -1,4 +1,5 @@
-#include "mainwindowm.h"
+#include <iostream>
+
 #include <QCoreApplication>
 #include <QDebug>
 #include <QDir>
@@ -8,11 +9,12 @@
 #include <QProcess>
 #include <QResizeEvent>
 #include <QVBoxLayout>
+
+#include "share.h"
 #include "btnconvert.h"
 #include "listset.h"
+#include "mainwindowm.h"
 #include "ui_mainwindowm.h"
-
-#include <iostream>
 
 // MainWindow constructor initializes the main window and its components.
 mainwindowm::mainwindowm(QWidget* parent, MainWindowResource* cr)
@@ -52,14 +54,10 @@ mainwindowm::mainwindowm(QWidget* parent, MainWindowResource* cr)
     QVBoxLayout* videoLayout = new QVBoxLayout(videoplayer);
     videoLayout->addWidget(videoWidget);
 
-    // 设置初始音量为 50
     commonResrc->mediaPlayer_->setVolume(50);
 
-    // 将 QSlider 初始值设置为 50
     ui->voicecontrolstrip->setValue(50);
-
     ui->videoBox->installEventFilter(this);
-
     ui->voicecontrolstrip->hide();
 
     isVideoPlaying = false;
@@ -74,10 +72,6 @@ mainwindowm::mainwindowm(QWidget* parent, MainWindowResource* cr)
     // Create a QHBoxLayout for the buttons
     listsBtnsLayout = new QHBoxLayout(listsContainer);
 
-    // Render all lists
-    //    fileUtil_ = new FileUtil("../XJCO2811_UserInterface/videolist_data.xml");
-    //    listInfos_ = fileUtil_->GetAllListsInfo();
-
     // Clear existing buttons
     QLayoutItem* child;
     while ((child = listsBtnsLayout->takeAt(0)) != nullptr) {
@@ -85,23 +79,6 @@ mainwindowm::mainwindowm(QWidget* parent, MainWindowResource* cr)
         delete child;
     }
 
-    // Create new buttons based on updated listInfos_
-    //    for (size_t i = 0; i < commonResrc->listinfo_.size(); i++) {
-    //        QPushButton* newButton = new QPushButton();
-    //        newButton->setText(commonResrc->listinfo_[i].name.c_str());
-    //        newButton->setCheckable(true);
-    //        newButton->setAutoExclusive(true);
-
-    //        // 设置按钮的最小和最大大小
-    //        newButton->setMinimumSize(100, 30);
-    //        newButton->setMaximumSize(100, 30);
-
-    //        listsLayout->addWidget(newButton);
-
-    //        // connect onClick hook
-    //        connect(newButton, &QPushButton::clicked,
-    //                [this, i] { parseFolder(commonResrc->listinfo_[i].videoDirPath.c_str()); });
-    //    }
     renderBtnList(listsBtnsLayout);
 
     // Set the container QWidget as the widget for the QScrollArea
@@ -110,10 +87,11 @@ mainwindowm::mainwindowm(QWidget* parent, MainWindowResource* cr)
     // Set the video output of the media player to the video widget
     commonResrc->mediaPlayer_->setVideoOutput(videoWidget);
 
-    // Connect signals and slots for window switch
-    connect(ui->addListBtn, &QPushButton::clicked, this, &mainwindowm::switchToPage);
+    volumeControlTimer = new QTimer(this);
+    volumeControlTimer->setSingleShot(true);
 
-    // Connect signals and slots for media playback control
+    connect(volumeControlTimer, &QTimer::timeout, this, &mainwindowm::hideVolumeControl);
+    connect(ui->addListBtn, &QPushButton::clicked, this, &mainwindowm::switchToPage);
     connect(commonResrc->mediaPlayer_, &QMediaPlayer::positionChanged, this, &mainwindowm::updateProgressBar);
     connect(ui->progressbar, &QSlider::sliderMoved, this, &mainwindowm::onProgressbarSliderMoved);
     connect(ui->forward, &QPushButton::clicked, this, &mainwindowm::onForwardClicked);
@@ -122,9 +100,9 @@ mainwindowm::mainwindowm(QWidget* parent, MainWindowResource* cr)
     connect(ui->fullScreen, &QPushButton::clicked, this, &mainwindowm::toggleFullScreen);
     connect(ui->voicecontrolstrip, &QSlider::valueChanged, this, &mainwindowm::adjustVolume);
     connect(ui->voice, &QPushButton::clicked, this, &mainwindowm::toggleVoiceControlStrip);
+    connect(ui->screenshot, &QPushButton::clicked, this, &mainwindowm::onScreenShotClicked);
 }
 
-// Destructor
 mainwindowm::~mainwindowm() {
     delete ui;
 }
@@ -151,7 +129,12 @@ void mainwindowm::renderBtnList(QHBoxLayout* btnLayout) {
 
 // keyPressEvent() handles various keyboard events within the window.
 // It performs specific actions based on the key pressed:
-// - Qt::Key_Escape: Triggers switchToPage() if the backward button is enabled and visible.
+// - Qt::Key_Escape: Triggers switchToPage() if the addListBtn button is enabled.
+// - Qt::Key_P: Toggles playback between pause and play if the pause button is enabled.
+// - Qt::Key_A: Triggers onRetreatClicked() to retreat in the media if the retreat button is enabled.
+// - Qt::Key_D: Triggers onForwardClicked() to advance in the media if the forward button is enabled.
+// - Qt::Key_W: Increases the volume if the voicecontrolstrip is enabled.
+// - Qt::Key_S: Decreases the volume if the voicecontrolstrip is enabled.
 // Other keys are handled by the default QMainWindow keyPressEvent handler.
 void mainwindowm::keyPressEvent(QKeyEvent* event) {
     switch (event->key()) {
@@ -160,9 +143,75 @@ void mainwindowm::keyPressEvent(QKeyEvent* event) {
                 switchToPage();
             }
             break;
+        case Qt::Key_P:
+            if (ui->pause->isEnabled()) {
+                onPauseClicked();
+            }
+            event->accept();
+            break;
+        case Qt::Key_A:
+            if (ui->retreat->isEnabled()){
+                onRetreatClicked();
+            }
+            break;
+        case Qt::Key_D:
+            if (ui->forward->isEnabled()) {
+                onForwardClicked();
+            }
+            break;
+        case Qt::Key_W:
+            if (ui->voicecontrolstrip->isEnabled()) {
+                increaseVolume();
+            }
+            break;
+        case Qt::Key_S:
+            if (ui->voicecontrolstrip->isEnabled()) {
+                decreaseVolume();
+            }
+            break;
         default:
             QMainWindow::keyPressEvent(event);
     }
+}
+
+// hideVolumeControl() hides the volume control slider.
+// This function is called after a delay to auto-hide the volume slider.
+void mainwindowm::hideVolumeControl() {
+    ui->voicecontrolstrip->hide();
+}
+
+// increaseVolume() increases media player's volume by 10 units up to a maximum of 100.
+// It performs the following actions:
+// - Retrieves the current volume of the media player.
+// - Increases the volume by 10 units, ensuring it does not exceed 100.
+// - Sets the new volume to the media player.
+// - Updates the volume control slider to reflect the new volume.
+// - Shows the volume control slider and starts a timer to hide it after 1 second.
+// This function is typically connected to keyboard shortcut.
+void mainwindowm::increaseVolume() {
+    int volume = commonResrc->mediaPlayer_->volume();
+    int newVolume = qMin(volume + 10, 100);
+    commonResrc->mediaPlayer_->setVolume(newVolume);
+    ui->voicecontrolstrip->setValue(newVolume);
+    ui->voicecontrolstrip->show();
+    volumeControlTimer->start(1000);
+}
+
+// decreaseVolume() decreases media player's volume by 10 units down to a minimum of 0.
+// It performs the following actions:
+// - Retrieves the current volume of the media player.
+// - Decreases the volume by 10 units, ensuring it does not go below 0.
+// - Sets the new volume to the media player.
+// - Updates the volume control slider to reflect the new volume.
+// - Shows the volume control slider and starts a timer to hide it after 1 second.
+// This function is typically connected to keyboard shortcut.
+void mainwindowm::decreaseVolume() {
+    int volume = commonResrc->mediaPlayer_->volume();
+    int newVolume = qMax(volume - 10, 0);
+    commonResrc->mediaPlayer_->setVolume(newVolume);
+    ui->voicecontrolstrip->setValue(newVolume);
+    ui->voicecontrolstrip->show();
+    volumeControlTimer->start(1000);
 }
 
 // onPauseClicked() toggles the play/pause state of the media player.
@@ -173,9 +222,15 @@ void mainwindowm::onPauseClicked() {
     if (commonResrc->mediaPlayer_->state() == QMediaPlayer::PlayingState) {
         // If the media player is currently in the playing state, pause playback
         commonResrc->mediaPlayer_->pause();
+
+        // Set the pause icon
+        ui->pause->setIcon(QIcon("../XJCO2811_UserInterface/icons/play-circle.svg"));
     } else {
         // If the media player is not in the playing state, start or resume playback
         commonResrc->mediaPlayer_->play();
+
+        // Set the play icon
+        ui->pause->setIcon(QIcon("../XJCO2811_UserInterface/icons/pause.svg"));
     }
 }
 
@@ -249,7 +304,6 @@ void mainwindowm::handleMediaStatusChanged(QMediaPlayer::MediaStatus status) {
     if (status == QMediaPlayer::LoadedMedia) {
         // Media has loaded successfully, start playback
         std::cout << "play video: " << commonResrc->currentVideoIndex_ << std::endl;
-        //        disconnect(mediaPlayer, &QMediaPlayer::mediaStatusChanged, this, &MainWindow::handleMediaStatusChanged);
         commonResrc->mediaPlayer_->play();
         isVideoPlaying = true;
         ui->video->show();
@@ -283,6 +337,8 @@ void mainwindowm::setMediaAndPlay() {
         commonResrc->mediaPlayer_->setMedia(QUrl::fromLocalFile(QFileInfo(videoPath).absoluteFilePath()));
 
         // Set up a signal-slot connection for media status changed
+        std::cout << "mainwindowm connect handlemediastatuschange" << std::endl;
+
         connect(commonResrc->mediaPlayer_, &QMediaPlayer::mediaStatusChanged, this,
                 &mainwindowm::handleMediaStatusChanged);
     }
@@ -408,6 +464,8 @@ void mainwindowm::onButtonClicked() {
         // Find the index of the video path in the list and handle the video selection
         int index = commonResrc->videoPaths_.indexOf(videoPath);
         if (index != -1) {
+            disconnect(commonResrc->mediaPlayer_, &QMediaPlayer::mediaStatusChanged, this,
+                       &mainwindowm::handleMediaStatusChanged);
             handleVideoSelection(commonResrc->videoPaths_, index);
         }
         ui->picturelist->hide();
@@ -528,4 +586,10 @@ void mainwindowm::RenderTheme() {
 
     // render thumbnails
     parseFolder(commonResrc->listinfo_[commonResrc->currentListButtonIndex_].videoDirPath.c_str());
+}
+
+void mainwindowm::onScreenShotClicked() {
+    share* s = new share(this);
+    std::cout << "share" << std::endl;
+    s->show();
 }

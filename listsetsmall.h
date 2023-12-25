@@ -1,6 +1,10 @@
 #ifndef LISTSETSMALL_H
 #define LISTSETSMALL_H
 
+#include <iostream>
+#include <map>
+#include <vector>
+
 #include <QHBoxLayout>
 #include <QKeyEvent>
 #include <QLabel>
@@ -10,12 +14,7 @@
 #include <QString>
 #include <QWidget>
 
-#include <map>
-#include <vector>
-
 #include "listsetresource.h"
-
-#include <iostream>
 
 extern std::map<int, QString> errorMessages;
 
