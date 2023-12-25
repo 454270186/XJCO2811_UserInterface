@@ -102,6 +102,7 @@ SportX provides many keyboard shortcuts：
 - `a`: Switch to the previous video
 - `d`: Switch to the next video
 - `p`: Play / Pause
+- `esc`: Switch to List Edit Window
 
 **List Edit Window**
 
@@ -111,10 +112,12 @@ SportX provides many keyboard shortcuts：
 - `Enter`: Submit / Edit
 - `Shift`: Delete
 - `tab`: Keyboard Navigation
+- `esc`: Switch to FAQ
 
 **FAQ Window**
 
 - `space`: Turn on Screen Reader
+- `esc`: Switch back to List Edit Window
 
 
 
