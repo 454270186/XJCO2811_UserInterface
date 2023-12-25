@@ -6,21 +6,45 @@
 #include <QPixmap>
 #include "ui_share.h"
 
-share::share(QWidget* parent) : QMainWindow(parent), ui(new Ui::share) {
-    ui->setupUi(this);
-    QFile file1("../XJCO2811_UserInterface/share.qss");
-    QString StyleSheet;
-    if (file1.open(QFile::ReadOnly)) {
-        StyleSheet += QLatin1String(file1.readAll());
-        file1.close();
-    } else {
-        qDebug() << "File does not exist: " << file1.fileName();
-    }
+#include <iostream>
 
-    if (!StyleSheet.isEmpty()) {
-        this->setStyleSheet(StyleSheet);
+share::share(QWidget* parent, bool isChinese) : QMainWindow(parent), ui(new Ui::share) {
+    ui->setupUi(this);
+
+    if (isChinese) {
+        QFile file1("../XJCO2811_UserInterface/share_ch.qss");
+        QString StyleSheet;
+        if (file1.open(QFile::ReadOnly)) {
+            StyleSheet += QLatin1String(file1.readAll());
+            file1.close();
+        } else {
+            qDebug() << "File does not exist: " << file1.fileName();
+        }
+
+        if (!StyleSheet.isEmpty()) {
+
+            this->setStyleSheet(StyleSheet);
+            std::cout << StyleSheet.toStdString() << std::endl;
+        } else {
+            qDebug() << "Current directory:" << QDir::currentPath();
+        }
     } else {
-        qDebug() << "Current directory:" << QDir::currentPath();
+        QFile file1("../XJCO2811_UserInterface/share.qss");
+        QString StyleSheet;
+        if (file1.open(QFile::ReadOnly)) {
+            StyleSheet += QLatin1String(file1.readAll());
+            file1.close();
+        } else {
+            qDebug() << "File does not exist: " << file1.fileName();
+        }
+
+        if (!StyleSheet.isEmpty()) {
+
+            this->setStyleSheet(StyleSheet);
+            std::cout << StyleSheet.toStdString() << std::endl;
+        } else {
+            qDebug() << "Current directory:" << QDir::currentPath();
+        }
     }
 
     // 在构造函数中确保 QLabel 控件存在
@@ -30,7 +54,6 @@ share::share(QWidget* parent) : QMainWindow(parent), ui(new Ui::share) {
     ui->picturefour->show();
     ui->picturefive->show();
     ui->picturesix->show();
-
 
     // 构建正确的图片路径并设置到 QLabel
     setPicture(ui->pictureone, "one.jpg");
