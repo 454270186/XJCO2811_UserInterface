@@ -8,6 +8,8 @@
 #include <QTranslator>
 #include <QWidget>
 
+#include "listsetresource.h"
+
 namespace Ui {
 class Faq;
 }
@@ -16,8 +18,10 @@ class Faq : public QDialog {
     Q_OBJECT
 
 public:
-    explicit Faq(QWidget* parent = nullptr);
+    explicit Faq(QWidget* parent = nullptr, ListSetResource* cr = nullptr);
     ~Faq();
+
+    void RenderTheme();
 
 signals:
     void switchPage(int pageIndex);
@@ -35,6 +39,8 @@ private:
     bool isChineseLanguage;
     void loadStyleSheet(const QString& sheetName);
     QTranslator translator;
+
+    ListSetResource* commonResrc;
 };
 
 #endif  // FAQ_H

@@ -1,12 +1,15 @@
-
+#thumbnailList QScrollArea{
+    background-color: rgb(28, 49, 84);
+    color:rgb(28, 49, 84);
+}
 #lists QScrollBar::handle:horizontal {
-    background: #9aa3ad;
+    background: #4b729e;
     min-width: 30px; /* 适用于水平滚动条 */
     border-radius: 7px;
 }
 
 #lists QScrollBar::handle:horizontal:hover {
-    background: #747b84;
+    background: #375376;
 }
 
 #lists QScrollBar::sub-line:horizontal, QScrollBar::add-line:horizontal {
@@ -28,13 +31,13 @@
 
 
 #thumbnailList QScrollBar::handle:vertical {
-    background: #9aa3ad;
+    background: #4b729e;
     min-height: 30px;
     border-radius: 7px;
 }
 
 #thumbnailList QScrollBar::handle:vertical:hover {
-    background: #747b84;
+    background: #375376;
 }
 
 #thumbnailList QScrollBar::sub-line:vertical, QScrollBar::add-line:vertical {
@@ -54,7 +57,8 @@
 }
 
 QMainWindow {
-    background-color: rgb(39, 40, 40);
+    background-color: rgb(10, 25, 47); 
+
 }
 
 QPushButton#retreat{
@@ -114,7 +118,7 @@ QScrollArea#lists QPushButton{
 }
 
 QScrollArea#lists QPushButton:checked {
-    background-color: rgb(75, 77, 77);
+    background-color: rgb(10, 25, 47);
     font-weight: bold;
     text-transform: uppercase;
     border: 2px solid #4aa1ff;
@@ -122,7 +126,8 @@ QScrollArea#lists QPushButton:checked {
 }
 
 QScrollArea#lists QPushButton:hover {
-    background-color: rgb(75, 77, 77);
+    background-color: rgb(28, 49, 84); 
+
     border: 1px solid white;
     color: #F0F0F0;
     font-weight: bold;
@@ -135,15 +140,26 @@ QScrollArea#lists QPushButton:hover {
 #thumbnailList QPushButton:pressed {
     border: 2px solid #4aa1ff; 
 }
-#thumbnailList{
-    background-color: rgb(75, 77, 77);
-    color:rgb(75, 77, 77);
+#thumbnailList QWidget{
+    background-color: rgb(28, 49, 84);
+    color:rgb(28, 49, 84);
 }
-QScrollArea#thumbnailList QWidget{
-    background-color: rgb(75, 77, 77);
-    color:rgb(75, 77, 77);
+#lists QWidget{
+    background-color: rgb(28, 49, 84);
+}
+QMainwindow{
+    background-color: rgb(10, 25, 47);
+    color:rgb(10, 25, 47);
 }
 #lists{
-    background-color: rgb(75, 77, 77);
-    color:rgb(75, 77, 77);
+    background-color: rgb(28, 49, 84);
+    color:rgb(28, 49, 84);
+}
+QScrollArea#thumbnailList QWidget{
+    background-color: rgb(28, 49, 84);
+    color:rgb(28, 49, 84);
+}
+#thumbnailList{
+    background-color: rgb(28, 49, 84);
+    color:rgb(28, 49, 84);
 }

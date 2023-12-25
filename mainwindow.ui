@@ -139,8 +139,7 @@
              <bool>true</bool>
             </property>
             <property name="styleSheet">
-             <string notr="true">    background-color: rgb(75,77,77);
-  </string>
+             <string notr="true"/>
             </property>
             <property name="lineWidth">
              <number>0</number>
@@ -188,7 +187,7 @@
        <item>
         <widget class="QScrollArea" name="thumbnailList">
          <property name="styleSheet">
-          <string notr="true">background-color: rgb(73, 74, 74);</string>
+          <string notr="true"/>
          </property>
          <property name="widgetResizable">
           <bool>true</bool>
