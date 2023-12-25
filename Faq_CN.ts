@@ -115,5 +115,16 @@ To delete: Directly click the 'Delete' button.</source>
 要编辑：修改表单内容并点击“编辑”按钮。
 要删除：直接点击“删除”按钮。</translation>
     </message>
+    <message>
+    <source>Can I Share Screenshots with Friends?</source>
+    <translation>我可以与朋友分享屏幕截图吗？</translation>
+    </message>
+    <message>
+        <source>Click the 'Share' button to capture the current video frame.
+Your contacts list will be opened.
+Select a friend to share the screenshot with.
+The screenshot is also saved in your default local folder.</source>
+        <translation>点击“分享”按钮捕捉当前视频帧。您的联系人列表将被打开。选择一个朋友分享屏幕截图。屏幕截图也将保存在您的默认本地文件夹中。</translation>
+    </message>
 </context>
 </TS>

@@ -174,9 +174,9 @@ QPushButton#newButton:checked {
     border-radius: 15px;
 }
 
-QScrollBar::handle:horizontal {
+ QScrollBar::handle:horizontal {
     background: #4b729e;
-    min-width: 20px; /* 适用于水平滚动条 */
+    min-width: 30px; /* 适用于水平滚动条 */
     border-radius: 7px;
 }
 
