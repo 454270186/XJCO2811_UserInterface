@@ -1,0 +1,30 @@
+QMainWindow {
+    background-color: rgb(39, 40, 40);
+    font:Arial 9pt;
+
+}
+
+QPushButton#shareone{
+    qproperty-icon: url(../XJCO2811_UserInterface/icons/share.svg); 
+    qproperty-iconSize: 10px; 
+}
+QPushButton#sharetwo{
+    qproperty-icon: url(../XJCO2811_UserInterface/icons/share.svg); 
+    qproperty-iconSize: 24px; 
+}
+QPushButton#sharethree{
+    qproperty-icon: url(../XJCO2811_UserInterface/icons/share.svg); 
+    qproperty-iconSize: 24px; 
+}
+QPushButton#sharefour{
+    qproperty-icon: url(../XJCO2811_UserInterface/icons/share.svg); 
+    qproperty-iconSize: 24px; 
+}
+QPushButton#sharefive{
+    qproperty-icon: url(../XJCO2811_UserInterface/icons/share.svg); 
+    qproperty-iconSize: 24px; 
+}
+QPushButton#sharesix{
+    qproperty-icon: url(../XJCO2811_UserInterface/icons/share.svg); 
+    qproperty-iconSize: 24px; 
+}

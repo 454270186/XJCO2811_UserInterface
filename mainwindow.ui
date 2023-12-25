@@ -80,7 +80,25 @@
          <property name="title">
           <string/>
          </property>
-         <layout class="QHBoxLayout" name="horizontalLayout">
+         <property name="flat">
+          <bool>false</bool>
+         </property>
+         <property name="checkable">
+          <bool>false</bool>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0">
+          <property name="leftMargin">
+           <number>12</number>
+          </property>
+          <property name="topMargin">
+           <number>12</number>
+          </property>
+          <property name="rightMargin">
+           <number>12</number>
+          </property>
+          <property name="bottomMargin">
+           <number>18</number>
+          </property>
           <item>
            <widget class="QPushButton" name="addListBtn">
             <property name="minimumSize">
@@ -120,6 +138,9 @@
             <property name="styleSheet">
              <string notr="true"/>
             </property>
+            <property name="lineWidth">
+             <number>0</number>
+            </property>
             <property name="widgetResizable">
              <bool>true</bool>
             </property>
@@ -128,12 +149,31 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>72</width>
-               <height>67</height>
+               <width>69</width>
+               <height>61</height>
               </rect>
              </property>
+             <property name="cursor">
+              <cursorShape>ArrowCursor</cursorShape>
+             </property>
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
+             </property>
+             <property name="contextMenuPolicy">
+              <enum>Qt::NoContextMenu</enum>
+             </property>
+             <property name="acceptDrops">
+              <bool>false</bool>
+             </property>
+             <property name="toolTipDuration">
+              <number>-1</number>
+             </property>
+             <property name="autoFillBackground">
+              <bool>false</bool>
+             </property>
              <property name="styleSheet">
-              <string notr="true"/>
+              <string notr="true">    background-color: transparent;
+</string>
              </property>
             </widget>
            </widget>
@@ -207,12 +247,18 @@
                <property name="styleSheet">
                 <string notr="true">border: none;
     background-color: transparent;
-    icon-size: 64px 64px;
+    icon-size: 20px 20px;
     padding: 0px;
 </string>
                </property>
                <property name="text">
                 <string/>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>10</width>
+                 <height>10</height>
+                </size>
                </property>
               </widget>
              </item>
@@ -243,8 +289,15 @@
                  <height>30</height>
                 </size>
                </property>
+               <property name="styleSheet">
+                <string notr="true">border: none;
+    background-color: transparent;
+    icon-size: 64px 64px;
+    padding: 0px;
+</string>
+               </property>
                <property name="text">
-                <string>截图</string>
+                <string/>
                </property>
               </widget>
              </item>
