@@ -177,7 +177,7 @@ System adjusts the interface based on the size of the device.</string>
             </font>
            </property>
            <property name="text">
-            <string>Can I Create My Own Videos?</string>
+            <string>Can I Share Screenshots with Friends?</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
@@ -392,10 +392,10 @@ Eg: clicking buttons, submitting inputs, etc…</string>
             </font>
            </property>
            <property name="text">
-            <string>Absolutely! Users can create their own videos.
-Navigate to the 'ListSet' page and click the 'Record' button.
-The software will use the device's front camera for recording.
-Videos are saved in the default directory.</string>
+            <string>Click the 'Share' button to capture the current video frame.
+Your contacts list will be opened.
+Select a friend to share the screenshot with.
+The screenshot is also saved in your default local folder.</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
