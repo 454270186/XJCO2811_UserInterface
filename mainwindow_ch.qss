@@ -127,7 +127,6 @@ QScrollArea#lists QPushButton:checked {
 
 QScrollArea#lists QPushButton:hover {
     background-color: rgb(28, 49, 84); 
-
     border: 1px solid white;
     color: #F0F0F0;
     font-weight: bold;
