@@ -118,6 +118,7 @@ SportX provides many keyboard shortcuts：
 
 - `space`: Turn on Screen Reader
 - `esc`: Switch back to List Edit Window
+- `Caps Lock`: Switch Chinese/English
 
 
 
