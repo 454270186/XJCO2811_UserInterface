@@ -46,7 +46,7 @@ QPushButton#shareone{
     qproperty-iconSize: 24px; 
 }
 QPushButton#sharetwo{
-    qproperty-icon: url(../XJCO2811_UserInterface/icons/share.svg); 
+    qproperty-icon: url(../../XJCO2811_UserInterface/icons/share.svg); 
     qproperty-iconSize: 24px; 
 }
 QPushButton#sharethree{

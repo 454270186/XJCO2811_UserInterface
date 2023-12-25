@@ -8,7 +8,7 @@
 
 share::share(QWidget* parent) : QMainWindow(parent), ui(new Ui::share) {
     ui->setupUi(this);
-    QFile file1("../XJCO2811_UserInterface/share.qss");
+    QFile file1("../XJCO2811_UserInterface/share_ch.qss");
     QString StyleSheet;
     if (file1.open(QFile::ReadOnly)) {
         StyleSheet += QLatin1String(file1.readAll());
