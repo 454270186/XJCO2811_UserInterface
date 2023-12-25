@@ -1,49 +1,137 @@
-# XJCO2811_UserInterface
+<!-- PROJECT LOGO -->
+<br />
 
-![c++](https://img.shields.io/badge/C++-00599C.svg?style=for-the-badge&logo=C++&logoColor=white)
-![QT](https://img.shields.io/badge/Qt-41CD52.svg?style=for-the-badge&logo=Qt&logoColor=white)
-
-当你在本地完成了一部分工作并希望将更改推送到远程仓库时，可以按照以下流程进行操作：
-
-1. 确保你的本地分支是基于远程仓库的最新代码创建的，并且你的更改已经提交到本地分支。
-
-    切换到主分支（例如 main 或 master）并拉取最新的代码：
-
-    ```shell
-    git checkout main
-    git pull origin main
-    ```
-
-2. 切换回你的分支：
-
-    ```shell
-    git checkout your_branch
-    ```
-
-3. 将主分支的最新代码合并到你的分支：
-    ```shell
-    git merge main
-    ```
-    如果在合并过程中出现冲突，需要解决冲突并手动编辑文件以保持代码的一致性。
+<div align="center">
+  <img src="./img/logo.png" alt="Logo">
+  <h1 align="center">SportX</h3>
+  <p align="center">
+    An awesome outdoor enthusiast' video player app
+    <br />
+    <a href="https://github.com/454270186/XJCO2811_UserInterface"><strong>Explore the Repo</strong></a>
+    <br />
+  </p>
 
 
-4. 提交合并后的更改：
-    ```shell
-    git add .
-    git commit -m "Merge main into your_branch"
-    ```
+</div>
 
-5. 推送你的分支到远程仓库：
-    ```shell
-    git push origin your_branch
-    ```
-    这将把你的本地分支的更改推送到远程仓库的你的分支。
+<br/>
+
+<br/>
+
+<!-- ABOUT THE PROJECT -->
+
+## About The APP
+
+<div style="display: inline-block;">
+    <img src="./img/videoplayer.png" alt="mainwindow" width="300" height="400" />
+	<img src="./img/listset.png" alt="listset" width="300" height="400" />
+</div>
 
 
-6. 在远程仓库中打开你的分支，并创建一个 Pull Request（PR）。
 
-    在 PR 中提供标题和描述，解释你的更改内容和目的。
-    邀请其他团队成员进行代码审查和讨论。
-    根据审查意见进行必要的修改和提交。
 
-7. 当你的更改得到批准后，将其合并到主分支。
+
+<br/>
+
+
+### Built With
+
+![C++](https://img.shields.io/badge/c++-%2300599C.svg?style=for-the-badge&logo=c%2B%2B&logoColor=white)![Qt](https://img.shields.io/badge/Qt-%23217346.svg?style=for-the-badge&logo=Qt&logoColor=white)
+
+
+
+<br/>
+
+<!-- GETTING STARTED -->
+
+## Getting Started
+
+This is an example of how you may give instructions on setting up your project locally.
+To get a local copy up and running follow these simple example steps.
+
+### Prerequisites
+
+Ensure that you have install `g++` that supports C++11 and `Qt5.15.2` in your computer
+
+
+
+### Installation
+
+#### 1. From GitHub
+
+- Clone the repo
+
+	```
+	git clone https://github.com/454270186/XJCO2811_UserInterface.git
+	```
+
+
+
+#### 2. Download Zip
+
+Download the latest source code and decompress
+
+
+
+### How to run
+
+1. Open `*.pro` qmeke config file with `QT Creator`
+
+2. **Set up working directory of Project** ----- **IMPORTANT!!!**
+
+   After opening `QT Creator`, click on the `Projects` button on the right side.
+
+   In **Run Settings**,  set the **Working directory** like this:
+
+   <img src="./img/setup.png" alt="setup" style="zoom:50%;" />
+
+   
+
+3. Click on the `Run` button in the bottom right corner
+
+
+
+### Keyboard Shortcuts
+
+SportX provides many keyboard shortcuts：
+
+**MainWindow**
+
+- `w`: increase volume
+- `s`: decrease volume
+- `a`: Switch to the previous video
+- `d`: Switch to the next video
+- `p`: Play / Pause
+- `esc`: Switch to List Edit Window
+
+**List Edit Window**
+
+- `F1`: Add new list
+- `F2`: Switch to FAQ page
+- `Caps Lock`: Switch Chinese/English
+- `Enter`: Submit / Edit
+- `Shift`: Delete
+- `tab`: Keyboard Navigation
+- `esc`: Switch to FAQ
+
+**FAQ Window**
+
+- `space`: Turn on Screen Reader
+- `esc`: Switch back to List Edit Window
+- `Caps Lock`: Switch Chinese/English
+
+
+
+<br/>
+
+<br/>
+
+<!-- CONTRIBUTING -->
+
+## Contributors
+
+- [Erfei Yu](https://github.com/454270186)
+- [Yufei Wang](https://github.com/Deck-Wang416)
+- [Zihao You](https://github.com/romanticthemeRT)
+- [Biliu Wang](https://github.com/Bi666)
+- [Yue Hao](https://github.com/HaoYue201587216)
