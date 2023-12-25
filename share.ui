@@ -61,8 +61,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>286</width>
-         <height>486</height>
+         <width>259</width>
+         <height>494</height>
         </rect>
        </property>
        <property name="maximumSize">
@@ -125,8 +125,14 @@
                <height>35</height>
               </size>
              </property>
+             <property name="styleSheet">
+              <string notr="true">border: none; /* 移除边框 */
+    background-color: transparent; /* 设置背景透明 */
+    icon-size: 64px 64px; /* 设置图标大小，根据需要进行调整 */
+    padding: 0px; /* 移除内边距 */</string>
+             </property>
              <property name="text">
-              <string>分享</string>
+              <string/>
              </property>
             </widget>
            </item>
@@ -186,8 +192,24 @@
                <height>35</height>
               </size>
              </property>
+             <property name="styleSheet">
+              <string notr="true">border: none; /* 移除边框 */
+    background-color: transparent; /* 设置背景透明 */
+    icon-size: 64px 64px; /* 设置图标大小，根据需要进行调整 */
+    padding: 0px; /* 移除内边距 */</string>
+             </property>
              <property name="text">
-              <string>分享</string>
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset>
+               <normaloff>icons/share.svg</normaloff>icons/share.svg</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>73</width>
+               <height>64</height>
+              </size>
              </property>
             </widget>
            </item>
@@ -247,8 +269,14 @@
                <height>35</height>
               </size>
              </property>
+             <property name="styleSheet">
+              <string notr="true">border: none;
+    background-color: transparent;
+    icon-size: 64px 64px;
+    padding: 0px;</string>
+             </property>
              <property name="text">
-              <string>分享</string>
+              <string/>
              </property>
             </widget>
            </item>
@@ -308,8 +336,14 @@
                <height>35</height>
               </size>
              </property>
+             <property name="styleSheet">
+              <string notr="true">border: none;
+    background-color: transparent;
+    icon-size: 64px 64px;
+    padding: 0px;</string>
+             </property>
              <property name="text">
-              <string>分享</string>
+              <string/>
              </property>
             </widget>
            </item>
@@ -369,8 +403,14 @@
                <height>35</height>
               </size>
              </property>
+             <property name="styleSheet">
+              <string notr="true">border: none;
+    background-color: transparent;
+    icon-size: 64px 64px;
+    padding: 0px;</string>
+             </property>
              <property name="text">
-              <string>分享</string>
+              <string/>
              </property>
             </widget>
            </item>
@@ -430,8 +470,14 @@
                <height>35</height>
               </size>
              </property>
+             <property name="styleSheet">
+              <string notr="true">border: none;
+    background-color: transparent;
+    icon-size: 64px 64px;
+    padding: 0px;</string>
+             </property>
              <property name="text">
-              <string>分享</string>
+              <string/>
              </property>
             </widget>
            </item>

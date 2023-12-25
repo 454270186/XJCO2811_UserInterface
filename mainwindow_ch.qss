@@ -1,4 +1,7 @@
-
+#thumbnailList QScrollArea{
+    background-color: rgb(28, 49, 84);
+    color:rgb(28, 49, 84);
+}
 #lists QScrollBar::handle:horizontal {
     background: #4b729e;
     min-width: 30px; /* 适用于水平滚动条 */
@@ -81,7 +84,7 @@ QPushButton#addListBtn{
 
 QPushButton#fullScreen{
     qproperty-icon: url(../XJCO2811_UserInterface/icons/arrows-fullscreen.svg); 
-    qproperty-iconSize: 24px; 
+    qproperty-iconSize: 18px; 
     
 }
 
@@ -146,8 +149,19 @@ QMainwindow{
     background-color: rgb(10, 25, 47);
     color:rgb(10, 25, 47);
 }
-
-#thumbnailList {
+#lists{
     background-color: rgb(28, 49, 84);
     color:rgb(28, 49, 84);
+}
+QScrollArea#thumbnailList QWidget{
+    background-color: rgb(28, 49, 84);
+    color:rgb(28, 49, 84);
+}
+#thumbnailList{
+    background-color: rgb(28, 49, 84);
+    color:rgb(28, 49, 84);
+}
+QPushButton#screenshot{
+    qproperty-icon: url(../XJCO2811_UserInterface/icons/reply.svg); 
+    qproperty-iconSize: 24px; 
 }
