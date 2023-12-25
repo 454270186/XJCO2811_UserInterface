@@ -232,4 +232,6 @@ void Faq::RenderTheme() {
         loadStyleSheet("faq.qss");
         qApp->removeTranslator(&translator);
     }
+
+    ui->retranslateUi(this);
 }
