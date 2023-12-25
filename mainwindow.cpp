@@ -8,6 +8,7 @@
 #include <QHBoxLayout>
 #include <QProcess>
 #include <QResizeEvent>
+#include <QScreen>
 #include <QVBoxLayout>
 
 #include "btnconvert.h"
@@ -593,6 +594,8 @@ void MainWindow::RenderTheme() {
 }
 
 void MainWindow::onScreenShotClicked() {
+    emit snapshot();
+
     share* s = new share(this);
     std::cout << "share" << std::endl;
     s->show();

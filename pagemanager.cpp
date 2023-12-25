@@ -1,5 +1,18 @@
-#include "pagemanager.h"
+#include <QApplication>
+#include <QDebug>
+#include <QDir>
+#include <QFileDialog>
+#include <QFileInfo>
+#include <QHBoxLayout>
+#include <QPixmap>
+#include <QProcess>
+#include <QResizeEvent>
+#include <QScreen>
+#include <QUuid>
+#include <QVBoxLayout>
+
 #include "mainwindowresource.h"
+#include "pagemanager.h"
 
 PageManager::PageManager(QWidget* parent) : QMainWindow{parent} {
     stackPage = new QStackedWidget(this);
@@ -30,6 +43,10 @@ PageManager::PageManager(QWidget* parent) : QMainWindow{parent} {
     connect(faq, &Faq::stopReading, this, &PageManager::handleFaqStopReading);
     connect(this, &PageManager::resized, this, &PageManager::changeWindows);
 
+    // snapshot
+    connect(mainwindow, &MainWindow::snapshot, this, &PageManager::handleScreenShot);
+    connect(mainwindowSmall, &mainwindowm::snapshot, this, &PageManager::handleScreenShot);
+
     setCentralWidget(stackPage);
 }
 
@@ -49,6 +66,30 @@ PageManager::~PageManager() {
 
 void PageManager::handleFaqStopReading() {
     faq->stopReadingAndReset();
+}
+
+void PageManager::handleScreenShot() {
+    QScreen* screen = QGuiApplication::primaryScreen();
+
+    QRect videoRect = this->geometry();
+
+    QPixmap screenshot = screen->grabWindow(0, videoRect.x(), videoRect.y(), videoRect.width(), videoRect.height());
+
+    QString directory = "../XJCO2811_UserInterface/snapshot";
+    QDir dir(directory);
+    if (!dir.exists()) {
+        if (!dir.mkpath(directory)) {
+            std::cerr << "Error: Failed to create directory: " << directory.toStdString() << std::endl;
+            return;
+        }
+    }
+
+    QUuid uuid = QUuid::createUuid();
+    QString snapPath = "../XJCO2811_UserInterface/snapshot/" + uuid.toString() + ".jpg";
+    if (!snapPath.isEmpty()) {
+        std::cout << "cover!!!" << std::endl;
+        screenshot.save(snapPath);
+    }
 }
 
 void PageManager::switchToPage(int pageIndex) {

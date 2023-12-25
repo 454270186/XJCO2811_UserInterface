@@ -595,6 +595,8 @@ void mainwindowm::RenderTheme() {
 }
 
 void mainwindowm::onScreenShotClicked() {
+    emit snapshot();
+
     share* s = new share(this);
     std::cout << "share" << std::endl;
     s->show();

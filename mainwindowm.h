@@ -51,6 +51,7 @@ public:
 
 signals:
     void switchPage(int pageIndex);
+    void snapshot();
 
 public slots:
     void switchToListset();
