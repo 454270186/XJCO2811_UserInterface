@@ -62,7 +62,7 @@ void share::setPicture(QLabel* label, const QString& imageName) {
 
 void share::onShareOneClicked() {
     // 显示分享成功的弹窗
-    QMessageBox::information(this, "分享失败", "赵老师觉得你太菜了!");
+    QMessageBox::information(this, "Share successfully", "Sent the screenshot to Mr.Zhao");
 
     // 添加事件循环，确保消息框的事件被处理
     QCoreApplication::processEvents();
@@ -70,7 +70,7 @@ void share::onShareOneClicked() {
 
 void share::onShareTwoClicked() {
     // 显示分享成功的弹窗
-    QMessageBox::information(this, "分享失败", "因为子豪把你拉黑了!");
+    QMessageBox::information(this, "Share successfully", "Sent the screenshot to Yu");
 
     // 添加事件循环，确保消息框的事件被处理
     QCoreApplication::processEvents();
@@ -78,7 +78,7 @@ void share::onShareTwoClicked() {
 
 void share::onShareThreeClicked() {
     // 显示分享成功的弹窗
-    QMessageBox::information(this, "分享成功", "大飞老师觉得你做得很好!");
+    QMessageBox::information(this, "Share successfully", "Sent the screenshot to Deck");
 
     // 添加事件循环，确保消息框的事件被处理
     QCoreApplication::processEvents();
@@ -86,7 +86,7 @@ void share::onShareThreeClicked() {
 
 void share::onShareFourClicked() {
     // 显示分享成功的弹窗
-    QMessageBox::information(this, "分享成功", "德克王决定用你的分享打胶!");
+    QMessageBox::information(this, "Share successfully", "Sent the screenshot to Yue");
 
     // 添加事件循环，确保消息框的事件被处理
     QCoreApplication::processEvents();
@@ -94,7 +94,7 @@ void share::onShareFourClicked() {
 
 void share::onShareFiveClicked() {
     // 显示分享成功的弹窗
-    QMessageBox::information(this, "分享成功", "hy觉得你做得很好!");
+    QMessageBox::information(this, "Share successfully", "Sent the screenshot to Zihao");
 
     // 添加事件循环，确保消息框的事件被处理
     QCoreApplication::processEvents();
@@ -102,7 +102,7 @@ void share::onShareFiveClicked() {
 
 void share::onShareSixClicked() {
     // 显示分享成功的弹窗
-    QMessageBox::information(this, "分享失败", "bi666正在跟男朋友过圣诞没空!");
+    QMessageBox::information(this, "Share successfully", "Sent the screenshot to Biliu");
 
     // 添加事件循环，确保消息框的事件被处理
     QCoreApplication::processEvents();

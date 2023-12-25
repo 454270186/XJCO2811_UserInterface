@@ -378,6 +378,8 @@ void MainWindow::parseFolder(const QString& folderPath) {
 
     // Retrieve a list of video files (.mp4) in the folder
     QStringList videoFiles = dir.entryList(QStringList() << "*.mp4", QDir::Files);
+    videoFiles.append(dir.entryList(QStringList() << "*.mov", QDir::Files));
+    videoFiles.append(dir.entryList(QStringList() << "*.wmv", QDir::Files));
 
     // Get the QScrollArea object named thumbnailList
     QScrollArea* thumbnailScrollArea = ui->thumbnailList;

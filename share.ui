@@ -63,9 +63,9 @@
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>0</y>
-         <width>284</width>
-         <height>484</height>
+         <y>-20</y>
+         <width>274</width>
+         <height>494</height>
         </rect>
        </property>
        <property name="maximumSize">
@@ -100,7 +100,7 @@
            <item>
             <widget class="QLabel" name="nameone">
              <property name="text">
-              <string>Mr.zhao</string>
+              <string>Mr.Zhao</string>
              </property>
             </widget>
            </item>
@@ -130,6 +130,9 @@
                <width>35</width>
                <height>35</height>
               </size>
+             </property>
+             <property name="cursor">
+              <cursorShape>PointingHandCursor</cursorShape>
              </property>
              <property name="styleSheet">
               <string notr="true">border: none; /* 移除边框 */
@@ -167,7 +170,7 @@
            <item>
             <widget class="QLabel" name="nametwo">
              <property name="text">
-              <string>Mr.you</string>
+              <string>Zihao</string>
              </property>
             </widget>
            </item>
@@ -197,6 +200,9 @@
                <width>35</width>
                <height>35</height>
               </size>
+             </property>
+             <property name="cursor">
+              <cursorShape>PointingHandCursor</cursorShape>
              </property>
              <property name="styleSheet">
               <string notr="true">border: none; /* 移除边框 */
@@ -240,7 +246,7 @@
            <item>
             <widget class="QLabel" name="namethree">
              <property name="text">
-              <string>Mr.fly</string>
+              <string>Yu</string>
              </property>
             </widget>
            </item>
@@ -270,6 +276,9 @@
                <width>35</width>
                <height>35</height>
               </size>
+             </property>
+             <property name="cursor">
+              <cursorShape>PointingHandCursor</cursorShape>
              </property>
              <property name="styleSheet">
               <string notr="true">border: none;
@@ -307,7 +316,7 @@
            <item>
             <widget class="QLabel" name="namefour">
              <property name="text">
-              <string>Mrs.dick</string>
+              <string>Deck</string>
              </property>
             </widget>
            </item>
@@ -337,6 +346,9 @@
                <width>35</width>
                <height>35</height>
               </size>
+             </property>
+             <property name="cursor">
+              <cursorShape>PointingHandCursor</cursorShape>
              </property>
              <property name="styleSheet">
               <string notr="true">border: none;
@@ -374,7 +386,7 @@
            <item>
             <widget class="QLabel" name="namefive">
              <property name="text">
-              <string>Mrs.hy</string>
+              <string>Yue</string>
              </property>
             </widget>
            </item>
@@ -404,6 +416,9 @@
                <width>35</width>
                <height>35</height>
               </size>
+             </property>
+             <property name="cursor">
+              <cursorShape>PointingHandCursor</cursorShape>
              </property>
              <property name="styleSheet">
               <string notr="true">border: none;
@@ -441,7 +456,7 @@
            <item>
             <widget class="QLabel" name="namesix">
              <property name="text">
-              <string>Mr.bi6</string>
+              <string>Biliu</string>
              </property>
             </widget>
            </item>
@@ -471,6 +486,9 @@
                <width>35</width>
                <height>35</height>
               </size>
+             </property>
+             <property name="cursor">
+              <cursorShape>PointingHandCursor</cursorShape>
              </property>
              <property name="styleSheet">
               <string notr="true">border: none;

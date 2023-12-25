@@ -1,12 +1,12 @@
 <lists>
     <videolist>
-        <id>3</id>
-        <name>tiktok3</name>
-        <video_path>../XJCO2811_UserInterface/videos/landscape/list3</video_path>
+        <id>1</id>
+        <name>cycling</name>
+        <video_path>../XJCO2811_UserInterface/videos/video/Cycling</video_path>
     </videolist>
     <videolist>
-        <id>4</id>
-        <name>tiktok4</name>
-        <video_path>../XJCO2811_UserInterface/videos/portrait/list3</video_path>
+        <id>2</id>
+        <name>workout</name>
+        <video_path>../XJCO2811_UserInterface/videos/workout</video_path>
     </videolist>
 </lists>
