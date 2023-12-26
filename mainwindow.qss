@@ -1,7 +1,7 @@
 
 #lists QScrollBar::handle:horizontal {
     background: #9aa3ad;
-    min-width: 20px; /* 适用于水平滚动条 */
+    min-width: 20px;
     border-radius: 7px;
 }
 
@@ -26,7 +26,6 @@ QScrollArea#lists QScrollBar {
     width: 8px;
     height: 10px;
 }
-
 
 #thumbnailList QScrollBar::handle:vertical {
     background: #9aa3ad;
@@ -57,48 +56,45 @@ QScrollArea#lists QScrollBar {
 QMainWindow {
     background-color: rgb(39, 40, 40);
 }
-QPushButton#screenshot{
+
+QPushButton#screenshot {
     qproperty-icon: url(../XJCO2811_UserInterface/icons/reply.svg); 
     qproperty-iconSize: 24px; 
 }
-QPushButton#retreat{
+
+QPushButton#retreat {
     qproperty-icon: url(../XJCO2811_UserInterface/icons/rewind.svg); 
     qproperty-iconSize: 24px; 
 }
 
-QPushButton#forward{
+QPushButton#forward {
     qproperty-icon: url(../XJCO2811_UserInterface/icons/fast-forward-circle.svg); 
     qproperty-iconSize: 24px; 
 }
 
-QPushButton#pause{
+QPushButton#pause {
     qproperty-icon: url(../XJCO2811_UserInterface/icons/pause.svg); 
     qproperty-iconSize: 24px; 
 }
 
-QPushButton#addListBtn{
+QPushButton#addListBtn {
     qproperty-icon: url(../XJCO2811_UserInterface/icons/plus-circle.svg); 
     qproperty-iconSize: 24px; 
-    
 }
 
-QPushButton#fullScreen{
+QPushButton#fullScreen {
     qproperty-icon: url(../XJCO2811_UserInterface/icons/arrows-fullscreen.svg); 
     qproperty-iconSize: 18px; 
-    
 }
 
-QPushButton#voice{
+QPushButton#voice {
     qproperty-icon: url(../XJCO2811_UserInterface/icons/volume-up.svg); 
     qproperty-iconSize: 24px; 
-    
 }
-
 
 QPushButton#addListBtn:hover {
     margin: 2px 5px 8px 5px;
 }
-
 
 #thumbnailList QPushButton {
     width: 100px; 
@@ -106,10 +102,9 @@ QPushButton#addListBtn:hover {
     border: none; 
     background-repeat: no-repeat; 
     background-position: center; 
-    /* background-clip: content-box;  */
 }
 
-QScrollArea#lists QPushButton{
+QScrollArea#lists QPushButton {
     color: white; 
     border: 1px solid white;
     border-radius: 10px;
@@ -133,36 +128,40 @@ QScrollArea#lists QPushButton:hover {
     border-radius: 10px;
 }
 
-#thumbnailList{
+#thumbnailList {
     background-color: rgb(75, 77, 77);
     color:rgb(75, 77, 77);
 }
-QScrollArea#thumbnailList QWidget{
+
+QScrollArea#thumbnailList QWidget {
     background-color: rgb(75, 77, 77);
     color:rgb(75, 77, 77);
 }
-#lists{
+
+#lists {
     background-color: rgb(75, 77, 77);
     color:rgb(75, 77, 77);
 }
-QPushButton#screenshot{
+
+QPushButton#screenshot {
     qproperty-icon: url(../XJCO2811_UserInterface/icons/reply.svg); 
     qproperty-iconSize: 24px; 
 }
-QScrollArea#lists QWidget{
+
+QScrollArea#lists QWidget {
     background-color: rgb(75, 77, 77);
 }
-QScrollArea#lists QPushButton{
+
+QScrollArea#lists QPushButton {
     border-radius: 20px;
     color: white; 
     border: 1px solid white;
     background-color: rgb(39, 40, 40);
     border-radius: 10px;
     font-weight: bold;
-
 }
 
-#thumbnailList{
+#thumbnailList {
     background-color: rgb(75, 77, 77);
     color:rgb(75, 77, 77);
 }

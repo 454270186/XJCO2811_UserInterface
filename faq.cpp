@@ -60,6 +60,9 @@ void Faq::resizeEvent(QResizeEvent* event) {
             ui->gridLayout->addWidget(findChild<QLabel*>(QString("answer%1").arg(i + 1)), i * 2 + 1, 0);
         }
 
+        QFont titleFont = ui->faq_title->font();
+        titleFont.setPointSize(15);
+        ui->faq_title->setFont(titleFont);
         ui->gridLayout->setColumnStretch(1, 0);
     } else {
         for (int i = 0; i < 4; ++i) {
@@ -68,7 +71,10 @@ void Faq::resizeEvent(QResizeEvent* event) {
             ui->gridLayout->addWidget(findChild<QLabel*>(QString("question%1").arg(i + 5)), i * 2, 1);
             ui->gridLayout->addWidget(findChild<QLabel*>(QString("answer%1").arg(i + 5)), i * 2 + 1, 1);
         }
-
+        
+        QFont titleFont = ui->faq_title->font();
+        titleFont.setPointSize(22);
+        ui->faq_title->setFont(titleFont);
         ui->gridLayout->setColumnStretch(1, 1);
     }
 }

@@ -5,7 +5,7 @@ QMainWindow {
 }
 
 .QScrollArea#ShareArea {
-    border: none; /* Remove border from QScrollArea */
+    border: none;
 }
 
 .QScrollArea#ShareArea > QWidget > QWidget {
@@ -26,7 +26,7 @@ QMainWindow {
 
 QDialog {
     background-color:  rgb(28, 49, 84);
-    color: white; /* 白色文字 */
+    color: white;
 }
 
 .QPushButton {
@@ -39,27 +39,32 @@ QDialog {
     color: white;
 }
 
-QPushButton#shareone{
+QPushButton#shareone {
     qproperty-icon: url(../XJCO2811_UserInterface/icons/share.svg); 
     qproperty-iconSize: 24px; 
 }
-QPushButton#sharetwo{
+
+QPushButton#sharetwo {
     qproperty-icon: url(../XJCO2811_UserInterface/icons/share.svg); 
     qproperty-iconSize: 24px; 
 }
-QPushButton#sharethree{
+
+QPushButton#sharethree {
     qproperty-icon: url(../XJCO2811_UserInterface/icons/share.svg); 
     qproperty-iconSize: 24px; 
 }
-QPushButton#sharefour{
+
+QPushButton#sharefour {
     qproperty-icon: url(../XJCO2811_UserInterface/icons/share.svg); 
     qproperty-iconSize: 24px; 
 }
-QPushButton#sharefive{
+
+QPushButton#sharefive {
     qproperty-icon: url(../XJCO2811_UserInterface/icons/share.svg); 
     qproperty-iconSize: 24px; 
 }
-QPushButton#sharesix{
+
+QPushButton#sharesix {
     qproperty-icon: url(../XJCO2811_UserInterface/icons/share.svg); 
     qproperty-iconSize: 24px; 
 }
@@ -71,7 +76,7 @@ QScrollBar:vertical {
 
 QScrollBar::handle:vertical {
     background: #4b729e;
-    min-height: 20px;  /* 滚动条手柄的最小高度 */
+    min-height: 20px;
     border-radius: 7px;
 }
 
@@ -80,8 +85,8 @@ QScrollBar::handle:vertical :hover {
 }
 
 QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
-    border: none;  /* 移除上下按钮的边框 */
-    background: none;  /* 移除上下按钮的背景 */
+    border: none;
+    background: none;
 }
 
 QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {
@@ -92,7 +97,7 @@ QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {
 }
 
 QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
-    background: none;  /* 移除滚动条轨道的背景 */
+    background: none;
 }
 
 QScrollArea#ShareArea QScrollBar {
