@@ -30,16 +30,12 @@ public:
     explicit mainwindowm(QWidget* parent = nullptr, MainWindowResource* cr = nullptr);
     ~mainwindowm();
 
-    // Play() and Pause() are exposed to PageManager
-    // to control the video play or pause
+    // Exposed to PageManager, used for page state synchronization
     void Play() { commonResrc->mediaPlayer_->play(); }
     void Pause() { commonResrc->mediaPlayer_->pause(); }
-
     QVideoWidget* getVideoOutput() { return this->videoWidget; }
-
     void RefreshList();
     void RenderTheme();
-
     void DisconnectMediaplayerEvent() {
         disconnect(commonResrc->mediaPlayer_, &QMediaPlayer::mediaStatusChanged, this,
                    &mainwindowm::handleMediaStatusChanged);
@@ -53,9 +49,6 @@ signals:
     void switchPage(int pageIndex);
     void snapshot();
 
-public slots:
-    void switchToListset();
-
 private slots:
     void onPauseClicked();
     void onForwardClicked();
@@ -64,7 +57,7 @@ private slots:
     void updateProgressBar(qint64 position);
     void onButtonClicked();
     void parseFolder(const QString& folderPath);
-    void handleVideoSelection(const QStringList& videoPaths, int currentIndex);  // 接口函数
+    void handleVideoSelection(const QStringList& videoPaths, int currentIndex);
     void handleMediaStatusChanged(QMediaPlayer::MediaStatus status);
     void toggleFullScreen();
     void switchToPage() { emit switchPage(3); }

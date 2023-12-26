@@ -11,7 +11,6 @@
 share::share(QWidget* parent) : QMainWindow(parent), ui(new Ui::share) {
     ui->setupUi(this);
 
-    // 在构造函数中确保 QLabel 控件存在
     ui->pictureone->show();
     ui->picturetwo->show();
     ui->picturethree->show();
@@ -19,7 +18,7 @@ share::share(QWidget* parent) : QMainWindow(parent), ui(new Ui::share) {
     ui->picturefive->show();
     ui->picturesix->show();
 
-    // 构建正确的图片路径并设置到 QLabel
+    // laod avatar
     setPicture(ui->pictureone, "one.jpg");
     setPicture(ui->picturetwo, "two.jpg");
     setPicture(ui->picturethree, "three.jpg");
@@ -40,71 +39,53 @@ share::~share() {
 }
 
 void share::setPicture(QLabel* label, const QString& imageName) {
-    // 构建相对路径
     QString relativePath = "../XJCO2811_UserInterface/picture/" + imageName;
 
-    // 使用相对路径和应用程序的目录构建绝对路径
-    QString imagePath = relativePath;
-
-    // 加载图片
-    QImage image(imagePath);
+    // load image
+    QImage image(relativePath);
     if (image.isNull()) {
-        qDebug() << "加载图片失败。错误信息: " << image.text() << " 文件路径：" << imagePath;
+        qDebug() << "Error: " << image.text();
     } else {
-        // 调整图像大小
         QSize labelSize = label->size();
         QImage scaledImage = image.scaled(labelSize, Qt::KeepAspectRatio);
 
-        // 设置图片到 QLabel
         label->setPixmap(QPixmap::fromImage(scaledImage));
     }
 }
 
 void share::onShareOneClicked() {
-    // 显示分享成功的弹窗
     QMessageBox::information(this, "Share successfully", "Sent the screenshot to Mr.Zhao");
 
-    // 添加事件循环，确保消息框的事件被处理
     QCoreApplication::processEvents();
 }
 
 void share::onShareTwoClicked() {
-    // 显示分享成功的弹窗
     QMessageBox::information(this, "Share successfully", "Sent the screenshot to Yu");
 
-    // 添加事件循环，确保消息框的事件被处理
     QCoreApplication::processEvents();
 }
 
 void share::onShareThreeClicked() {
-    // 显示分享成功的弹窗
     QMessageBox::information(this, "Share successfully", "Sent the screenshot to Deck");
 
-    // 添加事件循环，确保消息框的事件被处理
     QCoreApplication::processEvents();
 }
 
 void share::onShareFourClicked() {
-    // 显示分享成功的弹窗
     QMessageBox::information(this, "Share successfully", "Sent the screenshot to Yue");
 
-    // 添加事件循环，确保消息框的事件被处理
     QCoreApplication::processEvents();
 }
 
 void share::onShareFiveClicked() {
-    // 显示分享成功的弹窗
     QMessageBox::information(this, "Share successfully", "Sent the screenshot to Zihao");
 
-    // 添加事件循环，确保消息框的事件被处理
     QCoreApplication::processEvents();
 }
 
 void share::onShareSixClicked() {
-    // 显示分享成功的弹窗
     QMessageBox::information(this, "Share successfully", "Sent the screenshot to Biliu");
 
-    // 添加事件循环，确保消息框的事件被处理
     QCoreApplication::processEvents();
 }
 

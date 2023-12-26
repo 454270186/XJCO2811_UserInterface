@@ -29,6 +29,7 @@ public:
     bool isSubmitEnabled = false;
     ~ListSet();
 
+    // The public methods that are exposed to PageManager
     void RefreshList();
     void RenderTheme();
 
@@ -49,9 +50,12 @@ private slots:
 
 private:
     Ui::ListSet* ui;
+
+    // UI
     QVBoxLayout* listLayout;
     QLabel* labelName;
     QLabel* labelPath;
+    // Data
     ListSetResource* commonResrc;
     std::map<int, QString> errorMessages;
 

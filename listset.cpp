@@ -12,8 +12,47 @@
 #include "mainwindow.h"
 #include "ui_listset.h"
 
+// mapping between Error Number and Error Msg in English version
+std::map<int, QString> errorMessagesEN = {
+    {FORMHANDLER_ERROR::ErrEmptyFields, "Error: One or more fields are empty!\n"},
+    {FORMHANDLER_ERROR::ErrListNameTooLong, "Error: List name is too long!\n"},
+    {FORMHANDLER_ERROR::ErrInvalidListNameChars, "Error: List name contains invalid characters!\n"},
+    {FORMHANDLER_ERROR::ErrVideoDirPathTooLong, "Error: Video directory path is too long!\n"},
+    {FORMHANDLER_ERROR::ErrInvalidVideoDirPathFormat, "Error: Invalid video directory path format!\n"},
+    {FORMHANDLER_ERROR::ErrListNameNotUnique, "Error: List name is not unique!\n"},
+    {FORMHANDLER_ERROR::ErrUnexpect, "Error: Unexpected result of form handler!\n"},
+    {ERROR::ErrXMLParserInit, "Error: Initializing XML parser went wrong!\n"},
+    {ERROR::ErrXMLChangeSave, "Error: Saving changes to XML file went wrong!\n"},
+    {ERROR::ErrInvalidXML, "Error: Invalid XML file format!\n"},
+    {ERROR::ErrUnexpect, "Error: Unexpected result of file utility!\n"},
+    {ERROR::ErrListIDNotFound, "Error: List ID not found!\n"},
+    {0, "Error: Unexpected result of list set!\n"}  // Default error message
+};
+
+// mapping between Error Number and Error Msg in Chinese version
+std::map<int, QString> errorMessagesCN = {
+    {FORMHANDLER_ERROR::ErrEmptyFields, "错误： 一个或多个字段为空！\n"},
+    {FORMHANDLER_ERROR::ErrListNameTooLong, "错误： 列表名称太长！\n"},
+    {FORMHANDLER_ERROR::ErrInvalidListNameChars, "错误： 列表名称包含无效字符！\n"},
+    {FORMHANDLER_ERROR::ErrVideoDirPathTooLong, "错误： 视频目录路径太长！\n"},
+    {FORMHANDLER_ERROR::ErrInvalidVideoDirPathFormat, "错误： 视频目录路径格式无效！\n"},
+    {FORMHANDLER_ERROR::ErrListNameNotUnique, "错误： 列表名称不唯一！\n"},
+    {FORMHANDLER_ERROR::ErrUnexpect, "错误： 表单处理程序出现异常！\n"},
+    {ERROR::ErrXMLParserInit, "错误： 初始化 XML 解析器出错！\n"},
+    {ERROR::ErrXMLChangeSave, "错误： 保存到 XML 文件的更改出错！\n"},
+    {ERROR::ErrInvalidXML, "错误： XML 文件格式无效！\n"},
+    {ERROR::ErrUnexpect, "错误： 文件实用程序出现异常！\n"},
+    {ERROR::ErrListIDNotFound, "错误： 未找到列表 ID！\n"},
+    {0, "错误： 列表集出现异常！\n"}  // Default error message
+};
+
 ListSet::ListSet(QWidget* parent, ListSetResource* cr) : QMainWindow(parent), ui(new Ui::ListSet) {
     ui->setupUi(this);
+
+    // init common resource
+    commonResrc = cr;
+
+    // load stylesheet
     QFile file1("../XJCO2811_UserInterface/listset.qss");
     QString StyleSheet;
     if (file1.open(QFile::ReadOnly)) {
@@ -22,30 +61,24 @@ ListSet::ListSet(QWidget* parent, ListSetResource* cr) : QMainWindow(parent), ui
     } else {
         qDebug() << "File does not exist: " << file1.fileName();
     }
-
     if (!StyleSheet.isEmpty()) {
         this->setStyleSheet(StyleSheet);
     } else {
         qDebug() << "Current directory:" << QDir::currentPath();
     }
 
+    // initial setup
     listLayout = ui->scrollAreaWidget->findChild<QVBoxLayout*>("verticalLayout_6");
-
-    connect(ui->submit, &QPushButton::clicked, this, &ListSet::onSubmitClicked);
-    connect(ui->Delete, &QPushButton::clicked, this, &ListSet::onDeleteClicked);
-
-    // init common resource
-    commonResrc = cr;
-
-    // Set the input form to invisible at first time
     ui->groupBox_right->setVisible(false);
     ui->midline->setVisible(false);
     ui->Delete->setVisible(false);
-
     renderList();
-
     labelName = findChild<QLabel*>("label_name");
     labelPath = findChild<QLabel*>("label_path");
+
+    // connect slots with static buttons
+    connect(ui->submit, &QPushButton::clicked, this, &ListSet::onSubmitClicked);
+    connect(ui->Delete, &QPushButton::clicked, this, &ListSet::onDeleteClicked);
     connect(ui->backward, &QPushButton::clicked, this, &ListSet::switchToPage);
     connect(ui->qa, &QPushButton::clicked, this, &ListSet::switchToPageFaq);
     connect(ui->findPath, &QPushButton::clicked, this, &ListSet::onFindPathClicked);
@@ -56,9 +89,10 @@ ListSet::~ListSet() {
     delete ui;
 }
 
+// renderList() render all buttons in list with the data given by fileUtil
 void ListSet::renderList() {
     for (size_t i = 0; i < commonResrc->ListInfo_.size(); i++) {
-        // initialize video list ui
+        // initial button setup
         QPushButton* newButton = new QPushButton();
         newButton->setObjectName("newButton");
         newButton->setText(commonResrc->ListInfo_[i].name.c_str());
@@ -66,7 +100,8 @@ void ListSet::renderList() {
         newButton->setAutoExclusive(true);
         listLayout->addWidget(newButton);
 
-        connect(newButton, &QPushButton::clicked, [this, newButton] {
+        // connect slot with each button
+        connect(newButton, &QPushButton::clicked, this, [this, newButton] {
             commonResrc->isListButtonClicked_ = true;
 
             ui->groupBox_right->setVisible(true);
@@ -74,6 +109,7 @@ void ListSet::renderList() {
             ui->Delete->setVisible(true);
             ui->submit->setText(QString("Edit"));
             isSubmitEnabled = false;
+
             int index = listLayout->indexOf(newButton) - 1;
             commonResrc->currentBtnIndex_ = index;
             // Check if the index is valid
@@ -273,7 +309,7 @@ void ListSet::onSubmitClicked() {
 //   4. Clears the interface when there is no list.
 // - If the deletion fails (result <= 0), displays an error message.
 void ListSet::onDeleteClicked() {
-    if (commonResrc->currentBtnIndex_ < 0 || commonResrc->currentBtnIndex_ >= commonResrc->ListInfo_.size()) {
+    if (commonResrc->currentBtnIndex_ < 0 || commonResrc->currentBtnIndex_ >= (int)commonResrc->ListInfo_.size()) {
         if (commonResrc->isChineseLanguage_) {
             QMessageBox::warning(this, "错误", "未选择列表或列表索引无效");
         } else {
@@ -363,38 +399,6 @@ void ListSet::showError(int errorCode) {
     }
 }
 
-std::map<int, QString> errorMessagesEN = {
-    {FORMHANDLER_ERROR::ErrEmptyFields, "Error: One or more fields are empty!\n"},
-    {FORMHANDLER_ERROR::ErrListNameTooLong, "Error: List name is too long!\n"},
-    {FORMHANDLER_ERROR::ErrInvalidListNameChars, "Error: List name contains invalid characters!\n"},
-    {FORMHANDLER_ERROR::ErrVideoDirPathTooLong, "Error: Video directory path is too long!\n"},
-    {FORMHANDLER_ERROR::ErrInvalidVideoDirPathFormat, "Error: Invalid video directory path format!\n"},
-    {FORMHANDLER_ERROR::ErrListNameNotUnique, "Error: List name is not unique!\n"},
-    {FORMHANDLER_ERROR::ErrUnexpect, "Error: Unexpected result of form handler!\n"},
-    {ERROR::ErrXMLParserInit, "Error: Initializing XML parser went wrong!\n"},
-    {ERROR::ErrXMLChangeSave, "Error: Saving changes to XML file went wrong!\n"},
-    {ERROR::ErrInvalidXML, "Error: Invalid XML file format!\n"},
-    {ERROR::ErrUnexpect, "Error: Unexpected result of file utility!\n"},
-    {ERROR::ErrListIDNotFound, "Error: List ID not found!\n"},
-    {0, "Error: Unexpected result of list set!\n"}  // Default error message
-};
-
-std::map<int, QString> errorMessagesCN = {
-    {FORMHANDLER_ERROR::ErrEmptyFields, "错误： 一个或多个字段为空！\n"},
-    {FORMHANDLER_ERROR::ErrListNameTooLong, "错误： 列表名称太长！\n"},
-    {FORMHANDLER_ERROR::ErrInvalidListNameChars, "错误： 列表名称包含无效字符！\n"},
-    {FORMHANDLER_ERROR::ErrVideoDirPathTooLong, "错误： 视频目录路径太长！\n"},
-    {FORMHANDLER_ERROR::ErrInvalidVideoDirPathFormat, "错误： 视频目录路径格式无效！\n"},
-    {FORMHANDLER_ERROR::ErrListNameNotUnique, "错误： 列表名称不唯一！\n"},
-    {FORMHANDLER_ERROR::ErrUnexpect, "错误： 表单处理程序出现异常！\n"},
-    {ERROR::ErrXMLParserInit, "错误： 初始化 XML 解析器出错！\n"},
-    {ERROR::ErrXMLChangeSave, "错误： 保存到 XML 文件的更改出错！\n"},
-    {ERROR::ErrInvalidXML, "错误： XML 文件格式无效！\n"},
-    {ERROR::ErrUnexpect, "错误： 文件实用程序出现异常！\n"},
-    {ERROR::ErrListIDNotFound, "错误： 未找到列表 ID！\n"},
-    {0, "错误： 列表集出现异常！\n"}  // Default error message
-};
-
 void ListSet::onFindPathClicked() {
     QString initialPath = QDir::currentPath();  // or set to another base path
     QString directoryPath = QFileDialog::getExistingDirectory(this, tr("Choose video directory"), initialPath);
@@ -408,6 +412,7 @@ void ListSet::onFindPathClicked() {
     }
 }
 
+// toggleLanguage() is the callback func of language-switch button
 void ListSet::toggleLanguage() {
     commonResrc->isChineseLanguage_ = !commonResrc->isChineseLanguage_;
     QString sheetName = commonResrc->isChineseLanguage_ ? "listset_ch.qss" : "listset.qss";

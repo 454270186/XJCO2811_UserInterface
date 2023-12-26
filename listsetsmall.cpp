@@ -279,9 +279,10 @@ void ListSetSmall::onDeleteClicked() {
     }
 
     int listID = commonResrc->ListInfo_[commonResrc->currentBtnIndex_].id;
+
+    // Delete list
     string error;
     int result = commonResrc->fileUtil_->DelListByID(listID, &error);
-
     if (result == FORMHANDLER_ERROR::SUCCESS) {
         if (commonResrc->isChineseLanguage_) {
             QMessageBox::information(this, "完成", "列表删除成功");
@@ -377,6 +378,7 @@ void ListSetSmall::onFindPathClicked() {
     }
 }
 
+// toggleLanguage() is the callback func of language-switch button
 void ListSetSmall::toggleLanguage() {
     commonResrc->isChineseLanguage_ = !commonResrc->isChineseLanguage_;
     QString sheetName = commonResrc->isChineseLanguage_ ? "listsetsmall_ch.qss" : "listsetsmall.qss";
@@ -435,6 +437,7 @@ void ListSetSmall::RenderTheme() {
         ui->submit->setText(isSubmitEnabled ? "Submit" : "Edit");
     }
 
+    // check if form is opening
     if (commonResrc->isListButtonClicked_) {
         ui->groupBox_form->setVisible(true);
     } else {
