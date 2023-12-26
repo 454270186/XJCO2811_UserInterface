@@ -18,28 +18,28 @@ QPushButton#backward {
 }
 
 QPushButton#qa{
-     qproperty-icon: url(../XJCO2811_UserInterface/icons/QA.svg); 
-     qproperty-iconSize: 40px; 
-     border: none;
-     background-color: transparent;
-     icon-size: 64px 64px;
+    qproperty-icon: url(../XJCO2811_UserInterface/icons/QA.svg); 
+    qproperty-iconSize: 40px; 
+    border: none;
+    background-color: transparent;
+    icon-size: 64px 64px;
 }
 
 QPushButton#language{
-     qproperty-icon: url(../XJCO2811_UserInterface/icons/English.svg); 
-     qproperty-iconSize: 40px; 
-     border: none;
-     background-color: transparent;
-     icon-size: 64px 64px;
+    qproperty-icon: url(../XJCO2811_UserInterface/icons/English.svg); 
+    qproperty-iconSize: 40px; 
+    border: none;
+    background-color: transparent;
+    icon-size: 64px 64px;
 }
 
 QPushButton#findPath{
-     border: none;
-     background-color: transparent;
-     icon-size: 64px 64px;
-     padding: 0px;
-     qproperty-icon: url(../XJCO2811_UserInterface/icons/folder-plus.svg); 
-     qproperty-iconSize: 40px; 
+    border: none;
+    background-color: transparent;
+    icon-size: 64px 64px;
+    padding: 0px;
+    qproperty-icon: url(../XJCO2811_UserInterface/icons/folder-plus.svg); 
+    qproperty-iconSize: 40px; 
 }
 
 QGroupBox#groupBox {
@@ -47,7 +47,7 @@ QGroupBox#groupBox {
 }
 
 QLineEdit {
-    background-color: #506790; /* 浅深蓝色背景 */
+    background-color: #506790;
 }
 
 QLineEdit:focus {
@@ -56,7 +56,7 @@ QLineEdit:focus {
 }
 
 QMessageBox {
-    background-color: rgb(10, 25, 47); /* 深蓝色背景 */
+    background-color: rgb(10, 25, 47);
     color: white;
 }
 

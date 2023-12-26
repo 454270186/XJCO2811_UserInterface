@@ -53,7 +53,7 @@ QGroupBox#groupBox {
 
 QLabel[objectName^='question'] {
     color: white;
-    font: bold 22px Arial;
+    font: bold 20px Arial;
     padding: 2px;
     margin: 6px;
 }
@@ -66,4 +66,3 @@ QLabel[objectName^='answer'] {
     padding: 8px;
     margin: 4px;
 }
-
