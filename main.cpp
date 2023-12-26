@@ -2,11 +2,10 @@
 #include <iostream>
 #include "pagemanager.h"
 
-#include "share.h"
-
 int main(int argc, char* argv[]) {
     QApplication a(argc, argv);
 
+    // Print out SportX Banner 😎
     std::cout << "\n\n\033[1;32mBuild Successfully\033[0m\n";
     std::cout << "\n"
                  "     \033[1;32m_______..______     ______   .______     .___________.___   ___\033[0m     \n"
@@ -19,11 +18,13 @@ int main(int argc, char* argv[]) {
                  "\n";
 
     PageManager pagemanager;
+
+    // Base size setup
     pagemanager.setMaximumWidth(1000);
     pagemanager.setMinimumWidth(390);
     pagemanager.setFixedHeight(700);
     pagemanager.resize(390, 700);
-    pagemanager.show();
 
+    pagemanager.show();
     return a.exec();
 }

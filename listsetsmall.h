@@ -30,6 +30,7 @@ public:
     bool isSubmitEnabled = false;
     ~ListSetSmall();
 
+    // The public methods that are exposed to PageManager
     void RefreshList();
     void RenderTheme();
 
@@ -50,16 +51,18 @@ private slots:
 
 private:
     Ui::ListSetSmall* ui;
+
+    // UI
     QHBoxLayout* listLayout;
+    QLabel* labelName;
+    QLabel* labelPath;
+    //Data
+    ListSetResource* commonResrc;
+    std::map<int, QString> errorMessages;
 
     void renderList();
     void showError(int errorCode);
     void keyPressEvent(QKeyEvent* event);
-
-    QLabel* labelName;
-    QLabel* labelPath;
-    ListSetResource* commonResrc;
-    std::map<int, QString> errorMessages;
     void loadStyleSheet(const QString& sheetName);
 };
 
