@@ -1,10 +1,11 @@
-#thumbnailList QScrollArea{
+#thumbnailList QScrollArea {
     background-color: rgb(28, 49, 84);
     color:rgb(28, 49, 84);
 }
+
 #lists QScrollBar::handle:horizontal {
     background: #4b729e;
-    min-width: 20px; /* 适用于水平滚动条 */
+    min-width: 20px;
     border-radius: 7px;
 }
 
@@ -62,44 +63,39 @@ QMainWindow {
 
 }
 
-QPushButton#retreat{
+QPushButton#retreat {
     qproperty-icon: url(../XJCO2811_UserInterface/icons/rewind.svg); 
     qproperty-iconSize: 24px; 
 }
 
-QPushButton#forward{
+QPushButton#forward {
     qproperty-icon: url(../XJCO2811_UserInterface/icons/fast-forward-circle.svg); 
     qproperty-iconSize: 24px; 
 }
 
-QPushButton#pause{
+QPushButton#pause {
     qproperty-icon: url(../XJCO2811_UserInterface/icons/pause.svg); 
     qproperty-iconSize: 24px; 
 }
 
-QPushButton#addListBtn{
+QPushButton#addListBtn {
     qproperty-icon: url(../XJCO2811_UserInterface/icons/plus-circle.svg); 
     qproperty-iconSize: 24px; 
-    
 }
 
-QPushButton#fullScreen{
+QPushButton#fullScreen {
     qproperty-icon: url(../XJCO2811_UserInterface/icons/arrows-fullscreen.svg); 
     qproperty-iconSize: 18px; 
-    
 }
 
-QPushButton#voice{
+QPushButton#voice {
     qproperty-icon: url(../XJCO2811_UserInterface/icons/volume-up.svg); 
     qproperty-iconSize: 24px; 
-    
 }
-
 
 QPushButton#addListBtn:hover {
     margin: 2px 5px 8px 5px;
 }
-
 
 #thumbnailList QPushButton {
     width: 100px; 
@@ -110,12 +106,11 @@ QPushButton#addListBtn:hover {
     background-clip: content-box; 
 }
 
-QScrollArea#lists QPushButton{
+QScrollArea#lists QPushButton {
     color: white; 
     border: 1px solid white;
     border-radius: 10px;
     font-weight: bold;
-
 }
 
 QScrollArea#lists QPushButton:checked {
@@ -135,31 +130,36 @@ QScrollArea#lists QPushButton:hover {
     border-radius: 10px;
 }
 
-
-#thumbnailList QWidget{
+#thumbnailList QWidget {
     background-color: rgb(28, 49, 84);
     color:rgb(28, 49, 84);
 }
-#lists QWidget{
+
+#lists QWidget {
     background-color: rgb(28, 49, 84);
 }
-QMainwindow{
+
+QMainwindow {
     background-color: rgb(10, 25, 47);
     color:rgb(10, 25, 47);
 }
-#lists{
+
+#lists {
     background-color: rgb(28, 49, 84);
     color:rgb(28, 49, 84);
 }
-QScrollArea#thumbnailList QWidget{
+
+QScrollArea#thumbnailList QWidget {
     background-color: rgb(28, 49, 84);
     color:rgb(28, 49, 84);
 }
-#thumbnailList{
+
+#thumbnailList {
     background-color: rgb(28, 49, 84);
     color:rgb(28, 49, 84);
 }
-QPushButton#screenshot{
+
+QPushButton#screenshot {
     qproperty-icon: url(../XJCO2811_UserInterface/icons/reply.svg); 
     qproperty-iconSize: 24px; 
 }
