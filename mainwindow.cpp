@@ -14,7 +14,6 @@
 #include "btnconvert.h"
 #include "listset.h"
 #include "mainwindow.h"
-#include "share.h"
 #include "ui_mainwindow.h"
 
 // MainWindow constructor initializes the main window and its components.
@@ -33,7 +32,6 @@ MainWindow::MainWindow(QWidget* parent, MainWindowResource* cr)
     } else {
         qDebug() << "File does not exist: " << file2.fileName();
     }
-
     if (!StyleSheet.isEmpty()) {
         this->setStyleSheet(StyleSheet);
     } else {
@@ -41,57 +39,40 @@ MainWindow::MainWindow(QWidget* parent, MainWindowResource* cr)
     }
     ui->lists->setStyleSheet("QScrollArea { border: 0; }");
 
-    // Assuming you want to set the initial size to 1000x700
+    // base size setup
     setGeometry(100, 100, 1000, 700);
-
-    // Set the minimum size to 460x700
     setMinimumSize(460, 700);
 
-    // Assuming that "videoplayer" is the name of the QWidget in your UI file
+    // init videoplayer
     QWidget* videoplayer = ui->videoplayer;
-
-    // Set up layout for videoWidget
     QVBoxLayout* videoLayout = new QVBoxLayout(videoplayer);
     videoLayout->addWidget(videoWidget);
-
-    // 设置初始音量为 50
+    // video base state setup
     commonResrc->mediaPlayer_->setVolume(50);
-
-    // 将 QSlider 初始值设置为 50
     ui->voicecontrolstrip->setValue(50);
-
     ui->videoBox->installEventFilter(this);
-
-    isVideoPlaying = false;
     ui->video->hide();
+    commonResrc->mediaPlayer_->setVideoOutput(videoWidget);  // setup video-output
 
-    // Assuming ui->lists is now a QScrollArea
+    // initial render buttons list
     QScrollArea* listsScrollArea = ui->lists;
-
-    // Create a QWidget to serve as the container for the buttons
     QWidget* listsContainer = new QWidget(listsScrollArea);
-
-    // Create a QHBoxLayout for the buttons
     listsBtnsLayout = new QHBoxLayout(listsContainer);
-
     // Clear existing buttons
     QLayoutItem* child;
     while ((child = listsBtnsLayout->takeAt(0)) != nullptr) {
         delete child->widget();
         delete child;
     }
-
     renderBtnList(listsBtnsLayout);
-
     // Set the container QWidget as the widget for the QScrollArea
     listsScrollArea->setWidget(listsContainer);
 
-    // Set the video output of the media player to the video widget
-    commonResrc->mediaPlayer_->setVideoOutput(videoWidget);
-
+    // setup timer for keyboard event
     volumeControlTimer = new QTimer(this);
     volumeControlTimer->setSingleShot(true);
 
+    // setup slots
     connect(volumeControlTimer, &QTimer::timeout, this, &MainWindow::hideVolumeControl);
     connect(ui->addListBtn, &QPushButton::clicked, this, &MainWindow::switchToPage);
     connect(commonResrc->mediaPlayer_, &QMediaPlayer::positionChanged, this, &MainWindow::updateProgressBar);
@@ -108,6 +89,7 @@ MainWindow::~MainWindow() {
     delete ui;
 }
 
+// renderBtnList() renders all list info read from data file into button in UI
 void MainWindow::renderBtnList(QHBoxLayout* btnLayout) {
     for (size_t i = 0; i < commonResrc->listinfo_.size(); i++) {
         QPushButton* newButton = new QPushButton();
@@ -121,7 +103,7 @@ void MainWindow::renderBtnList(QHBoxLayout* btnLayout) {
         btnLayout->addWidget(newButton);
 
         // connect onClick hook
-        connect(newButton, &QPushButton::clicked, [this, i] {
+        connect(newButton, &QPushButton::clicked, this, [this, i] {
             commonResrc->currentListButtonIndex_ = i;
             parseFolder(commonResrc->listinfo_[i].videoDirPath.c_str());
         });
@@ -306,7 +288,6 @@ void MainWindow::handleMediaStatusChanged(QMediaPlayer::MediaStatus status) {
         // Media has loaded successfully, start playback
         std::cout << "play video: " << commonResrc->currentVideoIndex_ << std::endl;
         commonResrc->mediaPlayer_->play();
-        isVideoPlaying = true;
         ui->video->show();
         if (ui->video->isVisible()) {
             resizeEvent(nullptr);
@@ -475,19 +456,6 @@ void MainWindow::onButtonClicked() {
     }
 }
 
-// switchToListset() is called to switch to the ListSet window.
-// It hides the current MainWindow and shows a new ListSet window.
-void MainWindow::switchToListset() {
-    // Close the current MainWindow
-    hide();
-
-    // Create a new ListSet window
-    ListSet* listsetWindow = new ListSet();
-
-    // Show the ListSet window
-    listsetWindow->show();
-}
-
 // togglePictureList() toggles the visibility of the picturelist.
 void MainWindow::toggleFullScreen() {
     if (ui->picturelist->isHidden()) {
@@ -497,10 +465,9 @@ void MainWindow::toggleFullScreen() {
     }
 
     ui->picturelist->setHidden(!ui->picturelist->isHidden());
-    updateGeometry();  // 强制更新布局
-    repaint();         // 强制重绘
+    updateGeometry();
+    repaint();
 
-    // 手动触发 resizeEvent
     QResizeEvent* event = new QResizeEvent(size(), size());
     resizeEvent(event);
 }
@@ -508,45 +475,31 @@ void MainWindow::toggleFullScreen() {
 void MainWindow::resizeEvent(QResizeEvent* event) {
     QMainWindow::resizeEvent(event);
 
-    // 如果 picturelist 和 videoplayer 都没有被隐藏
     if (!ui->picturelist->isHidden() && !ui->video->isHidden()) {
-        // 获取 QGroupBox 的初始宽度比例，可以根据需要进行调整
         float initialPicturelistWidthRatio = 0.3;
-
-        // 获取 central 的宽度
         int centralWidth = this->width();
-
-        // 计算 QGroupBox 的宽度
         int initialPicturelistWidth = static_cast<int>(centralWidth * initialPicturelistWidthRatio);
 
-        // 设置 QGroupBox 的大小
         ui->picturelist->setFixedWidth(initialPicturelistWidth);
     }
 
-    // 调用 updateGeometry 触发布局更新
     updateGeometry();
 }
 
 bool MainWindow::eventFilter(QObject* obj, QEvent* event) {
     if (obj == ui->videoBox) {
         if (event->type() == QEvent::Enter) {
-            // 鼠标进入 videoBox 区域，显示音量条
             ui->voicecontrolstrip->show();
         } else if (event->type() == QEvent::Leave) {
-            // 鼠标离开 videoBox 区域，隐藏音量条
             ui->voicecontrolstrip->hide();
         }
     }
 
-    // 将事件传递给基类处理
     return QMainWindow::eventFilter(obj, event);
 }
 
 void MainWindow::adjustVolume(int volume) {
-    // 将音量值映射到 QMediaPlayer 的音量范围（0 到 100）
     qreal volumeLevel = volume / 100.0;
-
-    // 设置 QMediaPlayer 的音量
     commonResrc->mediaPlayer_->setVolume(static_cast<int>(volumeLevel * 100));
 }
 

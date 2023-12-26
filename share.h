@@ -13,20 +13,16 @@ class share : public QMainWindow {
 
 public:
     explicit share(QWidget* parent = nullptr);
-    void RenderTheme(bool isChinese);
     ~share();
+
+    void RenderTheme(bool isChinese);
 
 private slots:
     void onShareOneClicked();
-
     void onShareTwoClicked();
-
     void onShareThreeClicked();
-
     void onShareFourClicked();
-
     void onShareFiveClicked();
-
     void onShareSixClicked();
 
 private:

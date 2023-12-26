@@ -72,12 +72,12 @@ void PageManager::handleFaqStopReading() {
 }
 
 void PageManager::handleScreenShot() {
+    // Capture the entire screen and crop out the current window.
     QScreen* screen = QGuiApplication::primaryScreen();
-
     QRect videoRect = this->geometry();
-
     QPixmap screenshot = screen->grabWindow(0, videoRect.x(), videoRect.y(), videoRect.width(), videoRect.height());
 
+    // check the screenshot directory
     QString directory = "../XJCO2811_UserInterface/snapshot";
     QDir dir(directory);
     if (!dir.exists()) {
@@ -87,18 +87,18 @@ void PageManager::handleScreenShot() {
         }
     }
 
+    // use uuid to generate a unique screenshot file name
     QUuid uuid = QUuid::createUuid();
     QString snapPath = "../XJCO2811_UserInterface/snapshot/" + uuid.toString() + ".jpg";
     if (!snapPath.isEmpty()) {
-        std::cout << "cover!!!" << std::endl;
         screenshot.save(snapPath);
     }
 
-    // pop share
+    // pop share page
     s->setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint | Qt::WindowCloseButtonHint);
 
+    // get the coordinates of stackPage
     QPoint stackPageGlobalPos = stackPage->mapToGlobal(QPoint(0, 0));
-
     int x = stackPageGlobalPos.x() + (stackPage->width() - s->width()) / 2;
     int y = stackPageGlobalPos.y() + (stackPage->height() - s->height()) / 2;
 
@@ -107,6 +107,9 @@ void PageManager::handleScreenShot() {
     s->show();
 }
 
+// switchToPage() captures the signals emitted by each page
+// before switch to the target page, PageManager will do some operation to
+// maintain state and theme sync
 void PageManager::switchToPage(int pageIndex) {
     if (pageIndex == PageIndex::LISTSET || pageIndex == PageIndex::LISTSET_SMALL) {
         if (pageIndex == PageIndex::LISTSET) {
@@ -139,6 +142,9 @@ void PageManager::switchToPage(int pageIndex) {
     stackPage->setCurrentIndex(pageIndex);
 }
 
+// changeWindows() monitors the window width,
+// and when the window is smaller or larger than a threshold,
+// switch UI.
 void PageManager::changeWindows(const QSize& size) {
     QSize thresholdSize(550, 200000);
 

@@ -4,12 +4,16 @@
 #include <QResizeEvent>
 
 #include "faq.h"
-#include "listset.h"
 #include "ui_faq.h"
 
-Faq::Faq(QWidget* parent, ListSetResource* cr) : QDialog(parent), ui(new Ui::Faq), isSpeaking(false) {
+Faq::Faq(QWidget* parent, ListSetResource* cr)
+    : QDialog(parent), ui(new Ui::Faq), speech(new QTextToSpeech(this)), isSpeaking(false) {
     ui->setupUi(this);
-    speech = new QTextToSpeech(this);
+
+    // init common resource
+    commonResrc = cr;
+
+    // load style sheets
     QFile file1("../XJCO2811_UserInterface/faq.qss");
     QString StyleSheet;
     if (file1.open(QFile::ReadOnly)) {
@@ -25,9 +29,6 @@ Faq::Faq(QWidget* parent, ListSetResource* cr) : QDialog(parent), ui(new Ui::Faq
         qDebug() << "Current directory:" << QDir::currentPath();
     }
 
-    // init common resource
-    commonResrc = cr;
-
     connect(ui->backward, &QPushButton::clicked, this, &Faq::switchToPage);
     connect(ui->language, &QPushButton::clicked, this, &Faq::toggleLanguage);
     QResizeEvent resizeEvent(this->size(), QSize());
@@ -35,6 +36,7 @@ Faq::Faq(QWidget* parent, ListSetResource* cr) : QDialog(parent), ui(new Ui::Faq
 }
 
 Faq::~Faq() {
+    delete speech;
     delete ui;
 }
 
@@ -71,7 +73,7 @@ void Faq::resizeEvent(QResizeEvent* event) {
             ui->gridLayout->addWidget(findChild<QLabel*>(QString("question%1").arg(i + 5)), i * 2, 1);
             ui->gridLayout->addWidget(findChild<QLabel*>(QString("answer%1").arg(i + 5)), i * 2 + 1, 1);
         }
-        
+
         QFont titleFont = ui->faq_title->font();
         titleFont.setPointSize(22);
         ui->faq_title->setFont(titleFont);

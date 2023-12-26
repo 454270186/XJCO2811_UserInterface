@@ -11,20 +11,18 @@
 #include <QVBoxLayout>
 
 #include "btnconvert.h"
-#include "listset.h"
 #include "mainwindowm.h"
-#include "share.h"
 #include "ui_mainwindowm.h"
 
 // MainWindow constructor initializes the main window and its components.
 mainwindowm::mainwindowm(QWidget* parent, MainWindowResource* cr)
     : QMainWindow(parent), ui(new Ui::mainwindowm), videoWidget(new QVideoWidget(this)) {
+    ui->setupUi(this);
+
     // Init common resource
     commonResrc = cr;
 
-    // Set up the user interface
-    ui->setupUi(this);
-
+    // load style sheets
     QFile file1("../XJCO2811_UserInterface/mainwindow.qss");
     QString StyleSheet;
     if (file1.open(QFile::ReadOnly)) {
@@ -33,24 +31,20 @@ mainwindowm::mainwindowm(QWidget* parent, MainWindowResource* cr)
     } else {
         qDebug() << "File does not exist: " << file1.fileName();
     }
-
     if (!StyleSheet.isEmpty()) {
         this->setStyleSheet(StyleSheet);
     } else {
         qDebug() << "Current directory:" << QDir::currentPath();
     }
-
     ui->lists->setStyleSheet("QScrollArea { border: 0; }");
     ui->fullandmoblie->setStyleSheet("QGroupBox { border: 0; }");
     ui->videoBox->setStyleSheet("QGroupBox { border: 0; }");
 
-    // Set the minimum size to 460x700
+    // setup base size
     setMinimumSize(390, 700);
 
-    // Assuming that "videoplayer" is the name of the QWidget in your UI file
+    // init videoplayer
     QWidget* videoplayer = ui->videoplayer;
-
-    // Set up layout for videoWidget
     QVBoxLayout* videoLayout = new QVBoxLayout(videoplayer);
     videoLayout->addWidget(videoWidget);
 
@@ -59,17 +53,14 @@ mainwindowm::mainwindowm(QWidget* parent, MainWindowResource* cr)
     ui->voicecontrolstrip->setValue(50);
     ui->videoBox->installEventFilter(this);
     ui->voicecontrolstrip->hide();
-
-    isVideoPlaying = false;
     ui->video->hide();
 
-    // Assuming ui->lists is now a QScrollArea
+    // Set the video output of the media player to the video widget
+    commonResrc->mediaPlayer_->setVideoOutput(videoWidget);
+
+    // initial render buttons list
     QScrollArea* listsScrollArea = ui->lists;
-
-    // Create a QWidget to serve as the container for the buttons
     QWidget* listsContainer = new QWidget(listsScrollArea);
-
-    // Create a QHBoxLayout for the buttons
     listsBtnsLayout = new QHBoxLayout(listsContainer);
 
     // Clear existing buttons
@@ -78,18 +69,16 @@ mainwindowm::mainwindowm(QWidget* parent, MainWindowResource* cr)
         delete child->widget();
         delete child;
     }
-
     renderBtnList(listsBtnsLayout);
 
     // Set the container QWidget as the widget for the QScrollArea
     listsScrollArea->setWidget(listsContainer);
 
-    // Set the video output of the media player to the video widget
-    commonResrc->mediaPlayer_->setVideoOutput(videoWidget);
-
+    // set timer for keyboard events
     volumeControlTimer = new QTimer(this);
     volumeControlTimer->setSingleShot(true);
 
+    // setup slots
     connect(volumeControlTimer, &QTimer::timeout, this, &mainwindowm::hideVolumeControl);
     connect(ui->addListBtn, &QPushButton::clicked, this, &mainwindowm::switchToPage);
     connect(commonResrc->mediaPlayer_, &QMediaPlayer::positionChanged, this, &mainwindowm::updateProgressBar);
@@ -107,6 +96,7 @@ mainwindowm::~mainwindowm() {
     delete ui;
 }
 
+// renderBtnList() renders all list info read from data file into button in UI
 void mainwindowm::renderBtnList(QHBoxLayout* btnLayout) {
     for (size_t i = 0; i < commonResrc->listinfo_.size(); i++) {
         QPushButton* newButton = new QPushButton();
@@ -472,19 +462,6 @@ void mainwindowm::onButtonClicked() {
     }
 }
 
-// switchToListset() is called to switch to the ListSet window.
-// It hides the current MainWindow and shows a new ListSet window.
-void mainwindowm::switchToListset() {
-    // Close the current MainWindow
-    hide();
-
-    // Create a new ListSet window
-    ListSet* listsetWindow = new ListSet();
-
-    // Show the ListSet window
-    listsetWindow->show();
-}
-
 // togglePictureList() toggles the visibility of the picturelist.
 void mainwindowm::toggleFullScreen() {
     if (ui->picturelist->isHidden()) {
@@ -495,10 +472,9 @@ void mainwindowm::toggleFullScreen() {
 
     ui->picturelist->setHidden(!ui->picturelist->isHidden());
     ui->video->setHidden(!ui->video->isHidden());
-    updateGeometry();  // 强制更新布局
-    repaint();         // 强制重绘
+    updateGeometry();
+    repaint();
 
-    // 手动触发 resizeEvent
     QResizeEvent* event = new QResizeEvent(size(), size());
     resizeEvent(event);
 }
@@ -506,27 +482,18 @@ void mainwindowm::toggleFullScreen() {
 void mainwindowm::resizeEvent(QResizeEvent* event) {
     QMainWindow::resizeEvent(event);
 
-    // 如果 picturelist 和 videoplayer 都没有被隐藏
     if (!ui->picturelist->isHidden() && !ui->video->isHidden()) {
-        // 获取 QGroupBox 的初始宽度比例，可以根据需要进行调整
         float initialPicturelistWidthRatio = 1.0;
-
-        // 获取 central 的宽度
         int centralWidth = this->width();
-
-        // 计算 QGroupBox 的宽度
         int initialPicturelistWidth = static_cast<int>(centralWidth * initialPicturelistWidthRatio);
 
-        // 设置 QGroupBox 的大小
         ui->picturelist->setFixedWidth(initialPicturelistWidth);
     }
 
-    // 调用 updateGeometry 触发布局更新
     updateGeometry();
 }
 
 void mainwindowm::toggleVoiceControlStrip() {
-    // 判断当前状态，如果是隐藏则显示，反之亦然
     if (ui->voicecontrolstrip->isHidden()) {
         ui->voicecontrolstrip->show();
     } else {
@@ -535,10 +502,7 @@ void mainwindowm::toggleVoiceControlStrip() {
 }
 
 void mainwindowm::adjustVolume(int volume) {
-    // 将音量值映射到 QMediaPlayer 的音量范围（0 到 100）
     qreal volumeLevel = volume / 100.0;
-
-    // 设置 QMediaPlayer 的音量
     commonResrc->mediaPlayer_->setVolume(static_cast<int>(volumeLevel * 100));
 }
 
@@ -577,8 +541,8 @@ void mainwindowm::RenderTheme() {
 
         // hide video
         ui->video->setHidden(true);
-        updateGeometry();  // 强制更新布局
-        repaint();         // 强制重绘
+        updateGeometry();
+        repaint();
         QResizeEvent* event = new QResizeEvent(size(), size());
         resizeEvent(event);
     } else {

@@ -412,6 +412,7 @@ void ListSet::onFindPathClicked() {
     }
 }
 
+// toggleLanguage() is the callback func of language-switch button
 void ListSet::toggleLanguage() {
     commonResrc->isChineseLanguage_ = !commonResrc->isChineseLanguage_;
     QString sheetName = commonResrc->isChineseLanguage_ ? "listset_ch.qss" : "listset.qss";
