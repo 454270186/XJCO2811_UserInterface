@@ -61,9 +61,9 @@ Ensure that you have install `g++` that supports C++11 and `Qt5.15.2` in your co
 
 Clone the repo
 
-	```
+```shell
 	git clone https://github.com/454270186/XJCO2811_UserInterface.git
-	```
+```
 
 
 
