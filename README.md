@@ -69,7 +69,7 @@ git clone https://github.com/454270186/XJCO2811_UserInterface.git
 
 #### 2. From Source Code
 
-Download the latest source code and decompress
+Download the [latest source code](https://github.com/454270186/XJCO2811_UserInterface/releases/tag/v4.0) and decompress
 
 
 
