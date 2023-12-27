@@ -5,7 +5,7 @@
   <img src="./img/logo.png" alt="Logo">
   <h1 align="center">SportX</h3>
   <p align="center">
-    An awesome outdoor enthusiast' video player app
+    An awesome outdoor enthusiast video player app
     <br />
     <a href="https://github.com/454270186/XJCO2811_UserInterface"><strong>Explore the Repo</strong></a>
     <br />
