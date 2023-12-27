@@ -23,8 +23,8 @@
 ## About The APP
 
 <div style="display: inline-block;">
-    <img src="./img/videoplayer.png" alt="mainwindow" width="390" height="700" />
-	<img src="./img/listset.png" alt="listset" width="390" height="700" />
+    <img src="./img/videoplayer.png" alt="mainwindow" width="312" height="560" />
+	<img src="./img/listset.png" alt="listset" width="312" height="560" />
 </div>
 
 
