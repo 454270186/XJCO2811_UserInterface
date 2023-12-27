@@ -55,11 +55,11 @@ Ensure that you have install `g++` that supports C++11 and `Qt5.15.2` in your co
 
 
 
-### Installation
+### Installation (two ways)
 
-#### 1. From GitHub
+#### From GitHub
 
-- Clone the repo
+Clone the repo
 
 	```
 	git clone https://github.com/454270186/XJCO2811_UserInterface.git
@@ -67,7 +67,7 @@ Ensure that you have install `g++` that supports C++11 and `Qt5.15.2` in your co
 
 
 
-#### 2. Download Zip
+#### From Source Code
 
 Download the latest source code and decompress
 
