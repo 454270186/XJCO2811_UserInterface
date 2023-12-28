@@ -81,7 +81,7 @@ Download the [latest source code](https://github.com/454270186/XJCO2811_UserInte
 
    After opening `QT Creator`, click on the `Projects` button on the right side.
 
-   In **Run Settings**,  set the **Working directory** like this:
+   In **Run Settings**,  set the **Working directory** to the QT build folder (**This is very important!!**):
 
    <img src="./img/setup.png" alt="setup" style="zoom:50%;" />
 
